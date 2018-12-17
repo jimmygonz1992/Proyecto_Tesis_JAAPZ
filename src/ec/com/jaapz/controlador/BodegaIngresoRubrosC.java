@@ -1,7 +1,6 @@
 package ec.com.jaapz.controlador;
 
-import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
@@ -32,10 +31,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -195,8 +194,9 @@ public class BodegaIngresoRubrosC {
 			List<Ingreso> listaIngreso = new ArrayList<Ingreso>();
 			listaIngreso = ingresoDao.getRecuperaIngreso(numIngreso);
 			for(int i = 0 ; i < listaIngreso.size() ; i ++) {
-				SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-				String fechaComoCadena = sdf.format(listaIngreso.get(i).getFecha());
+				LocalDate date = listaIngreso.get(i).getFecha().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+				
+				
 				txtCodigo.setText(Integer.toString(listaIngreso.get(i).getIdIngreso()));
 				txtCodigoProv.setText(Integer.toString(listaIngreso.get(i).getProveedor().getIdProveedor()));
 				txtRuc.setText(listaIngreso.get(i).getProveedor().getRuc());
@@ -206,7 +206,9 @@ public class BodegaIngresoRubrosC {
 				txtDireccionPro.setText(listaIngreso.get(i).getProveedor().getDireccion());
 				txtTelefonoPro.setText(listaIngreso.get(i).getProveedor().getTelefono());
 				txtNumero.setText(listaIngreso.get(i).getNumeroIngreso());
-				dtpFecha.setPromptText(fechaComoCadena);
+				dtpFecha.setValue(date);
+				
+				
 				txtSubtotal.setText(Double.toString(listaIngreso.get(i).getSubtotal()));
 				//txtDescuento.setText(Double.toString(listaIngreso.get(i).getTotal()));
 				txtTotal.setText(Double.toString(listaIngreso.get(i).getTotal()));		
@@ -320,6 +322,7 @@ public class BodegaIngresoRubrosC {
 				txtApellidosPro.setText(listaProveedor.get(i).getApellidos());
 				txtDireccionPro.setText(listaProveedor.get(i).getDireccion());
 				txtTelefonoPro.setText(listaProveedor.get(i).getTelefono());
+				
 				proveedorSeleccionado = listaProveedor.get(i);
 			}
 			if (listaProveedor.size() == 0)
@@ -440,9 +443,10 @@ public class BodegaIngresoRubrosC {
 				return;
 			String estado = "A";
 			Date date = Date.from(dtpFecha.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
-			Timestamp fecha = new Timestamp(date.getTime());
-
+			//para guardar ingreso	
 			if(ingreso == null) {
+				ingreso = new Ingreso();
+				
 				proveedorSeleccionado.setNombreComercial(txtProveedor.getText());
 				proveedorSeleccionado.setNombres(txtNombresPro.getText());
 				proveedorSeleccionado.setApellidos(txtApellidosPro.getText());
@@ -450,10 +454,11 @@ public class BodegaIngresoRubrosC {
 				proveedorSeleccionado.setRuc(txtRuc.getText());
 				proveedorSeleccionado.setTelefono(txtTelefonoPro.getText());
 				proveedorSeleccionado.setUsuarioCrea(Context.getInstance().getUsuariosC().getIdUsuario());
-				proveedorSeleccionado.setFechaCrea(fecha);
+				proveedorSeleccionado.setFechaCrea(date);
 				proveedorSeleccionado.setUsuarioModifica(Context.getInstance().getUsuariosC().getIdUsuario());
-				proveedorSeleccionado.setFechaModificacion(fecha);
+				proveedorSeleccionado.setFechaModificacion(date);
 				proveedorSeleccionado.setEstado("A");
+				
 				ingreso.setProveedor(proveedorSeleccionado);
 			}else {
 				System.out.println(ingreso.getProveedor().getIdProveedor() + " Id Proveedor");
@@ -464,19 +469,15 @@ public class BodegaIngresoRubrosC {
 				ingreso.getProveedor().setRuc(txtRuc.getText());
 				ingreso.getProveedor().setTelefono(txtTelefonoPro.getText());
 				ingreso.getProveedor().setUsuarioCrea(Context.getInstance().getUsuariosC().getIdUsuario());
-				ingreso.getProveedor().setFechaCrea(fecha);
+				ingreso.getProveedor().setFechaCrea(date);
 				ingreso.getProveedor().setUsuarioModifica(Context.getInstance().getUsuariosC().getIdUsuario());
-				ingreso.getProveedor().setFechaModificacion(fecha);
+				ingreso.getProveedor().setFechaModificacion(date);
 				ingreso.getProveedor().setEstado("A");
 			}
 
 
-			//para guardar ingreso	
-			if(ingreso == null)
-				ingreso = new Ingreso();
-
 			//ingreso.setIdIngreso(null);
-			ingreso.setFecha(fecha);
+			ingreso.setFecha(date);
 			ingreso.setNumeroIngreso(txtNumero.getText());
 			ingreso.setUsuarioCrea(Context.getInstance().getUsuariosC().getIdUsuario());
 			ingreso.setSubtotal(Double.parseDouble(txtSubtotal.getText()));
@@ -498,7 +499,7 @@ public class BodegaIngresoRubrosC {
 						Kardex kardex = new Kardex();
 						//kardex.setIdKardex(null);
 						kardex.setRubro(det.getRubro());
-						kardex.setFecha(fecha);
+						kardex.setFecha(date);
 						kardex.setTipoDocumento("Factura #");
 						kardex.setNumDocumento(txtNumero.getText());
 						kardex.setDetalleOperacion(null);
@@ -566,10 +567,55 @@ public class BodegaIngresoRubrosC {
 							}
 						}
 					}
+					
+					
+					//elimina material resta stock
+					if(tvDatos != null) {
+						List<Integer> idActual = new ArrayList<Integer>();
+						for(IngresoDetalle detalle : tvDatos.getItems()) {
+							if(detalle.getIdIngresoDet() != null)
+								idActual.add(detalle.getIdIngresoDet());
+						}
+						
+						System.out.println("Ingresos actuales " + idActual.size());
+						System.out.println("Ingresos en la bd " + ingreso.getIngresoDetalles().size());
+						
+						for (IngresoDetalle det : ingreso.getIngresoDetalles()) {
+							if(det.getIdIngresoDet() != null) {
+								if(!idActual.contains(det.getIdIngresoDet())) {
+									System.out.println("Rubro a eliminar " + det.getRubro().getDescripcion());
+									Rubro rubroMod = det.getRubro();
+									rubroMod.setStock(rubroMod.getStock() - det.getCantidad());
+									System.out.println("Elimnia rubro " + rubroMod.getDescripcion());
+									rubroDAO.getEntityManager().getTransaction().begin();
+									rubroDAO.getEntityManager().merge(rubroMod);
+									rubroDAO.getEntityManager().getTransaction().commit();
+								}	
+							}
+						}
+					}
+					//sumar
+					if(tvDatos != null) {
+						List<Rubro> listaAgregadaRubros = new ArrayList<Rubro>();
+						for(IngresoDetalle detalle: tvDatos.getItems()) {
+							if(detalle.getIdIngresoDet() == null)
+								listaAgregadaRubros.add(detalle.getRubro());
+						}
+						for (Rubro rubro : listaAgregadaRubros) {
+							for(IngresoDetalle detalle : tvDatos.getItems()) {
+								if(rubro.getIdRubro() == detalle.getRubro().getIdRubro())
+									rubro.setStock(rubro.getStock() + detalle.getCantidad());
+							}
+							rubroDAO.getEntityManager().getTransaction().begin();
+							rubroDAO.getEntityManager().merge(rubro);
+							rubroDAO.getEntityManager().getTransaction().commit();
+						}
+					}
+					
 					ingresoDao.getEntityManager().getTransaction().begin();
 					ingresoDao.getEntityManager().merge(ingreso);
 					ingresoDao.getEntityManager().getTransaction().commit();
-
+					
 					helper.mostrarAlertaInformacion("Datos grabados Correctamente", Context.getInstance().getStage());
 					limpiar();
 					limpiarProveedor();
@@ -914,6 +960,9 @@ public class BodegaIngresoRubrosC {
 		tvDatos.getColumns().clear();
 		tvDatos.getItems().clear();
 		limpiarIngreso();
+		ingreso = null;
+		proveedorSeleccionado = null;
+		rubroSeleccionado = null;
 	}	
 
 	public void buscarRubro() {
