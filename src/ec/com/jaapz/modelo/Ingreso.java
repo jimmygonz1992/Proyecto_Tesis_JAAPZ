@@ -12,21 +12,12 @@ import java.util.List;
  * 
  */
 @Entity
-<<<<<<< HEAD
  @Table(name="ingreso")
  @NamedQueries({
  	@NamedQuery(name="Ingreso.findAll", query="SELECT i FROM Ingreso i"),
  	@NamedQuery(name="Ingreso.recuperaIngreso", query="SELECT i FROM Ingreso i, Proveedor p WHERE (i.proveedor.idProveedor=p.idProveedor and i.numeroIngreso = (:numIngreso) and i.estado = 'A')"),
  	@NamedQuery(name="Ingreso.BuscaFactura", query="SELECT i FROM Ingreso i WHERE (i.numeroIngreso = (:numIngreso) and i.proveedor.idProveedor = (:idProveedor) and i.estado = 'A')")
  })
-=======
-@Table(name="ingreso")
-@NamedQueries({
-	@NamedQuery(name="Ingreso.findAll", query="SELECT i FROM Ingreso i"),
-	@NamedQuery(name="Ingreso.recuperaIngreso", query="SELECT i FROM Ingreso i WHERE i.numeroIngreso = (:numIngreso) and i.estado = 'A'")
-})
-
->>>>>>> f9ef634870c894870b8fb7a18264f9bd1cbefe4f
 public class Ingreso implements Serializable {
 	private static final long serialVersionUID = 1L;
 

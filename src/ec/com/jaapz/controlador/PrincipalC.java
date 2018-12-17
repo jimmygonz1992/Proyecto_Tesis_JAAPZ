@@ -16,7 +16,6 @@ import ec.com.jaapz.modelo.SegPermiso;
 import ec.com.jaapz.modelo.SegPermisoDAO;
 import ec.com.jaapz.util.Context;
 import ec.com.jaapz.util.ControllerHelper;
-import ec.com.jaapz.util.Encriptado;
 import javafx.animation.FadeTransition;
 import javafx.animation.Interpolator;
 import javafx.event.Event;

@@ -136,34 +136,13 @@
                                     </HBox>
                                  </children>
                               </HBox>
-<<<<<<< HEAD
-                              <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="3">
-                                 <children>
-                                    <Label prefHeight="17.0" prefWidth="78.0" text="Código Prov">
-                                       <font>
-                                          <Font name="Arial Bold" size="12.0" />
-                                       </font>
-                                    </Label>
-                                 </children>
-                              </HBox>
-                              <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="5" GridPane.rowIndex="3">
-                                 <children>
-                                    <TextField fx:id="txtCodigoProv" prefHeight="25.0" prefWidth="122.0" HBox.hgrow="ALWAYS" />
-                                 </children>
-                              </HBox>
+
                            </children>
                         </GridPane>
                      </children>
                   </HBox>
-                  <HBox prefHeight="100.0" prefWidth="200.0" style="-fx-border-color: #bbc8d0; -fx-border-width: 1px; -fx-background-radius: 6; -fx-max-height: 600; -fx-max-width: 1500; -fx-min-height: 10; -fx-min-width: 10" GridPane.columnIndex="5" GridPane.columnSpan="3" GridPane.hgrow="ALWAYS" GridPane.rowSpan="2">
-=======
-                        </children>
-                    </GridPane>
-                </children>
-            </HBox>
             
             <HBox prefHeight="100.0" prefWidth="200.0" style="-fx-border-color: #bbc8d0; -fx-border-width: 1px; -fx-background-radius: 6; -fx-max-height: 600; -fx-max-width: 1500; -fx-min-height: 10; -fx-min-width: 10" GridPane.columnIndex="5" GridPane.columnSpan="3" GridPane.hgrow="ALWAYS" GridPane.rowSpan="2">
->>>>>>> f9ef634870c894870b8fb7a18264f9bd1cbefe4f
                      <children>
                         <GridPane HBox.hgrow="ALWAYS">
                           <columnConstraints>
@@ -173,17 +152,10 @@
                               <ColumnConstraints hgrow="SOMETIMES" maxWidth="205.0" minWidth="0.0" prefWidth="1.0" />
                           </columnConstraints>
                           <rowConstraints>
-<<<<<<< HEAD
                             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-=======
-                            <RowConstraints maxHeight="38.0" minHeight="10.0" prefHeight="33.0" vgrow="SOMETIMES" />
-                            <RowConstraints maxHeight="63.0" minHeight="10.0" prefHeight="32.0" vgrow="SOMETIMES" />
-                            <RowConstraints maxHeight="69.0" minHeight="10.0" prefHeight="31.0" vgrow="SOMETIMES" />
-                              <RowConstraints maxHeight="69.0" minHeight="10.0" prefHeight="33.0" vgrow="SOMETIMES" />
->>>>>>> f9ef634870c894870b8fb7a18264f9bd1cbefe4f
                           </rowConstraints>
                            <children>
                         <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1">
@@ -232,27 +204,12 @@
                               </HBox>
                                  </children>
                         </HBox>
-<<<<<<< HEAD
-=======
-                              <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
-                                 <children>
-                                    <Label prefWidth="50.0" text="Código:">
-                                       <font>
-                                          <Font name="Arial Bold" size="12.0" />
-                                       </font>
-                                    </Label>
-                                 </children>
-                              </HBox>
->>>>>>> f9ef634870c894870b8fb7a18264f9bd1cbefe4f
+
                               <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="3">
                                  <children>
                                     <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
                                        <children>
-<<<<<<< HEAD
                                           <TextField fx:id="txtCodigo" prefHeight="25.0" prefWidth="173.0" />
-=======
-                                          <TextField fx:id="txtCodigoIng" prefHeight="25.0" prefWidth="173.0" />
->>>>>>> f9ef634870c894870b8fb7a18264f9bd1cbefe4f
                                        </children>
                                     </HBox>
                                  </children>

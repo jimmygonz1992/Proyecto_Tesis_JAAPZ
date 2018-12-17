@@ -24,7 +24,6 @@ public class IngresoDAO extends ClaseDAO{
 		resultado = (List<Ingreso>) query.getResultList();
 		return resultado;
 	}
-<<<<<<< HEAD
 	
 	@SuppressWarnings("unchecked")
 	public List<Ingreso> getBuscaFactura(String numIngreso, int idProveedor){
@@ -36,7 +35,4 @@ public class IngresoDAO extends ClaseDAO{
 		resultado = (List<Ingreso>) query.getResultList();
 		return resultado;
 	}
-	
-=======
->>>>>>> f9ef634870c894870b8fb7a18264f9bd1cbefe4f
 }
