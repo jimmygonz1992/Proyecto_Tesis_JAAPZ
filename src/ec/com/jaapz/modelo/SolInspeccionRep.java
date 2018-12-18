@@ -13,7 +13,12 @@ import java.util.List;
  */
 @Entity
 @Table(name="sol_inspeccion_rep")
-@NamedQuery(name="SolInspeccionRep.findAll", query="SELECT s FROM SolInspeccionRep s")
+@NamedQueries({
+	@NamedQuery(name="SolInspeccionRep.findAll", query="SELECT r FROM SolInspeccionRep r"),
+	@NamedQuery(name="SolInspeccionRep.buscarInspeccionAsignada", query="SELECT r FROM SolInspeccionRep r "
+		+ "where r.idUsuEncargado = :idPerfilUsuario and r.estado = 'A' order by r.idSolicitudRep desc")
+})
+
 public class SolInspeccionRep implements Serializable {
 	private static final long serialVersionUID = 1L;
 

@@ -50,6 +50,10 @@ public class SolicitudesTipoAsignacionC {
 				helper.mostrarVentanaContenedor("/solicitudes/SolicitudesAsignacionIns.fxml", apContenido);
 				System.out.println("aqui");
 			}
+			if(cboTipoSolicitud.getSelectionModel().getSelectedItem().getIdTipoSolicitud() == 2) { // es una solicitud de reparacion
+				helper.mostrarVentanaContenedor("/solicitudes/SolicitudesAsignacionRep.fxml", apContenido);
+				System.out.println("aqui");
+			}
 		}catch(Exception ex) {
 			System.out.println(ex.getMessage());
 		}
