@@ -36,17 +36,17 @@ public class SolicitudReparacionC {
 	@FXML private TextField txtDireccion;
 	@FXML private TextField txtTelefono;
 	@FXML private TextField txtCodigo;
-	
+
 	@FXML private DatePicker dtpFechaIns;
 	@FXML private TextField txtReferenciaIns;
 	@FXML private TextField txtDireccionIns;
 	@FXML private TextField txtContacto;
 	@FXML private TextArea txtObservaciones;
-	
+
 	@FXML private Button btnGrabarIns;
 	@FXML private Button btnNuevoIns;
 	@FXML private Button btnBuscarIns;
-	
+
 	ControllerHelper helper = new ControllerHelper();
 	CuentaClienteDAO cuentaClienteDao = new CuentaClienteDAO();
 	TipoSolicitudDAO tipoSolicitudDAO = new TipoSolicitudDAO();
@@ -67,7 +67,7 @@ public class SolicitudReparacionC {
 					txtNombres.setText(cadena);
 				}
 			});
-			
+
 			//solo letras mayusculas
 			txtApellidos.textProperty().addListener(new ChangeListener<String>() {
 				@Override
@@ -77,7 +77,7 @@ public class SolicitudReparacionC {
 					txtApellidos.setText(cadena);
 				}
 			});
-			
+
 			//solo letras mayusculas
 			txtDireccion.textProperty().addListener(new ChangeListener<String>() {
 				@Override
@@ -87,7 +87,7 @@ public class SolicitudReparacionC {
 					txtDireccion.setText(cadena);
 				}
 			});
-			
+
 			//solo letras mayusculas
 			txtReferenciaIns.textProperty().addListener(new ChangeListener<String>() {
 				@Override
@@ -97,7 +97,7 @@ public class SolicitudReparacionC {
 					txtReferenciaIns.setText(cadena);
 				}
 			});
-			
+
 			//solo letras mayusculas
 			txtDireccionIns.textProperty().addListener(new ChangeListener<String>() {
 				@Override
@@ -107,7 +107,7 @@ public class SolicitudReparacionC {
 					txtDireccionIns.setText(cadena);
 				}
 			});
-			
+
 			//solo letras mayusculas
 			txtObservaciones.textProperty().addListener(new ChangeListener<String>() {
 				@Override
@@ -117,7 +117,7 @@ public class SolicitudReparacionC {
 					txtObservaciones.setText(cadena);
 				}
 			});
-			
+
 			//solo letras mayusculas
 			txtNumMedidor.textProperty().addListener(new ChangeListener<String>() {
 				@Override
@@ -127,7 +127,7 @@ public class SolicitudReparacionC {
 					txtNumMedidor.setText(cadena);
 				}
 			});
-			
+
 			//validar solo numeros
 			txtCuenta.textProperty().addListener(new ChangeListener<String>() {
 				@Override
@@ -140,7 +140,7 @@ public class SolicitudReparacionC {
 					}
 				}
 			});
-			
+
 			//validar solo numeros
 			txtTelefono.textProperty().addListener(new ChangeListener<String>() {
 				@Override
@@ -153,7 +153,7 @@ public class SolicitudReparacionC {
 					}
 				}
 			});
-			
+
 			//validar solo numeros
 			txtContacto.textProperty().addListener(new ChangeListener<String>() {
 				@Override
@@ -166,7 +166,7 @@ public class SolicitudReparacionC {
 					}
 				}
 			});
-			
+
 			txtCuenta.setOnKeyPressed(new EventHandler<KeyEvent>(){
 				@Override
 				public void handle(KeyEvent ke){
@@ -181,7 +181,7 @@ public class SolicitudReparacionC {
 					}
 				}
 			});
-			
+
 			txtNumMedidor.setOnKeyPressed(new EventHandler<KeyEvent>(){
 				@Override
 				public void handle(KeyEvent ke){
@@ -196,9 +196,9 @@ public class SolicitudReparacionC {
 					}
 				}
 			});
-			
+
 			txtCedula.setEditable(false);
-			//txtCodigo.setVisible(false);
+			txtCodigo.setVisible(false);
 			txtNombres.setEditable(false);
 			txtApellidos.setEditable(false);
 			txtDireccion.setEditable(false);
@@ -207,44 +207,44 @@ public class SolicitudReparacionC {
 			System.out.println(ex.getMessage());
 		}
 	}
-	
+
 	private void recuperarDatosCuenta(Integer cuenta) {
-    	try {
-    		List<CuentaCliente> listaCuentaCliente = new ArrayList<CuentaCliente>();
-    		listaCuentaCliente = cuentaClienteDao.getExisteCuenta(cuenta);
-    		for(int i = 0 ; i < listaCuentaCliente.size() ; i ++) {
-    			//txtCodigo.setText(Integer.toString(listaCuentaCliente.get(i).getCliente().getIdCliente()));
-    			txtCedula.setText(listaCuentaCliente.get(i).getCliente().getCedula());
-    			txtNumMedidor.setText(listaCuentaCliente.get(i).getMedidor().getCodigo());
-    			txtNombres.setText(listaCuentaCliente.get(i).getCliente().getNombre());
-    			txtApellidos.setText(listaCuentaCliente.get(i).getCliente().getApellido());
-    			txtDireccion.setText(listaCuentaCliente.get(i).getDireccion());
-    			txtTelefono.setText(listaCuentaCliente.get(i).getCliente().getTelefono());
-    		}
-    	}catch(Exception ex) {
-    		System.out.println(ex.getMessage());
-    	}
-    }
-	
+		try {
+			List<CuentaCliente> listaCuentaCliente = new ArrayList<CuentaCliente>();
+			listaCuentaCliente = cuentaClienteDao.getExisteCuenta(cuenta);
+			for(int i = 0 ; i < listaCuentaCliente.size() ; i ++) {
+				//txtCodigo.setText(Integer.toString(listaCuentaCliente.get(i).getCliente().getIdCliente()));
+				txtCedula.setText(listaCuentaCliente.get(i).getCliente().getCedula());
+				txtNumMedidor.setText(listaCuentaCliente.get(i).getMedidor().getCodigo());
+				txtNombres.setText(listaCuentaCliente.get(i).getCliente().getNombre());
+				txtApellidos.setText(listaCuentaCliente.get(i).getCliente().getApellido());
+				txtDireccion.setText(listaCuentaCliente.get(i).getDireccion());
+				txtTelefono.setText(listaCuentaCliente.get(i).getCliente().getTelefono());
+			}
+		}catch(Exception ex) {
+			System.out.println(ex.getMessage());
+		}
+	}
+
 	private void recuperarDatosMedidor(String medidor) {
-    	try {
-    		List<CuentaCliente> listaCuentaCliente = new ArrayList<CuentaCliente>();
-    		listaCuentaCliente = cuentaClienteDao.getExisteCuentaMedidor(medidor);
-    		for(int i = 0 ; i < listaCuentaCliente.size() ; i ++) {
-    			//txtCodigo.setText(Integer.toString(listaCuentaCliente.get(i).getCliente().getIdCliente()));
-    			txtCuenta.setText(Integer.toString(listaCuentaCliente.get(i).getIdCuenta()));
-    			txtCedula.setText(listaCuentaCliente.get(i).getCliente().getCedula());
-    			txtNumMedidor.setText(listaCuentaCliente.get(i).getMedidor().getCodigo());
-    			txtNombres.setText(listaCuentaCliente.get(i).getCliente().getNombre());
-    			txtApellidos.setText(listaCuentaCliente.get(i).getCliente().getApellido());
-    			txtDireccion.setText(listaCuentaCliente.get(i).getDireccion());
-    			txtTelefono.setText(listaCuentaCliente.get(i).getCliente().getTelefono());
-    		}
-    	}catch(Exception ex) {
-    		System.out.println(ex.getMessage());
-    	}
-    }
-	
+		try {
+			List<CuentaCliente> listaCuentaCliente = new ArrayList<CuentaCliente>();
+			listaCuentaCliente = cuentaClienteDao.getExisteCuentaMedidor(medidor);
+			for(int i = 0 ; i < listaCuentaCliente.size() ; i ++) {
+				//txtCodigo.setText(Integer.toString(listaCuentaCliente.get(i).getCliente().getIdCliente()));
+				txtCuenta.setText(Integer.toString(listaCuentaCliente.get(i).getIdCuenta()));
+				txtCedula.setText(listaCuentaCliente.get(i).getCliente().getCedula());
+				txtNumMedidor.setText(listaCuentaCliente.get(i).getMedidor().getCodigo());
+				txtNombres.setText(listaCuentaCliente.get(i).getCliente().getNombre());
+				txtApellidos.setText(listaCuentaCliente.get(i).getCliente().getApellido());
+				txtDireccion.setText(listaCuentaCliente.get(i).getDireccion());
+				txtTelefono.setText(listaCuentaCliente.get(i).getCliente().getTelefono());
+			}
+		}catch(Exception ex) {
+			System.out.println(ex.getMessage());
+		}
+	}
+
 	boolean validarCuentaExiste() {
 		try {
 			List<CuentaCliente> listaCuentas;
@@ -258,7 +258,7 @@ public class SolicitudReparacionC {
 			return false;
 		}
 	}
-	
+
 	boolean validarCuentaExisteMedidor() {
 		try {
 			List<CuentaCliente> listaCuentas;
@@ -272,7 +272,7 @@ public class SolicitudReparacionC {
 			return false;
 		}
 	}
-	
+
 	void llenarDatos(CuentaCliente cuentaSeleccionada){
 		try {
 			//txtCodigo.setText(String.valueOf(cuentaSeleccionada.getCliente().getIdCliente()));
@@ -310,28 +310,28 @@ public class SolicitudReparacionC {
 				txtDireccion.setText("");
 			else
 				txtDireccion.setText(cuentaSeleccionada.getDireccion());
-			
+
 		}catch(Exception ex) {
 			System.out.println(ex.getMessage());
 		}
 	}
-	
+
 	public void nuevo(){
-    	txtCedula.setText("");
-    	txtCodigo.setText("0");
-    	txtCuenta.setText("");
-    	txtNumMedidor.setText("");    	
-    	txtNombres.setText("");
-    	txtApellidos.setText("");
-    	txtDireccion.setText("");
-    	txtTelefono.setText("");
-    	dtpFechaIns.setValue(null);
-    	txtReferenciaIns.setText("");
-    	txtDireccionIns.setText("");
-    	txtContacto.setText("");
-    	txtObservaciones.setText("");
+		txtCedula.setText("");
+		txtCodigo.setText("0");
+		txtCuenta.setText("");
+		txtNumMedidor.setText("");    	
+		txtNombres.setText("");
+		txtApellidos.setText("");
+		txtDireccion.setText("");
+		txtTelefono.setText("");
+		dtpFechaIns.setValue(null);
+		txtReferenciaIns.setText("");
+		txtDireccionIns.setText("");
+		txtContacto.setText("");
+		txtObservaciones.setText("");
 	}
-	
+
 	public void buscarCuenta() {
 		try{
 			helper.abrirPantallaModal("/reparaciones/ReparacionesListadoCuentas.fxml","Listado de Clientes", Context.getInstance().getStage());
@@ -349,64 +349,65 @@ public class SolicitudReparacionC {
 			System.out.println(ex.getMessage());
 		}
 	}
-	
+
 	private void recuperarDatos(String numMedidor) {
-    	try {
-    		List<CuentaCliente> listaCuentaCliente = new ArrayList<CuentaCliente>();
-    		listaCuentaCliente = cuentaClienteDao.getExisteCuentaMedidor(numMedidor);
-    		if(listaCuentaCliente.size() > 0) {
-    			txtNombres.setText(listaCuentaCliente.get(0).getCliente().getNombre());
-    			txtApellidos.setText(listaCuentaCliente.get(0).getCliente().getApellido());
-    			txtDireccion.setText(listaCuentaCliente.get(0).getDireccion());
-    			txtTelefono.setText(listaCuentaCliente.get(0).getCliente().getTelefono());
-    			txtCuenta.setText(Integer.toString(listaCuentaCliente.get(0).getIdCuenta()));
-    			cuentaRecuperada = listaCuentaCliente.get(0);
-    		}else {
-    			helper.mostrarAlertaInformacion("Cliente no registrado.. debe ser registrado", Context.getInstance().getStage());
-    			txtNombres.requestFocus();
-    			cuentaRecuperada = new CuentaCliente();
-    		}
-    	}catch(Exception ex) {
-    		System.out.println(ex.getMessage());
-    	}
-    }
-	
+		try {
+			List<CuentaCliente> listaCuentaCliente = new ArrayList<CuentaCliente>();
+			listaCuentaCliente = cuentaClienteDao.getExisteCuentaMedidor(numMedidor);
+			if(listaCuentaCliente.size() > 0) {
+				txtNombres.setText(listaCuentaCliente.get(0).getCliente().getNombre());
+				txtApellidos.setText(listaCuentaCliente.get(0).getCliente().getApellido());
+				txtDireccion.setText(listaCuentaCliente.get(0).getDireccion());
+				txtTelefono.setText(listaCuentaCliente.get(0).getCliente().getTelefono());
+				txtCuenta.setText(Integer.toString(listaCuentaCliente.get(0).getIdCuenta()));
+				cuentaRecuperada = listaCuentaCliente.get(0);
+			}else {
+				helper.mostrarAlertaInformacion("Cliente no registrado.. debe ser registrado", Context.getInstance().getStage());
+				txtNombres.requestFocus();
+				cuentaRecuperada = new CuentaCliente();
+			}
+		}catch(Exception ex) {
+			System.out.println(ex.getMessage());
+		}
+	}
+
 	public void grabar() {
 		try {
 			if(validarDatos() == false)
 				return;
 			Optional<ButtonType> result = helper.mostrarAlertaConfirmacion("Desea Grabar los Datos?",Context.getInstance().getStage());
 			if(result.get() == ButtonType.OK){
+
+				Date date = Date.from(dtpFechaIns.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
+
+				cuentaRecuperada.setIdCuenta(Integer.parseInt(txtCuenta.getText()));
 				
-			Date date = Date.from(dtpFechaIns.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
-			
-			cuentaRecuperada.setIdCuenta(Integer.parseInt(txtCuenta.getText()));
-			SolInspeccionRep reparacion = new SolInspeccionRep();
-			
-			List<TipoSolicitud> tipoSolicitud = tipoSolicitudDAO.getSolById(2);
-			System.out.println(tipoSolicitud.size());
-			if(tipoSolicitud.size() > 0)
-				reparacion.setTipoSolicitud(tipoSolicitud.get(0));
-			
-			reparacion.setCuentaCliente(cuentaRecuperada);
-			reparacion.setUsuarioCrea(Context.getInstance().getUsuariosC().getIdUsuario());
-			reparacion.setFecha(date);
-			reparacion.setEstadoInspecRep(Constantes.EST_INSPECCION_PENDIENTE);
-			reparacion.setObservacion(txtObservaciones.getText());
-			reparacion.setEstado("A");
-				
-			reparacionDao.getEntityManager().getTransaction().begin();
-			if (txtCodigo.getText().equals("0")) {
-				reparacion.setIdSolicitudRep(null);
-				reparacionDao.getEntityManager().persist(reparacion);
-			}else {
-				reparacion.setIdSolicitudRep(Integer.parseInt(txtCodigo.getText()));
-				reparacionDao.getEntityManager().merge(reparacion);
-			}			
-			reparacionDao.getEntityManager().getTransaction().commit();
-				
-			helper.mostrarAlertaInformacion("Datos Grabados Correctamente", Context.getInstance().getStage());
-			nuevo();
+				SolInspeccionRep reparacion = new SolInspeccionRep();
+
+				List<TipoSolicitud> tipoSolicitud = tipoSolicitudDAO.getSolById(2);
+				System.out.println(tipoSolicitud.size());
+				if(tipoSolicitud.size() > 0)
+					reparacion.setTipoSolicitud(tipoSolicitud.get(0));
+
+				reparacion.setCuentaCliente(cuentaRecuperada);
+				reparacion.setUsuarioCrea(Context.getInstance().getUsuariosC().getIdUsuario());
+				reparacion.setFecha(date);
+				reparacion.setEstadoInspecRep(Constantes.EST_INSPECCION_PENDIENTE);
+				reparacion.setObservacion(txtObservaciones.getText());
+				reparacion.setEstado("A");
+
+				reparacionDao.getEntityManager().getTransaction().begin();
+				if (txtCodigo.getText().equals("0")) {
+					reparacion.setIdSolicitudRep(null);
+					reparacionDao.getEntityManager().persist(reparacion);
+				}else {
+					reparacion.setIdSolicitudRep(Integer.parseInt(txtCodigo.getText()));
+					reparacionDao.getEntityManager().merge(reparacion);
+				}			
+				reparacionDao.getEntityManager().getTransaction().commit();
+
+				helper.mostrarAlertaInformacion("Datos Grabados Correctamente", Context.getInstance().getStage());
+				nuevo();
 			}
 		}catch(Exception ex) {
 			helper.mostrarAlertaError("Error al grabar", Context.getInstance().getStage());
@@ -415,42 +416,42 @@ public class SolicitudReparacionC {
 		}
 	}
 
-	 boolean validarDatos() {
-			try {
-				if(txtCuenta.getText().equals("")) {
-					helper.mostrarAlertaAdvertencia("Debe ingresar cuenta", Context.getInstance().getStage());
-					txtCuenta.requestFocus();
-					return false;
-				}
-				if(txtNumMedidor.getText().equals("")) {
-					helper.mostrarAlertaAdvertencia("Debe ingresar # Medidor", Context.getInstance().getStage());
-					txtNumMedidor.requestFocus();
-					return false;
-				}
-				if(txtNombres.getText().equals("")) {
-					helper.mostrarAlertaAdvertencia("Debe ingresar Nombre de cliente", Context.getInstance().getStage());
-					txtNombres.requestFocus();
-					return false;	
-				}
-				if(txtApellidos.getText().equals("")) {
-					helper.mostrarAlertaAdvertencia("Debe ingresar Apellidos de cliente", Context.getInstance().getStage());
-					txtApellidos.requestFocus();
-					return false;	
-				}
-				if(txtDireccion.getText().equals("")) {
-					helper.mostrarAlertaAdvertencia("Debe ingresar Dirección de cliente", Context.getInstance().getStage());
-					txtDireccion.requestFocus();
-					return false;	
-				}
-				if(txtTelefono.getText().equals("")) {
-					helper.mostrarAlertaAdvertencia("Debe ingresar Dirección de cliente", Context.getInstance().getStage());
-					txtTelefono.requestFocus();
-					return false;	
-				}
-				return true;
-			}catch(Exception ex) {
-				System.out.println(ex.getMessage());
+	boolean validarDatos() {
+		try {
+			if(txtCuenta.getText().equals("")) {
+				helper.mostrarAlertaAdvertencia("Debe ingresar cuenta", Context.getInstance().getStage());
+				txtCuenta.requestFocus();
 				return false;
 			}
+			if(txtNumMedidor.getText().equals("")) {
+				helper.mostrarAlertaAdvertencia("Debe ingresar # Medidor", Context.getInstance().getStage());
+				txtNumMedidor.requestFocus();
+				return false;
+			}
+			if(txtNombres.getText().equals("")) {
+				helper.mostrarAlertaAdvertencia("Debe ingresar Nombre de cliente", Context.getInstance().getStage());
+				txtNombres.requestFocus();
+				return false;	
+			}
+			if(txtApellidos.getText().equals("")) {
+				helper.mostrarAlertaAdvertencia("Debe ingresar Apellidos de cliente", Context.getInstance().getStage());
+				txtApellidos.requestFocus();
+				return false;	
+			}
+			if(txtDireccion.getText().equals("")) {
+				helper.mostrarAlertaAdvertencia("Debe ingresar Dirección de cliente", Context.getInstance().getStage());
+				txtDireccion.requestFocus();
+				return false;	
+			}
+			if(txtTelefono.getText().equals("")) {
+				helper.mostrarAlertaAdvertencia("Debe ingresar Dirección de cliente", Context.getInstance().getStage());
+				txtTelefono.requestFocus();
+				return false;	
+			}
+			return true;
+		}catch(Exception ex) {
+			System.out.println(ex.getMessage());
+			return false;
 		}
+	}
 }
