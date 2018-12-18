@@ -15,12 +15,10 @@ import java.util.List;
 @Table(name="rubro")
 
 @NamedQueries({
-	@NamedQuery(name="Rubro.findAll", query="SELECT r FROM Rubro r"),
-	@NamedQuery(name="Rubro.buscarPatron", 
-	query="SELECT r FROM Rubro r "
+	@NamedQuery(name="Rubro.findAll", query="SELECT r FROM Rubro r WHERE r.estado = 'A' ORDER BY r.idRubro"),
+	@NamedQuery(name="Rubro.buscarPatron", query="SELECT r FROM Rubro r "
 			+ "WHERE lower(r.descripcion) like lower(:descripcion) and r.estado = 'A'"),
-	@NamedQuery(name="Rubro.validarMaterial", 
-	query="SELECT r FROM Rubro r "
+	@NamedQuery(name="Rubro.validarMaterial", query="SELECT r FROM Rubro r "
 			+ "WHERE r.descripcion = (:descripcion) AND r.idRubro <> (:idRubro) and r.estado = 'A'"),
 	@NamedQuery(name="Rubro.findPatron", query="SELECT r FROM Rubro r WHERE r.idRubro = (:idRubro)")
 })

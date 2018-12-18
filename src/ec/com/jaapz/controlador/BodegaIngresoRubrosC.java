@@ -85,6 +85,7 @@ public class BodegaIngresoRubrosC {
 	
 	public void initialize(){
 		try {
+			nuevo();
 			Encriptado encriptado = new Encriptado();
 			usuarioLogueado = Context.getInstance().getUsuariosC();
 			txtUsuario.setText(encriptado.Desencriptar(String.valueOf(Context.getInstance().getUsuariosC().getUsuario())));
@@ -170,6 +171,35 @@ public class BodegaIngresoRubrosC {
 				}
 			});
 			
+			//solo letras mayusculas
+			txtNombresPro.textProperty().addListener(new ChangeListener<String>() {
+				@Override
+				public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+					// TODO Auto-generated method stub
+					String cadena = txtNombresPro.getText().toUpperCase();
+					txtNombresPro.setText(cadena);
+				}
+			});
+			
+			//solo letras mayusculas
+			txtApellidosPro.textProperty().addListener(new ChangeListener<String>() {
+				@Override
+				public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+					// TODO Auto-generated method stub
+					String cadena = txtApellidosPro.getText().toUpperCase();
+					txtApellidosPro.setText(cadena);
+				}
+			});
+			
+			//solo letras mayusculas
+			txtDireccionPro.textProperty().addListener(new ChangeListener<String>() {
+				@Override
+				public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+					// TODO Auto-generated method stub
+					String cadena = txtDireccionPro.getText().toUpperCase();
+					txtDireccionPro.setText(cadena);
+				}
+			});
 		}catch(Exception ex) {
 			System.out.println(ex.getMessage());
 		}
@@ -475,7 +505,6 @@ public class BodegaIngresoRubrosC {
 				ingreso.getProveedor().setEstado("A");
 			}
 
-
 			//ingreso.setIdIngreso(null);
 			ingreso.setFecha(date);
 			ingreso.setNumeroIngreso(txtNumero.getText());
@@ -483,7 +512,6 @@ public class BodegaIngresoRubrosC {
 			ingreso.setSubtotal(Double.parseDouble(txtSubtotal.getText()));
 			ingreso.setTotal(Double.parseDouble(txtTotal.getText()));
 			ingreso.setEstado(estado);
-
 
 			Optional<ButtonType> result = helper.mostrarAlertaConfirmacion("Desea Grabar los Datos?",Context.getInstance().getStage());
 			if(result.get() == ButtonType.OK){
@@ -568,7 +596,6 @@ public class BodegaIngresoRubrosC {
 						}
 					}
 					
-					
 					//elimina material resta stock
 					if(tvDatos != null) {
 						List<Integer> idActual = new ArrayList<Integer>();
@@ -623,7 +650,6 @@ public class BodegaIngresoRubrosC {
 					tvDatos.getColumns().clear();
 					tvDatos.getItems().clear();
 				}
-
 			}
 			ingreso = null;
 			proveedorSeleccionado = null;
@@ -633,240 +659,6 @@ public class BodegaIngresoRubrosC {
 			System.out.println(ex.getMessage());
 		}
 	}
-
-
-	//graba solo lo primero los ingresos y el detalle
-	/*public void grabar() {
-		try {
-			if(validarDatos() == false)
-				return;
-			Optional<ButtonType> result = helper.mostrarAlertaConfirmacion("Desea Grabar los Datos?",Context.getInstance().getStage());
-			if(result.get() == ButtonType.OK){
-				Ingreso ingreso = new Ingreso();
-				String estado = "A";		
-				ingreso.setIdIngreso(null);
-				Date date = Date.from(dtpFecha.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
-				Timestamp fecha = new Timestamp(date.getTime());
-				ingreso.setFecha(fecha);
-				ingreso.setNumeroIngreso(txtNumero.getText());
-				ingreso.setUsuarioCrea(Context.getInstance().getUsuariosC().getIdUsuario());
-				ingreso.setEstado(estado);
-				List<IngresoDetalle> listaAgregadaRubros = new ArrayList<IngresoDetalle>();
-				for(IngresoDetalle det : tvDatos.getItems()) {
-					det.setIdIngresoDet(null);
-					det.setEstado("A");
-					det.setIngreso(ingreso);
-					listaAgregadaRubros.add(det);
-				}
-
-				ingreso.setIngresoDetalles(listaAgregadaRubros);
-				ingresoDao.getEntityManager().getTransaction().begin();
-				ingresoDao.getEntityManager().persist(ingreso);				
-				ingresoDao.getEntityManager().getTransaction().commit();
-
-				actualizarListaRubros();
-
-				helper.mostrarAlertaInformacion("Datos Grabados Correctamente", Context.getInstance().getStage());
-				limpiar();
-				txtNumero.setText("");
-				tvDatos.getColumns().clear();
-				tvDatos.getItems().clear();
-			}
-		}catch(Exception ex) {
-			ingresoDao.getEntityManager().getTransaction().rollback();
-			helper.mostrarAlertaError("Error al grabar", Context.getInstance().getStage());
-			System.out.println(ex.getMessage());
-		}
-	}*/
-
-	//Intento grabar todo solo graba hasta kardex
-	/*public void grabar() {
-		try {
-			if(validarDatos() == false)
-				return;
-			Optional<ButtonType> result = helper.mostrarAlertaConfirmacion("Desea Grabar los Datos?",Context.getInstance().getStage());
-			if(result.get() == ButtonType.OK){
-				if (idfactura == 0) {
-					if(buscaFactura() == true) {
-						helper.mostrarAlertaAdvertencia("Número de factura ya existe", Context.getInstance().getStage());
-						return;
-					}
-				}			
-				//funcion grabar informacion
-				if (grabarFacIngreso() == false) {
-					helper.mostrarAlertaError("Error al guardar datos", Context.getInstance().getStage());
-				}else {
-					helper.mostrarAlertaInformacion("Datos Grabados Correctamente", Context.getInstance().getStage());
-				}
-			}
-			
-		}catch(Exception ex) {
-			//ingresoDao.getEntityManager().getTransaction().rollback();
-			//helper.mostrarAlertaError("Error al grabar", Context.getInstance().getStage());
-			System.out.println(ex.getMessage());
-		}
-	}
-	
-	boolean grabarFacIngreso() {
-		try {
-			Date date = Date.from(dtpFecha.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
-			Timestamp fecha = new Timestamp(date.getTime());
-			String estado = "A";
-			Ingreso ingreso = new Ingreso();
-			Proveedor proveedor = new Proveedor();
-			//inicia transaccion
-					
-			proveedor.setNombreComercial(txtProveedor.getText());
-			proveedor.setNombres(txtNombresPro.getText());
-			proveedor.setApellidos(txtApellidosPro.getText());
-			proveedor.setDireccion(txtDireccionPro.getText());
-			proveedor.setRuc(txtRuc.getText());
-			proveedor.setTelefono(txtTelefonoPro.getText());
-			proveedor.setUsuarioCrea(Context.getInstance().getUsuariosC().getIdUsuario());
-			proveedor.setFechaCrea(fecha);
-			proveedor.setUsuarioModifica(Context.getInstance().getUsuariosC().getIdUsuario());
-			proveedor.setFechaModificacion(fecha);
-			proveedor.setEstado("A");
-			
-			//proveedorSeleccionado.setIdProveedor(Integer.parseInt(txtCodigoProv.getText()));
-			ingreso.setProveedor(proveedor);
-			ingreso.setNumeroIngreso(txtNumero.getText());
-			ingreso.setUsuarioCrea(Context.getInstance().getUsuariosC().getIdUsuario());
-			ingreso.setFecha(fecha);
-			ingreso.setSubtotal(Double.parseDouble(txtSubtotal.getText()));
-			ingreso.setTotal(Double.parseDouble(txtTotal.getText()));
-			ingreso.setEstado(estado);
-			
-			List<IngresoDetalle> listaAgregadaRubros = new ArrayList<IngresoDetalle>();
-			for(IngresoDetalle det : tvDatos.getItems()) {
-				det.setIdIngresoDet(null);
-				det.setEstado("A");
-				det.setIngreso(ingreso);
-				listaAgregadaRubros.add(det);
-			}
-			
-			ingreso.setIngresoDetalles(listaAgregadaRubros);
-			ingresoDao.getEntityManager().getTransaction().begin();
-			
-			if(txtCodigoProv.getText().equals("0")) {//inserta
-				proveedor.setIdProveedor(null);
-				ingresoDao.getEntityManager().persist(proveedor);
-			}else {//modifica
-				proveedor.setIdProveedor(Integer.parseInt(txtCodigoProv.getText()));
-				ingresoDao.getEntityManager().merge(proveedor);
-				Ingreso ingreso = new Ingreso();
-				List<Kardex> listaProductos = new ArrayList<Kardex>();
-
-				String estado = "A";		
-				ingreso.setIdIngreso(null);
-				Date date = Date.from(dtpFecha.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
-				Timestamp fecha = new Timestamp(date.getTime());
-				ingreso.setFecha(fecha);
-				ingreso.setProveedor(proveedorSeleccionado);
-				ingreso.setSubtotal(Double.parseDouble(txtSubtotal.getText()));
-				ingreso.setTotal(Double.parseDouble(txtTotal.getText()));
-				ingreso.setNumeroIngreso(txtNumero.getText());
-				ingreso.setUsuarioCrea(Context.getInstance().getUsuariosC().getIdUsuario());
-				ingreso.setEstado(estado);
-
-				List<IngresoDetalle> listaAgregadaRubros = new ArrayList<IngresoDetalle>();
-				for(IngresoDetalle det : tvDatos.getItems()) {
-					det.setIdIngresoDet(null);
-					det.setEstado("A");
-					det.setIngreso(ingreso);
-
-					Kardex kardex = new Kardex();
-					kardex.setIdKardex(null);
-					kardex.setRubro(det.getRubro());
-					kardex.setFecha(fecha);
-					kardex.setTipoDocumento("Factura #");
-					kardex.setNumDocumento(txtNumero.getText());
-					kardex.setDetalleOperacion(null);
-					kardex.setCantidad(det.getCantidad());
-					kardex.setUnidadMedida("Unidad");
-					kardex.setValorUnitario(det.getPrecio());
-					kardex.setCostoTotal(det.getCantidad()*det.getPrecio());
-					kardex.setTipoMovimiento("ING");
-					kardex.setEstado("A");
-
-					listaProductos.add(kardex);
-					listaAgregadaRubros.add(det);
-				}
-
-				System.out.println("hola");
-				proveedorSeleccionado.setNombreComercial(txtProveedor.getText());
-				proveedorSeleccionado.setNombres(txtNombresPro.getText());
-				proveedorSeleccionado.setApellidos(txtApellidosPro.getText());
-				proveedorSeleccionado.setDireccion(txtDireccionPro.getText());
-				proveedorSeleccionado.setRuc(txtRuc.getText());
-				proveedorSeleccionado.setTelefono(txtTelefonoPro.getText());
-				proveedorSeleccionado.setUsuarioCrea(Context.getInstance().getUsuariosC().getIdUsuario());
-				proveedorSeleccionado.setFechaCrea(fecha);
-				proveedorSeleccionado.setUsuarioModifica(Context.getInstance().getUsuariosC().getIdUsuario());
-				proveedorSeleccionado.setFechaModificacion(fecha);
-				proveedorSeleccionado.setEstado("A");
-
-				if(proveedorSeleccionado.getIdProveedor() != null) {
-					ingreso.setProveedor(proveedorSeleccionado);
-				}else {
-					proveedorSeleccionado.setIdProveedor(null);
-					List<Ingreso> lista = new ArrayList<Ingreso>();
-					lista.add(ingreso);
-					proveedorSeleccionado.setIngresos(lista);
-					ingreso.setProveedor(proveedorSeleccionado);
-
-				}
-
-				ingreso.setIngresoDetalles(listaAgregadaRubros);
-				ingresoDao.getEntityManager().getTransaction().begin();
-				ingresoDao.getEntityManager().persist(proveedorSeleccionado);		
-
-				for (Kardex kar : listaProductos) {
-					ingresoDao.getEntityManager().persist(kar);	
-				}
-
-				ingresoDao.getEntityManager().getTransaction().commit();
-
-				actualizarListaRubros();
-
-				helper.mostrarAlertaInformacion("Datos Grabados Correctamente", Context.getInstance().getStage());
-				limpiar();
-				txtNumero.setText("");
-				tvDatos.getColumns().clear();
-				tvDatos.getItems().clear();
-			}
-			
-			if(txtCodigo.getText().equals("0")) {//inserta
-				ingreso.setIdIngreso(null);
-				ingresoDao.getEntityManager().persist(ingreso);
-			}else {//modifica
-				ingreso.setIdIngreso(Integer.parseInt(txtCodigo.getText()));
-				ingresoDao.getEntityManager().merge(ingreso);
-			}
-			ingresoDao.getEntityManager().getTransaction().commit();
-			helper.mostrarAlertaInformacion("Datos Grabados Correctamente", Context.getInstance().getStage());
-			return true;		
-		}catch(Exception ex) {
-			helper.mostrarAlertaError("Error al grabar", Context.getInstance().getStage());
-			ingresoDao.getEntityManager().getTransaction().rollback();
-			System.out.println(ex.getMessage());
-			return false;
-		}
-	}
-	
-	boolean buscaFactura() {
-		try {
-			List<Ingreso> listaIngresos;
-			listaIngresos = ingresoDao.getBuscaFactura(txtNumero.getText(), Integer.parseInt(txtCodigoProv.getText()));
-			if(listaIngresos.size() != 0)
-				return true;
-			else
-				return false;
-		}catch(Exception ex) {
-			System.out.println(ex.getMessage());
-			return false;
-		}
-	}*/
 
 	boolean validarDatos() {
 		try {
