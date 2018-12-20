@@ -26,6 +26,8 @@ public class Medidor implements Serializable {
 	private byte[] foto;
 
 	private String marca;
+	
+	private double precio;
 
 	private String modelo;
 
@@ -82,6 +84,14 @@ public class Medidor implements Serializable {
 
 	public String getMarca() {
 		return this.marca;
+	}
+	
+	public double getPrecio() {
+		return this.precio;
+	}
+
+	public void setPrecio(double precio) {
+		this.precio = precio;
 	}
 
 	public void setMarca(String marca) {

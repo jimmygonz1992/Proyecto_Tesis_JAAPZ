@@ -365,7 +365,7 @@ public class BodegaIngresoRubrosC {
 	@SuppressWarnings("unchecked")
 	public void anadir() {
 		try {
-			if(validarAñadirRubro() == false)
+			if(validarAnadirRubro() == false)
 				return;
 			ObservableList<IngresoDetalle> datos = tvDatos.getItems();
 			tvDatos.getColumns().clear();
@@ -417,7 +417,7 @@ public class BodegaIngresoRubrosC {
 		}
 	}
 
-	boolean validarAñadirRubro() {
+	boolean validarAnadirRubro() {
 		try {
 			if(txtCantidadMat.getText().equals("")) {
 				helper.mostrarAlertaError("Ingresar Cantidad", Context.getInstance().getStage());

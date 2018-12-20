@@ -8,6 +8,7 @@ import ec.com.jaapz.modelo.Barrio;
 import ec.com.jaapz.modelo.Categoria;
 import ec.com.jaapz.modelo.Cliente;
 import ec.com.jaapz.modelo.CuentaCliente;
+import ec.com.jaapz.modelo.LiquidacionOrden;
 import ec.com.jaapz.modelo.Medidor;
 import ec.com.jaapz.modelo.Planilla;
 import ec.com.jaapz.modelo.Rubro;
@@ -32,6 +33,8 @@ public class Context {
 	
 	private Rubro rubro;
 	private Rubro rubros;
+	private LiquidacionOrden liquidaciones;
+	
 	private Planilla planillas;
 	private Cliente cliente;
 	private Medidor medidor;
@@ -217,6 +220,11 @@ public class Context {
 		this.medidor = medidor;
 	}
 	
-	
-	
+	public LiquidacionOrden getLiquidaciones() {
+		return liquidaciones;
+	}
+
+	public void setLiquidaciones(LiquidacionOrden liquidaciones) {
+		this.liquidaciones = liquidaciones;
+	}	
 }

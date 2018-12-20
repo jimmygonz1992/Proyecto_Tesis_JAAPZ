@@ -15,6 +15,13 @@ import java.util.List;
 @Table(name="sol_inspeccion_rep")
 @NamedQueries({
 	@NamedQuery(name="SolInspeccionRep.findAll", query="SELECT r FROM SolInspeccionRep r"),
+	@NamedQuery(name="SolInspeccionRep.buscarInspeccionPerfilPendiente", query="SELECT r FROM SolInspeccionRep r "
+			+ "where lower(r.cuentaCliente.cliente.apellido) like :patron  or lower(r.cuentaCliente.cliente.nombre) like :patron "
+			+ " and r.idUsuEncargado = :idPerfilUsuario "
+			+ " and r.estadoInspecRep = 'PENDIENTE' and r.estado = 'A' order by r.idSolicitudRep desc"),
+	@NamedQuery(name="SolInspeccionRep.findAllPendiente", query="SELECT r FROM SolInspeccionRep r "
+			+ "where (lower(r.cuentaCliente.cliente.apellido) like :patron  or lower(r.cuentaCliente.cliente.nombre) like :patron) "
+			+ "and r.estadoInspecRep = 'PENDIENTE' and r.idUsuEncargado = null and r.estado = 'A' order by r.idSolicitudRep desc"),
 	@NamedQuery(name="SolInspeccionRep.buscarInspeccionAsignada", query="SELECT r FROM SolInspeccionRep r "
 		+ "where r.idUsuEncargado = :idPerfilUsuario and r.estado = 'A' order by r.idSolicitudRep desc")
 })

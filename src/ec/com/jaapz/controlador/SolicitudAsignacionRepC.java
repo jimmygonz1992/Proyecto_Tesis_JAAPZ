@@ -6,7 +6,6 @@ import java.util.Optional;
 
 import ec.com.jaapz.modelo.SegUsuario;
 import ec.com.jaapz.modelo.SegUsuarioDAO;
-import ec.com.jaapz.modelo.SolInspeccionIn;
 import ec.com.jaapz.modelo.SolInspeccionRep;
 import ec.com.jaapz.modelo.SolInspeccionRepDAO;
 import ec.com.jaapz.util.Constantes;
@@ -304,7 +303,7 @@ public class SolicitudAsignacionRepC {
 			}
 			//pasar por parametro la lista de inspecciones a realzar para ir aminorando en el listado
 			Context.getInstance().setListaInspeccionesRep(tvNuevosAsig.getItems());
-			helper.abrirPantallaModal("/clientes/ClientesOrdenPendiente.fxml","Listado de Órdenes de Inspección", Context.getInstance().getStage());
+			helper.abrirPantallaModal("/solicitudes/SolicitudListaOrdenesRep.fxml","Listado de Órdenes de Solicitud", Context.getInstance().getStage());
 			if (Context.getInstance().getReparacion() != null) {
 				SolInspeccionRep ordenAgregar = Context.getInstance().getReparacion();
 				agregarOrden(ordenAgregar);
@@ -373,7 +372,6 @@ public class SolicitudAsignacionRepC {
 					return new SimpleObjectProperty<String>(dato);
 				}
 			});
-
 
 			TableColumn<SolInspeccionRep, String> estadoColum = new TableColumn<>("Estado");
 			estadoColum.setMinWidth(10);
