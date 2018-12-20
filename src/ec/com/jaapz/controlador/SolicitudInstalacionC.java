@@ -300,8 +300,16 @@ public class SolicitudInstalacionC {
 				Timestamp fecha = new Timestamp(date.getTime());
 				inspeccion.setFechaIngreso(fecha);
 				
-				if(clienteRecuperado.getIdCliente() != null)
+				inspeccion.setUsoMedidor(String.valueOf(cboUsoMedidor.getValue()));
+				inspeccion.setIdSolInspeccion(null);
+				inspeccion.setUsuarioCrea(Context.getInstance().getIdUsuario());
+				inspeccion.setReferencia(txtReferenciaIns.getText());
+				inspeccion.setBarrio(cboBarrio.getSelectionModel().getSelectedItem());
+				
+				if(clienteRecuperado.getIdCliente() != null) {
 					inspeccion.setCliente(clienteRecuperado);
+					clienteRecuperado.addSolInspeccionIn(inspeccion);
+				}
 				else {
 					inspeccion.setCliente(clienteRecuperado);
 					List<SolInspeccionIn> lista = new ArrayList<SolInspeccionIn>();
@@ -309,11 +317,7 @@ public class SolicitudInstalacionC {
 					clienteRecuperado.setSolInspeccionIns(lista);
 				}
 				
-				inspeccion.setUsoMedidor(String.valueOf(cboUsoMedidor.getValue()));
-				inspeccion.setIdSolInspeccion(null);
-				inspeccion.setUsuarioCrea(Context.getInstance().getIdUsuario());
-				inspeccion.setReferencia(txtReferenciaIns.getText());
-				inspeccion.setBarrio(cboBarrio.getSelectionModel().getSelectedItem());
+				
 				inspeccionDAO.getEntityManager().getTransaction().begin();
 				if(clienteRecuperado.getIdCliente() != null)
 					inspeccionDAO.getEntityManager().merge(clienteRecuperado);
