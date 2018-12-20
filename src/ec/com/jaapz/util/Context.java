@@ -8,11 +8,13 @@ import ec.com.jaapz.modelo.Barrio;
 import ec.com.jaapz.modelo.Categoria;
 import ec.com.jaapz.modelo.Cliente;
 import ec.com.jaapz.modelo.CuentaCliente;
+import ec.com.jaapz.modelo.LiquidacionOrden;
 import ec.com.jaapz.modelo.Medidor;
 import ec.com.jaapz.modelo.Planilla;
 import ec.com.jaapz.modelo.Rubro;
 import ec.com.jaapz.modelo.SegUsuario;
 import ec.com.jaapz.modelo.SolInspeccionIn;
+import ec.com.jaapz.modelo.SolInspeccionRep;
 import javafx.stage.Stage;
 
 public class Context {
@@ -31,6 +33,8 @@ public class Context {
 	
 	private Rubro rubro;
 	private Rubro rubros;
+	private LiquidacionOrden liquidaciones;
+	
 	private Planilla planillas;
 	private Cliente cliente;
 	private Medidor medidor;
@@ -38,10 +42,12 @@ public class Context {
 	private Categoria categoria;
 	private Barrio barrio;
 	private List<SolInspeccionIn> listaInspecciones;
+	private List<SolInspeccionRep> listaInspeccionesRep;
 	private List<Barrio> listaBarrios;
 	
 	private AperturaLectura apertura;
 	private SolInspeccionIn inspeccion;
+	private SolInspeccionRep reparacion;
 	
 	public static Context getInstance() {
 		return instance;
@@ -113,6 +119,14 @@ public class Context {
 	public void setListaInspecciones(List<SolInspeccionIn> listaInspecciones) {
 		this.listaInspecciones = listaInspecciones;
 	}
+	
+	public List<SolInspeccionRep> getListaInspeccionesRep() {
+		return listaInspeccionesRep;
+	}
+
+	public void setListaInspeccionesRep(List<SolInspeccionRep> listaInspeccionesRep) {
+		this.listaInspeccionesRep = listaInspeccionesRep;
+	}
 
 	public SolInspeccionIn getInspeccion() {
 		return inspeccion;
@@ -120,6 +134,14 @@ public class Context {
 
 	public void setInspeccion(SolInspeccionIn inspeccion) {
 		this.inspeccion = inspeccion;
+	}
+	
+	public SolInspeccionRep getReparacion() {
+		return reparacion;
+	}
+
+	public void setReparacion(SolInspeccionRep reparacion) {
+		this.reparacion = reparacion;
 	}
 
 	public Rubro getRubro() {
@@ -198,6 +220,11 @@ public class Context {
 		this.medidor = medidor;
 	}
 	
-	
-	
+	public LiquidacionOrden getLiquidaciones() {
+		return liquidaciones;
+	}
+
+	public void setLiquidaciones(LiquidacionOrden liquidaciones) {
+		this.liquidaciones = liquidaciones;
+	}	
 }

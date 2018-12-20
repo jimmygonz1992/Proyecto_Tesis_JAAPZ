@@ -6,10 +6,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="482.0" prefWidth="701.0"
-	stylesheets="/estilo.css" xmlns="http://javafx.com/javafx/8"
-	xmlns:fx="http://javafx.com/fxml/1"
-	fx:controller="ec.com.jaapz.controlador.SolicitudesTipoAsignacionC">
+<AnchorPane prefHeight="482.0" prefWidth="701.0" stylesheets="/estilo.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ec.com.jaapz.controlador.SolicitudesTipoAsignacionC">
 	<children>
 		<GridPane layoutX="67.0" layoutY="69.0"
 			AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"

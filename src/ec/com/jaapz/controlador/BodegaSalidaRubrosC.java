@@ -65,7 +65,6 @@ public class BodegaSalidaRubrosC {
 	InstalacionDAO instalacionDao = new InstalacionDAO();
 	LiquidacionOrdenDAO liquidacionOrdenDao = new LiquidacionOrdenDAO();
 	RubroDAO rubroDAO = new RubroDAO();
-	//JunRequerimientoDAO requerimientoDao = new JunRequerimientoDAO();
 	
 	public void initialize(){
 		try {		
@@ -329,7 +328,7 @@ public class BodegaSalidaRubrosC {
 			helper.abrirPantallaModal("/bodega/ListadoRubros.fxml","Listado de Rubros", Context.getInstance().getStage());
 			if (Context.getInstance().getRubros() != null) {
 				rubroSeleccionado = Context.getInstance().getRubros();
-				llenarDatos(rubroSeleccionado);
+				llenarDatosRubro(rubroSeleccionado);
 				Context.getInstance().setRubros(null);
 			}
 		}catch(Exception ex){
@@ -337,7 +336,7 @@ public class BodegaSalidaRubrosC {
 		}
 	}
 	
-	void llenarDatos(Rubro datoSeleccionado){
+	void llenarDatosRubro(Rubro datoSeleccionado){
 		try {
 			txtCodigoMat.setText(String.valueOf(datoSeleccionado.getIdRubro()));
 			if(datoSeleccionado.getDescripcion() == null)

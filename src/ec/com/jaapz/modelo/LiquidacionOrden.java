@@ -16,11 +16,11 @@ import java.util.List;
 @NamedQueries({
 	@NamedQuery(name="LiquidacionOrden.findAll", query="SELECT l FROM LiquidacionOrden l "
 			+ "where (lower(l.cuentaCliente.cliente.apellido) like :patron or lower(l.cuentaCliente.cliente.nombre) like :patron "
-			+ "or lower(l.cuentaCliente.cliente.cedula) like :patron) and l.solInspeccionIn.estadoInspeccion = 'REALIZADO' and l.estadoOrden = 'PENDIENTE'"
+			+ "or lower(l.cuentaCliente.cliente.cedula) like :patron) and l.solInspeccionIn.estadoInspeccion = 'REALIZADO' and l.estadoValor = 'CANCELADO' and l.estadoOrden = 'PENDIENTE'"
 			+ "order by l.idLiquidacion asc"),
 	@NamedQuery(name="LiquidacionOrden.buscarLiquidacionOrdenPerfil", query="SELECT l FROM LiquidacionOrden l "
 			+ "where (lower(l.cuentaCliente.cliente.apellido) like :patron or lower(l.cuentaCliente.cliente.nombre) like :patron "
-			+ "or lower(l.cuentaCliente.cliente.cedula) like :patron) and l.solInspeccionIn.estadoInspeccion = 'REALIZADO' and l.estadoOrden = 'PENDIENTE'"
+			+ "or lower(l.cuentaCliente.cliente.cedula) like :patron) and l.solInspeccionIn.estadoInspeccion = 'REALIZADO' and l.estadoValor = 'CANCELADO' and l.estadoOrden = 'PENDIENTE'"
 			+ "and l.usuarioCrea = :idPerfilUsuario order by l.idLiquidacion asc")
 })
 public class LiquidacionOrden implements Serializable {

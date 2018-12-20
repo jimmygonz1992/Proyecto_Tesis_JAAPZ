@@ -7,10 +7,7 @@
 <?import javafx.scene.text.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="517.0"
-	prefWidth="634.0" xmlns="http://javafx.com/javafx/8"
-	xmlns:fx="http://javafx.com/fxml/1"
-	fx:controller="ec.com.jaapz.controlador.SolicitudAsignacionInsC">
+<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="517.0" prefWidth="634.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ec.com.jaapz.controlador.SolicitudAsignacionInsC">
 	<children>
 		<GridPane layoutX="85.0" layoutY="119.0"
 			AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
