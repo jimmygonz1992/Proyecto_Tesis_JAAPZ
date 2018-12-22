@@ -51,14 +51,17 @@ public class ReparacionesListadoCuentasC {
 	void llenarDatos(String patron) {
 		try{
 			tvDatos.getColumns().clear();
+			tvDatos.getItems().clear();
 			List<CuentaCliente> listaCuentas;
 			
-			if(Context.getInstance().getIdPerfil() == 1) {
+			/*if(Context.getInstance().getIdPerfil() == 1) {
 				listaCuentas = cuentaClienteDao.getListaCuentaClientes(patron);
 			}else {
 				listaCuentas = cuentaClienteDao.getListaCuentaClientePerfil(patron);
-			}
+			}*/
+			
 			ObservableList<CuentaCliente> datosCuenta = FXCollections.observableArrayList();
+			listaCuentas = cuentaClienteDao.getListaCuentaClientes(patron);
 			datosCuenta.setAll(listaCuentas);
 
 			//llenar los datos en la tabla
@@ -140,7 +143,7 @@ public class ReparacionesListadoCuentasC {
 				}
 			});
 			
-			tvDatos.getColumns().addAll(idColum,  cedulaColum, clienteColum, medidorColum, direccionColum, telefonoColum, fechaIngColum, estadoColum);
+			tvDatos.getColumns().addAll(idColum, cedulaColum, clienteColum, medidorColum, direccionColum, telefonoColum, fechaIngColum, estadoColum);
 			tvDatos.setItems(datosCuenta);
 		}catch(Exception ex){
 			System.out.println(ex.getMessage());

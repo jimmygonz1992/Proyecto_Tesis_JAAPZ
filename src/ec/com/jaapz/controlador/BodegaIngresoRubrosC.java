@@ -95,6 +95,8 @@ public class BodegaIngresoRubrosC {
 			txtStockMat.setEditable(false);
 			//dtpFecha.setValue(LocalDate.now());
 			txtRuc.requestFocus();
+			txtCodigo.setVisible(false);
+			txtCodigoProv.setVisible(false);
 			
 			//validar solo numeros
 			txtRuc.textProperty().addListener(new ChangeListener<String>() {
@@ -225,8 +227,6 @@ public class BodegaIngresoRubrosC {
 			listaIngreso = ingresoDao.getRecuperaIngreso(numIngreso);
 			for(int i = 0 ; i < listaIngreso.size() ; i ++) {
 				LocalDate date = listaIngreso.get(i).getFecha().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-				
-				
 				txtCodigo.setText(Integer.toString(listaIngreso.get(i).getIdIngreso()));
 				txtCodigoProv.setText(Integer.toString(listaIngreso.get(i).getProveedor().getIdProveedor()));
 				txtRuc.setText(listaIngreso.get(i).getProveedor().getRuc());
@@ -236,16 +236,12 @@ public class BodegaIngresoRubrosC {
 				txtDireccionPro.setText(listaIngreso.get(i).getProveedor().getDireccion());
 				txtTelefonoPro.setText(listaIngreso.get(i).getProveedor().getTelefono());
 				txtNumero.setText(listaIngreso.get(i).getNumeroIngreso());
-				dtpFecha.setValue(date);
-				
-				
+				dtpFecha.setValue(date);	
 				txtSubtotal.setText(Double.toString(listaIngreso.get(i).getSubtotal()));
 				//txtDescuento.setText(Double.toString(listaIngreso.get(i).getTotal()));
 				txtTotal.setText(Double.toString(listaIngreso.get(i).getTotal()));		
-
 				ingreso = listaIngreso.get(i);
 				recuperarDetalleIngreso();
-
 				//proveedorSeleccionado = listaProveedor.get(i);
 			}
 			//if (listaProveedor.size() == 0)
@@ -322,7 +318,7 @@ public class BodegaIngresoRubrosC {
 		tvDatos.getColumns().addAll(descripcionColum, cantidadColum, precioColum, totalColum);
 		tvDatos.setItems(datos);
 
-		sumarDatos();
+		//sumarDatos();
 	}
 
 	boolean validarProveedorExiste() {
@@ -408,7 +404,7 @@ public class BodegaIngresoRubrosC {
 			tvDatos.getColumns().addAll(descipcionColum, cantidadColum, precioColum, totalColum);
 			tvDatos.setItems(datos);
 
-			sumarDatos();
+			//sumarDatos();
 
 			rubroSeleccionado = null;
 			limpiar();
@@ -436,7 +432,7 @@ public class BodegaIngresoRubrosC {
 		try {
 			IngresoDetalle detalleSeleccionado = tvDatos.getSelectionModel().getSelectedItem();
 			tvDatos.getItems().remove(detalleSeleccionado);
-			sumarDatos();
+			//sumarDatos();
 		}catch(Exception ex) {
 			System.out.println(ex.getMessage());
 		}

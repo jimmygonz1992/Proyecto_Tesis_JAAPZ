@@ -53,7 +53,7 @@
                   </HBox>
                   <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="2">
                      <children>
-                        <TextField fx:id="txtCodigo" maxWidth="200.0" prefHeight="25.0" prefWidth="145.0" />
+                        <TextField fx:id="txtCodigoProducto" prefHeight="25.0" prefWidth="147.0" />
                         <Button fx:id="btnBuscar" mnemonicParsing="false" onAction="#buscar" text="Buscar">
                            <font>
                               <Font name="Arial Bold" size="12.0" />
@@ -114,7 +114,7 @@
                   </HBox>
                   <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
                      <children>
-                        <Label prefHeight="21.0" prefWidth="93.0" text="Cantidad:">
+                        <Label prefHeight="21.0" prefWidth="141.0" text="Stock Inicial:">
                            <font>
                               <Font name="Arial Bold" size="18.0" />
                            </font>
@@ -166,6 +166,7 @@
                         <CheckBox fx:id="chkEstado" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" />
                      </children>
                   </HBox>
+                  <TextField fx:id="txtCodigo" maxWidth="200.0" prefHeight="25.0" prefWidth="87.0" GridPane.columnIndex="3" GridPane.rowIndex="5" />
                </children>
                <GridPane.margin>
                   <Insets top="-10.0" />

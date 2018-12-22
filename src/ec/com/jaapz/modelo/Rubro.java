@@ -19,7 +19,7 @@ import java.util.List;
 	@NamedQuery(name="Rubro.buscarPatron", query="SELECT r FROM Rubro r "
 			+ "WHERE lower(r.descripcion) like lower(:descripcion) and r.estado = 'A'"),
 	@NamedQuery(name="Rubro.validarMaterial", query="SELECT r FROM Rubro r "
-			+ "WHERE r.descripcion = (:descripcion) AND r.idRubro <> (:idRubro) and r.estado = 'A'"),
+			+ "WHERE r.descripcion = (:descripcion) AND r.codigo = (:codigo) and r.estado = 'A'"),
 	@NamedQuery(name="Rubro.findPatron", query="SELECT r FROM Rubro r WHERE r.idRubro = (:idRubro)")
 })
 public class Rubro implements Serializable {
@@ -31,6 +31,8 @@ public class Rubro implements Serializable {
 	private Integer idRubro;
 
 	private String descripcion;
+	
+	private String codigo;
 
 	private String estado;
 
@@ -129,6 +131,14 @@ public class Rubro implements Serializable {
 
 	public void setMarca(String marca) {
 		this.marca = marca;
+	}
+	
+	public String getCodigo() {
+		return this.codigo;
+	}
+
+	public void setCodigo(String codigo) {
+		this.codigo = codigo;
 	}
 
 	public double getPrecio() {

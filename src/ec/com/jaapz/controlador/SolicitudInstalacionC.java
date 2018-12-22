@@ -124,9 +124,9 @@ public class SolicitudInstalacionC {
 			txtTelefono.textProperty().addListener(new ChangeListener<String>() {
 				@Override
 				public void changed(final ObservableValue<? extends String> ov, final String oldValue, final String newValue) {
-					if (txtCedula.getText().length() > 10) {
-						String s = txtCedula.getText().substring(0, 10);
-						txtCedula.setText(s);
+					if (txtTelefono.getText().length() > 10) {
+						String s = txtTelefono.getText().substring(0, 10);
+						txtTelefono.setText(s);
 					}
 				}
 			});

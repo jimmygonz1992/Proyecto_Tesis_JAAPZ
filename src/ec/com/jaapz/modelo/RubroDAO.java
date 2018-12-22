@@ -17,12 +17,12 @@ public class RubroDAO extends ClaseDAO {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<Rubro> getValidarRubro(String descripcion,int idMaterial) {
+	public List<Rubro> getValidarRubro(String descripcion, String codigo) {
 		List<Rubro> resultado; 
 		Query query = getEntityManager().createNamedQuery("Rubro.validarMaterial");
 		query.setHint("javax.persistence.cache.storeMode", "REFRESH");
 		query.setParameter("descripcion", descripcion);
-		query.setParameter("idRubro", idMaterial);
+		query.setParameter("codigo", codigo);
 		resultado = (List<Rubro>) query.getResultList();
 		return resultado;
 	}

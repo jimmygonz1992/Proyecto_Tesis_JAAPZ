@@ -8,6 +8,7 @@ import ec.com.jaapz.modelo.SolInspeccionRepDAO;
 import ec.com.jaapz.util.Constantes;
 import ec.com.jaapz.util.Context;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -26,6 +27,7 @@ public class SolicitudListaRepC {
 	
 	SolInspeccionRepDAO reparacionDAO = new SolInspeccionRepDAO();
 	List<SolInspeccionRep> listadoInspecciones = new ArrayList<SolInspeccionRep>();
+	
 	public void initialize() {
 		listadoInspecciones = Context.getInstance().getListaInspeccionesRep();
 		//poner nuevamente a null
@@ -44,10 +46,22 @@ public class SolicitudListaRepC {
             });
             return row ;
         });
+		
+		//solo letras mayusculas
+				txtBuscar.textProperty().addListener(new ChangeListener<String>() {
+					@Override
+					public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+						// TODO Auto-generated method stub
+						String cadena = txtBuscar.getText().toUpperCase();
+						txtBuscar.setText(cadena);
+					}
+				});
 	}
+	
 	public void buscarCliente() {
 		llenarTablaInspecciones(txtBuscar.getText());
 	}
+	
 	@SuppressWarnings("unchecked")
 	void llenarTablaInspecciones(String patron) {
 		try{

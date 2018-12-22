@@ -359,8 +359,8 @@ public class RecaudacionesRegistroCobroC {
 			if (!datoSeleccionado.getPlanillas().isEmpty()) {
 
 				ObservableList<Planilla> planillas = FXCollections.observableArrayList();
-				for(Planilla pla : datoSeleccionado.getPlanillas()) {;
-					if (pla.getCancelado().equals(Constantes.EST_FAC_PENDIENTE)) {
+				for(Planilla pla : datoSeleccionado.getPlanillas()) {
+					if (pla.getCancelado() == Constantes.EST_FAC_PENDIENTE) {
 						planillas.add(pla);
 					}
 				}
@@ -430,7 +430,7 @@ public class RecaudacionesRegistroCobroC {
 					}
 				});
 
-				tvDatos.getColumns().addAll(idColum, descripcionColum, lecturaAnteriorColum, lecturaActualColum, consumoColum, valorPagoColum);
+				tvDatos.getColumns().addAll(idColum, lecturaAnteriorColum, lecturaActualColum, consumoColum, valorPagoColum);
 				tvDatos.setItems(planillas);
 				sumarDatos();
 				noEditable();

@@ -6,6 +6,7 @@ import ec.com.jaapz.modelo.SolInspeccionIn;
 import ec.com.jaapz.modelo.SolInspeccionInDAO;
 import ec.com.jaapz.util.Context;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -23,7 +24,6 @@ public class SolicitudesListaOrdenC {
 	@FXML TableView<SolInspeccionIn> tvDatos;
 	SolInspeccionInDAO inspeccionDAO = new SolInspeccionInDAO();
 	public void initialize() {
-		
 		llenarTablaInspecciones("");
 		tvDatos.setRowFactory(tv -> {
             TableRow<SolInspeccionIn> row = new TableRow<>();
@@ -37,6 +37,16 @@ public class SolicitudesListaOrdenC {
             });
             return row ;
         });
+
+		//solo letras mayusculas
+		txtBuscar.textProperty().addListener(new ChangeListener<String>() {
+			@Override
+			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+				// TODO Auto-generated method stub
+				String cadena = txtBuscar.getText().toUpperCase();
+				txtBuscar.setText(cadena);
+			}
+		});
 	}
 	public void buscarCliente() {
 		try {

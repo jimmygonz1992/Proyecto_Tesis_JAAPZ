@@ -15,9 +15,6 @@ import ec.com.jaapz.modelo.TipoSolicitudDAO;
 import ec.com.jaapz.util.Constantes;
 import ec.com.jaapz.util.Context;
 import ec.com.jaapz.util.ControllerHelper;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
@@ -26,6 +23,9 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.event.EventHandler;
 
 public class SolicitudReparacionC {
 	@FXML private TextField txtCedula;
@@ -163,6 +163,17 @@ public class SolicitudReparacionC {
 						//int value = Integer.parseInt(newValue);
 					} else {
 						txtContacto.setText(oldValue);
+					}
+				}
+			});
+			
+			//validar solo 10 valores
+			txtContacto.textProperty().addListener(new ChangeListener<String>() {
+				@Override
+				public void changed(final ObservableValue<? extends String> ov, final String oldValue, final String newValue) {
+					if (txtContacto.getText().length() > 10) {
+						String s = txtContacto.getText().substring(0, 10);
+						txtContacto.setText(s);
 					}
 				}
 			});

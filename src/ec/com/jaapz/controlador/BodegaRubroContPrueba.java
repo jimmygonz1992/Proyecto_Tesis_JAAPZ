@@ -176,7 +176,7 @@ public class BodegaRubroContPrueba {
 	boolean validarRubro() {
 		try {
 			List<Rubro> listaRubro;
-			listaRubro = rubroDAO.getValidarRubro(txtDescripcion.getText(), Integer.parseInt(txtCodigo.getText()));
+			listaRubro = rubroDAO.getValidarRubro(txtDescripcion.getText(), txtCodigo.getText());
 			if(listaRubro.size() != 0)
 				return true;
 			else

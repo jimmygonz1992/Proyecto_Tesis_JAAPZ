@@ -12,10 +12,10 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TableColumn.CellDataFeatures;
+import javafx.scene.control.TableRow;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.Callback;
 
@@ -123,7 +123,7 @@ public class RecaudacionesPlanillasEmitidasC {
 					List<Planilla> listPla = param.getValue().getPlanillas();
 					for(Planilla planilla : listPla) {
 						//if (planilla.getCancelado() == "PENDIENTE")
-						if(planilla.getCancelado().equals(Constantes.EST_FAC_PENDIENTE)) 
+						if(planilla.getCancelado().equals(Constantes.EST_FAC_PENDIENTE)); 
 							cont = cont + 1;
 					}
 					numPendiente = String.valueOf(cont);
@@ -131,14 +131,9 @@ public class RecaudacionesPlanillasEmitidasC {
 				}
 			});
 			
-			tvDatos.getColumns().addAll(idColum,  cedulaColum, clienteColum, medidorColum, direccionColum, totalColum);
+			tvDatos.getColumns().addAll(idColum, cedulaColum, clienteColum, medidorColum, direccionColum, totalColum);
 			tvDatos.setItems(datosCuenta);
 			
-			/*for (int i=0; i<tvDatos.getItems().size(); i++) {
-				if (String.valueOf(totalColum) != "0") {
-					tvDatos.getItems().remove(i);
-				}
-			}*/
 		}catch(Exception ex){
 			System.out.println(ex.getMessage());
 		}

@@ -23,6 +23,7 @@ import javafx.scene.control.TextField;
 
 public class BodegaRubroC {
 	@FXML private TextField txtCodigo;
+	@FXML private TextField txtCodigoProducto;
 	@FXML private TextField txtDescripcion;
 	@FXML private TextField txtMarca;
 	@FXML private TextField txtPrecio;
@@ -43,10 +44,12 @@ public class BodegaRubroC {
 		limpiar();
 		llenarComboPerfil();
 		chkEstado.setSelected(true);
+		txtCodigo.setVisible(false);
 	}
 	
 	void limpiar() {
 		txtCodigo.setText("0");
+		txtCodigoProducto.setText("");
 		txtCodigo.setEditable(false);
 		txtDescripcion.setText("");
 		txtMarca.setText("");
@@ -88,6 +91,7 @@ public class BodegaRubroC {
 			rubro.setTipoRubro(cboTipoRubro.getSelectionModel().getSelectedItem());
 			rubro.setDescripcion(txtDescripcion.getText());
 			rubro.setMarca(txtMarca.getText());
+			rubro.setCodigo(txtCodigoProducto.getText());
 			rubro.setUsuarioCrea(Context.getInstance().getUsuariosC().getIdUsuario());
 			rubro.setFechaCrea(new Date());
 			//falta la hora
@@ -128,6 +132,12 @@ public class BodegaRubroC {
 				txtDescripcion.requestFocus();
 				return false;
 			}
+			
+			if(txtCodigoProducto.getText().equals("")) {
+				helper.mostrarAlertaAdvertencia("Debe ingresar Código de Rubro", Context.getInstance().getStage());
+				txtCodigoProducto.requestFocus();
+				return false;
+			}
 		/*	if(txtMarca.getText().equals("")) {
 				helper.mostrarAlertaAdvertencia("Debe ingresar Marca", Context.getInstance().getStage());
 				txtMarca.requestFocus();
@@ -159,7 +169,7 @@ public class BodegaRubroC {
 	boolean validarRubro() {
 		try {
 			List<Rubro> listaRubro;
-			listaRubro = rubroDAO.getValidarRubro(txtDescripcion.getText(), Integer.parseInt(txtCodigo.getText()));
+			listaRubro = rubroDAO.getValidarRubro(txtDescripcion.getText(), txtCodigoProducto.getText());
 			if(listaRubro.size() != 0)
 				return true;
 			else
@@ -191,6 +201,11 @@ public class BodegaRubroC {
 		try {
 			txtCodigo.setText(String.valueOf(datoSeleccionado.getIdRubro()));
 			cboTipoRubro.getSelectionModel().select(datoSeleccionado.getTipoRubro());
+			
+			if(datoSeleccionado.getCodigo() == null)
+				txtCodigoProducto.setText("");
+			else
+				txtCodigoProducto.setText(datoSeleccionado.getCodigo());
 			
 			if(datoSeleccionado.getDescripcion() == null)
 				txtDescripcion.setText("");
