@@ -30,6 +30,8 @@ public class Medidor implements Serializable {
 	private double precio;
 
 	private String modelo;
+	
+	private boolean usado;
 
 	@Column(name="usuario_crea")
 	private Integer usuarioCrea;
@@ -164,6 +166,14 @@ public class Medidor implements Serializable {
 
 	public void setEstadoMedidor(EstadoMedidor estadoMedidor) {
 		this.estadoMedidor = estadoMedidor;
+	}
+
+	public boolean isUsado() {
+		return usado;
+	}
+
+	public void setUsado(boolean usado) {
+		this.usado = usado;
 	}
 
 }

@@ -14,11 +14,13 @@ import java.util.List;
 @NamedQueries({
 	@NamedQuery(name="SegUsuario.findAll", query="SELECT u FROM SegUsuario u"),
 	@NamedQuery(name="SegUsuario.buscarPatron", query="SELECT u FROM SegUsuario u "
-	            		+ "WHERE u.usuario = (:usuario) AND u.clave = (:clave) and u.estado = 'A'"),
+			+ "WHERE u.usuario = (:usuario) AND u.clave = (:clave) and u.estado = 'A'"),
+	@NamedQuery(name="SegUsuario.buscarUsuario", query="SELECT u FROM SegUsuario u "
+			+ "WHERE u.usuario = (:usuario) and u.estado = 'A'"),
 	@NamedQuery(name="SegUsuario.validarUsuario", query="SELECT u FROM SegUsuario u "
-    		+ "WHERE u.usuario = (:usuario) AND u.idUsuario <> (:idUsuario) and u.estado = 'A'"),
-	@NamedQuery(name="SegUsuario.buscarInspeccion", query="SELECT u FROM SegUsuario u where u.segPerfil.idPerfil = :idINS and u.estado = 'A'"),
-	@NamedQuery(name="SegUsuario.buscarLectura", query="SELECT u FROM SegUsuario u where u.segPerfil.idPerfil = :idLEC and u.estado = 'A'"),
+			+ "WHERE u.usuario = (:usuario) AND u.idUsuario <> (:idUsuario) and u.estado = 'A'"),
+	//@NamedQuery(name="SegUsuario.buscarInspeccion", query="SELECT u FROM SegUsuario u where u.segPerfil.idPerfil = :idINS and u.estado = 'A'"),
+	//@NamedQuery(name="SegUsuario.buscarLectura", query="SELECT u FROM SegUsuario u where u.segPerfil.idPerfil = :idLEC and u.estado = 'A'"),
 	@NamedQuery(name="SegUsuario.recuperaUsuario", query="SELECT u FROM SegUsuario u WHERE u.cedula = (:cedula) and u.estado = 'A'")
 })
 public class SegUsuario implements Serializable {
@@ -58,10 +60,35 @@ public class SegUsuario implements Serializable {
 	@OneToMany(mappedBy="segUsuario", cascade = CascadeType.ALL)
 	private List<ResponsableLectura> responsableLecturas;
 
-	//bi-directional many-to-one association to SegPerfil
-	@ManyToOne
-	@JoinColumn(name="id_perfil")
-	private SegPerfil segPerfil;
+
+
+	//bi-directional many-to-one association to SegUsuario
+	@OneToMany(mappedBy="segUsuario", cascade = CascadeType.ALL)
+	private List<SegUsuarioPerfil> segUsuarioPerfils;
+
+	public List<SegUsuarioPerfil> getSegUsuarioPerfils() {
+		return this.segUsuarioPerfils;
+	}
+
+	public void setSegUsuarioPerfils(List<SegUsuarioPerfil> segUsuarioPerfils) {
+		this.segUsuarioPerfils = segUsuarioPerfils;
+	}
+
+	public SegUsuarioPerfil addSegUsuarioPerfil(SegUsuarioPerfil segUsuarioPerfils) {
+		getSegUsuarioPerfils().add(segUsuarioPerfils);
+		segUsuarioPerfils.setSegUsuario(this);
+
+		return segUsuarioPerfils;
+	}
+
+	public SegUsuarioPerfil removeSegUsuarioPerfil(SegUsuarioPerfil segUsuarioPerfils) {
+		getSegUsuarioPerfils().remove(segUsuarioPerfils);
+		segUsuarioPerfils.setSegUsuario(null);
+
+		return segUsuarioPerfils;
+	}
+
+
 
 	public SegUsuario() {
 	}
@@ -190,14 +217,6 @@ public class SegUsuario implements Serializable {
 		responsableLectura.setSegUsuario(null);
 
 		return responsableLectura;
-	}
-
-	public SegPerfil getSegPerfil() {
-		return this.segPerfil;
-	}
-
-	public void setSegPerfil(SegPerfil segPerfil) {
-		this.segPerfil = segPerfil;
 	}
 
 }

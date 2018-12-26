@@ -27,6 +27,8 @@ public class LecturasBarriosC {
 	List<Barrio> listadoBarrios = new ArrayList<Barrio>();
 	AperturaLectura aperturaActiva = new AperturaLectura();
 	AperturaLecturaDAO aperturaDAO = new AperturaLecturaDAO();
+	
+	
 	public void initialize() {
 		aperturaActiva = Context.getInstance().getApertura();
 		Context.getInstance().setApertura(null);

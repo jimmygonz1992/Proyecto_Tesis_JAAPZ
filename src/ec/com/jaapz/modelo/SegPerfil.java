@@ -39,7 +39,7 @@ public class SegPerfil implements Serializable {
 
 	//bi-directional many-to-one association to SegUsuario
 	@OneToMany(mappedBy="segPerfil", cascade = CascadeType.ALL)
-	private List<SegUsuario> segUsuarios;
+	private List<SegUsuarioPerfil> segUsuarioPerfils;
 
 	public SegPerfil() {
 	}
@@ -106,26 +106,26 @@ public class SegPerfil implements Serializable {
 		return segPermiso;
 	}
 
-	public List<SegUsuario> getSegUsuarios() {
-		return this.segUsuarios;
+	public List<SegUsuarioPerfil> getSegUsuarioPerfils() {
+		return this.segUsuarioPerfils;
 	}
 
-	public void setSegUsuarios(List<SegUsuario> segUsuarios) {
-		this.segUsuarios = segUsuarios;
+	public void setSegUsuarioPerfils(List<SegUsuarioPerfil> segUsuarioPerfils) {
+		this.segUsuarioPerfils = segUsuarioPerfils;
 	}
 
-	public SegUsuario addSegUsuario(SegUsuario segUsuario) {
-		getSegUsuarios().add(segUsuario);
-		segUsuario.setSegPerfil(this);
+	public SegUsuarioPerfil addSegUsuarioPerfil(SegUsuarioPerfil segUsuarioPerfils) {
+		getSegUsuarioPerfils().add(segUsuarioPerfils);
+		segUsuarioPerfils.setSegPerfil(this);
 
-		return segUsuario;
+		return segUsuarioPerfils;
 	}
 
-	public SegUsuario removeSegUsuario(SegUsuario segUsuario) {
-		getSegUsuarios().remove(segUsuario);
-		segUsuario.setSegPerfil(null);
+	public SegUsuarioPerfil removeSegUsuarioPerfil(SegUsuarioPerfil segUsuarioPerfils) {
+		getSegUsuarioPerfils().remove(segUsuarioPerfils);
+		segUsuarioPerfils.setSegPerfil(null);
 
-		return segUsuario;
+		return segUsuarioPerfils;
 	}
 	@Override
 	public String toString() {

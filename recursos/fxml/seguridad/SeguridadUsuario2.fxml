@@ -41,12 +41,12 @@
                      <children>
                         <GridPane alignment="CENTER" HBox.hgrow="ALWAYS">
                            <children>
-                              <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="5" GridPane.rowIndex="8">
+                              <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="8">
                                  <children>
                                     <TextField fx:id="txtCodigo" prefHeight="25.0" prefWidth="81.0" />
                                  </children>
                               </HBox>
-                              <Label id="lb" fx:id="lbCodigo" text="Código:" GridPane.columnIndex="4" GridPane.rowIndex="8">
+                              <Label id="lb" fx:id="lbCodigo" text="Código:" GridPane.columnIndex="1" GridPane.rowIndex="8">
                                  <font>
                                     <Font name="Arial Bold" size="12.0" />
                                  </font>
@@ -61,22 +61,17 @@
                                     <Font name="Arial Bold" size="12.0" />
                                  </font>
                               </Label>
-                              <Label text="Perfil:" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                              <Label text="Usuario:" GridPane.columnIndex="1" GridPane.rowIndex="6">
                                  <font>
                                     <Font name="Arial Bold" size="12.0" />
                                  </font>
                               </Label>
-                              <Label text="Usuario:" GridPane.columnIndex="1" GridPane.rowIndex="7">
+                              <Label text="Teléfono:" GridPane.columnIndex="1" GridPane.rowIndex="4">
                                  <font>
                                     <Font name="Arial Bold" size="12.0" />
                                  </font>
                               </Label>
-                              <Label text="Teléfono:" GridPane.columnIndex="1" GridPane.rowIndex="5">
-                                 <font>
-                                    <Font name="Arial Bold" size="12.0" />
-                                 </font>
-                              </Label>
-                              <Label text="Dirección:" GridPane.columnIndex="1" GridPane.rowIndex="6">
+                              <Label text="Dirección:" GridPane.columnIndex="1" GridPane.rowIndex="5">
                                  <font>
                                     <Font name="Arial Bold" size="12.0" />
                                  </font>
@@ -86,12 +81,12 @@
                                     <Font name="Arial Bold" size="12.0" />
                                  </font>
                               </Label>
-                              <Label text="Cargo:" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="4">
+                              <Label text="Cargo:" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="3">
                                  <font>
                                     <Font name="Arial Bold" size="12.0" />
                                  </font>
                               </Label>
-                              <Label text="Clave:" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="8">
+                              <Label text="Clave:" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="7">
                                  <font>
                                     <Font name="Arial Bold" size="12.0" />
                                  </font>
@@ -107,19 +102,18 @@
                               <TextField fx:id="txtCedula" GridPane.columnIndex="2" />
                               <TextField fx:id="txtNombres" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.rowIndex="1" />
                               <TextField fx:id="txtApellidos" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.rowIndex="2" />
-                              <ComboBox fx:id="cboPerfil" maxWidth="1.7976931348623157E308" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.rowIndex="3" />
-                              <TextField fx:id="txtCargo" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.rowIndex="4" />
-                              <TextField fx:id="txtTelefono" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.rowIndex="5" />
-                              <TextField fx:id="txtDireccion" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.rowIndex="6" />
-                              <TextField fx:id="txtUsuario" GridPane.columnIndex="2" GridPane.rowIndex="7" />
-                              <PasswordField fx:id="txtClave" GridPane.columnIndex="2" GridPane.rowIndex="8" />
+                              <TextField fx:id="txtCargo" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.rowIndex="3" />
+                              <TextField fx:id="txtTelefono" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.rowIndex="4" />
+                              <TextField fx:id="txtDireccion" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.rowIndex="5" />
+                              <TextField fx:id="txtUsuario" GridPane.columnIndex="2" GridPane.rowIndex="6" />
+                              <PasswordField fx:id="txtClave" GridPane.columnIndex="2" GridPane.rowIndex="7" />
                               <CheckBox fx:id="chkEstado" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" GridPane.columnIndex="3" GridPane.halignment="RIGHT" />
-                              <Label text="Foto" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP">
+                              <Label text="Foto" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.valignment="TOP">
                                  <font>
                                     <Font name="Arial Bold" size="12.0" />
                                  </font>
                               </Label>
-                              <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="6" GridPane.valignment="CENTER">
+                              <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER">
                                  <children>
                                     <Button fx:id="btnExaminar" mnemonicParsing="false" onAction="#examinar" prefHeight="25.0" prefWidth="77.0" text="Examinar..">
                                        <font>
@@ -149,11 +143,31 @@
                                     <Insets left="50.0" />
                                  </GridPane.margin>
                               </Button>
-                              <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.rowSpan="3" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                              <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.rowSpan="3" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
                                  <children>
                                     <ImageView fx:id="ivFoto" fitHeight="123.0" fitWidth="145.0" pickOnBounds="true" preserveRatio="true" styleClass="Bordes" HBox.hgrow="ALWAYS" />
                                  </children>
                               </HBox>
+                              <VBox alignment="CENTER" prefHeight="156.0" prefWidth="243.0" GridPane.columnIndex="5" GridPane.rowIndex="5" GridPane.rowSpan="4">
+                                 <children>
+                                    <Label alignment="CENTER" contentDisplay="CENTER" text="Perfiles" textAlignment="CENTER">
+                                       <font>
+                                          <Font name="Arial Bold" size="12.0" />
+                                       </font>
+                                    </Label>
+                                    <TableView fx:id="tvPerfiles" prefHeight="121.0" prefWidth="243.0" />
+                                    <HBox alignment="CENTER" prefHeight="0.0" prefWidth="243.0" VBox.vgrow="ALWAYS">
+                                       <children>
+                                          <Button fx:id="btnAgregarPerfil" mnemonicParsing="false" onAction="#agregarPerfil" text="Agregar" />
+                                          <Button fx:id="btnQuitarPerfil" mnemonicParsing="false" onAction="#quitarPerfil" text="Quitar">
+                                             <HBox.margin>
+                                                <Insets left="15.0" />
+                                             </HBox.margin>
+                                          </Button>
+                                       </children>
+                                    </HBox>
+                                 </children>
+                              </VBox>
                            </children>
                            <columnConstraints>
                               <ColumnConstraints hgrow="SOMETIMES" maxWidth="115.0" minWidth="1.0" prefWidth="11.0" />
@@ -172,8 +186,8 @@
                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints maxHeight="51.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints maxHeight="52.0" minHeight="9.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="9.0" prefHeight="30.0" vgrow="SOMETIMES" />
                            </rowConstraints>
                         </GridPane>
                      </children>
