@@ -9,6 +9,16 @@ import ec.com.jaapz.util.Constantes;
 
 public class SegUsuarioDAO extends ClaseDAO{
 	@SuppressWarnings("unchecked")
+	public List<SegUsuario> getUsuarioPerfil(String usuario) {
+		List<SegUsuario> resultado; 
+		Query query = getEntityManager().createNamedQuery("SegUsuario.buscarUsuario");
+		query.setHint("javax.persistence.cache.storeMode", "REFRESH");
+		query.setParameter("usuario", usuario);
+		resultado = (List<SegUsuario>) query.getResultList();
+		return resultado;
+	}
+	
+	@SuppressWarnings("unchecked")
 	public List<SegUsuario> getUsuario(String usuario,String clave) {
 		List<SegUsuario> resultado; 
 		Query query = getEntityManager().createNamedQuery("SegUsuario.buscarPatron");

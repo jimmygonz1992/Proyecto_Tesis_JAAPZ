@@ -12,9 +12,12 @@ import ec.com.jaapz.modelo.SegPerfil;
 import ec.com.jaapz.modelo.SegPerfilDAO;
 import ec.com.jaapz.modelo.SegUsuario;
 import ec.com.jaapz.modelo.SegUsuarioDAO;
+import ec.com.jaapz.modelo.SegUsuarioPerfil;
+import ec.com.jaapz.util.Constantes;
 import ec.com.jaapz.util.Context;
 import ec.com.jaapz.util.ControllerHelper;
 import ec.com.jaapz.util.Encriptado;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -24,15 +27,18 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableColumn.CellDataFeatures;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.FileChooser;
+import javafx.util.Callback;
 
 public class SeguridadUsuarioC {
 	@FXML private TextField txtCodigo;
@@ -40,7 +46,6 @@ public class SeguridadUsuarioC {
 	@FXML private TextField txtNombres;
 	@FXML private TextField txtApellidos;
 	@FXML private CheckBox chkEstado;
-	@FXML private ComboBox<SegPerfil> cboPerfil;
 	@FXML private TextField txtCargo;
 	@FXML private TextField txtTelefono;
 	@FXML private TextField txtDireccion;
@@ -54,16 +59,20 @@ public class SeguridadUsuarioC {
 	@FXML private Button btnBuscar;
 	@FXML private Label lbCodigo;
 
+	@FXML private TableView<SegUsuarioPerfil> tvPerfiles;
+	@FXML private Button btnAgregarPerfil;
+	@FXML private Button btnQuitarPerfil;
+	
 	ControllerHelper helper = new ControllerHelper();
 	Encriptado encriptado = new Encriptado();
 	SegUsuarioDAO segUsuarioDAO = new SegUsuarioDAO();
 	SegPerfilDAO perfilDAO = new SegPerfilDAO();
-
+	SegUsuario usuarioSeleccionado;
+	
 	public void initialize(){
 		int maxLength = 10;
 		limpiar();
 		Context.getInstance().setUsuarios(null);
-		llenarComboPerfil();
 		//solo letras mayusculas
 		txtNombres.textProperty().addListener(new ChangeListener<String>() {
 			@Override
@@ -178,22 +187,6 @@ public class SeguridadUsuarioC {
 				}
 			}
 		});
-
-		/*txtEmail.setOnKeyPressed(new EventHandler<KeyEvent>(){
-	        @Override
-	        public void handle(KeyEvent ke)
-	        {
-	            if (ke.getCode().equals(KeyCode.ENTER))
-	            {
-	            	if (ValidarEmail(txtEmail.getText()) == false)
-	    			{
-	    				helper.mostrarAlertaAdvertencia("El email es incorrecto!", Context.getInstance().getStage());
-	    				txt_email.requestFocus();
-	    			}
-	            }
-	        }
-	    });*/
-
 		txtUsuario.setEditable(false);
 		txtClave.setEditable(false);
 		//txtCodigo.setVisible(false);
@@ -201,16 +194,19 @@ public class SeguridadUsuarioC {
 		chkEstado.setSelected(true);
 	}
 
+	@SuppressWarnings("unchecked")
 	public void recuperarDatos(String cedula){
 		try{
+			listaEliminar.clear();
 			List<SegUsuario> listaUsuario = new ArrayList<SegUsuario>();
 			listaUsuario = segUsuarioDAO.getRecuperaUsuario(cedula);
 			for(int i = 0 ; i < listaUsuario.size() ; i ++) {
+				usuarioSeleccionado = listaUsuario.get(i);
 				txtCodigo.setText(Integer.toString(listaUsuario.get(i).getIdUsuario()));
 				txtCedula.setText(listaUsuario.get(i).getCedula());
 				txtNombres.setText(listaUsuario.get(i).getNombre());
 				txtApellidos.setText(listaUsuario.get(i).getApellido());
-				cboPerfil.setValue(listaUsuario.get(i).getSegPerfil());
+				//cboPerfil.setValue(listaUsuario.get(i).getSegPerfil());
 				txtCargo.setText(listaUsuario.get(i).getCargo());
 				txtTelefono.setText(listaUsuario.get(i).getTelefono());
 				txtDireccion.setText(listaUsuario.get(i).getDireccion());
@@ -225,10 +221,42 @@ public class SeguridadUsuarioC {
 					ivFoto.setImage(img);
 				}
 				
-				if(listaUsuario.get(i).getEstado().equals("A"))
+				if(listaUsuario.get(i).getEstado().equals(Constantes.ESTADO_ACTIVO))
 					chkEstado.setSelected(true);
 				else
 					chkEstado.setSelected(false);
+				
+				//recuperar los perfiles del usuario en la tabla
+				tvPerfiles.getItems().clear();
+				tvPerfiles.getColumns().clear();
+				ObservableList<SegUsuarioPerfil> datos = FXCollections.observableArrayList();
+				System.out.println(listaUsuario.get(0).getSegUsuarioPerfils().size());
+				for(SegUsuarioPerfil perfil : listaUsuario.get(0).getSegUsuarioPerfils()) { 
+					if(perfil.getEstado().equals(Constantes.ESTADO_ACTIVO))
+						datos.add(perfil);
+				}
+				
+				//llenar los datos en la tabla
+				TableColumn<SegUsuarioPerfil, String> idColum = new TableColumn<>("Código");
+				idColum.setMinWidth(10);
+				idColum.setPrefWidth(70);
+				idColum.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<SegUsuarioPerfil,String>, ObservableValue<String>>() {
+					@Override
+					public ObservableValue<String> call(CellDataFeatures<SegUsuarioPerfil, String> param) {
+						return new SimpleObjectProperty<String>(String.valueOf(param.getValue().getSegPerfil().getIdPerfil()));
+					}
+				});
+				TableColumn<SegUsuarioPerfil, String> descripcionColum = new TableColumn<>("Descripción");
+				descripcionColum.setMinWidth(10);
+				descripcionColum.setPrefWidth(150);
+				descripcionColum.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<SegUsuarioPerfil,String>, ObservableValue<String>>() {
+					@Override
+					public ObservableValue<String> call(CellDataFeatures<SegUsuarioPerfil, String> param) {
+						return new SimpleObjectProperty<String>(param.getValue().getSegPerfil().getNombre());
+					}
+				});
+				tvPerfiles.getColumns().addAll(idColum, descripcionColum);
+				tvPerfiles.setItems(datos);
 			}
 		}catch(Exception e) {
 			e.printStackTrace();
@@ -244,28 +272,54 @@ public class SeguridadUsuarioC {
 				estado = "A";
 			else
 				estado = "I";
-			SegUsuario usuario = new SegUsuario();
-			usuario.setEstado(estado);
-			usuario.setSegPerfil(cboPerfil.getSelectionModel().getSelectedItem());
-			usuario.setCedula(txtCedula.getText());
-			usuario.setNombre(txtNombres.getText());
-			usuario.setApellido(txtApellidos.getText());
-			usuario.setDireccion(txtDireccion.getText());
-			usuario.setTelefono(txtTelefono.getText());
-			usuario.setCargo(txtCargo.getText());
-			usuario.setUsuario(encriptado.Encriptar(txtUsuario.getText()));
-			usuario.setClave(encriptado.Encriptar(txtClave.getText()));
-			usuario.setFoto(helper.encodeFileToBase64Binary(ivFoto.getImage()).getBytes());
+			
+			if(usuarioSeleccionado == null)
+				usuarioSeleccionado = new SegUsuario();
+			usuarioSeleccionado.setEstado(estado);
+			//usuario.setSegPerfil(cboPerfil.getSelectionModel().getSelectedItem());
+			usuarioSeleccionado.setCedula(txtCedula.getText());
+			usuarioSeleccionado.setNombre(txtNombres.getText());
+			usuarioSeleccionado.setApellido(txtApellidos.getText());
+			usuarioSeleccionado.setDireccion(txtDireccion.getText());
+			usuarioSeleccionado.setTelefono(txtTelefono.getText());
+			usuarioSeleccionado.setCargo(txtCargo.getText());
+			usuarioSeleccionado.setUsuario(encriptado.Encriptar(txtUsuario.getText()));
+			usuarioSeleccionado.setClave(encriptado.Encriptar(txtClave.getText()));
+			usuarioSeleccionado.setFoto(helper.encodeFileToBase64Binary(ivFoto.getImage()).getBytes());
+			//quitar los eliminados
+			if(listaEliminar.size() > 0) {//tiene elementos eliminados
+				for(SegUsuarioPerfil perfiles : listaEliminar) {
+					for(int i = 0 ; i < usuarioSeleccionado.getSegUsuarioPerfils().size() ; i++) {
+						if(perfiles.getIdUsuarioPerfil() != null)//pregunto si el id esta en nulo.. xq tbn se pueden eliminar elementos sin id
+							if(perfiles.getIdUsuarioPerfil() == usuarioSeleccionado.getSegUsuarioPerfils().get(i).getIdUsuarioPerfil())
+								usuarioSeleccionado.getSegUsuarioPerfils().get(i).setEstado(Constantes.ESTADO_INACTIVO);
+					}	
+				}
+			}
+			//agregar los nuevos
+			for(SegUsuarioPerfil usuPer : tvPerfiles.getItems()) {
+				if(usuPer.getIdUsuarioPerfil() == null) {//si es nulo es una nueva asignacion de perfil
+					usuPer.setEstado(Constantes.ESTADO_ACTIVO);
+					if(usuarioSeleccionado.getSegUsuarioPerfils() != null) {
+						usuPer.setSegUsuario(usuarioSeleccionado);
+						usuarioSeleccionado.getSegUsuarioPerfils().add(usuPer);
+					}else {
+						usuPer.setSegUsuario(usuarioSeleccionado);
+						usuarioSeleccionado.getSegUsuarioPerfils().add(usuPer);
+					}
+				}
+			}
+			
 			Optional<ButtonType> result = helper.mostrarAlertaConfirmacion("Desea Grabar los Datos?",Context.getInstance().getStage());
 			if(result.get() == ButtonType.OK){
-				usuario.setEstado(estado);
+				usuarioSeleccionado.setEstado(estado);
 				segUsuarioDAO.getEntityManager().getTransaction().begin();
 				if(txtCodigo.getText().equals("0")) {//inserta
-					usuario.setIdUsuario(null);
-					segUsuarioDAO.getEntityManager().persist(usuario);
+					usuarioSeleccionado.setIdUsuario(null);
+					segUsuarioDAO.getEntityManager().persist(usuarioSeleccionado);
 				}else {//modifica
-					usuario.setIdUsuario(Integer.parseInt(txtCodigo.getText()));
-					segUsuarioDAO.getEntityManager().merge(usuario);
+					usuarioSeleccionado.setIdUsuario(Integer.parseInt(txtCodigo.getText()));
+					segUsuarioDAO.getEntityManager().merge(usuarioSeleccionado);
 				}
 				segUsuarioDAO.getEntityManager().getTransaction().commit();
 				helper.mostrarAlertaInformacion("Datos Grabados Correctamente", Context.getInstance().getStage());
@@ -305,11 +359,6 @@ public class SeguridadUsuarioC {
 				txtClave.requestFocus();
 				return false;	
 			}
-			if(cboPerfil.getValue() == null) {
-				helper.mostrarAlertaAdvertencia("Debe Seleccionar un perfil", Context.getInstance().getStage());
-				cboPerfil.requestFocus();
-				return false;	
-			}
 			if(validarUsuario() == true) {
 				helper.mostrarAlertaAdvertencia("El usuario ya existe!!", Context.getInstance().getStage());
 				txtUsuario.requestFocus();
@@ -341,6 +390,8 @@ public class SeguridadUsuarioC {
 	}
 
 	void limpiar() {
+		usuarioSeleccionado = null;
+		listaEliminar.clear();
 		txtCodigo.setText("0");
 		txtCodigo.setEditable(false);
 		txtCedula.setText("");
@@ -355,6 +406,8 @@ public class SeguridadUsuarioC {
 		Image img = new Image("/usuario.jpg");
 		ivFoto.setImage(img);
 		txtCedula.requestFocus();
+		tvPerfiles.getItems().clear();
+		tvPerfiles.getColumns().clear();
 	}
 
 	public void buscar() {
@@ -370,8 +423,12 @@ public class SeguridadUsuarioC {
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	void llenarDatos(SegUsuario datoSeleccionado){
 		try {
+			usuarioSeleccionado = datoSeleccionado;
+			listaEliminar.clear();
+			
 			txtCodigo.setText(String.valueOf(datoSeleccionado.getIdUsuario()));
 			if(datoSeleccionado.getCedula() == null)
 				txtCedula.setText("");
@@ -388,12 +445,12 @@ public class SeguridadUsuarioC {
 			else
 				txtApellidos.setText(datoSeleccionado.getApellido());
 
-			if(datoSeleccionado.getEstado().equals("A")) 
+			if(datoSeleccionado.getEstado().equals(Constantes.ESTADO_ACTIVO)) 
 				chkEstado.setSelected(true);
 			else
 				chkEstado.setSelected(false);
 
-			cboPerfil.getSelectionModel().select(datoSeleccionado.getSegPerfil());;
+			//cboPerfil.getSelectionModel().select(datoSeleccionado.getSegPerfil());;
 
 			if(datoSeleccionado.getCargo() == null)
 				txtCargo.setText("");
@@ -420,6 +477,37 @@ public class SeguridadUsuarioC {
 				Image img = new Image("/usuario.jpg");
 				ivFoto.setImage(img);
 			}
+			//recuperar los perfiles del usuario en la tabla
+			tvPerfiles.getItems().clear();
+			tvPerfiles.getColumns().clear();
+			ObservableList<SegUsuarioPerfil> datos = FXCollections.observableArrayList();
+			System.out.println(datoSeleccionado.getSegUsuarioPerfils().size());
+			for(SegUsuarioPerfil perfil : datoSeleccionado.getSegUsuarioPerfils()) {
+				if(perfil.getEstado().equals(Constantes.ESTADO_ACTIVO))
+					datos.add(perfil);
+			}
+				
+			//llenar los datos en la tabla
+			TableColumn<SegUsuarioPerfil, String> idColum = new TableColumn<>("Código");
+			idColum.setMinWidth(10);
+			idColum.setPrefWidth(70);
+			idColum.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<SegUsuarioPerfil,String>, ObservableValue<String>>() {
+				@Override
+				public ObservableValue<String> call(CellDataFeatures<SegUsuarioPerfil, String> param) {
+					return new SimpleObjectProperty<String>(String.valueOf(param.getValue().getSegPerfil().getIdPerfil()));
+				}
+			});
+			TableColumn<SegUsuarioPerfil, String> descripcionColum = new TableColumn<>("Descripción");
+			descripcionColum.setMinWidth(10);
+			descripcionColum.setPrefWidth(150);
+			descripcionColum.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<SegUsuarioPerfil,String>, ObservableValue<String>>() {
+				@Override
+				public ObservableValue<String> call(CellDataFeatures<SegUsuarioPerfil, String> param) {
+					return new SimpleObjectProperty<String>(param.getValue().getSegPerfil().getNombre());
+				}
+			});
+			tvPerfiles.getColumns().addAll(idColum, descripcionColum);
+			tvPerfiles.setItems(datos);
 		}catch(Exception ex) {
 			System.out.println(ex.getMessage());
 		}
@@ -446,19 +534,6 @@ public class SeguridadUsuarioC {
 				ivFoto.setImage(image);
 			}
 		}catch(Exception ex) {
-			System.out.println(ex.getMessage());
-		}
-	}
-	private void llenarComboPerfil(){
-		try{
-			cboPerfil.setPromptText("Seleccione Perfil");
-			List<SegPerfil> listaPerfiles;
-			listaPerfiles = perfilDAO.getListaPerfil();
-			ObservableList<SegPerfil> datos = FXCollections.observableArrayList();
-
-			datos.addAll(listaPerfiles);
-			cboPerfil.setItems(datos);
-		}catch(Exception ex){
 			System.out.println(ex.getMessage());
 		}
 	}
@@ -498,5 +573,69 @@ public class SeguridadUsuarioC {
 		}else{
 			return false;
 		}        
+	}
+	public void agregarPerfil() {
+		try {
+			Context.getInstance().setListaPerfiles(tvPerfiles.getItems());
+			helper.abrirPantallaModal("/seguridad/SeguridadListaPerfil.fxml","Listado de perfiles", Context.getInstance().getStage());
+			if (Context.getInstance().getPerfilSeleccionado() != null) {
+				SegPerfil perfilAgregar = Context.getInstance().getPerfilSeleccionado();
+				agregarPerfil(perfilAgregar);
+				Context.getInstance().setPerfilSeleccionado(null);
+				
+			}
+			Context.getInstance().setListaPerfiles(null);
+		}catch(Exception ex) {
+			System.out.println(ex.getMessage());
+		}
+	}
+	@SuppressWarnings("unchecked")
+	private void agregarPerfil(SegPerfil perfilAgregar) {
+		try {
+			ObservableList<SegUsuarioPerfil> datos = FXCollections.observableArrayList();
+			SegUsuarioPerfil agg = new SegUsuarioPerfil();
+			agg.setSegPerfil(perfilAgregar);
+			datos.setAll(tvPerfiles.getItems());
+			datos.add(agg);
+
+			tvPerfiles.getItems().clear();
+			tvPerfiles.getColumns().clear();
+
+			//llenar los datos en la tabla
+			TableColumn<SegUsuarioPerfil, String> idColum = new TableColumn<>("Código");
+			idColum.setMinWidth(10);
+			idColum.setPrefWidth(70);
+			idColum.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<SegUsuarioPerfil,String>, ObservableValue<String>>() {
+				@Override
+				public ObservableValue<String> call(CellDataFeatures<SegUsuarioPerfil, String> param) {
+					return new SimpleObjectProperty<String>(String.valueOf(param.getValue().getSegPerfil().getIdPerfil()));
+				}
+			});
+			TableColumn<SegUsuarioPerfil, String> descripcionColum = new TableColumn<>("Descripción");
+			descripcionColum.setMinWidth(10);
+			descripcionColum.setPrefWidth(150);
+			descripcionColum.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<SegUsuarioPerfil,String>, ObservableValue<String>>() {
+				@Override
+				public ObservableValue<String> call(CellDataFeatures<SegUsuarioPerfil, String> param) {
+					return new SimpleObjectProperty<String>(param.getValue().getSegPerfil().getNombre());
+				}
+			});
+			tvPerfiles.getColumns().addAll(idColum, descripcionColum);
+			tvPerfiles.setItems(datos);
+		}catch(Exception ex) {
+			System.out.println(ex.getMessage());
+		}
+	}
+	List<SegUsuarioPerfil> listaEliminar = new ArrayList<SegUsuarioPerfil>();
+	public void quitarPerfil() {
+		try {
+			if(tvPerfiles.getSelectionModel().getSelectedItem() != null) {
+				SegUsuarioPerfil remove = tvPerfiles.getSelectionModel().getSelectedItem();
+				listaEliminar.add(remove);
+				tvPerfiles.getItems().remove(remove);
+			}
+		}catch(Exception ex) {
+			System.out.println(ex.getMessage());
+		}
 	}
 }

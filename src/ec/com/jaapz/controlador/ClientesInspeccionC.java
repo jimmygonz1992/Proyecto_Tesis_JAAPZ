@@ -539,20 +539,11 @@ public class ClientesInspeccionC {
 			apellidosColum.setMinWidth(10);
 			apellidosColum.setPrefWidth(200);
 			apellidosColum.setCellValueFactory(new PropertyValueFactory<SegUsuario, String>("apellidos"));
-			TableColumn<SegUsuario, String> perfilColum = new TableColumn<>("Género");
-			perfilColum.setMinWidth(10);
-			perfilColum.setPrefWidth(100);
-			perfilColum.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<SegUsuario,String>, ObservableValue<String>>() {
-				@Override
-				public ObservableValue<String> call(CellDataFeatures<SegUsuario, String> param) {
-					return new SimpleObjectProperty<String>(param.getValue().getSegPerfil().getNombre());
-				}
-			});
 			TableColumn<SegUsuario, String> fechColum = new TableColumn<>("Telefono");
 			fechColum.setMinWidth(10);
 			fechColum.setPrefWidth(100);
 			fechColum.setCellValueFactory(new PropertyValueFactory<SegUsuario, String>("telefono"));
-			tvPersonalAsig.getColumns().addAll(idColum, nombresColum,apellidosColum,perfilColum,fechColum);
+			tvPersonalAsig.getColumns().addAll(idColum, nombresColum,apellidosColum,fechColum);
 			tvPersonalAsig.setItems(datos);
 		}catch(Exception ex){
 			System.out.println(ex.getMessage());

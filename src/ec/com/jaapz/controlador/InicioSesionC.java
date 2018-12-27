@@ -3,15 +3,20 @@ package ec.com.jaapz.controlador;
 import java.util.List;
 import java.util.Optional;
 
+import ec.com.jaapz.modelo.SegPerfil;
 import ec.com.jaapz.modelo.SegUsuario;
 import ec.com.jaapz.modelo.SegUsuarioDAO;
+import ec.com.jaapz.modelo.SegUsuarioPerfil;
 import ec.com.jaapz.util.Context;
 import ec.com.jaapz.util.ControllerHelper;
 import ec.com.jaapz.util.Encriptado;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
@@ -28,7 +33,11 @@ public class InicioSesionC {
 	@FXML private Button btnAceptar;
 	@FXML private TextField txtUsuario;
 	@FXML private PasswordField txtClave;
+	@FXML private ComboBox<SegPerfil> cboPerfil;
+	
 	ControllerHelper helper = new ControllerHelper();
+	SegUsuarioDAO usuarioDAO = new SegUsuarioDAO();
+	
 	Encriptado encriptado = new Encriptado();
 	private Stage stage;
 	@FXML private ImageView ivLogo;
@@ -39,15 +48,15 @@ public class InicioSesionC {
 	public void aceptar() throws Exception {
 		if(validarDatos() == false)
 			return;
-		SegUsuarioDAO usuarioDAO = new SegUsuarioDAO();
+		
 		List<SegUsuario> usuario;
 		usuario = usuarioDAO.getUsuario(encriptado.Encriptar(txtUsuario.getText()),encriptado.Encriptar(txtClave.getText()));
 		if(usuario.size() == 1){
 			Context.getInstance().setUsuariosC(usuario.get(0));
-			Context.getInstance().setPerfil(usuario.get(0).getSegPerfil().getNombre());
+			Context.getInstance().setPerfil(cboPerfil.getSelectionModel().getSelectedItem().getDescripcion());
 			Context.getInstance().setUsuario(encriptado.Desencriptar(usuario.get(0).getUsuario()));
 			Context.getInstance().setIdUsuario(usuario.get(0).getIdUsuario());
-			Context.getInstance().setIdPerfil(usuario.get(0).getSegPerfil().getIdPerfil());
+			Context.getInstance().setIdPerfil(cboPerfil.getSelectionModel().getSelectedItem().getIdPerfil());
 			helper.abrirPantallaPrincipal("Principal","/principal/Contenido.fxml",stage);
 		}
 		else{
@@ -63,6 +72,11 @@ public class InicioSesionC {
 		}
 		if(txtClave.getText().equals("")) {
 			helper.mostrarAlertaAdvertencia("Debe de Ingresar Clave", Context.getInstance().getStage());
+			txtClave.requestFocus();
+			return false;
+		}
+		if(cboPerfil.getSelectionModel().getSelectedIndex() == -1){
+			helper.mostrarAlertaAdvertencia("Debe seleccionar perfil", Context.getInstance().getStage());
 			txtClave.requestFocus();
 			return false;
 		}
@@ -95,7 +109,8 @@ public class InicioSesionC {
 			public void handle(KeyEvent event) {
 				if(event.getCode().equals(KeyCode.ENTER))
 					try {
-						aceptar();
+						cboPerfil.getItems().clear();
+						buscarPerfilUsuario();
 					} catch (Exception e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -116,5 +131,18 @@ public class InicioSesionC {
 		});
 		txtUsuario.setText("sa");
 		txtClave.setText("sa");
+	}
+	private void buscarPerfilUsuario() {
+		try {
+			ObservableList<SegPerfil> listaPerfil = FXCollections.observableArrayList();
+			List<SegUsuario> usuario = usuarioDAO.getUsuarioPerfil(encriptado.Encriptar(txtUsuario.getText()));
+			for(SegUsuarioPerfil per : usuario.get(0).getSegUsuarioPerfils()) {
+				if(per.getEstado().equals("A"))
+					listaPerfil.add(per.getSegPerfil());
+			}
+			cboPerfil.setItems(listaPerfil);
+		}catch(Exception ex) {
+			System.out.println(ex.getMessage());
+		}
 	}
 }

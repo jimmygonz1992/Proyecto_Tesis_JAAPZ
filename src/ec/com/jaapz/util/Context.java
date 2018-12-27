@@ -12,7 +12,9 @@ import ec.com.jaapz.modelo.LiquidacionOrden;
 import ec.com.jaapz.modelo.Medidor;
 import ec.com.jaapz.modelo.Planilla;
 import ec.com.jaapz.modelo.Rubro;
+import ec.com.jaapz.modelo.SegPerfil;
 import ec.com.jaapz.modelo.SegUsuario;
+import ec.com.jaapz.modelo.SegUsuarioPerfil;
 import ec.com.jaapz.modelo.SolInspeccionIn;
 import ec.com.jaapz.modelo.SolInspeccionRep;
 import javafx.stage.Stage;
@@ -44,6 +46,8 @@ public class Context {
 	private List<SolInspeccionIn> listaInspecciones;
 	private List<SolInspeccionRep> listaInspeccionesRep;
 	private List<Barrio> listaBarrios;
+	private List<SegUsuarioPerfil> listaPerfiles;
+	private SegPerfil perfilSeleccionado;
 	
 	private AperturaLectura apertura;
 	private SolInspeccionIn inspeccion;
@@ -226,5 +230,22 @@ public class Context {
 
 	public void setLiquidaciones(LiquidacionOrden liquidaciones) {
 		this.liquidaciones = liquidaciones;
+	}
+
+	public List<SegUsuarioPerfil> getListaPerfiles() {
+		return listaPerfiles;
+	}
+
+	public void setListaPerfiles(List<SegUsuarioPerfil> listaPerfiles) {
+		this.listaPerfiles = listaPerfiles;
+	}
+
+	public SegPerfil getPerfilSeleccionado() {
+		return perfilSeleccionado;
+	}
+
+	public void setPerfilSeleccionado(SegPerfil perfilSeleccionado) {
+		this.perfilSeleccionado = perfilSeleccionado;
 	}	
+	
 }
