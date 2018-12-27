@@ -118,16 +118,12 @@ public class RecaudacionesPlanillasEmitidasC {
 			totalColum.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<CuentaCliente, String>, ObservableValue<String>>() {
 				@Override
 				public ObservableValue<String> call(CellDataFeatures<CuentaCliente, String> param) {
-					String numPendiente = "";
 					int cont = 0;
-					List<Planilla> listPla = param.getValue().getPlanillas();
-					for(Planilla planilla : listPla) {
-						//if (planilla.getCancelado() == "PENDIENTE")
-						if(planilla.getCancelado().equals(Constantes.EST_FAC_PENDIENTE)); 
+					for(Planilla planilla : param.getValue().getPlanillas()) {
+						if(planilla.getCancelado().equals(Constantes.EST_FAC_PENDIENTE))
 							cont = cont + 1;
 					}
-					numPendiente = String.valueOf(cont);
-					return new SimpleObjectProperty<String>(numPendiente);
+					return new SimpleObjectProperty<String>(String.valueOf(cont));
 				}
 			});
 			

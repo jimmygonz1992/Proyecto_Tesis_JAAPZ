@@ -15,6 +15,14 @@ public class AperturaLecturaDAO extends ClaseDAO{
 		return resultado;
 	}
 	@SuppressWarnings("unchecked")
+	public List<AperturaLectura> getListaAperturasRealizadas(){
+		List<AperturaLectura> resultado = new ArrayList<AperturaLectura>();
+		Query query = getEntityManager().createNamedQuery("AperturaLectura.findAllRealizado");
+		query.setHint("javax.persistence.cache.storeMode", "REFRESH");
+		resultado = (List<AperturaLectura>) query.getResultList();
+		return resultado;
+	}
+	@SuppressWarnings("unchecked")
 	public List<AperturaLectura> getAperturaByAnio(Integer idAnio){
 		List<AperturaLectura> resultado = new ArrayList<AperturaLectura>();
 		Query query = getEntityManager().createNamedQuery("AperturaLectura.buscarAperturaIdAnio");

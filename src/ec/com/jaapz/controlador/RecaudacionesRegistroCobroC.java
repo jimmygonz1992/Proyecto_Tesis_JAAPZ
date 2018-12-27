@@ -360,7 +360,7 @@ public class RecaudacionesRegistroCobroC {
 
 				ObservableList<Planilla> planillas = FXCollections.observableArrayList();
 				for(Planilla pla : datoSeleccionado.getPlanillas()) {
-					if (pla.getCancelado() == Constantes.EST_FAC_PENDIENTE) {
+					if (pla.getCancelado().equals(Constantes.EST_FAC_PENDIENTE)) {
 						planillas.add(pla);
 					}
 				}
@@ -637,7 +637,12 @@ public class RecaudacionesRegistroCobroC {
 			descripcionColum.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<FacturaDetalle, String>, ObservableValue<String>>() {
 				@Override
 				public ObservableValue<String> call(CellDataFeatures<FacturaDetalle, String> param) {
-					return new SimpleObjectProperty<String>("Factura mes de: " + String.valueOf(param.getValue().getPlanilla().getAperturaLectura().getMe()));
+					String descripcion;
+					if(param.getValue().getPlanilla().getIdentInstalacion().equals("INS"))
+						descripcion = "Por instalacion de nuevo medidor";
+					else
+						descripcion = "Factura mes de: " + String.valueOf(param.getValue().getPlanilla().getAperturaLectura().getMe());
+					return new SimpleObjectProperty<String>(descripcion);
 				}
 			});
 
