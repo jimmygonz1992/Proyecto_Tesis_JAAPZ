@@ -450,7 +450,7 @@ public class SeguridadUsuarioC {
 			else
 				chkEstado.setSelected(false);
 
-			//cboPerfil.getSelectionModel().select(datoSeleccionado.getSegPerfil());;
+			//cboPerfil.getSelectionModel().select(datoSeleccionado.getSegPerfil());
 
 			if(datoSeleccionado.getCargo() == null)
 				txtCargo.setText("");

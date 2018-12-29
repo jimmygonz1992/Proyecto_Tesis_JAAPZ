@@ -13,4 +13,24 @@ public class MedidorDAO extends ClaseDAO{
 		resultado = (List<Medidor>) query.getResultList();
 		return resultado;
 	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Medidor> getRecuperaMedidor(String codigo){
+		List<Medidor> resultado = new ArrayList<Medidor>();
+		Query query = getEntityManager().createNamedQuery("Medidor.recuperaMedidor");
+		query.setHint("javax.persistence.cache.storeMode", "REFRESH");
+		query.setParameter("codigo", codigo);
+		resultado = (List<Medidor>) query.getResultList();
+		return resultado;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Medidor> getValidarCodigoMedidor(String codigo) {
+		List<Medidor> resultado; 
+		Query query = getEntityManager().createNamedQuery("Medidor.validarCodigo");
+		query.setHint("javax.persistence.cache.storeMode", "REFRESH");
+		query.setParameter("codigo", codigo);
+		resultado = (List<Medidor>) query.getResultList();
+		return resultado;
+	}
 }

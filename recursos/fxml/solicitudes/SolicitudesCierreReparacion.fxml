@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="630.0" prefWidth="725.0" stylesheets="/estilo.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ec.com.jaapz.controlador.SolicitudesCierreInspeccionC">
+<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="630.0" prefWidth="725.0" stylesheets="/estilo.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ec.com.jaapz.controlador.SolicitudesCierreReparacionC">
 	<children>
 		<GridPane layoutX="76.0" layoutY="36.0" minHeight="0.0" minWidth="0.0" prefHeight="347.0" prefWidth="570.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="5.0">
 			<columnConstraints>
@@ -45,7 +45,7 @@
 				<HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" style="-fx-border-color: #bbc8d0; -fx-border-width: 1px; -fx-background-radius: 6; -fx-max-height: 600; -fx-max-width: 1500; -fx-min-height: 10; -fx-min-width: 10" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="12">
 					<children>
 						<Button fx:id="btnGrabar" alignment="BOTTOM_CENTER" contentDisplay="TOP" graphicTextGap="0.0" mnemonicParsing="false" onAction="#grabar" prefHeight="49.0" prefWidth="72.0" styleClass="botonGrabar" text="Grabar" />
-						<Button fx:id="btnEliminar" alignment="BOTTOM_CENTER" contentDisplay="TOP" graphicTextGap="0.0" mnemonicParsing="false" onAction="#eliminar" prefHeight="49.0" prefWidth="72.0" styleClass="botonEliminar" text="Eliminar">
+						<Button fx:id="btnNuevo" alignment="BOTTOM_CENTER" contentDisplay="TOP" graphicTextGap="0.0" mnemonicParsing="false" onAction="#nuevo" prefHeight="49.0" prefWidth="72.0" styleClass="botonEliminar" text="Nuevo">
 							<HBox.margin>
 								<Insets left="20.0" />
 							</HBox.margin>
@@ -86,14 +86,13 @@
 									</rowConstraints>
 									<children>
 										<TextField fx:id="txtCodigo" />
-										<Button fx:id="btnBuscar" mnemonicParsing="false" onAction="#buscarOrden" text="?" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
+										<Button fx:id="btnBuscar" mnemonicParsing="false" onAction="#buscarSolicitudRep" text="?" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
 									</children>
 								</GridPane>
 								<Label text="Fecha:" GridPane.columnIndex="6" GridPane.halignment="CENTER">
                            <font>
                               <Font name="Arial Bold" size="12.0" />
                            </font></Label>
-								<TextField fx:id="txtFecha" maxWidth="150.0" minWidth="20.0" prefWidth="150.0" GridPane.columnIndex="7" />
 								<Label text="Ref. Domicilio:" GridPane.rowIndex="1">
                            <font>
                               <Font name="Arial Bold" size="12.0" />
@@ -117,6 +116,7 @@
                            </font>
                         </Label>
 								<TextField fx:id="txtLongitud" GridPane.columnIndex="4" GridPane.rowIndex="2" />
+                        <TextField fx:id="txtFecha" GridPane.columnIndex="7" />
 							</children>
 							<HBox.margin>
 								<Insets bottom="2.0" left="13.0" right="13.0" top="2.0" />
@@ -146,7 +146,7 @@
                               <Font name="Arial Bold" size="12.0" />
                            </font></Label>
 								<TextField fx:id="txtCedula" GridPane.columnIndex="1" />
-								<Label text="Teléfono:" GridPane.columnIndex="2" GridPane.halignment="CENTER">
+								<Label text="Telf. Cliente:" GridPane.columnIndex="2" GridPane.halignment="CENTER">
                            <font>
                               <Font name="Arial Bold" size="12.0" />
                            </font></Label>
@@ -156,11 +156,11 @@
                               <Font name="Arial Bold" size="12.0" />
                            </font></Label>
 								<TextField fx:id="txtNombres" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-								<Label text="Género:" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+								<Label text="Telf. Contacto:" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1">
                            <font>
                               <Font name="Arial Bold" size="12.0" />
                            </font></Label>
-								<TextField fx:id="txtGenero" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+								<TextField fx:id="txtContacto" GridPane.columnIndex="3" GridPane.rowIndex="1" />
 								<Label text="Dirección:" GridPane.rowIndex="2">
                            <font>
                               <Font name="Arial Bold" size="12.0" />
@@ -211,22 +211,17 @@
                <children>
                   <GridPane GridPane.columnIndex="1" GridPane.columnSpan="1" GridPane.rowIndex="1" GridPane.rowSpan="1" HBox.hgrow="ALWAYS">
                      <children>
-                        <TableView fx:id="tvDatosOrdenPrevia" GridPane.columnIndex="3" GridPane.columnSpan="2" GridPane.rowIndex="1" GridPane.rowSpan="3" />
+                        <TableView fx:id="tvDatosDetalle" GridPane.columnIndex="3" GridPane.columnSpan="2" GridPane.rowIndex="1" GridPane.rowSpan="3" />
                         <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="5" GridPane.rowSpan="4" GridPane.valignment="CENTER">
                            <children>
-                              <Button fx:id="btnAgregar" mnemonicParsing="false" onAction="#agregarPrecioUnitario" prefHeight="25.0" prefWidth="65.0" text="Agregar">
-                                 <VBox.margin>
-                                    <Insets bottom="20.0" />
-                                 </VBox.margin>
-                              </Button>
-                              <Button fx:id="btnQuitar" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#quitarPrecioUnitario" prefHeight="25.0" prefWidth="65.0" text="Quitar" />
+                              <Button fx:id="btnQuitar" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#quitarMaterial" prefHeight="25.0" prefWidth="65.0" text="Quitar" />
                            </children>
                         </VBox>
                         <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnSpan="2" GridPane.rowIndex="1" GridPane.rowSpan="3">
                            <children>
-                              <GridPane>
+                              <GridPane prefHeight="148.0" prefWidth="285.0">
                                  <children>
-                                    <Label text="Tipo Rubro:">
+                                    <Label text="Código:">
                                        <font>
                                           <Font name="Arial Bold" size="12.0" />
                                        </font>
@@ -236,42 +231,43 @@
                                           <Font name="Arial Bold" size="12.0" />
                                        </font>
                                     </Label>
-                                    <TextField fx:id="txtTipoRubro" GridPane.columnIndex="1" />
-                                    <Label text="Cantidad:" GridPane.rowIndex="2">
+                                    <TextField fx:id="txtCodigoMat" GridPane.columnIndex="1" />
+                                    <Label text="Cantidad:" GridPane.rowIndex="4">
                                        <font>
                                           <Font name="Arial Bold" size="12.0" />
                                        </font>
                                     </Label>
-                                    <Label text="Stock" GridPane.rowIndex="4">
+                                    <Label text="Stock:" GridPane.rowIndex="2">
                                        <font>
                                           <Font name="Arial Bold" size="12.0" />
                                        </font>
                                     </Label>
-                                    <TextField fx:id="txtStock" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                    <TextField fx:id="txtStock" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                                     <Button fx:id="btnBuscarRubro" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#buscarRubro" text="?" GridPane.columnIndex="2" GridPane.halignment="CENTER" />
-                                    <TextField fx:id="txtCantidad" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                                    <Label text="Precio U:" GridPane.rowIndex="3">
+                                    <TextField fx:id="txtCantidad" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                    <Label text="Precio:" GridPane.rowIndex="3">
                                        <font>
                                           <Font name="Arial Bold" size="12.0" />
                                        </font>
                                     </Label>
                                     <TextField fx:id="txtPrecio" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                                     <TextArea fx:id="txtDescripcionProd" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                    <Button fx:id="btnAgregar" mnemonicParsing="false" onAction="#agregarMaterial" prefHeight="25.0" prefWidth="65.0" text="Agregar" GridPane.columnIndex="2" GridPane.rowIndex="4" />
                                  </children>
                                  <columnConstraints>
                                     <ColumnConstraints hgrow="SOMETIMES" maxWidth="80.0" minWidth="70.0" prefWidth="76.0" />
-                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="153.0" minWidth="10.0" prefWidth="153.0" />
-                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="120.0" minWidth="10.0" prefWidth="27.0" />
+                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="153.0" minWidth="10.0" prefWidth="131.0" />
+                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="120.0" minWidth="10.0" prefWidth="59.0" />
                                     <ColumnConstraints />
                                     <ColumnConstraints />
                                     <ColumnConstraints />
                                     <ColumnConstraints />
                                  </columnConstraints>
                                  <rowConstraints>
-                                    <RowConstraints maxHeight="63.0" minHeight="9.0" prefHeight="39.0" vgrow="SOMETIMES" />
-                                    <RowConstraints maxHeight="93.0" minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
-                                    <RowConstraints maxHeight="52.0" minHeight="10.0" prefHeight="29.0" vgrow="SOMETIMES" />
-                                    <RowConstraints maxHeight="33.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints maxHeight="63.0" minHeight="9.0" prefHeight="29.0" vgrow="SOMETIMES" />
+                                    <RowConstraints maxHeight="93.0" minHeight="10.0" prefHeight="42.0" vgrow="SOMETIMES" />
+                                    <RowConstraints maxHeight="52.0" minHeight="10.0" prefHeight="27.0" vgrow="SOMETIMES" />
+                                    <RowConstraints maxHeight="33.0" minHeight="10.0" prefHeight="28.0" vgrow="SOMETIMES" />
                                     <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="27.0" vgrow="SOMETIMES" />
                                  </rowConstraints>
                                  <HBox.margin>
@@ -293,9 +289,9 @@
                      </children>
                      <columnConstraints>
                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="50.0" minWidth="50.0" prefWidth="50.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="226.0" minWidth="10.0" prefWidth="226.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="39.0" minWidth="0.0" prefWidth="9.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="227.0" minWidth="10.0" prefWidth="163.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="233.0" minWidth="10.0" prefWidth="233.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="39.0" minWidth="0.0" prefWidth="10.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="227.0" minWidth="10.0" prefWidth="167.0" />
                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="75.0" minWidth="75.0" prefWidth="75.0" />
                      </columnConstraints>
@@ -312,12 +308,12 @@
                <children>
                   <GridPane HBox.hgrow="ALWAYS">
                      <children>
-                        <Label alignment="TOP_LEFT" contentDisplay="TOP" text="Novedades de Inspección::" textAlignment="CENTER" wrapText="true">
+                        <Label alignment="TOP_LEFT" contentDisplay="TOP" text="Novedades de Inspección:" textAlignment="CENTER" wrapText="true">
                            <font>
                               <Font name="Arial Bold" size="12.0" />
                            </font>
                         </Label>
-                        <TextArea fx:id="txtNovedadesReportadas1" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" />
+                        <TextArea fx:id="txtNovedadesInspeccion" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" />
                      </children>
                      <columnConstraints>
                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="307.0" minWidth="10.0" prefWidth="105.0" />

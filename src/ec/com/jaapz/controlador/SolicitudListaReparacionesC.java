@@ -21,7 +21,7 @@ import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.Callback;
 
-public class SolicitudListaRepC {
+public class SolicitudListaReparacionesC {
 	@FXML TextField txtBuscar;
 	@FXML TableView<SolInspeccionRep> tvDatos;
 	
@@ -48,14 +48,14 @@ public class SolicitudListaRepC {
         });
 		
 		//solo letras mayusculas
-				txtBuscar.textProperty().addListener(new ChangeListener<String>() {
-					@Override
-					public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-						// TODO Auto-generated method stub
-						String cadena = txtBuscar.getText().toUpperCase();
-						txtBuscar.setText(cadena);
-					}
-				});
+		txtBuscar.textProperty().addListener(new ChangeListener<String>() {
+			@Override
+			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+				// TODO Auto-generated method stub
+				String cadena = txtBuscar.getText().toUpperCase();
+				txtBuscar.setText(cadena);
+			}
+		});
 	}
 	
 	public void buscarCliente() {

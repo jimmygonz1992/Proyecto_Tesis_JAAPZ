@@ -34,7 +34,7 @@
                   </Label>
                </children>
             </HBox>
-            <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="2">
+            <HBox prefHeight="100.0" prefWidth="200.0" style="-fx-border-color: #bbc8d0; -fx-border-width: 1px; -fx-background-radius: 6; -fx-max-height: 600; -fx-max-width: 1500; -fx-min-height: 10; -fx-min-width: 10" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="2">
                <children>
                   <GridPane HBox.hgrow="ALWAYS">
                     <columnConstraints>
@@ -45,6 +45,7 @@
                     </columnConstraints>
                     <rowConstraints>
                       <RowConstraints maxHeight="88.0" minHeight="10.0" prefHeight="44.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="88.0" minHeight="10.0" prefHeight="44.0" vgrow="SOMETIMES" />
                       <RowConstraints maxHeight="166.0" minHeight="10.0" prefHeight="46.0" vgrow="SOMETIMES" />
                         <RowConstraints maxHeight="166.0" minHeight="10.0" prefHeight="48.0" vgrow="SOMETIMES" />
                         <RowConstraints maxHeight="166.0" minHeight="10.0" prefHeight="45.0" vgrow="SOMETIMES" />
@@ -61,10 +62,18 @@
                         </HBox>
                         <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="2">
                            <children>
-                              <TextField fx:id="txtCodigo" />
+                              <TextField fx:id="txtCodigo" prefHeight="25.0" prefWidth="124.0" />
+                              <Button fx:id="btnBuscar" mnemonicParsing="false" onAction="#buscar" text="?">
+                                 <font>
+                                    <Font name="Arial Bold" size="12.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets left="5.0" />
+                                 </HBox.margin>
+                              </Button>
                            </children>
                         </HBox>
-                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                            <children>
                               <Label text="Marca:">
                                  <font>
@@ -73,7 +82,7 @@
                               </Label>
                            </children>
                         </HBox>
-                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
                            <children>
                               <Label text="Modelo:">
                                  <font>
@@ -82,7 +91,7 @@
                               </Label>
                            </children>
                         </HBox>
-                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
                            <children>
                               <Label text="Precio:">
                                  <font>
@@ -91,26 +100,41 @@
                               </Label>
                            </children>
                         </HBox>
-                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="2">
                            <children>
                               <TextField fx:id="txtMarca" />
                            </children>
                         </HBox>
-                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="2">
+                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="3">
                            <children>
                               <TextField fx:id="txtModelo" />
                            </children>
                         </HBox>
-                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="3">
+                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="4">
                            <children>
                               <TextField fx:id="txtPrecio" />
                            </children>
                         </HBox>
+                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                           <children>
+                              <Label text="Estado Medidor:">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </HBox>
+                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                           <children>
+                              <ComboBox fx:id="cboEstadoMed" prefHeight="25.0" prefWidth="154.0" />
+                           </children>
+                        </HBox>
+                        <TextField fx:id="txtIdMedidor" GridPane.columnIndex="3" />
                      </children>
                   </GridPane>
                </children>
             </HBox>
-            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="4">
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" style="-fx-border-color: #bbc8d0; -fx-border-width: 1px; -fx-background-radius: 6; -fx-max-height: 600; -fx-max-width: 1500; -fx-min-height: 10; -fx-min-width: 10" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="4">
                <children>
                   <Button fx:id="btnGrabar" alignment="BOTTOM_CENTER" contentDisplay="TOP" graphicTextGap="0.0" maxHeight="50.0" minHeight="50.0" mnemonicParsing="false" onAction="#grabar" prefHeight="50.0" prefWidth="72.0" styleClass="botonGrabar" text="Grabar">
                      <font>
@@ -127,7 +151,6 @@
                   </Button>
                </children>
             </HBox>
-            <TextField fx:id="txtIdMedidor" GridPane.columnIndex="2" GridPane.rowIndex="3" />
          </children>
       </GridPane>
    </children>
