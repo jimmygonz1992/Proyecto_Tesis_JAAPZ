@@ -90,7 +90,6 @@ public class BodegaIngresoRubrosC {
 			usuarioLogueado = Context.getInstance().getUsuariosC();
 			txtUsuario.setText(encriptado.Desencriptar(String.valueOf(Context.getInstance().getUsuariosC().getUsuario())));
 			txtUsuario.setEditable(false);
-			txtCodigoMat.setEditable(false);
 			txtDescripcionMat.setEditable(false);
 			txtStockMat.setEditable(false);
 			//dtpFecha.setValue(LocalDate.now());
@@ -202,8 +201,62 @@ public class BodegaIngresoRubrosC {
 					txtDireccionPro.setText(cadena);
 				}
 			});
+			
+			//recuperar Material
+			txtCodigoMat.setOnKeyPressed(new EventHandler<KeyEvent>(){
+				@Override
+				public void handle(KeyEvent ke){
+					if (ke.getCode().equals(KeyCode.ENTER)){
+						if (validarProductoExiste() == false) {
+							helper.mostrarAlertaAdvertencia("Elemento no existente!", Context.getInstance().getStage());
+							txtCodigoMat.requestFocus();
+							txtCodigoMat.setText("");
+							txtDescripcionMat.setText("");
+							txtStockMat.setText("");
+							txtPrecioMat.setText("");
+						}else {
+							recuperarDatosMat(txtCodigoMat.getText());
+							txtCantidadMat.requestFocus();
+						}
+					}
+				}
+			});
 		}catch(Exception ex) {
 			System.out.println(ex.getMessage());
+		}
+	}
+	
+	//recupera datos del material
+		public void recuperarDatosMat(String codigo){
+			try{
+				List<Rubro> listaRubro = new ArrayList<Rubro>();
+				listaRubro = rubroDAO.getRecuperaRubro(codigo);
+				for(int i = 0 ; i < listaRubro.size() ; i ++) {
+					txtCodigoMat.setText(listaRubro.get(i).getCodigo());
+					txtDescripcionMat.setText(listaRubro.get(i).getDescripcion());
+					txtStockMat.setText(String.valueOf(listaRubro.get(i).getStock()));
+					txtPrecioMat.setText(String.valueOf(listaRubro.get(i).getPrecio()));
+						
+					rubroSeleccionado = listaRubro.get(i);
+				}
+				if (listaRubro.size() == 0)
+						rubroSeleccionado = new Rubro();
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
+	boolean validarProductoExiste() {
+		try {
+			List<Rubro> listaRubros;
+			listaRubros = rubroDAO.getRecuperaRubro(txtCodigoMat.getText());
+			if(listaRubros.size() != 0)
+				return true;
+			else
+				return false;
+		}catch(Exception ex) {
+			System.out.println(ex.getMessage());
+			return false;
 		}
 	}
 
@@ -768,7 +821,12 @@ public class BodegaIngresoRubrosC {
 
 	void llenarDatos(Rubro datoSeleccionado){
 		try {
-			txtCodigoMat.setText(String.valueOf(datoSeleccionado.getIdRubro()));
+			//txtCodigoMat.setText(String.valueOf(datoSeleccionado.getIdRubro()));
+			if(datoSeleccionado.getCodigo() == null)
+				txtCodigoMat.setText("");
+			else
+				txtCodigoMat.setText(datoSeleccionado.getCodigo());
+			
 			if(datoSeleccionado.getDescripcion() == null)
 				txtDescripcionMat.setText("");
 			else

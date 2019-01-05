@@ -192,6 +192,8 @@ public class SeguridadUsuarioC {
 		//txtCodigo.setVisible(false);
 		lbCodigo.setVisible(false);
 		chkEstado.setSelected(true);
+		txtCodigo.setEditable(false);
+		txtCodigo.setVisible(false);
 	}
 
 	@SuppressWarnings("unchecked")

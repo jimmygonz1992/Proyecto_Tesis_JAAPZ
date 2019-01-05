@@ -13,7 +13,7 @@ import java.util.List;
 @Table(name="seg_perfil")
 @NamedQueries({
 	@NamedQuery(name="SegPerfil.findAll", query="SELECT s FROM SegPerfil s WHERE s.estado = 'A'"),
-	@NamedQuery(name="SegPerfil.findAllPerfiles", query="SELECT s FROM SegPerfil s WHERE s.estado = 'A'"),
+	@NamedQuery(name="SegPerfil.findAllPerfiles", query="SELECT s FROM SegPerfil s WHERE s.estado = 'A' Order By s.idPerfil asc"),
 	@NamedQuery(name="SegPerfil.findPatron", query="SELECT s FROM SegPerfil s WHERE s.idPerfil = (:idPerfil)"),
 	@NamedQuery(name="SegPerfil.BuscarUltimoPerfil", query="SELECT s FROM SegPerfil s order by s.idPerfil desc")
 })

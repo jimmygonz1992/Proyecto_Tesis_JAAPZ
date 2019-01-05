@@ -1,14 +1,23 @@
 package ec.com.jaapz.controlador;
 
+import java.sql.Timestamp;
+import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
+import ec.com.jaapz.modelo.CuentaCliente;
+import ec.com.jaapz.modelo.Reparacion;
+import ec.com.jaapz.modelo.ReparacionDAO;
 import ec.com.jaapz.modelo.ReparacionDetalle;
 import ec.com.jaapz.modelo.Rubro;
 import ec.com.jaapz.modelo.RubroDAO;
 import ec.com.jaapz.modelo.SolInspeccionRep;
+import ec.com.jaapz.util.Constantes;
 import ec.com.jaapz.util.Context;
 import ec.com.jaapz.util.ControllerHelper;
+import ec.com.jaapz.util.Encriptado;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -16,6 +25,8 @@ import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
@@ -50,109 +61,137 @@ public class SolicitudesCierreReparacionC {
 	@FXML private TextField txtPrecio;
 	@FXML private TextField txtStock;
 	
+	@FXML private TextField txtUsuario;
+	@FXML private DatePicker dtpFecha;
+	
 	@FXML private Button btnAgregar;
 	@FXML private Button btnQuitar;
 	
 	@FXML private TextArea txtNovedadesInspeccion;
 	
 	@FXML TableView<ReparacionDetalle> tvDatosDetalle;
+	@FXML private TextField txtIdSolicRep;
+	@FXML private TextField txtIdCuenta;
+	@FXML private TextField txtSubtotal;
+	@FXML private TextField txtTotal;
+	
 	
 	ControllerHelper helper = new ControllerHelper();
 	SolInspeccionRep inspeccionRepSeleccionado = new SolInspeccionRep();
+	SolInspeccionRep inspeccionRepRecuperado;
+	CuentaCliente cuentaRecuperada = new CuentaCliente();
 	Rubro rubroSeleccionado = new Rubro();
 	RubroDAO rubroDao = new RubroDAO();
+	ReparacionDAO reparacionDao = new ReparacionDAO();
 	
 	public void initialize() {
-		txtCodigo.setEditable(false);
-		txtCodigoMedidor.setEditable(false);
-		txtFecha.setEditable(false);
-		txtReferencia.setEditable(false);
-		txtLatitud.setEditable(false);
-		txtLongitud.setEditable(false);
-		txtCedula.setEditable(false);
-		txtTelefono.setEditable(false);
-		txtContacto.setEditable(false);
-		txtNombres.setEditable(false);
-		txtDireccion.setEditable(false);
-		txtNovedadesReportadas.setEditable(false);
-		txtDescripcionProd.setEditable(false);
-		txtStock.setEditable(false);
-		txtPrecio.setEditable(false);
-		
-		//recuperar Material
-		txtCodigoMat.setOnKeyPressed(new EventHandler<KeyEvent>(){
-			@Override
-			public void handle(KeyEvent ke){
-				if (ke.getCode().equals(KeyCode.ENTER)){
-					if (validarProductoExiste() == false) {
-						helper.mostrarAlertaAdvertencia("Elemento no existente!", Context.getInstance().getStage());
-						txtCodigoMat.requestFocus();
-						txtCodigoMat.setText("");
-						txtDescripcionProd.setText("");
-						txtStock.setText("");
-						txtPrecio.setText("");
-					}else {
-						recuperarDatos(txtCodigoMat.getText());
-						txtCantidad.requestFocus();
+		try {
+			txtCodigo.setEditable(false);
+			txtCodigoMedidor.setEditable(false);
+			txtFecha.setEditable(false);
+			txtReferencia.setEditable(false);
+			txtLatitud.setEditable(false);
+			txtLongitud.setEditable(false);
+			txtCedula.setEditable(false);
+			txtTelefono.setEditable(false);
+			txtContacto.setEditable(false);
+			txtNombres.setEditable(false);
+			txtDireccion.setEditable(false);
+			txtNovedadesReportadas.setEditable(false);
+			txtDescripcionProd.setEditable(false);
+			txtStock.setEditable(false);
+			txtPrecio.setEditable(false);
+			txtIdSolicRep.setVisible(false);
+			txtIdCuenta.setVisible(false);
+			txtIdSolicRep.setEditable(false);
+			txtIdCuenta.setEditable(false);
+			txtUsuario.setEditable(false);
+			txtSubtotal.setEditable(false);
+			txtTotal.setEditable(false);
+			txtSubtotal.setVisible(false);
+			txtTotal.setVisible(false);
+			
+			Encriptado encriptado = new Encriptado();
+			txtUsuario.setText(encriptado.Desencriptar(String.valueOf(Context.getInstance().getUsuariosC().getUsuario())));
+			
+			//recuperar Material
+			txtCodigoMat.setOnKeyPressed(new EventHandler<KeyEvent>(){
+				@Override
+				public void handle(KeyEvent ke){
+					if (ke.getCode().equals(KeyCode.ENTER)){
+						if (validarProductoExiste() == false) {
+							helper.mostrarAlertaAdvertencia("Elemento no existente!", Context.getInstance().getStage());
+							txtCodigoMat.requestFocus();
+							txtCodigoMat.setText("");
+							txtDescripcionProd.setText("");
+							txtStock.setText("");
+							txtPrecio.setText("");
+						}else {
+							recuperarDatos(txtCodigoMat.getText());
+							txtCantidad.requestFocus();
+						}
 					}
 				}
-			}
-		});
-		
-		//validar solo numeros
-		txtCantidad.textProperty().addListener(new ChangeListener<String>() {
-			@Override
-			public void changed(ObservableValue<? extends String> observable, String oldValue, 
-					String newValue) {
-				if (newValue.matches("\\d*")) {
-					//int value = Integer.parseInt(newValue);
-				} else {
-					txtCantidad.setText(oldValue);
+			});
+			
+			//validar solo numeros
+			txtCantidad.textProperty().addListener(new ChangeListener<String>() {
+				@Override
+				public void changed(ObservableValue<? extends String> observable, String oldValue, 
+						String newValue) {
+					if (newValue.matches("\\d*")) {
+						//int value = Integer.parseInt(newValue);
+					} else {
+						txtCantidad.setText(oldValue);
+					}
 				}
-			}
-		});
-		
-		//solo letras mayusculas
-		txtNovedadesInspeccion.textProperty().addListener(new ChangeListener<String>() {
-			@Override
-			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-				// TODO Auto-generated method stub
-				String cadena = txtNovedadesInspeccion.getText().toUpperCase();
-				txtNovedadesInspeccion.setText(cadena);
-			}
-		});
-		
-		//para anadir a la grilla con enter
-		txtCantidad.setOnKeyPressed(new EventHandler<KeyEvent>(){
-			@Override
-			public void handle(KeyEvent ke){
-				if (ke.getCode().equals(KeyCode.ENTER)){
-					agregarMaterial();
-					btnBuscarRubro.requestFocus();
+			});
+			
+			//solo letras mayusculas
+			txtNovedadesInspeccion.textProperty().addListener(new ChangeListener<String>() {
+				@Override
+				public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+					// TODO Auto-generated method stub
+					String cadena = txtNovedadesInspeccion.getText().toUpperCase();
+					txtNovedadesInspeccion.setText(cadena);
 				}
-			}
-		});
+			});
+			
+			//para anadir a la grilla con enter
+			txtCantidad.setOnKeyPressed(new EventHandler<KeyEvent>(){
+				@Override
+				public void handle(KeyEvent ke){
+					if (ke.getCode().equals(KeyCode.ENTER)){
+						agregarMaterial();
+						btnBuscarRubro.requestFocus();
+					}
+				}
+			});
+			
+		}catch(Exception ex) {
+			System.out.println(ex.getMessage());
+		}
 	}
 	
-	//recupera datos del proveedor
-		public void recuperarDatos(String codigo){
-			try{
-				List<Rubro> listaRubro = new ArrayList<Rubro>();
-				listaRubro = rubroDao.getRecuperaRubro(codigo);
-				for(int i = 0 ; i < listaRubro.size() ; i ++) {
-					txtCodigoMat.setText(listaRubro.get(i).getCodigo());
-					txtDescripcionProd.setText(listaRubro.get(i).getDescripcion());
-					txtStock.setText(String.valueOf(listaRubro.get(i).getStock()));
-					txtPrecio.setText(String.valueOf(listaRubro.get(i).getPrecio()));
+	//recupera datos del material
+	public void recuperarDatos(String codigo){
+		try{
+			List<Rubro> listaRubro = new ArrayList<Rubro>();
+			listaRubro = rubroDao.getRecuperaRubro(codigo);
+			for(int i = 0 ; i < listaRubro.size() ; i ++) {
+				txtCodigoMat.setText(listaRubro.get(i).getCodigo());
+				txtDescripcionProd.setText(listaRubro.get(i).getDescripcion());
+				txtStock.setText(String.valueOf(listaRubro.get(i).getStock()));
+				txtPrecio.setText(String.valueOf(listaRubro.get(i).getPrecio()));
 					
-					rubroSeleccionado = listaRubro.get(i);
-				}
-				if (listaRubro.size() == 0)
-					rubroSeleccionado = new Rubro();
-			}catch(Exception e) {
-				e.printStackTrace();
+				rubroSeleccionado = listaRubro.get(i);
 			}
+			if (listaRubro.size() == 0)
+					rubroSeleccionado = new Rubro();
+		}catch(Exception e) {
+			e.printStackTrace();
 		}
+	}
 	
 	boolean validarProductoExiste() {
 		try {
@@ -169,11 +208,130 @@ public class SolicitudesCierreReparacionC {
 	}
 	
 	public void nuevo() {
-		
+		txtCodigo.setText("");
+		txtCodigoMedidor.setText("");
+		txtFecha.setText("");
+		txtReferencia.setText("");
+		txtLatitud.setText("");
+		txtLongitud.setText("");
+		txtCedula.setText("");
+		txtNombres.setText("");
+		txtTelefono.setText("");
+		txtContacto.setText("");
+		txtDireccion.setText("");
+		txtSubtotal.setText("");
+		txtTotal.setText("");
+		txtNovedadesReportadas.setText("");
+		dtpFecha.setValue(null);
+		txtNovedadesInspeccion.setText("");
+		tvDatosDetalle.getColumns().clear();
+		tvDatosDetalle.getItems().clear();
 	}
 	
 	public void grabar() {
-		
+		try {
+			if(validarDatos() == false)
+				return;
+			inspeccionRepSeleccionado.setIdSolicitudRep(Integer.parseInt(txtIdSolicRep.getText()));
+			cuentaRecuperada.setIdCuenta(inspeccionRepSeleccionado.getCuentaCliente().getIdCuenta());
+			Optional<ButtonType> result = helper.mostrarAlertaConfirmacion("Desea Grabar los Datos?",Context.getInstance().getStage());
+			if(result.get() == ButtonType.OK){
+				Reparacion reparacion = new Reparacion();
+				
+				String estado = "A";
+				reparacion.setIdReparacion(null);
+				Date date = Date.from(dtpFecha.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
+				Timestamp fecha = new Timestamp(date.getTime());
+				
+				reparacion.setFechaReparacion(fecha);
+				reparacion.setCuentaCliente(cuentaRecuperada);
+				reparacion.setSolInspeccionRep(inspeccionRepSeleccionado);
+				reparacion.setEstado(estado);
+				reparacion.setEstadoValor(Constantes.EST_FAC_PENDIENTE);
+				reparacion.setEstadoEntrega(Constantes.EST_FAC_PENDIENTE);
+				reparacion.setObservcion(txtNovedadesInspeccion.getText());
+				reparacion.setUsuarioCrea(Context.getInstance().getUsuariosC().getIdUsuario());
+				reparacion.setSubtotal(Double.parseDouble(txtSubtotal.getText()));
+				reparacion.setTotal(Double.parseDouble(txtTotal.getText()));
+				inspeccionRepSeleccionado.setEstadoInspecRep(Constantes.EST_INSPECCION_REALIZADO);
+
+				///////////////////////////////////////////////////////////////////////////////////////////////////
+				////   falta de considerar si se hace o no descuento
+				////  falta guardar hora, foto (no se si se vaya a ocupar) 
+				//////////////////////////////////////////////////////////////////////////////////////////////////////////
+				
+				List<ReparacionDetalle> listaAgregadaRubros = new ArrayList<ReparacionDetalle>();
+				
+				for(ReparacionDetalle det : tvDatosDetalle.getItems()) {
+					det.setIdReparacionDet(null);
+					det.setEstado("A");
+					det.setReparacion(reparacion);
+					det.setUsuarioCrea(Context.getInstance().getUsuariosC().getIdUsuario());
+					det.setFechaCrea(fecha);
+					
+					listaAgregadaRubros.add(det);
+				}
+				
+				reparacion.setReparacionDetalles(listaAgregadaRubros);
+				reparacionDao.getEntityManager().getTransaction().begin();
+				reparacionDao.getEntityManager().persist(reparacion);
+				reparacionDao.getEntityManager().merge(inspeccionRepSeleccionado);
+				reparacionDao.getEntityManager().getTransaction().commit();
+					
+				helper.mostrarAlertaInformacion("Datos Grabados Correctamente", Context.getInstance().getStage());
+				nuevo();
+			}
+		}catch(Exception ex) {
+			reparacionDao.getEntityManager().getTransaction().rollback();
+			helper.mostrarAlertaError("Error al grabar", Context.getInstance().getStage());
+			System.out.println(ex.getMessage());
+		}
+	}
+	
+	//para sumar el subtotal y total de los materiales q se van en una instalación
+	public void sumarDatos() {
+		try {
+			if (tvDatosDetalle.getItems().isEmpty()) {
+				txtSubtotal.setText("0.0");
+				txtTotal.setText("0.0");
+			}else {
+				double subtotal = 0;
+				for(int i=0; i<tvDatosDetalle.getItems().size(); i++) {
+					//DecimalFormat df = new DecimalFormat ("########.00");
+					Double valorSubt = new Double(tvDatosDetalle.getItems().get(i).getCantidad()*tvDatosDetalle.getItems().get(i).getPrecio());
+					subtotal += valorSubt;
+					txtSubtotal.setText(String.valueOf(Double.valueOf(subtotal)));
+					
+					//total si es q se considera descuento sino va normal
+					//double total = Double.valueOf(txtSubtotal.getText()) - Double.valueOf(txtDescuento.getText());
+					double total = Double.valueOf(txtSubtotal.getText());
+					txtTotal.setText(String.valueOf(Double.valueOf(total)));
+				}
+			}
+		}catch(Exception ex) {
+			System.out.println(ex.getMessage());
+		}
+	}
+	
+	boolean validarDatos() {
+		try {
+			if(dtpFecha.getValue().equals(null)) {
+				helper.mostrarAlertaAdvertencia("Escoja una fecha", Context.getInstance().getStage());
+				dtpFecha.requestFocus();
+				return false;
+			}
+
+			if(tvDatosDetalle.getItems().isEmpty()) {
+				helper.mostrarAlertaAdvertencia("Ingresar Rubros", Context.getInstance().getStage());
+				tvDatosDetalle.requestFocus();
+				return false;
+			}
+			
+			return true;
+		}catch(Exception ex) {
+			System.out.println(ex.getMessage());
+			return false;
+		}
 	}
 	
 	public void buscarSolicitudRep() {
@@ -194,6 +352,8 @@ public class SolicitudesCierreReparacionC {
 			txtCodigo.setText(String.valueOf(inspRep.getIdSolicitudRep()));
 			txtCodigoMedidor.setText(inspRep.getCuentaCliente().getMedidor().getCodigo());
 			txtFecha.setText(String.valueOf(inspRep.getFecha()));
+			txtIdCuenta.setText(String.valueOf(inspRep.getCuentaCliente().getIdCuenta()));
+			txtIdSolicRep.setText(String.valueOf(inspRep.getIdSolicitudRep()));
 			//falta Campo Referencia
 			//txtReferencia.setText(inspRep.getReferencia);
 			txtLatitud.setText(inspRep.getCuentaCliente().getLatitud());
@@ -305,7 +465,7 @@ public class SolicitudesCierreReparacionC {
 			tvDatosDetalle.getColumns().addAll(descipcionColum, cantidadColum, precioColum, totalColum);
 			tvDatosDetalle.setItems(datos);
 
-			//sumarDatos();
+			sumarDatos();
 
 			rubroSeleccionado = null;
 			limpiarTextosProd();
@@ -315,7 +475,7 @@ public class SolicitudesCierreReparacionC {
 	}
 	
 	void limpiarTextosProd() {
-		txtCodigo.setText("");
+		txtCodigoMat.setText("");
 		txtDescripcionProd.setText("");
 		txtCantidad.setText("");
 		txtPrecio.setText("");
@@ -326,7 +486,7 @@ public class SolicitudesCierreReparacionC {
 		try {
 			ReparacionDetalle detalleSeleccionado = tvDatosDetalle.getSelectionModel().getSelectedItem();
 			tvDatosDetalle.getItems().remove(detalleSeleccionado);
-			//sumarDatos();
+			sumarDatos();
 		}catch(Exception ex) {
 			System.out.println(ex.getMessage());
 		}

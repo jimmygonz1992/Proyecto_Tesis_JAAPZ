@@ -12,7 +12,7 @@ import java.util.List;
 @Entity
 @Table(name="seg_usuario")
 @NamedQueries({
-	@NamedQuery(name="SegUsuario.findAll", query="SELECT u FROM SegUsuario u"),
+	@NamedQuery(name="SegUsuario.findAll", query="SELECT u FROM SegUsuario u Order By u.idUsuario asc"),
 	@NamedQuery(name="SegUsuario.buscarPatron", query="SELECT u FROM SegUsuario u "
 			+ "WHERE u.usuario = (:usuario) AND u.clave = (:clave) and u.estado = 'A'"),
 	@NamedQuery(name="SegUsuario.buscarUsuario", query="SELECT u FROM SegUsuario u "
