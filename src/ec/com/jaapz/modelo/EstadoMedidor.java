@@ -11,7 +11,7 @@ import java.util.List;
  */
 @Entity
 @Table(name="estado_medidor")
-@NamedQuery(name="EstadoMedidor.findAll", query="SELECT e FROM EstadoMedidor e")
+@NamedQuery(name="EstadoMedidor.findAll", query="SELECT e FROM EstadoMedidor e where e.estado = 'A'")
 public class EstadoMedidor implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -77,4 +77,8 @@ public class EstadoMedidor implements Serializable {
 		return medidor;
 	}
 
+	@Override
+	public String toString() {
+		return this.descripcion;
+	}
 }

@@ -10,7 +10,14 @@ import java.util.List;
  * 
  */
 @Entity
-@NamedQuery(name="Medidor.medidoresDisponibles", query="SELECT m FROM Medidor m where m.estado = 'A'")
+@Table(name="medidor")
+@NamedQueries({
+	@NamedQuery(name="Medidor.medidoresDisponibles", query="SELECT m FROM Medidor m where m.estado = 'A'"),
+	@NamedQuery(name="Medidor.recuperaMedidor", query="SELECT m FROM Medidor m WHERE m.codigo = (:codigo) and m.estado = 'A'"),
+	@NamedQuery(name="Medidor.validarCodigo", query="SELECT m FROM Medidor m "
+			+ "WHERE m.codigo = (:codigo) and m.estado = 'A'")
+})
+
 public class Medidor implements Serializable {
 	private static final long serialVersionUID = 1L;
 

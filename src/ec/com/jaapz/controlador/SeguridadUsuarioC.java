@@ -191,6 +191,8 @@ public class SeguridadUsuarioC {
 		//txtCodigo.setVisible(false);
 		lbCodigo.setVisible(false);
 		chkEstado.setSelected(true);
+		txtCodigo.setEditable(false);
+		txtCodigo.setVisible(false);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -448,7 +450,7 @@ public class SeguridadUsuarioC {
 			else
 				chkEstado.setSelected(false);
 
-			//cboPerfil.getSelectionModel().select(datoSeleccionado.getSegPerfil());;
+			//cboPerfil.getSelectionModel().select(datoSeleccionado.getSegPerfil());
 
 			if(datoSeleccionado.getCargo() == null)
 				txtCargo.setText("");

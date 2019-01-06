@@ -45,4 +45,15 @@ public class RubroDAO extends ClaseDAO {
 		resultado = (List<Rubro>) query.getResultList();
 		return resultado;
 	}
+	
+	//para validar rubro existente
+		@SuppressWarnings("unchecked")
+		public List<Rubro> getRecuperaRubro(String codigo){
+			List<Rubro> resultado = new ArrayList<Rubro>();
+			Query query = getEntityManager().createNamedQuery("Rubro.recuperaRubro");
+			query.setHint("javax.persistence.cache.storeMode", "REFRESH");
+			query.setParameter("codigo", codigo);
+			resultado = (List<Rubro>) query.getResultList();
+			return resultado;
+		}
 }

@@ -95,7 +95,7 @@ public class Context {
 	public void setUsuarios(SegUsuario usuarios) {
 		this.usuarios = usuarios;
 	}
-
+	
 	public int getIdUsuario() {
 		return idUsuario;
 	}
