@@ -11,7 +11,7 @@ import org.apache.commons.codec.binary.Base64;
 
 
 public class Encriptado {
-	public String Encriptar(String texto) {
+	public static String Encriptar(String texto) {
         String secretKey = "qualityinfosolutions"; //llave para encriptar datos
         String base64EncryptedString = "";
         try {
@@ -34,7 +34,7 @@ public class Encriptado {
         }
         return base64EncryptedString;
 	}
-	public String Desencriptar(String textoEncriptado) throws Exception {
+	public static String Desencriptar(String textoEncriptado) {
 		 
         String secretKey = "qualityinfosolutions"; //llave para desenciptar datos
         String base64EncryptedString = "";

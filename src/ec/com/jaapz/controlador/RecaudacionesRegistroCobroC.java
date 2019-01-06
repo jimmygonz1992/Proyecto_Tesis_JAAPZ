@@ -83,9 +83,8 @@ public class RecaudacionesRegistroCobroC {
 			Context.getInstance().setCuentaCliente(null);
 			noEditable();
 			dtpFecha.setValue(LocalDate.now());
-			Encriptado encriptado = new Encriptado();
 			usuarioLogueado = Context.getInstance().getUsuariosC();
-			txtUsuario.setText(encriptado.Desencriptar(String.valueOf(Context.getInstance().getUsuariosC().getUsuario())));
+			txtUsuario.setText(Encriptado.Desencriptar(String.valueOf(Context.getInstance().getUsuariosC().getUsuario())));
 
 			//solo numeros
 			txtIdCuenta.textProperty().addListener(new ChangeListener<String>() {

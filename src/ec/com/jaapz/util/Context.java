@@ -28,6 +28,8 @@ public class Context {
 	private int idUsuario;
 	private int idPerfil;
 	
+	private boolean mensajeEnviado;
+	
 	private Stage stage;
 	private Stage stageModal;
 	private SegUsuario usuarios;
@@ -246,6 +248,14 @@ public class Context {
 
 	public void setPerfilSeleccionado(SegPerfil perfilSeleccionado) {
 		this.perfilSeleccionado = perfilSeleccionado;
+	}
+
+	public boolean isMensajeEnviado() {
+		return mensajeEnviado;
+	}
+
+	public void setMensajeEnviado(boolean mensajeEnviado) {
+		this.mensajeEnviado = mensajeEnviado;
 	}	
 	
 }

@@ -6,6 +6,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.scene.layout.AnchorPane?>
+
 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="515.0" prefWidth="630.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ec.com.jaapz.controlador.SolicitudInstalacionC">
    <children>
       <GridPane minHeight="0.0" minWidth="0.0" prefHeight="347.0" prefWidth="570.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -20,7 +21,7 @@
                         <Label text="Nombres:" GridPane.rowIndex="1">
                            <font><Font name="System Bold Italic" size="12.0" /></font>
                         </Label>
-                        <Label text="Apellidos:" GridPane.rowIndex="2">
+                        <Label text="Apellidos:" GridPane.columnIndex="2" GridPane.rowIndex="1">
                            <font><Font name="System Bold Italic" size="12.0" /></font>
                         </Label>
                         <Label text="Cédula:" GridPane.halignment="LEFT">
@@ -47,8 +48,9 @@
                            </rowConstraints>
                         </GridPane>
                                 
-                        <TextField fx:id="txtNombres" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="1" />
-                        <TextField fx:id="txtApellidos" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="2" />
+                        <TextField fx:id="txtNombres" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <TextField fx:id="txtApellidos" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                        <TextField fx:id="txtCorreo" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="2" />
                         <TextField fx:id="txtDireccion" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="3" />
                         <ComboBox fx:id="cboGenero" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                         <TextField fx:id="txtTelefono" maxWidth="150.0" minWidth="20.0" prefWidth="150.0" GridPane.columnIndex="3" GridPane.rowIndex="4" />
@@ -56,9 +58,14 @@
                         <Label text="Dirección:" GridPane.rowIndex="3">
                            <font><Font name="System Bold Italic" size="12.0" /></font>
                         </Label>
+                        <Label text="Correo Electrónico:" GridPane.rowIndex="2">
+                           <font>
+                              <Font name="System Bold Italic" size="12.0" />
+                           </font>
+                        </Label>
                      </children>
                      <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="120.0" minWidth="100.0" prefWidth="120.0" />
                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="164.0" />
                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="70.0" minWidth="70.0" prefWidth="70.0" />
                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="150.0" />

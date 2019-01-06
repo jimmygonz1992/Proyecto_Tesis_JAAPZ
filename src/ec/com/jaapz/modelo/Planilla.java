@@ -70,6 +70,12 @@ public class Planilla implements Serializable, Comparable<Planilla> {
 	@Column(name="usuario_crea")
 	private Integer usuarioCrea;
 
+	@Column(nullable = false, columnDefinition = "bit")
+	private Boolean imprime;
+
+	@Column(nullable = false, columnDefinition = "bit")
+	private Boolean envia;
+
 	//bi-directional many-to-one association to ConvenioPlanilla
 	@OneToMany(mappedBy="planilla", cascade = CascadeType.ALL)
 	private List<ConvenioPlanilla> convenioPlanillas;
@@ -330,14 +336,29 @@ public class Planilla implements Serializable, Comparable<Planilla> {
 
 		return planillaDetalle;
 	}
+	public Boolean getImprime() {
+		return imprime;
+	}
+
+	public void setImprime(Boolean imprime) {
+		this.imprime = imprime;
+	}
+
+	public Boolean getEnvia() {
+		return envia;
+	}
+
+	public void setEnvia(Boolean envia) {
+		this.envia = envia;
+	}
 	@Override
-    public int compareTo(Planilla o) {
-        if (this.idPlanilla < o.idPlanilla) {
-            return -1;
-        }
-        if (this.idPlanilla  > o.idPlanilla) {
-            return 1;
-        }
-        return 0;
-    }
+	public int compareTo(Planilla o) {
+		if (this.idPlanilla < o.idPlanilla) {
+			return -1;
+		}
+		if (this.idPlanilla  > o.idPlanilla) {
+			return 1;
+		}
+		return 0;
+	}
 }

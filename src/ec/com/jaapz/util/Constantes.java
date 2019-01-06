@@ -1,9 +1,20 @@
 package ec.com.jaapz.util;
 
 public abstract class Constantes {
+	//para envio de correos
+	public static String CORREO_ORIGEN = "f3iOsp4oT3ZoNGwbEs6BQCKx3Ue8sRSGlbkfwuJtg1U=";
+	public static String CONTRASENIA_CORREO = "Y73I1I1gzY/belRAnrLbIw==";
+	/*---------------------------------------------------------------------------*/
+	//id de los diferentes usuarios que estan registrados en el sistema
 	public static int ID_USU_ADMINISTRADOR = 1;
-	public static int ID_USU_INSPECCION = 3;
 	public static int ID_USU_LECTURA = 2;
+	public static int ID_USU_INSPECCION = 3;
+	public static int ID_USU_PRESIDENTE = 5;
+	public static int ID_USU_REPARACIONES = 6;
+	public static int ID_USU_SECRETARIA = 7;
+	public static int ID_USU_BODEGA = 8;
+	public static int ID_USU_RECAUDACIONES = 9;
+	
 	
 	public static String EST_INSPECCION_REALIZADO = "REALIZADO";
 	public static String EST_INSPECCION_PENDIENTE = "PENDIENTE";

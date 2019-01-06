@@ -53,6 +53,7 @@ public class SolicitudInstalacionC {
     @FXML private TextField txtEstado;
     @FXML private TextField txtContacto;
     @FXML private ComboBox<Barrio> cboBarrio;
+    @FXML private TextField txtCorreo;
 
     BarrioDAO barrioDAO = new BarrioDAO();
     CategoriaDAO categoriaDAO = new CategoriaDAO();
@@ -204,6 +205,7 @@ public class SolicitudInstalacionC {
     			txtApellidos.setText(listaCliente.get(0).getApellido());
     			txtDireccion.setText(listaCliente.get(0).getDireccion());
     			txtTelefono.setText(listaCliente.get(0).getTelefono());
+    			txtCorreo.setText(listaCliente.get(0).getEmail());
     			for(Genero g : genero){
     				if(g.toString().equals(listaCliente.get(0).getGenero()))
     					cboGenero.getSelectionModel().select(g);
@@ -271,6 +273,12 @@ public class SolicitudInstalacionC {
 				helper.mostrarAlertaAdvertencia("Debe seleccionar el barrio del cliente a inspeccionar", Context.getInstance().getStage());
 				return;
 			}
+			if(!txtCorreo.getText().equals("")) {
+				if(ControllerHelper.validarEmail(txtCorreo.getText())) {
+					helper.mostrarAlertaAdvertencia("Correo electrónico no valido", Context.getInstance().getStage());
+					return;	
+				}
+			}
 			if (grabarDatos() == true) {
 				helper.mostrarAlertaInformacion("Orden de Inspección Emitida con Exito", Context.getInstance().getStage());
 			}
@@ -336,17 +344,17 @@ public class SolicitudInstalacionC {
 		}
 	}
     private void cargarDatos() {
-    	if(clienteRecuperado.getIdCliente() == null) {
+    	clienteRecuperado.setApellido(txtApellidos.getText());
+		clienteRecuperado.setCedula(txtCedula.getText());
+		clienteRecuperado.setDireccion(txtDireccion.getText());
+		clienteRecuperado.setEstado("A");
+		clienteRecuperado.setGenero(cboGenero.getSelectionModel().getSelectedItem().name());
+		clienteRecuperado.setNombre(txtNombres.getText());
+		clienteRecuperado.setTelefono(txtTelefono.getText());
+		clienteRecuperado.setUsuarioCrea(Context.getInstance().getIdUsuario());
+		clienteRecuperado.setEmail(txtCorreo.getText());
+    	if(clienteRecuperado.getIdCliente() == null) 
     		clienteRecuperado.setIdCliente(null);
-    		clienteRecuperado.setApellido(txtApellidos.getText());
-    		clienteRecuperado.setCedula(txtCedula.getText());
-    		clienteRecuperado.setDireccion(txtDireccion.getText());
-    		clienteRecuperado.setEstado("A");
-    		clienteRecuperado.setGenero(cboGenero.getSelectionModel().getSelectedItem().name());
-    		clienteRecuperado.setNombre(txtNombres.getText());
-    		clienteRecuperado.setTelefono(txtTelefono.getText());
-    		clienteRecuperado.setUsuarioCrea(Context.getInstance().getIdUsuario());
-    	}
     }
     public void nuevo() {
     	clienteRecuperado = null;
@@ -362,6 +370,7 @@ public class SolicitudInstalacionC {
     	txtDireccion.setText("");
     	txtDireccionIns.setText("");
     	txtContacto.setText("");
+    	txtCorreo.setText("");
     	cboBarrio.getSelectionModel().select(-1);
     }
 

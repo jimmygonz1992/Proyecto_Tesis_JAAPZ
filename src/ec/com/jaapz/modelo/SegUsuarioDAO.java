@@ -61,21 +61,33 @@ public class SegUsuarioDAO extends ClaseDAO{
 	
 	@SuppressWarnings("unchecked")
 	public List<SegUsuario> getListaUsuariosInspeccion(){
-		List<SegUsuario> resultado = new ArrayList<SegUsuario>();
-		Query query = getEntityManager().createNamedQuery("SegUsuario.buscarInspeccion");
+		List<SegUsuario> resultado;
+		List<SegUsuario> usuarioInspeccion = new ArrayList<SegUsuario>();
+		Query query = getEntityManager().createNamedQuery("SegUsuario.buscarTodosUsuarios");
 		query.setHint("javax.persistence.cache.storeMode", "REFRESH");
-		query.setParameter("idINS", Constantes.ID_USU_INSPECCION);
 		resultado = (List<SegUsuario>) query.getResultList();
-		return resultado;
+		for(SegUsuario usuario : resultado) {
+			for(SegUsuarioPerfil perfil : usuario.getSegUsuarioPerfils()) {
+				if(perfil.getSegPerfil().getIdPerfil() == Constantes.ID_USU_INSPECCION && perfil.getEstado().equals(Constantes.ESTADO_ACTIVO))
+					usuarioInspeccion.add(usuario);
+			}
+		}
+		return usuarioInspeccion;
 	}
 	
 	@SuppressWarnings("unchecked")
 	public List<SegUsuario> getListaUsuariosLectura(){
-		List<SegUsuario> resultado = new ArrayList<SegUsuario>();
-		Query query = getEntityManager().createNamedQuery("SegUsuario.buscarLectura");
+		List<SegUsuario> resultado;
+		List<SegUsuario> usuarioInspeccion = new ArrayList<SegUsuario>();
+		Query query = getEntityManager().createNamedQuery("SegUsuario.buscarTodosUsuarios");
 		query.setHint("javax.persistence.cache.storeMode", "REFRESH");
-		query.setParameter("idLEC", Constantes.ID_USU_LECTURA);
 		resultado = (List<SegUsuario>) query.getResultList();
-		return resultado;
+		for(SegUsuario usuario : resultado) {
+			for(SegUsuarioPerfil perfil : usuario.getSegUsuarioPerfils()) {
+				if(perfil.getSegPerfil().getIdPerfil() == Constantes.ID_USU_LECTURA && perfil.getEstado().equals(Constantes.ESTADO_ACTIVO))
+					usuarioInspeccion.add(usuario);
+			}
+		}
+		return usuarioInspeccion;
 	}
 }

@@ -86,9 +86,8 @@ public class BodegaIngresoRubrosC {
 	public void initialize(){
 		try {
 			nuevo();
-			Encriptado encriptado = new Encriptado();
 			usuarioLogueado = Context.getInstance().getUsuariosC();
-			txtUsuario.setText(encriptado.Desencriptar(String.valueOf(Context.getInstance().getUsuariosC().getUsuario())));
+			txtUsuario.setText(Encriptado.Desencriptar(String.valueOf(Context.getInstance().getUsuariosC().getUsuario())));
 			txtUsuario.setEditable(false);
 			txtCodigoMat.setEditable(false);
 			txtDescripcionMat.setEditable(false);

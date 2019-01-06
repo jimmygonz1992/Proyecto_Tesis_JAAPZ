@@ -301,6 +301,7 @@ public class SolicitudesCierreInspeccionC {
 					//enlace entre detalle de planilla y planilla
 					PlanillaDetalle detallePlanilla = new PlanillaDetalle();
 					detallePlanilla.setIdPlanillaDet(null);
+					detallePlanilla.setCantidad(1);
 					detallePlanilla.setUsuarioCrea(Context.getInstance().getIdUsuario());
 					detallePlanilla.setSubtotal(valorTotal);
 					detallePlanilla.setDescripcion("Por instalación de nuevo medidor");

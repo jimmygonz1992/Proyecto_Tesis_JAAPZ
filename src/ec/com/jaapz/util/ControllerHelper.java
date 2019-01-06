@@ -7,6 +7,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigDecimal;
 import java.util.Optional;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.imageio.ImageIO;
 
@@ -36,6 +38,10 @@ import javafx.stage.WindowEvent;
 import javafx.util.Duration;
 
 public class ControllerHelper {
+	private static final String EMAIL_PATTERN = 
+			"^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+			+ "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+	
 	public void abrirPantallaModal(String uriVista, String titulo,Stage parent){
 		try {
 			FXMLLoader loader = new FXMLLoader();
@@ -60,7 +66,7 @@ public class ControllerHelper {
 			root.setLocation(getClass().getResource(uriVista));
 			AnchorPane page = (AnchorPane) root.load();
 			Scene scene = new Scene(page);
-			nuevo.getIcons().add(new Image("/icon.png"));
+			nuevo.getIcons().add(new Image("/logo_jaapz.png"));
 			nuevo.setScene(scene);
 			nuevo.setMaximized(true);
 			nuevo.setTitle(titulo);
@@ -323,5 +329,17 @@ public class ControllerHelper {
  
         return result;
     }
+	public static boolean validarEmail(String email) {
+		try{
+		    // Compiles the given regular expression into a pattern.
+		    Pattern pattern = Pattern.compile(EMAIL_PATTERN);
+		    // Match the given input against this pattern
+		    Matcher matcher = pattern.matcher(email);
+		    return matcher.matches();
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return false;
+ }
 }
 

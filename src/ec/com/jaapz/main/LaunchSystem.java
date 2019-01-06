@@ -24,7 +24,7 @@ public class LaunchSystem extends Application {
 			AnchorPane page = (AnchorPane) root.load();
 			Scene scene = new Scene(page);
 			stage.setScene(scene);
-			stage.getIcons().add(new Image("/icon.png"));
+			stage.getIcons().add(new Image("/logo_jaapz.png"));
 			stage.setTitle("Inicio de Sesion");
 			InicioSesionC inicio = (InicioSesionC) root.getController();
 			inicio.setDialogStage(stage);
