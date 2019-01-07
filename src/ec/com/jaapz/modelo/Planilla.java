@@ -22,7 +22,10 @@ import java.util.List;
 			+ "and p.usuarioCrea = :idPerfilUsuario order by p.idPlanilla asc"),
 	@NamedQuery(name="Planilla.buscarPorCuenta", query="SELECT p FROM Planilla p "
 			+ "where p.cuentaCliente.idCuenta = :idCuenta and p.estado = 'A' "
-			+ "order by p.idPlanilla desc")
+			+ "order by p.idPlanilla desc"),
+	@NamedQuery(name="Planilla.buscarPorCuentaPlanilla", query="SELECT p FROM Planilla p "
+			+ "where p.cuentaCliente.idCuenta = :idCuenta and p.idPlanilla < (:idPlanillaActual) and p.estado = 'A' "
+			+ "order by p.idPlanilla asc")
 })
 public class Planilla implements Serializable, Comparable<Planilla> {
 	private static final long serialVersionUID = 1L;

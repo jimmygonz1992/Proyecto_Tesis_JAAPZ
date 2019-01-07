@@ -6,6 +6,7 @@ import java.util.Map;
 import ec.com.jaapz.modelo.ClaseDAO;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperPrintManager;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.util.JRLoader;
 import net.sf.jasperreports.view.JasperViewer;
@@ -42,6 +43,14 @@ public class PrintReport {
 			//JasperExportManager.exportReportToPdfFile(destino);
 		}catch(Exception ex) {
 			ex.printStackTrace();
+		}
+	}
+	public void imprimirReporte() {
+		try {
+			JasperPrintManager.printReport(reportFilled, false);
+			
+		}catch(Exception ex) {
+			System.out.println(ex.getMessage());
 		}
 	}
 }

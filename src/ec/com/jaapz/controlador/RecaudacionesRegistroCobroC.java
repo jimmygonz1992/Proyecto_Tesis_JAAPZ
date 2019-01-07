@@ -637,7 +637,7 @@ public class RecaudacionesRegistroCobroC {
 				@Override
 				public ObservableValue<String> call(CellDataFeatures<FacturaDetalle, String> param) {
 					String descripcion;
-					if(param.getValue().getPlanilla().getIdentInstalacion().equals("INS"))
+					if(param.getValue().getPlanilla().getIdentInstalacion() != null)
 						descripcion = "Por instalacion de nuevo medidor";
 					else
 						descripcion = "Factura mes de: " + String.valueOf(param.getValue().getPlanilla().getAperturaLectura().getMe());

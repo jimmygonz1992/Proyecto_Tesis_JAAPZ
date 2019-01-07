@@ -274,7 +274,7 @@ public class SolicitudInstalacionC {
 				return;
 			}
 			if(!txtCorreo.getText().equals("")) {
-				if(ControllerHelper.validarEmail(txtCorreo.getText())) {
+				if(ControllerHelper.validarEmail(txtCorreo.getText()) == false) {
 					helper.mostrarAlertaAdvertencia("Correo electrónico no valido", Context.getInstance().getStage());
 					return;	
 				}

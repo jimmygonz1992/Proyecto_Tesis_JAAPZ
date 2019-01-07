@@ -111,8 +111,7 @@ public class SolicitudesCierreReparacionC {
 			txtSubtotal.setVisible(false);
 			txtTotal.setVisible(false);
 			
-			Encriptado encriptado = new Encriptado();
-			txtUsuario.setText(encriptado.Desencriptar(String.valueOf(Context.getInstance().getUsuariosC().getUsuario())));
+			txtUsuario.setText(Encriptado.Desencriptar(String.valueOf(Context.getInstance().getUsuariosC().getUsuario())));
 			
 			//recuperar Material
 			txtCodigoMat.setOnKeyPressed(new EventHandler<KeyEvent>(){

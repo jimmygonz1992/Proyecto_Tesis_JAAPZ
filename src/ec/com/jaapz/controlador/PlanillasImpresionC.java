@@ -9,6 +9,7 @@ import ec.com.jaapz.modelo.AperturaLectura;
 import ec.com.jaapz.modelo.Planilla;
 import ec.com.jaapz.util.Context;
 import ec.com.jaapz.util.ControllerHelper;
+import ec.com.jaapz.util.GenerarPlanillaJasper;
 import ec.com.jaapz.util.GenerarPlanillasPDF;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -295,8 +296,11 @@ public class PlanillasImpresionC {
 			Context.getInstance().setMensajeEnviado(false);
 			for(Planilla pl : tvDatos.getItems()) {
 				if(pl.getCuentaCliente().getCliente().getEmail() != null) {
-					GenerarPlanillasPDF generador = new GenerarPlanillasPDF();
-					generador.crearEstadoCuenta(pl);
+					GenerarPlanillasPDF planilaPDF = new GenerarPlanillasPDF();
+					planilaPDF.crearEstadoCuenta(pl);
+					
+					GenerarPlanillaJasper planillaJasper = new GenerarPlanillaJasper();
+					planillaJasper.crearPlanillaCliente(pl);
 					return;
 					/*
 					ivEnviandoMensaje.setVisible(true);
