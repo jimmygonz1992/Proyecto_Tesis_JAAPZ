@@ -83,9 +83,8 @@ public class RecaudacionesRegistroCobroC {
 			Context.getInstance().setCuentaCliente(null);
 			noEditable();
 			dtpFecha.setValue(LocalDate.now());
-			Encriptado encriptado = new Encriptado();
 			usuarioLogueado = Context.getInstance().getUsuariosC();
-			txtUsuario.setText(encriptado.Desencriptar(String.valueOf(Context.getInstance().getUsuariosC().getUsuario())));
+			txtUsuario.setText(Encriptado.Desencriptar(String.valueOf(Context.getInstance().getUsuariosC().getUsuario())));
 
 			//solo numeros
 			txtIdCuenta.textProperty().addListener(new ChangeListener<String>() {
@@ -638,7 +637,7 @@ public class RecaudacionesRegistroCobroC {
 				@Override
 				public ObservableValue<String> call(CellDataFeatures<FacturaDetalle, String> param) {
 					String descripcion;
-					if(param.getValue().getPlanilla().getIdentInstalacion().equals("INS"))
+					if(param.getValue().getPlanilla().getIdentInstalacion() != null)
 						descripcion = "Por instalacion de nuevo medidor";
 					else
 						descripcion = "Factura mes de: " + String.valueOf(param.getValue().getPlanilla().getAperturaLectura().getMe());

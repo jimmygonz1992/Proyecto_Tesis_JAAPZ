@@ -38,7 +38,6 @@ public class InicioSesionC {
 	ControllerHelper helper = new ControllerHelper();
 	SegUsuarioDAO usuarioDAO = new SegUsuarioDAO();
 	
-	Encriptado encriptado = new Encriptado();
 	private Stage stage;
 	@FXML private ImageView ivLogo;
 	@FXML private ImageView ivLogin;
@@ -50,11 +49,11 @@ public class InicioSesionC {
 			return;
 		
 		List<SegUsuario> usuario;
-		usuario = usuarioDAO.getUsuario(encriptado.Encriptar(txtUsuario.getText()),encriptado.Encriptar(txtClave.getText()));
+		usuario = usuarioDAO.getUsuario(Encriptado.Encriptar(txtUsuario.getText()),Encriptado.Encriptar(txtClave.getText()));
 		if(usuario.size() == 1){
 			Context.getInstance().setUsuariosC(usuario.get(0));
 			Context.getInstance().setPerfil(cboPerfil.getSelectionModel().getSelectedItem().getDescripcion());
-			Context.getInstance().setUsuario(encriptado.Desencriptar(usuario.get(0).getUsuario()));
+			Context.getInstance().setUsuario(Encriptado.Desencriptar(usuario.get(0).getUsuario()));
 			Context.getInstance().setIdUsuario(usuario.get(0).getIdUsuario());
 			Context.getInstance().setIdPerfil(cboPerfil.getSelectionModel().getSelectedItem().getIdPerfil());
 			helper.abrirPantallaPrincipal("Principal","/principal/Contenido.fxml",stage);
@@ -89,7 +88,6 @@ public class InicioSesionC {
 			System.exit(0);
 	}
 	public void initialize(){
-		
 		toolTip = new Tooltip("Ingrese Nombre de usuario");
 		txtUsuario.setTooltip(toolTip);
 		toolTip = new Tooltip("Ingrese Clave del usuario");
@@ -135,7 +133,7 @@ public class InicioSesionC {
 	private void buscarPerfilUsuario() {
 		try {
 			ObservableList<SegPerfil> listaPerfil = FXCollections.observableArrayList();
-			List<SegUsuario> usuario = usuarioDAO.getUsuarioPerfil(encriptado.Encriptar(txtUsuario.getText()));
+			List<SegUsuario> usuario = usuarioDAO.getUsuarioPerfil(Encriptado.Encriptar(txtUsuario.getText()));
 			for(SegUsuarioPerfil per : usuario.get(0).getSegUsuarioPerfils()) {
 				if(per.getEstado().equals("A"))
 					listaPerfil.add(per.getSegPerfil());

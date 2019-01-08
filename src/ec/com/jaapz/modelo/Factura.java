@@ -14,7 +14,9 @@ import java.util.List;
 @Table(name="Factura")
 @NamedQueries({
 	@NamedQuery(name="Factura.findAll", query="SELECT f FROM Factura f WHERE f.estado = 'A'"),
-	@NamedQuery(name="Factura.buscarIDFact", query="SELECT f FROM Factura f WHERE f.estado = 'A' order by f.idFactura desc")
+	@NamedQuery(name="Factura.buscarIDFact", query="SELECT f FROM Factura f WHERE f.estado = 'A' order by f.idFactura desc"),
+	@NamedQuery(name="Factura.buscarFactCuenta", query="SELECT f FROM Factura f WHERE f.cuentaCliente.idCuenta = :idCuenta and "
+			+ "f.estado = 'A' order by f.idFactura desc")
 })
 public class Factura implements Serializable {
 	private static final long serialVersionUID = 1L;

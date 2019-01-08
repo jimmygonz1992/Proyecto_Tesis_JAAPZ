@@ -297,11 +297,9 @@ public class SolicitudAsignacionInsC {
 
 			if(tpRealizadas.isSelected()) {
 				if(tvAsignados.getSelectionModel().getSelectedItem().getEstadoInspeccion().equals(Constantes.EST_INSPECCION_REALIZADO)) {
-					System.out.println("realizado");
 					helper.mostrarAlertaError("No se puede quitar una inspección ya realizada", Context.getInstance().getStage());
 					return;
 				}else if(tvAsignados.getSelectionModel().getSelectedItem().getEstadoInspeccion().equals(Constantes.EST_INSPECCION_PENDIENTE)) {
-					System.out.println("pendiente");
 					SolInspeccionIn insEliminar = tvAsignados.getSelectionModel().getSelectedItem();
 					listaInspeccionesEliminar.add(insEliminar);
 					tvAsignados.getItems().remove(tvAsignados.getSelectionModel().getSelectedItem());

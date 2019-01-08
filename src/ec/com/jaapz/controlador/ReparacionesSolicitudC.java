@@ -42,14 +42,13 @@ public class ReparacionesSolicitudC {
 	
 	ControllerHelper helper = new ControllerHelper();
 	SegUsuario usuarioLogueado = new SegUsuario();
-	Encriptado encriptado = new Encriptado();
 	ReparacionDAO reparacionDao = new ReparacionDAO();
 	
 	public void initialize(){
 		try {
 			dtpFecha.setValue(LocalDate.now());
 			usuarioLogueado = Context.getInstance().getUsuariosC();
-			txtUsuario.setText(encriptado.Desencriptar(String.valueOf(Context.getInstance().getUsuariosC().getUsuario())));
+			txtUsuario.setText(Encriptado.Desencriptar(String.valueOf(Context.getInstance().getUsuariosC().getUsuario())));
 			txtNumReparacion.setText(String.valueOf(reparacionDao.getIdReparacion()+1));
 		}catch(Exception ex) {
 			System.out.println(ex.getMessage());

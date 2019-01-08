@@ -64,7 +64,6 @@ public class SeguridadUsuarioC {
 	@FXML private Button btnQuitarPerfil;
 	
 	ControllerHelper helper = new ControllerHelper();
-	Encriptado encriptado = new Encriptado();
 	SegUsuarioDAO segUsuarioDAO = new SegUsuarioDAO();
 	SegPerfilDAO perfilDAO = new SegPerfilDAO();
 	SegUsuario usuarioSeleccionado;
@@ -212,8 +211,8 @@ public class SeguridadUsuarioC {
 				txtCargo.setText(listaUsuario.get(i).getCargo());
 				txtTelefono.setText(listaUsuario.get(i).getTelefono());
 				txtDireccion.setText(listaUsuario.get(i).getDireccion());
-				txtUsuario.setText(encriptado.Desencriptar(listaUsuario.get(i).getUsuario()));
-				txtClave.setText(encriptado.Desencriptar(listaUsuario.get(i).getClave()));
+				txtUsuario.setText(Encriptado.Desencriptar(listaUsuario.get(i).getUsuario()));
+				txtClave.setText(Encriptado.Desencriptar(listaUsuario.get(i).getClave()));
 				if(listaUsuario.get(i).getFoto() != null) {
 					String imgString = new String(listaUsuario.get(i).getFoto(), "UTF-8");
 					ivFoto.setImage(helper.getImageFromBase64String(imgString).getImage());
@@ -232,7 +231,6 @@ public class SeguridadUsuarioC {
 				tvPerfiles.getItems().clear();
 				tvPerfiles.getColumns().clear();
 				ObservableList<SegUsuarioPerfil> datos = FXCollections.observableArrayList();
-				System.out.println(listaUsuario.get(0).getSegUsuarioPerfils().size());
 				for(SegUsuarioPerfil perfil : listaUsuario.get(0).getSegUsuarioPerfils()) { 
 					if(perfil.getEstado().equals(Constantes.ESTADO_ACTIVO))
 						datos.add(perfil);
@@ -285,8 +283,8 @@ public class SeguridadUsuarioC {
 			usuarioSeleccionado.setDireccion(txtDireccion.getText());
 			usuarioSeleccionado.setTelefono(txtTelefono.getText());
 			usuarioSeleccionado.setCargo(txtCargo.getText());
-			usuarioSeleccionado.setUsuario(encriptado.Encriptar(txtUsuario.getText()));
-			usuarioSeleccionado.setClave(encriptado.Encriptar(txtClave.getText()));
+			usuarioSeleccionado.setUsuario(Encriptado.Encriptar(txtUsuario.getText()));
+			usuarioSeleccionado.setClave(Encriptado.Encriptar(txtClave.getText()));
 			usuarioSeleccionado.setFoto(helper.encodeFileToBase64Binary(ivFoto.getImage()).getBytes());
 			//quitar los eliminados
 			if(listaEliminar.size() > 0) {//tiene elementos eliminados
@@ -376,7 +374,7 @@ public class SeguridadUsuarioC {
 	boolean validarUsuario() {
 		try {
 			List<SegUsuario> listaUsuario;
-			listaUsuario = segUsuarioDAO.getValidarUsuario(encriptado.Encriptar(txtUsuario.getText()), Integer.parseInt(txtCodigo.getText()));
+			listaUsuario = segUsuarioDAO.getValidarUsuario(Encriptado.Encriptar(txtUsuario.getText()), Integer.parseInt(txtCodigo.getText()));
 			if(listaUsuario.size() != 0)
 				return true;
 			else
@@ -469,8 +467,8 @@ public class SeguridadUsuarioC {
 			else
 				txtDireccion.setText(datoSeleccionado.getDireccion());
 
-			txtUsuario.setText(encriptado.Desencriptar(datoSeleccionado.getUsuario()));
-			txtClave.setText(encriptado.Desencriptar(datoSeleccionado.getClave()));
+			txtUsuario.setText(Encriptado.Desencriptar(datoSeleccionado.getUsuario()));
+			txtClave.setText(Encriptado.Desencriptar(datoSeleccionado.getClave()));
 			if(datoSeleccionado.getFoto() != null) {
 				String imgString = new String(datoSeleccionado.getFoto(), "UTF-8");
 				ivFoto.setImage(helper.getImageFromBase64String(imgString).getImage());
@@ -483,7 +481,6 @@ public class SeguridadUsuarioC {
 			tvPerfiles.getItems().clear();
 			tvPerfiles.getColumns().clear();
 			ObservableList<SegUsuarioPerfil> datos = FXCollections.observableArrayList();
-			System.out.println(datoSeleccionado.getSegUsuarioPerfils().size());
 			for(SegUsuarioPerfil perfil : datoSeleccionado.getSegUsuarioPerfils()) {
 				if(perfil.getEstado().equals(Constantes.ESTADO_ACTIVO))
 					datos.add(perfil);

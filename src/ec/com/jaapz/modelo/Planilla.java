@@ -22,7 +22,10 @@ import java.util.List;
 			+ "and p.usuarioCrea = :idPerfilUsuario order by p.idPlanilla asc"),
 	@NamedQuery(name="Planilla.buscarPorCuenta", query="SELECT p FROM Planilla p "
 			+ "where p.cuentaCliente.idCuenta = :idCuenta and p.estado = 'A' "
-			+ "order by p.idPlanilla desc")
+			+ "order by p.idPlanilla desc"),
+	@NamedQuery(name="Planilla.buscarPorCuentaPlanilla", query="SELECT p FROM Planilla p "
+			+ "where p.cuentaCliente.idCuenta = :idCuenta and p.idPlanilla < (:idPlanillaActual) and p.estado = 'A' "
+			+ "order by p.idPlanilla asc")
 })
 public class Planilla implements Serializable, Comparable<Planilla> {
 	private static final long serialVersionUID = 1L;
@@ -69,6 +72,12 @@ public class Planilla implements Serializable, Comparable<Planilla> {
 
 	@Column(name="usuario_crea")
 	private Integer usuarioCrea;
+
+	@Column(nullable = false, columnDefinition = "bit")
+	private Boolean imprime;
+
+	@Column(nullable = false, columnDefinition = "bit")
+	private Boolean envia;
 
 	//bi-directional many-to-one association to ConvenioPlanilla
 	@OneToMany(mappedBy="planilla", cascade = CascadeType.ALL)
@@ -330,14 +339,29 @@ public class Planilla implements Serializable, Comparable<Planilla> {
 
 		return planillaDetalle;
 	}
+	public Boolean getImprime() {
+		return imprime;
+	}
+
+	public void setImprime(Boolean imprime) {
+		this.imprime = imprime;
+	}
+
+	public Boolean getEnvia() {
+		return envia;
+	}
+
+	public void setEnvia(Boolean envia) {
+		this.envia = envia;
+	}
 	@Override
-    public int compareTo(Planilla o) {
-        if (this.idPlanilla < o.idPlanilla) {
-            return -1;
-        }
-        if (this.idPlanilla  > o.idPlanilla) {
-            return 1;
-        }
-        return 0;
-    }
+	public int compareTo(Planilla o) {
+		if (this.idPlanilla < o.idPlanilla) {
+			return -1;
+		}
+		if (this.idPlanilla  > o.idPlanilla) {
+			return 1;
+		}
+		return 0;
+	}
 }

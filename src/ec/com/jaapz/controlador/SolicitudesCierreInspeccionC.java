@@ -230,7 +230,7 @@ public class SolicitudesCierreInspeccionC {
 					long lnMilisegundos = utilDate.getTime();
 					java.sql.Time sqlTime = new java.sql.Time(lnMilisegundos);
 					
-					
+					medidorSeleccionado.setUsado(true);
 					//lleno los datos de la orden de despacho
 					ordenLiquidacion.setIdLiquidacion(null);
 					ordenLiquidacion.setMedidor(medidorSeleccionado);
@@ -253,6 +253,8 @@ public class SolicitudesCierreInspeccionC {
 						valorTotal = valorTotal + det.getTotal();
 						detalle.add(det);
 					}
+					//tambien se suma el precio del medidor
+					valorTotal = valorTotal + medidorSeleccionado.getPrecio();
 					//se realiza el enlace con el detalle, ya que anteriormente se le habia asignado el detalle
 					ordenLiquidacion.setLiquidacionDetalles(detalle);
 					ordenLiquidacion.setTotal(valorTotal);
@@ -302,11 +304,12 @@ public class SolicitudesCierreInspeccionC {
 					//enlace entre detalle de planilla y planilla
 					PlanillaDetalle detallePlanilla = new PlanillaDetalle();
 					detallePlanilla.setIdPlanillaDet(null);
+					detallePlanilla.setCantidad(1);
 					detallePlanilla.setUsuarioCrea(Context.getInstance().getIdUsuario());
 					detallePlanilla.setSubtotal(valorTotal);
-					detallePlanilla.setDescripcion("Por instalación de nuevo medidor");
+					detallePlanilla.setDescripcion("POR INSTALACIÓN DE NUEVO MEDIDOR");
 					detallePlanilla.setEstado("A");
-					detallePlanilla.setCantidad(0);
+					detallePlanilla.setCantidad(1);
 					detallePlanilla.setPlanilla(planilla);
 					List<PlanillaDetalle> det = new ArrayList<PlanillaDetalle>();
 					det.add(detallePlanilla);
@@ -331,6 +334,7 @@ public class SolicitudesCierreInspeccionC {
 					//se procede a grabar los datos
 					inspeccionDAO.getEntityManager().getTransaction().begin();
 					inspeccionDAO.getEntityManager().merge(inspeccionSeleccionado);
+					inspeccionDAO.getEntityManager().merge(medidorSeleccionado);
 					
 					//Tambien se hace una factura con el 60% del costo de instalacion
 					

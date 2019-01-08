@@ -18,4 +18,14 @@ public class FacturaDAO extends ClaseDAO{
 			i = resultado.get(0).getIdFactura();
 		return i;
 	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Factura> getListaFacturasCuenta(Integer idCuenta){
+		List<Factura> resultado = new ArrayList<Factura>();
+		Query query = getEntityManager().createNamedQuery("Factura.buscarFactCuenta");
+		query.setHint("javax.persistence.cache.storeMode", "REFRESH");
+		query.setParameter("idCuenta",idCuenta);
+		resultado = (List<Factura>) query.getResultList();
+		return resultado;
+	}
 }

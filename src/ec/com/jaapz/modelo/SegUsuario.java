@@ -19,8 +19,7 @@ import java.util.List;
 			+ "WHERE u.usuario = (:usuario) and u.estado = 'A'"),
 	@NamedQuery(name="SegUsuario.validarUsuario", query="SELECT u FROM SegUsuario u "
 			+ "WHERE u.usuario = (:usuario) AND u.idUsuario <> (:idUsuario) and u.estado = 'A'"),
-	//@NamedQuery(name="SegUsuario.buscarInspeccion", query="SELECT u FROM SegUsuario u where u.segPerfil.idPerfil = :idINS and u.estado = 'A'"),
-	//@NamedQuery(name="SegUsuario.buscarLectura", query="SELECT u FROM SegUsuario u where u.segPerfil.idPerfil = :idLEC and u.estado = 'A'"),
+	@NamedQuery(name="SegUsuario.buscarTodosUsuarios", query="SELECT u FROM SegUsuario u where u.estado = 'A'"),
 	@NamedQuery(name="SegUsuario.recuperaUsuario", query="SELECT u FROM SegUsuario u WHERE u.cedula = (:cedula) and u.estado = 'A'")
 })
 public class SegUsuario implements Serializable {

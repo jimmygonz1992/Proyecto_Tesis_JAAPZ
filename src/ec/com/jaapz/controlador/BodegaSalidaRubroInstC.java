@@ -68,8 +68,7 @@ public class BodegaSalidaRubroInstC {
 	
 	public void initialize() {
 		try {
-			Encriptado encriptado = new Encriptado();
-			txtUsuario.setText(encriptado.Desencriptar(String.valueOf(Context.getInstance().getUsuariosC().getUsuario())));
+			txtUsuario.setText(Encriptado.Desencriptar(String.valueOf(Context.getInstance().getUsuariosC().getUsuario())));
 		}catch(Exception ex) {
 			System.out.println(ex.getMessage());
 		}

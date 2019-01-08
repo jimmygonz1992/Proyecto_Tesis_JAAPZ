@@ -24,7 +24,6 @@ public class SeguridadCambioContraseñaC {
 	@FXML private Button btnGrabar;
 	@FXML private Label lblEtiqueta;
 	
-	Encriptado encriptado = new Encriptado();
 	ControllerHelper helper = new ControllerHelper();
 	
 	SegUsuario usuarioLogueado = new SegUsuario();
@@ -34,8 +33,8 @@ public class SeguridadCambioContraseñaC {
 		try {
 			txtContraseñaNueva.requestFocus();
 			usuarioLogueado = Context.getInstance().getUsuariosC();
-			txtContraseñaActual.setText(encriptado.Desencriptar(Context.getInstance().getUsuariosC().getClave()));
-			txtUsuario.setText(encriptado.Desencriptar(Context.getInstance().getUsuariosC().getUsuario()));
+			txtContraseñaActual.setText(Encriptado.Desencriptar(Context.getInstance().getUsuariosC().getClave()));
+			txtUsuario.setText(Encriptado.Desencriptar(Context.getInstance().getUsuariosC().getUsuario()));
 			txtUsuario.setEditable(false);
 			txtContraseñaActual.setEditable(false);
 
@@ -74,7 +73,7 @@ public class SeguridadCambioContraseñaC {
 			if(validarDatos() == false){
 				return;
 			}
-			usuarioLogueado.setClave(encriptado.Encriptar(txtConfirmaContraseña.getText()));
+			usuarioLogueado.setClave(Encriptado.Encriptar(txtConfirmaContraseña.getText()));
 			Optional<ButtonType> result = helper.mostrarAlertaConfirmacion("Desea Grabar los datos?", Context.getInstance().getStage());
 			if (result.get() == ButtonType.OK) {
 				segUsuarioDAO.getEntityManager().getTransaction().begin();
