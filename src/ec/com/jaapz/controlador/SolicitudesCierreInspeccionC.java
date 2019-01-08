@@ -234,7 +234,8 @@ public class SolicitudesCierreInspeccionC {
 					//lleno los datos de la orden de despacho
 					ordenLiquidacion.setIdLiquidacion(null);
 					ordenLiquidacion.setMedidor(medidorSeleccionado);
-					ordenLiquidacion.setEstadoOrden("PENDIENTE");
+					ordenLiquidacion.setEstadoOrden(Constantes.EST_INSPECCION_PENDIENTE);
+					ordenLiquidacion.setEstadoInstalacion(Constantes.EST_INSPECCION_PENDIENTE);
 					ordenLiquidacion.setEstado("A");
 					ordenLiquidacion.setHora(sqlTime);
 					

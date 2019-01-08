@@ -34,6 +34,10 @@ public class Instalacion implements Serializable {
 	@Temporal(TemporalType.DATE)
 	@Column(name="fecha_inst")
 	private Date fechaInst;
+	
+	@Temporal(TemporalType.DATE)
+	@Column(name="fecha_salida")
+	private Date fechaSalida;
 
 	@Column(name="foto_predio")
 	private byte[] fotoPredio;
@@ -47,7 +51,10 @@ public class Instalacion implements Serializable {
 
 	@Column(name="usuario_crea")
 	private Integer usuarioCrea;
-
+	
+	@Column(name="usuario_instalacion")
+	private Integer usuarioInstalacion;
+	
 	//bi-directional many-to-one association to CuentaCliente
 	@ManyToOne
 	@JoinColumn(name="id_cuenta")
@@ -116,6 +123,14 @@ public class Instalacion implements Serializable {
 	public void setFechaInst(Date fechaInst) {
 		this.fechaInst = fechaInst;
 	}
+	
+	public Date getFechaSalida() {
+		return this.fechaSalida;
+	}
+
+	public void setFechaSalida(Date fechaSalida) {
+		this.fechaSalida = fechaSalida;
+	}
 
 	public byte[] getFotoPredio() {
 		return this.fotoPredio;
@@ -155,6 +170,14 @@ public class Instalacion implements Serializable {
 
 	public void setUsuarioCrea(Integer usuarioCrea) {
 		this.usuarioCrea = usuarioCrea;
+	}
+	
+	public Integer getUsuarioInstalacion() {
+		return this.usuarioInstalacion;
+	}
+
+	public void setUsuarioInstalacion(Integer usuarioInstalacion) {
+		this.usuarioInstalacion = usuarioInstalacion;
 	}
 
 	public CuentaCliente getCuentaCliente() {

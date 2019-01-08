@@ -77,11 +77,11 @@ public class BodegaSalidaRubroInstC {
 	
 	public void buscarLiqCuenta() {
 		try{
-			helper.abrirPantallaModal("/bodega/ListadoLiquidaciones.fxml","Listado de Rubros", Context.getInstance().getStage());
+			helper.abrirPantallaModal("/bodega/ListadoLiquidaciones.fxml","Listado de Órdenes Liquidaciones", Context.getInstance().getStage());
 			if (Context.getInstance().getLiquidaciones() != null) {
 				liquidacionSeleccionada = Context.getInstance().getLiquidaciones();
 				llenarDatosLiquidacion(liquidacionSeleccionada);
-				Context.getInstance().setLiquidaciones(null);;
+				Context.getInstance().setLiquidaciones(null);
 			}
 		}catch(Exception ex){
 			System.out.println(ex.getMessage());
@@ -342,7 +342,7 @@ public class BodegaSalidaRubroInstC {
 				//Timestamp fecha = new Timestamp(date.getTime());
 				instalacion.setCuentaCliente(liquidacionSeleccionada.getCuentaCliente());
 				instalacion.setSolInspeccionIn(liquidacionSeleccionada.getSolInspeccionIn());
-				instalacion.setFechaInst(date);
+				instalacion.setFechaSalida(date);
 				instalacion.setTotal(Double.parseDouble(txtTotal.getText()));
 				instalacion.setEstadoInstalacion(Constantes.EST_INSPECCION_PENDIENTE);
 				instalacion.setUsuarioCrea(Context.getInstance().getUsuariosC().getIdUsuario());
