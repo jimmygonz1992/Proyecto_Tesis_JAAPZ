@@ -23,20 +23,20 @@
 			<rowConstraints>
 				<RowConstraints maxHeight="5.0" minHeight="10.0" prefHeight="5.0" vgrow="SOMETIMES" />
 				<RowConstraints maxHeight="20.0" minHeight="10.0" prefHeight="20.0" vgrow="SOMETIMES" />
+				<RowConstraints maxHeight="91.0" minHeight="10.0" prefHeight="89.0" vgrow="SOMETIMES" />
+				<RowConstraints maxHeight="27.0" minHeight="10.0" prefHeight="27.0" vgrow="SOMETIMES" />
 				<RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-				<RowConstraints maxHeight="20.0" minHeight="10.0" prefHeight="20.0" vgrow="SOMETIMES" />
-				<RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-				<RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-				<RowConstraints maxHeight="20.0" minHeight="10.0" prefHeight="20.0" vgrow="SOMETIMES" />
-				<RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-				<RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-				<RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-				<RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-				<RowConstraints maxHeight="20.0" minHeight="12.0" prefHeight="20.0" vgrow="SOMETIMES" />
-				<RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-				<RowConstraints maxHeight="10.0" minHeight="10.0" prefHeight="10.0" vgrow="SOMETIMES" />
-				<RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-				<RowConstraints maxHeight="10.0" minHeight="5.0" prefHeight="10.0" vgrow="SOMETIMES" />
+				<RowConstraints maxHeight="99.0" minHeight="10.0" prefHeight="80.0" vgrow="SOMETIMES" />
+				<RowConstraints maxHeight="93.0" minHeight="10.0" prefHeight="35.0" vgrow="SOMETIMES" />
+				<RowConstraints maxHeight="83.0" minHeight="10.0" prefHeight="28.0" vgrow="SOMETIMES" />
+				<RowConstraints maxHeight="84.0" minHeight="10.0" prefHeight="31.0" vgrow="SOMETIMES" />
+				<RowConstraints maxHeight="107.0" minHeight="10.0" prefHeight="61.0" vgrow="SOMETIMES" />
+				<RowConstraints maxHeight="111.0" minHeight="10.0" prefHeight="62.0" vgrow="SOMETIMES" />
+				<RowConstraints maxHeight="83.0" minHeight="12.0" prefHeight="38.0" vgrow="SOMETIMES" />
+				<RowConstraints maxHeight="60.0" minHeight="10.0" prefHeight="42.0" vgrow="SOMETIMES" />
+				<RowConstraints maxHeight="30.0" minHeight="5.0" prefHeight="7.0" vgrow="SOMETIMES" />
+				<RowConstraints maxHeight="64.0" minHeight="10.0" prefHeight="55.0" vgrow="SOMETIMES" />
+				<RowConstraints maxHeight="10.0" minHeight="2.0" prefHeight="2.0" vgrow="SOMETIMES" />
 			</rowConstraints>
 			<children>
 				<Label alignment="CENTER" prefHeight="30.0" prefWidth="384.0" text="CIERRE DE INSPECCIÓN INSTALACIÓN" GridPane.columnSpan="5" GridPane.halignment="CENTER" GridPane.rowIndex="1">
@@ -171,9 +171,9 @@
 					</columnConstraints>
 					<rowConstraints>
 						<RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-						<RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-						<RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-						<RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+						<RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
+						<RowConstraints maxHeight="42.0" minHeight="10.0" prefHeight="42.0" vgrow="SOMETIMES" />
+						<RowConstraints maxHeight="32.0" minHeight="10.0" prefHeight="29.0" vgrow="SOMETIMES" />
 						<RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
 						<RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
 					</rowConstraints>
@@ -350,7 +350,7 @@
 						<Font name="Arial Bold" size="12.0" />
 					</font>
 				</Label>
-            <Label text="RESULTADOS DE LA INSPECCIÓN" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="6">
+            <Label alignment="BOTTOM_LEFT" text="RESULTADOS DE LA INSPECCIÓN" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="6" GridPane.valignment="BOTTOM">
                <font>
                   <Font name="Arial Bold" size="12.0" />
                </font>

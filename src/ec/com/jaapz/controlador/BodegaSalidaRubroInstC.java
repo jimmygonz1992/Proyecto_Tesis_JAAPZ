@@ -18,6 +18,7 @@ import ec.com.jaapz.util.Context;
 import ec.com.jaapz.util.ControllerHelper;
 import ec.com.jaapz.util.Encriptado;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -68,10 +69,63 @@ public class BodegaSalidaRubroInstC {
 	
 	public void initialize() {
 		try {
+			//validar solo numeros
+			txtIdCuenta.textProperty().addListener(new ChangeListener<String>() {
+				@Override
+				public void changed(ObservableValue<? extends String> observable, String oldValue, 
+						String newValue) {
+					if (newValue.matches("\\d*")) {
+						//int value = Integer.parseInt(newValue);
+					} else {
+						txtIdCuenta.setText(oldValue);
+					}
+				}
+			});
+			
+			//validar solo numeros
+			txtIdLiquid.textProperty().addListener(new ChangeListener<String>() {
+				@Override
+				public void changed(ObservableValue<? extends String> observable, String oldValue, 
+						String newValue) {
+					if (newValue.matches("\\d*")) {
+						//int value = Integer.parseInt(newValue);
+					} else {
+						txtIdLiquid.setText(oldValue);
+					}
+				}
+			});
+			
+			//solo letras mayusculas
+			txtObservaciones.textProperty().addListener(new ChangeListener<String>() {
+				@Override
+				public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+					// TODO Auto-generated method stub
+					String cadena = txtObservaciones.getText().toUpperCase();
+					txtObservaciones.setText(cadena);
+				}
+			});
+			
+			bloquear();
 			txtUsuario.setText(Encriptado.Desencriptar(String.valueOf(Context.getInstance().getUsuariosC().getUsuario())));
 		}catch(Exception ex) {
 			System.out.println(ex.getMessage());
 		}
+	}
+	
+	void bloquear() {
+		txtCedula.setEditable(false);
+		txtNombres.setEditable(false);
+		txtApellidos.setEditable(false);
+		txtDireccion.setEditable(false);
+		txtTelefono.setEditable(false);
+		txtCodigoMedidor.setEditable(false);
+		txtMarca.setEditable(false);
+		txtModelo.setEditable(false);
+		txtPrecioMed.setEditable(false);
+		txtSubtotal.setEditable(false);
+		txtDescuento.setEditable(false);
+		txtTotal.setEditable(false);
+		txtEstadoValorInst.setEditable(false);
 	}
 	
 	public void buscarLiqCuenta() {
@@ -89,7 +143,6 @@ public class BodegaSalidaRubroInstC {
 	
 	void llenarDatosLiquidacion(LiquidacionOrden datoSeleccionado){
 		try {
-			//txtCodigoMat.setText(String.valueOf(datoSeleccionado.getIdRubro()));
 			if(datoSeleccionado.getCuentaCliente().getCliente().getCedula() == null)
 				txtCedula.setText("");
 			else
@@ -237,7 +290,7 @@ public class BodegaSalidaRubroInstC {
 			if (Context.getInstance().getLiquidaciones() != null) {
 				liquidacionSeleccionada = Context.getInstance().getLiquidaciones();
 				llenarDatosLiquidacion(liquidacionSeleccionada);
-				Context.getInstance().setLiquidaciones(null);;
+				Context.getInstance().setLiquidaciones(null);
 			}
 		}catch(Exception ex){
 			System.out.println(ex.getMessage());

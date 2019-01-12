@@ -11,7 +11,7 @@
   <children>
     <GridPane prefHeight="613.0" prefWidth="603.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
       <children>
-        <Label alignment="CENTER" prefHeight="42.0" prefWidth="394.0" text="LISTADO DE RUBROS" GridPane.columnSpan="5" GridPane.halignment="CENTER"><font><Font name="Arial Bold" size="24.0" /></font></Label>
+        <Label alignment="CENTER" prefHeight="42.0" prefWidth="394.0" text="LISTADO DE MATERIALES" GridPane.columnSpan="5" GridPane.halignment="CENTER"><font><Font name="Arial Bold" size="24.0" /></font></Label>
         <TableView fx:id="tvDatos" prefHeight="171.0" prefWidth="432.0" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="2" />
       </children>
       <columnConstraints>

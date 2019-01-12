@@ -186,7 +186,8 @@
                   <Font name="Arial Bold" size="12.0" />
                </font>
             </Label>
-            <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="6">
+            
+            <HBox style="-fx-border-color: #bbc8d0; -fx-border-width: 1px; -fx-background-radius: 6; -fx-max-height: 600; -fx-max-width: 1500; -fx-min-height: 10; -fx-min-width: 10" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="6">
                <children>
                   <GridPane HBox.hgrow="ALWAYS">
                     <columnConstraints>
@@ -196,20 +197,17 @@
                     <rowConstraints>
                       <RowConstraints maxHeight="36.0" minHeight="10.0" prefHeight="23.0" vgrow="SOMETIMES" />
                     </rowConstraints>
-                     <HBox.margin>
-                        <Insets bottom="5.0" left="7.0" right="7.0" top="5.0" />
-                     </HBox.margin>
+                     <HBox.margin><Insets bottom="5.0" left="7.0" right="7.0" top="5.0" /></HBox.margin>
                      <children>
                         <Label alignment="TOP_LEFT" contentDisplay="TOP" text="Novedades reportadas:" textAlignment="CENTER" wrapText="true">
-                           <font>
-                              <Font name="Arial Bold" size="12.0" />
-                           </font>
+                           <font><Font name="Arial Bold" size="12.0" /></font>
                         </Label>
                         <TextArea fx:id="txtNovedadesReportadas" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" />
                      </children>
                   </GridPane>
                </children>
             </HBox>
+            
             <HBox alignment="CENTER" style="-fx-border-color: #bbc8d0; -fx-border-width: 1px; -fx-background-radius: 6; -fx-max-height: 600; -fx-max-width: 1500; -fx-min-height: 10; -fx-min-width: 10" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="9">
                <children>
                   <GridPane GridPane.columnIndex="1" GridPane.columnSpan="1" GridPane.rowIndex="1" GridPane.rowSpan="1" HBox.hgrow="ALWAYS">
@@ -225,33 +223,23 @@
                               <GridPane prefHeight="148.0" prefWidth="285.0">
                                  <children>
                                     <Label text="Código:">
-                                       <font>
-                                          <Font name="Arial Bold" size="12.0" />
-                                       </font>
+                                       <font><Font name="Arial Bold" size="12.0" /></font>
                                     </Label>
                                     <Label text="Descripción:" GridPane.rowIndex="1">
-                                       <font>
-                                          <Font name="Arial Bold" size="12.0" />
-                                       </font>
+                                       <font><Font name="Arial Bold" size="12.0" /></font>
                                     </Label>
                                     <TextField fx:id="txtCodigoMat" GridPane.columnIndex="1" />
                                     <Label text="Cantidad:" GridPane.rowIndex="4">
-                                       <font>
-                                          <Font name="Arial Bold" size="12.0" />
-                                       </font>
+                                       <font><Font name="Arial Bold" size="12.0" /></font>
                                     </Label>
                                     <Label text="Stock:" GridPane.rowIndex="2">
-                                       <font>
-                                          <Font name="Arial Bold" size="12.0" />
-                                       </font>
+                                       <font><Font name="Arial Bold" size="12.0" /></font>
                                     </Label>
                                     <TextField fx:id="txtStock" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                                     <Button fx:id="btnBuscarRubro" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#buscarRubro" text="?" GridPane.columnIndex="2" GridPane.halignment="CENTER" />
                                     <TextField fx:id="txtCantidad" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                                     <Label text="Precio:" GridPane.rowIndex="3">
-                                       <font>
-                                          <Font name="Arial Bold" size="12.0" />
-                                       </font>
+                                       <font><Font name="Arial Bold" size="12.0" /></font>
                                     </Label>
                                     <TextField fx:id="txtPrecio" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                                     <TextArea fx:id="txtDescripcionProd" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
@@ -273,21 +261,15 @@
                                     <RowConstraints maxHeight="33.0" minHeight="10.0" prefHeight="28.0" vgrow="SOMETIMES" />
                                     <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="27.0" vgrow="SOMETIMES" />
                                  </rowConstraints>
-                                 <HBox.margin>
-                                    <Insets bottom="5.0" left="7.0" right="7.0" top="5.0" />
-                                 </HBox.margin>
+                                 <HBox.margin><Insets bottom="5.0" left="7.0" right="7.0" top="5.0" /></HBox.margin>
                               </GridPane>
                            </children>
                         </HBox>
                         <Label alignment="BOTTOM_CENTER" prefHeight="17.0" prefWidth="283.0" text="PRECIOS UNITARIOS" GridPane.columnSpan="2">
-                           <font>
-                              <Font name="Arial Bold" size="12.0" />
-                           </font>
+                           <font><Font name="Arial Bold" size="12.0" /></font>
                         </Label>
                         <Label alignment="BOTTOM_LEFT" prefHeight="17.0" prefWidth="283.0" text="Detalle de Materiales a Utilizar" GridPane.columnIndex="3" GridPane.columnSpan="2">
-                           <font>
-                              <Font name="Arial Bold" size="12.0" />
-                           </font>
+                           <font><Font name="Arial Bold" size="12.0" /></font>
                         </Label>
                         <TextField fx:id="txtSubtotal" GridPane.columnIndex="5" GridPane.rowIndex="2" />
                         <TextField fx:id="txtTotal" GridPane.columnIndex="5" />
@@ -309,14 +291,13 @@
                   </GridPane>
                </children>
             </HBox>
-            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="11" GridPane.valignment="CENTER">
+            
+            <HBox style="-fx-border-color: #bbc8d0; -fx-border-width: 1px; -fx-background-radius: 6; -fx-max-height: 600; -fx-max-width: 1500; -fx-min-height: 10; -fx-min-width: 10" alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="11" GridPane.valignment="CENTER">
                <children>
                   <GridPane HBox.hgrow="ALWAYS">
                      <children>
                         <Label alignment="TOP_LEFT" contentDisplay="TOP" text="Novedades de Inspección:" textAlignment="CENTER" wrapText="true">
-                           <font>
-                              <Font name="Arial Bold" size="12.0" />
-                           </font>
+                           <font><Font name="Arial Bold" size="12.0" /></font>
                         </Label>
                         <TextArea fx:id="txtNovedadesInspeccion" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" />
                      </children>
@@ -327,12 +308,11 @@
                      <rowConstraints>
                         <RowConstraints maxHeight="36.0" minHeight="10.0" prefHeight="23.0" vgrow="SOMETIMES" />
                      </rowConstraints>
-                     <HBox.margin>
-                        <Insets bottom="5.0" left="7.0" right="7.0" top="5.0" />
-                     </HBox.margin>
+                     <HBox.margin><Insets bottom="5.0" left="7.0" right="7.0" top="5.0" /></HBox.margin>
                   </GridPane>
                </children>
             </HBox>
+            
             <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="8">
                <children>
                   <GridPane HBox.hgrow="ALWAYS">

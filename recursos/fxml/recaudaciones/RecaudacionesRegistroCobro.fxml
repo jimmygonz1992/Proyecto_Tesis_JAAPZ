@@ -7,9 +7,9 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="488.0" prefWidth="949.0" stylesheets="/estilo.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ec.com.jaapz.controlador.RecaudacionesRegistroCobroC">
+<AnchorPane prefHeight="600.0" prefWidth="949.0" stylesheets="/estilo.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ec.com.jaapz.controlador.RecaudacionesRegistroCobroC">
    <children>
-      <GridPane alignment="CENTER" layoutX="5.0" layoutY="-1.0" prefHeight="488.0" prefWidth="937.0" AnchorPane.bottomAnchor="3.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="7.0" AnchorPane.topAnchor="3.0">
+      <GridPane alignment="CENTER" layoutX="5.0" layoutY="-1.0" prefHeight="488.0" prefWidth="937.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="644.0" minWidth="1.0" prefWidth="5.0" />
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="720.0" minWidth="10.0" prefWidth="493.0" />
@@ -18,8 +18,8 @@
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="435.0" minWidth="5.0" prefWidth="5.0" />
         </columnConstraints>
         <rowConstraints>
-          <RowConstraints maxHeight="286.0" minHeight="0.0" prefHeight="35.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="286.0" minHeight="10.0" prefHeight="34.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="286.0" minHeight="0.0" prefHeight="33.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="286.0" minHeight="10.0" prefHeight="48.0" vgrow="SOMETIMES" />
           <RowConstraints maxHeight="790.0" minHeight="10.0" prefHeight="97.0" vgrow="SOMETIMES" />
             <RowConstraints maxHeight="790.0" minHeight="10.0" prefHeight="20.0" vgrow="SOMETIMES" />
             <RowConstraints maxHeight="790.0" minHeight="10.0" prefHeight="54.0" vgrow="SOMETIMES" />
@@ -37,15 +37,11 @@
                   <Font name="Arial Bold" size="24.0" />
                </font>
             </Label>
-            <Button fx:id="btnBuscaCuentas" mnemonicParsing="false" onAction="#buscarCuenta" prefHeight="25.0" prefWidth="130.0" text="Buscar Cuentas" GridPane.columnIndex="1" GridPane.rowIndex="1">
-               <GridPane.margin>
-                  <Insets />
-               </GridPane.margin>
-               <font>
-                  <Font name="Arial Bold" size="13.0" />
-               </font>
+            <Button fx:id="btnBuscaCuentas" mnemonicParsing="false" onAction="#buscarCuenta" prefHeight="25.0" prefWidth="130.0" text="Buscar Cuentas" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.valignment="TOP">
+               <GridPane.margin><Insets /></GridPane.margin>
+               <font><Font name="Arial Bold" size="13.0" /></font>
             </Button>
-            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" style="-fx-border-color: #ddd; -fx-border-width: 3; -fx-background-radius: 6; -fx-max-height: 400" GridPane.columnIndex="1" GridPane.rowIndex="2">
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" style="-fx-border-color: #bbc8d0; -fx-border-width: 1px; -fx-background-radius: 6; -fx-max-height: 600; -fx-max-width: 1500; -fx-min-height: 10; -fx-min-width: 10" GridPane.columnIndex="1" GridPane.rowIndex="2">
                <children>
                   <GridPane prefHeight="80.0" prefWidth="505.0">
                     <columnConstraints>
@@ -64,9 +60,8 @@
                         <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
                            <children>
                               <Label text="Nº Medidor:">
-                                 <font>
-                                    <Font name="Arial Bold" size="13.0" />
-                                 </font></Label>
+                                 <font><Font name="Arial Bold" size="13.0" /></font>
+                              </Label>
                            </children>
                         </HBox>
                         <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1">
@@ -77,9 +72,8 @@
                         <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="3">
                            <children>
                               <Label text="Id Cuenta:">
-                                 <font>
-                                    <Font name="Arial Bold" size="13.0" />
-                                 </font></Label>
+                                 <font><Font name="Arial Bold" size="13.0" /></font>
+                              </Label>
                            </children>
                         </HBox>
                         <HBox alignment="CENTER_LEFT" prefHeight="21.0" prefWidth="191.0" GridPane.columnIndex="4">
@@ -90,9 +84,8 @@
                         <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="1">
                            <children>
                               <Label text="Cédula:">
-                                 <font>
-                                    <Font name="Arial Bold" size="13.0" />
-                                 </font></Label>
+                                 <font><Font name="Arial Bold" size="13.0" /></font>
+                              </Label>
                            </children>
                         </HBox>
                         <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
@@ -103,9 +96,8 @@
                         <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="1">
                            <children>
                               <Label text="Cliente:">
-                                 <font>
-                                    <Font name="Arial Bold" size="13.0" />
-                                 </font></Label>
+                                 <font><Font name="Arial Bold" size="13.0" /></font>
+                              </Label>
                            </children>
                         </HBox>
                         <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="1">
@@ -116,9 +108,8 @@
                         <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="2">
                            <children>
                               <Label text="Dirección:">
-                                 <font>
-                                    <Font name="Arial Bold" size="13.0" />
-                                 </font></Label>
+                                 <font><Font name="Arial Bold" size="13.0" /></font>
+                              </Label>
                            </children>
                         </HBox>
                         <HBox alignment="CENTER_LEFT" prefHeight="3.0" prefWidth="383.0" GridPane.columnIndex="1" GridPane.columnSpan="4" GridPane.rowIndex="2">
@@ -138,14 +129,10 @@
             <HBox alignment="TOP_RIGHT" prefHeight="57.0" prefWidth="274.0" GridPane.columnIndex="1" GridPane.rowIndex="6">
                <children>
                   <Label text="Total:">
-                     <font>
-                        <Font name="Arial Bold" size="14.0" />
-                     </font>
+                     <font><Font name="Arial Bold" size="14.0" /></font>
                   </Label>
                   <TextField fx:id="txtTotal" alignment="CENTER_RIGHT">
-                     <HBox.margin>
-                        <Insets right="40.0" />
-                     </HBox.margin>
+                     <HBox.margin><Insets right="40.0" /></HBox.margin>
                   </TextField>
                </children>
             </HBox>
@@ -154,7 +141,7 @@
                   <TableView fx:id="tvDetalle" prefHeight="110.0" prefWidth="643.0" />
                </children>
             </HBox>
-            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" style="-fx-border-color: #ddd; -fx-border-width: 3; -fx-background-radius: 6; -fx-max-height: 400" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" style="-fx-border-color: #bbc8d0; -fx-border-width: 1px; -fx-background-radius: 6; -fx-max-height: 600; -fx-max-width: 1500; -fx-min-height: 10; -fx-min-width: 10" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
                <children>
                   <GridPane alignment="CENTER" prefHeight="64.0" prefWidth="427.0">
                      <children>
@@ -166,9 +153,7 @@
                         <HBox alignment="CENTER_LEFT" prefHeight="31.0" prefWidth="64.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                            <children>
                               <Label text="Abono:">
-                                 <font>
-                                    <Font name="Arial Bold" size="14.0" />
-                                 </font>
+                                 <font><Font name="Arial Bold" size="14.0" /></font>
                               </Label>
                            </children>
                         </HBox>
@@ -180,9 +165,7 @@
                         <HBox alignment="CENTER_LEFT" prefHeight="31.0" prefWidth="64.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                            <children>
                               <Label text="Paga con:">
-                                 <font>
-                                    <Font name="Arial Bold" size="14.0" />
-                                 </font>
+                                 <font><Font name="Arial Bold" size="14.0" /></font>
                               </Label>
                            </children>
                         </HBox>
@@ -194,9 +177,7 @@
                         <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="1">
                            <children>
                               <Label prefHeight="16.0" prefWidth="68.0" text="Saldo:">
-                                 <font>
-                                    <Font name="Arial Bold" size="14.0" />
-                                 </font>
+                                 <font><Font name="Arial Bold" size="14.0" /></font>
                               </Label>
                            </children>
                         </HBox>
@@ -208,9 +189,7 @@
                          <HBox alignment="CENTER_LEFT" prefHeight="31.0" prefWidth="64.0" GridPane.columnIndex="4" GridPane.rowIndex="2">
                            <children>
                               <Label text="Cambio:">
-                                 <font>
-                                    <Font name="Arial Bold" size="14.0" />
-                                 </font>
+                                 <font><Font name="Arial Bold" size="14.0" /></font>
                               </Label>
                            </children>
                         </HBox>
@@ -222,9 +201,7 @@
                         <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.columnSpan="5" GridPane.rowIndex="3">
                            <children>
                               <Button fx:id="btnAceptar" mnemonicParsing="false" onAction="#aceptar" prefHeight="55.0" prefWidth="70.0" text="Aceptar">
-                                 <font>
-                                    <Font name="Arial Bold" size="13.0" />
-                                 </font>
+                                 <font><Font name="Arial Bold" size="13.0" /></font>
                               </Button>
                            </children>
                         </HBox>
@@ -249,16 +226,14 @@
             </HBox>
             
             
-            <HBox prefHeight="100.0" prefWidth="200.0" style="-fx-border-color: #ddd; -fx-border-width: 3; -fx-background-radius: 6; -fx-max-height: 400" GridPane.columnIndex="3" GridPane.rowIndex="4">
+            <HBox prefHeight="100.0" prefWidth="200.0" style="-fx-border-color: #bbc8d0; -fx-border-width: 1px; -fx-background-radius: 6; -fx-max-height: 600; -fx-max-width: 1500; -fx-min-height: 10; -fx-min-width: 10" GridPane.columnIndex="3" GridPane.rowIndex="4">
                <children>
                   <GridPane alignment="CENTER" prefHeight="64.0" prefWidth="427.0" HBox.hgrow="ALWAYS">
                      <children>
                         <HBox alignment="CENTER_LEFT" prefHeight="31.0" prefWidth="64.0">
                            <children>
                               <Label text="Nº Comprobante:">
-                                 <font>
-                                    <Font name="Arial Bold" size="12.0" />
-                                 </font>
+                                 <font><Font name="Arial Bold" size="12.0" /></font>
                               </Label>
                            </children>
                         </HBox>
@@ -270,9 +245,7 @@
                         <HBox alignment="CENTER_LEFT" prefHeight="31.0" prefWidth="64.0" GridPane.rowIndex="1">
                            <children>
                               <Label text="Fecha:">
-                                 <font>
-                                    <Font name="Arial Bold" size="12.0" />
-                                 </font>
+                                 <font><Font name="Arial Bold" size="12.0" /></font>
                               </Label>
                            </children>
                         </HBox>
@@ -284,9 +257,7 @@
                         <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="3">
                            <children>
                               <Label prefHeight="16.0" prefWidth="68.0" text="Usuario:">
-                                 <font>
-                                    <Font name="Arial Bold" size="12.0" />
-                                 </font>
+                                 <font><Font name="Arial Bold" size="12.0" /></font>
                               </Label>
                            </children>
                         </HBox>
@@ -310,23 +281,15 @@
                   </GridPane>
                </children>
             </HBox>
-            <Label alignment="BOTTOM_CENTER" contentDisplay="BOTTOM" text="Datos del Cliente" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
-               <GridPane.margin>
-                  <Insets />
-               </GridPane.margin>
-               <font>
-                  <Font name="System Bold Italic" size="13.0" />
-               </font>
+            <Label alignment="BOTTOM_CENTER" contentDisplay="BOTTOM" prefHeight="7.0" prefWidth="104.0" text="Datos del Cliente" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
+               <GridPane.margin><Insets /></GridPane.margin>
+               <font><Font name="System Bold Italic" size="13.0" /></font>
             </Label>
             <Label alignment="BOTTOM_CENTER" contentDisplay="BOTTOM" text="Facturas por Cobrar" GridPane.columnIndex="1" GridPane.rowIndex="3" GridPane.valignment="BOTTOM">
-               <font>
-                  <Font name="Arial Bold Italic" size="13.0" />
-               </font>
+               <font><Font name="Arial Bold Italic" size="13.0" /></font>
             </Label>
             <Label alignment="BOTTOM_CENTER" contentDisplay="BOTTOM" text="Registrar Abono" GridPane.columnIndex="3" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
-               <font>
-                  <Font name="Arial Bold Italic" size="13.0" />
-               </font>
+               <font><Font name="Arial Bold Italic" size="13.0" /></font>
             </Label>
            
             <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="6" GridPane.rowSpan="3">
@@ -335,34 +298,28 @@
                </children>
             </HBox>
             
-            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" style="-fx-border-color: #ddd; -fx-border-width: 3; -fx-background-radius: 6; -fx-max-height: 400" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="10" GridPane.valignment="CENTER">
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" style="-fx-border-color: #bbc8d0; -fx-border-width: 1px; -fx-background-radius: 6; -fx-max-height: 600; -fx-max-width: 1500; -fx-min-height: 10; -fx-min-width: 10" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="10" GridPane.valignment="CENTER">
                <children>
                   <GridPane alignment="CENTER" prefHeight="64.0" prefWidth="427.0">
                      <children>
                         <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1">
                            <children>
                               <CheckBox fx:id="chkImprimirComp" alignment="CENTER" mnemonicParsing="false" prefHeight="45.0" prefWidth="101.0" text="Imprimir Comprobante" textAlignment="CENTER" textOverrun="CENTER_WORD_ELLIPSIS" wrapText="true">
-                                 <font>
-                                    <Font name="System Bold" size="12.0" />
-                                 </font>
+                                 <font><Font name="System Bold" size="12.0" /></font>
                               </CheckBox>
                            </children>
                         </HBox>
                         <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="2">
                            <children>
                               <Button fx:id="btnCobrar" alignment="BOTTOM_CENTER" contentDisplay="TOP" mnemonicParsing="false" onAction="#cobrar" prefHeight="55.0" prefWidth="70.0" styleClass="botonCobrar" text="Cobrar">
-                                 <font>
-                                    <Font name="Arial Bold" size="13.0" />
-                                 </font>
+                                 <font><Font name="Arial Bold" size="13.0" /></font>
                               </Button>
                            </children>
                         </HBox>
                         <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="3">
                            <children>
                               <Button fx:id="btnLimpiar" alignment="BOTTOM_CENTER" contentDisplay="TOP" mnemonicParsing="false" onAction="#limpiar" prefHeight="55.0" prefWidth="70.0" styleClass="botonLimpiar" text="Limpiar">
-                                 <font>
-                                    <Font name="Arial Bold" size="13.0" />
-                                 </font>
+                                 <font><Font name="Arial Bold" size="13.0" /></font>
                               </Button>
                            </children>
                         </HBox>
@@ -381,26 +338,18 @@
                </children>
             </HBox>
             <Label alignment="BOTTOM_CENTER" contentDisplay="BOTTOM" text="Detalle de Factura Seleccionada" GridPane.columnIndex="1" GridPane.rowIndex="7" GridPane.valignment="BOTTOM">
-               <font>
-                  <Font name="Arial Bold Italic" size="13.0" />
-               </font>
+               <font><Font name="Arial Bold Italic" size="13.0" /></font>
             </Label>
             <Label alignment="BOTTOM_CENTER" contentDisplay="BOTTOM" text="Detalle de Factura a Cancelar" GridPane.columnIndex="3" GridPane.rowIndex="5" GridPane.valignment="BOTTOM">
-               <font>
-                  <Font name="Arial Bold Italic" size="13.0" />
-               </font>
+               <font><Font name="Arial Bold Italic" size="13.0" /></font>
             </Label>
             <HBox alignment="TOP_RIGHT" prefHeight="57.0" prefWidth="274.0" GridPane.columnIndex="3" GridPane.rowIndex="9">
                <children>
                   <Label text="Total:">
-                     <font>
-                        <Font name="Arial Bold" size="14.0" />
-                     </font>
+                     <font><Font name="Arial Bold" size="14.0" /></font>
                   </Label>
                   <TextField fx:id="txtTotalPago" alignment="CENTER_RIGHT">
-                     <HBox.margin>
-                        <Insets right="40.0" />
-                     </HBox.margin>
+                     <HBox.margin><Insets right="40.0" /></HBox.margin>
                   </TextField>
                </children>
             </HBox>

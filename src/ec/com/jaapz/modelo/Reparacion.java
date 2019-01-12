@@ -15,7 +15,23 @@ import java.util.List;
 @Table(name="Reparacion")
 @NamedQueries({
 	@NamedQuery(name="Reparacion.findAll", query="SELECT r FROM Reparacion r WHERE r.estado = 'A'"),
-	@NamedQuery(name="Reparacion.buscarIDRepar", query="SELECT r FROM Reparacion r WHERE r.estado = 'A' order by r.idReparacion desc")
+	@NamedQuery(name="Reparacion.buscarIDRepar", query="SELECT r FROM Reparacion r WHERE r.estado = 'A' order by r.idReparacion desc"),
+	@NamedQuery(name="Reparacion.findAllReparaciones", query="SELECT r FROM Reparacion r "
+			+ "where (lower(r.cuentaCliente.cliente.apellido) like :patron or lower(r.cuentaCliente.cliente.nombre) like :patron "
+			+ "or lower(r.cuentaCliente.cliente.cedula) like :patron) and r.estadoReparacion = 'PENDIENTE' "
+			+ "order by r.idReparacion asc"),
+	@NamedQuery(name="Reparacion.buscarReparacionPerfilReparaciones", query="SELECT r FROM Reparacion r "
+			+ "where (lower(r.cuentaCliente.cliente.apellido) like :patron or lower(r.cuentaCliente.cliente.nombre) like :patron "
+			+ "or lower(r.cuentaCliente.cliente.cedula) like :patron) and r.estadoReparacion = 'PENDIENTE'"
+			+ "and r.usuarioCrea = :idPerfilUsuario order by r.idReparacion asc"),
+	@NamedQuery(name="Reparacion.findAllReparacionesListadoSalida", query="SELECT r FROM Reparacion r "
+			+ "where (lower(r.cuentaCliente.cliente.apellido) like :patron or lower(r.cuentaCliente.cliente.nombre) like :patron "
+			+ "or lower(r.cuentaCliente.cliente.cedula) like :patron) and r.estadoEntrega = 'PENDIENTE' "
+			+ "order by r.idReparacion asc"),
+	@NamedQuery(name="Reparacion.buscarReparacionListadoSalidaPerfilReparaciones", query="SELECT r FROM Reparacion r "
+			+ "where (lower(r.cuentaCliente.cliente.apellido) like :patron or lower(r.cuentaCliente.cliente.nombre) like :patron "
+			+ "or lower(r.cuentaCliente.cliente.cedula) like :patron) and r.estadoEntrega = 'PENDIENTE'"
+			+ "and r.usuarioCrea = :idPerfilUsuario order by r.idReparacion asc")
 })
 public class Reparacion implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -31,6 +47,9 @@ public class Reparacion implements Serializable {
 
 	@Column(name="estado_entrega")
 	private String estadoEntrega;
+	
+	@Column(name="estado_reparacion")
+	private String estadoReparacion;
 
 	@Column(name="estado_valor")
 	private String estadoValor;
@@ -38,6 +57,10 @@ public class Reparacion implements Serializable {
 	@Temporal(TemporalType.DATE)
 	@Column(name="fecha_reparacion")
 	private Date fechaReparacion;
+	
+	@Temporal(TemporalType.DATE)
+	@Column(name="fecha_salida")
+	private Date fechaSalida;
 
 	@Column(name="foto_predio")
 	private byte[] fotoPredio;
@@ -46,6 +69,8 @@ public class Reparacion implements Serializable {
 	private Time horaReparacion;
 
 	private String observcion;
+	
+	private String referencia;
 
 	private double subtotal;
 
@@ -53,6 +78,9 @@ public class Reparacion implements Serializable {
 
 	@Column(name="usuario_crea")
 	private Integer usuarioCrea;
+	
+	@Column(name="usuario_reparacion")
+	private Integer usuarioReparacion;
 
 	//bi-directional many-to-one association to PlanillaDetalle
 	@OneToMany(mappedBy="reparacion", cascade = CascadeType.ALL)
@@ -89,6 +117,38 @@ public class Reparacion implements Serializable {
 
 	public void setDescuento(double descuento) {
 		this.descuento = descuento;
+	}
+
+	public String getEstadoReparacion() {
+		return estadoReparacion;
+	}
+
+	public void setEstadoReparacion(String estadoReparacion) {
+		this.estadoReparacion = estadoReparacion;
+	}
+
+	public Date getFechaSalida() {
+		return fechaSalida;
+	}
+
+	public void setFechaSalida(Date fechaSalida) {
+		this.fechaSalida = fechaSalida;
+	}
+
+	public String getReferencia() {
+		return referencia;
+	}
+
+	public void setReferencia(String referencia) {
+		this.referencia = referencia;
+	}
+
+	public Integer getUsuarioReparacion() {
+		return usuarioReparacion;
+	}
+
+	public void setUsuarioReparacion(Integer usuarioReparacion) {
+		this.usuarioReparacion = usuarioReparacion;
 	}
 
 	public String getEstado() {

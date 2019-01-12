@@ -77,7 +77,7 @@
                   </GridPane>
                </children>
             </HBox>
-            <Label text="Impresión de planillas" GridPane.columnSpan="11" GridPane.halignment="CENTER">
+            <Label text="IMPRESIÓN DE PLANILLAS" GridPane.columnSpan="11" GridPane.halignment="CENTER">
                <font>
                   <Font name="Arial Bold" size="24.0" />
                </font>

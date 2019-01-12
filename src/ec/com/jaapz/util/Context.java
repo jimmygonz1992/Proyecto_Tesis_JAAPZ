@@ -11,6 +11,7 @@ import ec.com.jaapz.modelo.CuentaCliente;
 import ec.com.jaapz.modelo.LiquidacionOrden;
 import ec.com.jaapz.modelo.Medidor;
 import ec.com.jaapz.modelo.Planilla;
+import ec.com.jaapz.modelo.Reparacion;
 import ec.com.jaapz.modelo.Rubro;
 import ec.com.jaapz.modelo.SegPerfil;
 import ec.com.jaapz.modelo.SegUsuario;
@@ -38,6 +39,7 @@ public class Context {
 	private Rubro rubro;
 	private Rubro rubros;
 	private LiquidacionOrden liquidaciones;
+	private Reparacion reparaciones;
 	
 	private Planilla planillas;
 	private Cliente cliente;
@@ -232,6 +234,14 @@ public class Context {
 
 	public void setLiquidaciones(LiquidacionOrden liquidaciones) {
 		this.liquidaciones = liquidaciones;
+	}
+	
+	public Reparacion getReparaciones() {
+		return reparaciones;
+	}
+
+	public void setReparaciones(Reparacion reparaciones) {
+		this.reparaciones = reparaciones;
 	}
 
 	public List<SegUsuarioPerfil> getListaPerfiles() {
