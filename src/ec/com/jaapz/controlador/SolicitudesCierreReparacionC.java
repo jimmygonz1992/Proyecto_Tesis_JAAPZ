@@ -66,6 +66,8 @@ public class SolicitudesCierreReparacionC {
 	
 	@FXML private Button btnAgregar;
 	@FXML private Button btnQuitar;
+	@FXML private Button btnGrabar;
+	@FXML private Button btnNuevo;
 	
 	@FXML private TextArea txtNovedadesInspeccion;
 	
@@ -86,31 +88,7 @@ public class SolicitudesCierreReparacionC {
 	
 	public void initialize() {
 		try {
-			txtCodigo.setEditable(false);
-			txtCodigoMedidor.setEditable(false);
-			txtFecha.setEditable(false);
-			txtReferencia.setEditable(false);
-			txtLatitud.setEditable(false);
-			txtLongitud.setEditable(false);
-			txtCedula.setEditable(false);
-			txtTelefono.setEditable(false);
-			txtContacto.setEditable(false);
-			txtNombres.setEditable(false);
-			txtDireccion.setEditable(false);
-			txtNovedadesReportadas.setEditable(false);
-			txtDescripcionProd.setEditable(false);
-			txtStock.setEditable(false);
-			txtPrecio.setEditable(false);
-			txtIdSolicRep.setVisible(false);
-			txtIdCuenta.setVisible(false);
-			txtIdSolicRep.setEditable(false);
-			txtIdCuenta.setEditable(false);
-			txtUsuario.setEditable(false);
-			txtSubtotal.setEditable(false);
-			txtTotal.setEditable(false);
-			txtSubtotal.setVisible(false);
-			txtTotal.setVisible(false);
-			
+			bloquear();			
 			txtUsuario.setText(Encriptado.Desencriptar(String.valueOf(Context.getInstance().getUsuariosC().getUsuario())));
 			
 			//recuperar Material
@@ -170,6 +148,33 @@ public class SolicitudesCierreReparacionC {
 		}catch(Exception ex) {
 			System.out.println(ex.getMessage());
 		}
+	}
+	
+	void bloquear() {
+		txtCodigo.setEditable(false);
+		txtCodigoMedidor.setEditable(false);
+		txtFecha.setEditable(false);
+		txtReferencia.setEditable(false);
+		txtLatitud.setEditable(false);
+		txtLongitud.setEditable(false);
+		txtCedula.setEditable(false);
+		txtTelefono.setEditable(false);
+		txtContacto.setEditable(false);
+		txtNombres.setEditable(false);
+		txtDireccion.setEditable(false);
+		txtNovedadesReportadas.setEditable(false);
+		txtDescripcionProd.setEditable(false);
+		txtStock.setEditable(false);
+		txtPrecio.setEditable(false);
+		txtIdSolicRep.setVisible(false);
+		txtIdCuenta.setVisible(false);
+		txtIdSolicRep.setEditable(false);
+		txtIdCuenta.setEditable(false);
+		txtUsuario.setEditable(false);
+		txtSubtotal.setEditable(false);
+		txtTotal.setEditable(false);
+		txtSubtotal.setVisible(false);
+		txtTotal.setVisible(false);
 	}
 	
 	//recupera datos del material

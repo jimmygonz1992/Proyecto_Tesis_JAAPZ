@@ -72,6 +72,24 @@ public class SeguridadUsuarioC {
 		int maxLength = 10;
 		limpiar();
 		Context.getInstance().setUsuarios(null);
+		//validar solo letras.... igual se va con puntuaciones
+		txtNombres.textProperty().addListener(new ChangeListener<String>() {
+			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+				if (!newValue.matches("\\D*")) {
+					txtNombres.setText(newValue.replaceAll("[^\\D]", ""));
+		        }
+		    }
+		});
+		
+		//validar solo letras.... igual se va con puntuaciones
+		txtApellidos.textProperty().addListener(new ChangeListener<String>() {
+			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+				if (!newValue.matches("\\D*")) {
+					txtApellidos.setText(newValue.replaceAll("[^\\D]", ""));
+			    }
+		   }
+		});
+		
 		//solo letras mayusculas
 		txtNombres.textProperty().addListener(new ChangeListener<String>() {
 			@Override

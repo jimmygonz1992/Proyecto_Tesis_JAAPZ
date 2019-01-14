@@ -11,18 +11,16 @@
    <children>
       <GridPane layoutX="85.0" layoutY="119.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <TableView fx:id="tvPersonalLectura" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="6" GridPane.rowSpan="3" />
-            <Label alignment="CENTER" prefHeight="17.0" prefWidth="206.0" text="Listado de Responsables de Lectura" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="5">
-               <font>
-                  <Font name="System Bold Italic" size="12.0" />
-               </font>
+            <TableView fx:id="tvPersonalLectura" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="4" GridPane.rowSpan="3" />
+            <Label alignment="CENTER" prefHeight="17.0" prefWidth="206.0" text="Listado de Responsables de Lectura" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="3">
+               <font><Font name="System Bold Italic" size="12.0" /></font>
             </Label>
-            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.columnSpan="5" GridPane.rowIndex="10">
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.columnSpan="5" GridPane.rowIndex="8">
                <children>
                   <Button fx:id="btnGrabarAsig" alignment="BOTTOM_CENTER" contentDisplay="TOP" graphicTextGap="0.0" mnemonicParsing="false" onAction="#grabarAsig" prefHeight="49.0" prefWidth="72.0" styleClass="botonGrabar" text="Grabar" />
                </children>
             </HBox>
-            <TabPane fx:id="tpAsignaciones" prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" GridPane.columnIndex="4" GridPane.columnSpan="2" GridPane.rowIndex="6" GridPane.rowSpan="3">
+            <TabPane fx:id="tpAsignaciones" prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" GridPane.columnIndex="4" GridPane.columnSpan="2" GridPane.rowIndex="4" GridPane.rowSpan="3">
                <tabs>
                   <Tab fx:id="tpRealizadas" text="Asignadas">
                      <content>
@@ -44,16 +42,14 @@
                   </Tab>
                </tabs>
             </TabPane>
-            <GridPane GridPane.columnIndex="4" GridPane.columnSpan="2" GridPane.rowIndex="5">
+            <GridPane GridPane.columnIndex="4" GridPane.columnSpan="2" GridPane.rowIndex="3">
                <children>
                   <Button fx:id="btnImprimirAsig" mnemonicParsing="false" onAction="#imprimirAsignaciones" text="Imprimir" />
                   <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1">
                      <children>
                         <Button fx:id="btnAsignar" mnemonicParsing="false" onAction="#asignarBarrios" text="Agregar" />
                         <Button fx:id="btnQuitarAsig" mnemonicParsing="false" onAction="#quitarBarrios" text="Quitar">
-                           <HBox.margin>
-                              <Insets left="10.0" />
-                           </HBox.margin>
+                           <HBox.margin><Insets left="10.0" /></HBox.margin>
                         </Button>
                      </children>
                   </HBox>
@@ -66,60 +62,71 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                </rowConstraints>
             </GridPane>
-            <GridPane GridPane.columnIndex="1" GridPane.columnSpan="5" GridPane.rowIndex="1" GridPane.rowSpan="3">
+            <Label text="RESPONSABLES DE LECTURA" GridPane.columnSpan="8" GridPane.halignment="CENTER">
+               <font><Font name="System Bold" size="18.0" /></font>
+            </Label>
+            
+            
+            <HBox style="-fx-border-color: #bbc8d0; -fx-border-width: 1px; -fx-spacing: 8; -fx-background-radius: 6.0; -fx-max-height: 300" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.columnSpan="5" GridPane.rowIndex="1">
                <children>
-                  <Label text="Año:" GridPane.columnIndex="1" GridPane.rowIndex="2">
-                     <font>
-                        <Font name="System Bold" size="12.0" />
-                     </font>
-                  </Label>
-                  <Label text="Mes:" GridPane.columnIndex="1" GridPane.rowIndex="4">
-                     <font>
-                        <Font name="System Bold" size="12.0" />
-                     </font>
-                  </Label>
-                  <Label text="Seleccione Apertura Realizada" GridPane.columnSpan="7" GridPane.halignment="CENTER">
-                     <font>
-                        <Font name="System Bold Italic" size="12.0" />
-                     </font>
-                  </Label>
-                  <Label text="Fecha de Inicio:" GridPane.columnIndex="1" GridPane.rowIndex="6">
-                     <font>
-                        <Font name="System Bold" size="12.0" />
-                     </font>
-                  </Label>
-                  <Button fx:id="btnBuscarApertura" contentDisplay="CENTER" mnemonicParsing="false" onAction="#buscarApertura" text="?" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
-                  <TextField fx:id="txtAnioAperRes" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.rowIndex="2" />
-                  <TextField fx:id="txtFechAperRes" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.rowIndex="6" />
-                  <TextField fx:id="txtMesAperRes" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.rowIndex="4" />
-                  <Label text="Estado:" GridPane.columnIndex="1" GridPane.rowIndex="8">
-                     <font>
-                        <Font name="System Bold" size="12.0" />
-                     </font>
-                  </Label>
-                  <TextField fx:id="txtEstadoApeAsi" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.rowIndex="8" />
+                  <GridPane HBox.hgrow="ALWAYS">
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="320.0" minWidth="10.0" prefWidth="320.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="424.0" minWidth="10.0" prefWidth="328.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="424.0" minWidth="10.0" prefWidth="328.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <Label text="Año:" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+                           <font><Font name="System Bold" size="12.0" /></font>
+                        </Label>
+                        <Label text="Mes:" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+                           <font><Font name="System Bold" size="12.0" /></font>
+                        </Label>
+                        <Label text="Fecha de Inicio:" GridPane.halignment="CENTER" GridPane.rowIndex="3">
+                           <font><Font name="System Bold" size="12.0" /></font>
+                           <GridPane.margin><Insets left="60.0" /></GridPane.margin>
+                        </Label>
+                        <Label text="Estado:" GridPane.halignment="CENTER" GridPane.rowIndex="4">
+                           <font><Font name="System Bold" size="12.0" /></font>
+                           <GridPane.margin><Insets left="10.0" /></GridPane.margin>
+                        </Label>
+                        
+                        <Button fx:id="btnBuscarApertura" contentDisplay="CENTER" mnemonicParsing="false" onAction="#buscarApertura" text="?" GridPane.columnIndex="1">
+                           <GridPane.margin><Insets left="25.0" /></GridPane.margin>
+                        </Button>
+                        
+                        <TextField fx:id="txtAnioAperRes" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="1">
+                           <GridPane.margin><Insets right="60.0" /></GridPane.margin>
+                        </TextField>
+                        
+                        <TextField fx:id="txtMesAperRes" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="2">
+                           <GridPane.margin><Insets right="60.0" /></GridPane.margin>
+                        </TextField>
+                        
+                        <TextField fx:id="txtFechAperRes" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="3">
+                           <GridPane.margin><Insets right="60.0" /></GridPane.margin>
+                        </TextField>
+                        <TextField fx:id="txtEstadoApeAsi" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="4">
+                           <GridPane.margin><Insets right="60.0" /></GridPane.margin>
+                        </TextField>
+                        <Label text="Seleccione Apertura Realizada" GridPane.halignment="CENTER">
+                           <font><Font name="System Bold Italic" size="12.0" /></font>
+                        </Label>
+                        
+                     </children>
+                     <HBox.margin><Insets bottom="5.0" left="5.0" right="5.0" top="5.0" /></HBox.margin>
+                  </GridPane>
                </children>
-               <columnConstraints>
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="120.0" minWidth="10.0" prefWidth="120.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-               </columnConstraints>
-               <rowConstraints>
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-               </rowConstraints>
-            </GridPane>
+            </HBox>
+            
+            
          </children>
          <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="20.0" minWidth="10.0" prefWidth="20.0" />
@@ -131,18 +138,16 @@
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="20.0" minWidth="10.0" prefWidth="20.0" />
          </columnConstraints>
          <rowConstraints>
-            <RowConstraints maxHeight="10.0" minHeight="10.0" prefHeight="10.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="10.0" minHeight="10.0" prefHeight="10.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="68.0" minHeight="10.0" prefHeight="28.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="175.0" minHeight="10.0" prefHeight="140.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="89.0" minHeight="0.0" prefHeight="10.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="102.0" minHeight="10.0" prefHeight="25.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="106.0" minHeight="10.0" prefHeight="90.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="10.0" minHeight="10.0" prefHeight="10.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="83.0" minHeight="10.0" prefHeight="72.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="28.0" minHeight="0.0" prefHeight="4.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="65.0" minHeight="10.0" prefHeight="54.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="30.0" minHeight="1.0" prefHeight="1.0" vgrow="SOMETIMES" />
          </rowConstraints>
       </GridPane>
    </children>

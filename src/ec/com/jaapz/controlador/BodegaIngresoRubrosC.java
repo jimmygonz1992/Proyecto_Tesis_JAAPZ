@@ -85,6 +85,7 @@ public class BodegaIngresoRubrosC {
 	
 	public void initialize(){
 		try {
+			int maxLength = 10;
 			nuevo();
 			usuarioLogueado = Context.getInstance().getUsuariosC();
 			txtUsuario.setText(Encriptado.Desencriptar(String.valueOf(Context.getInstance().getUsuariosC().getUsuario())));
@@ -105,6 +106,19 @@ public class BodegaIngresoRubrosC {
 						//int value = Integer.parseInt(newValue);
 					} else {
 						txtRuc.setText(oldValue);
+					}
+				}
+			});
+			
+			//validar solo numeros
+			txtCantidadMat.textProperty().addListener(new ChangeListener<String>() {
+				@Override
+				public void changed(ObservableValue<? extends String> observable, String oldValue, 
+						String newValue) {
+					if (newValue.matches("\\d*")) {
+						//int value = Integer.parseInt(newValue);
+					} else {
+						txtCantidadMat.setText(oldValue);
 					}
 				}
 			});
@@ -158,6 +172,46 @@ public class BodegaIngresoRubrosC {
 				}
 			});
 			
+			//numeros con decimales
+			txtPrecioMat.textProperty().addListener(new ChangeListener<String>() {
+				@Override
+				public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+					if (!newValue.matches("\\d*(\\.\\d*)?")) {
+						txtPrecioMat.setText(oldValue);
+					}
+				}
+			});
+			
+			//numeros con decimales
+			txtSubtotal.textProperty().addListener(new ChangeListener<String>() {
+				@Override
+				public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+					if (!newValue.matches("\\d*(\\.\\d*)?")) {
+						txtSubtotal.setText(oldValue);
+					}
+				}
+			});
+			
+			//numeros con decimales
+			txtDescuento.textProperty().addListener(new ChangeListener<String>() {
+				@Override
+				public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+					if (!newValue.matches("\\d*(\\.\\d*)?")) {
+						txtDescuento.setText(oldValue);
+					}
+				}
+			});
+			
+			//numeros con decimales
+			txtTotal.textProperty().addListener(new ChangeListener<String>() {
+				@Override
+				public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+					if (!newValue.matches("\\d*(\\.\\d*)?")) {
+						txtTotal.setText(oldValue);
+					}
+				}
+			});
+			
 			//recuperar factura
 			txtNumero.setOnKeyPressed(new EventHandler<KeyEvent>(){
 				@Override
@@ -172,6 +226,16 @@ public class BodegaIngresoRubrosC {
 			});
 			
 			//solo letras mayusculas
+			txtProveedor.textProperty().addListener(new ChangeListener<String>() {
+				@Override
+				public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+					// TODO Auto-generated method stub
+					String cadena = txtProveedor.getText().toUpperCase();
+					txtProveedor.setText(cadena);
+				}
+			});
+			
+			//solo letras mayusculas
 			txtNombresPro.textProperty().addListener(new ChangeListener<String>() {
 				@Override
 				public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
@@ -179,6 +243,15 @@ public class BodegaIngresoRubrosC {
 					String cadena = txtNombresPro.getText().toUpperCase();
 					txtNombresPro.setText(cadena);
 				}
+			});
+			
+			//validar solo letras.... igual se va con puntuaciones
+			txtNombresPro.textProperty().addListener(new ChangeListener<String>() {
+				public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+					if (!newValue.matches("\\D*")) {
+						txtNombresPro.setText(newValue.replaceAll("[^\\D]", ""));
+			        }
+			    }
 			});
 			
 			//solo letras mayusculas
@@ -191,6 +264,15 @@ public class BodegaIngresoRubrosC {
 				}
 			});
 			
+			//validar solo letras.... igual se va con puntuaciones
+			txtApellidosPro.textProperty().addListener(new ChangeListener<String>() {
+				public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+					if (!newValue.matches("\\D*")) {
+						txtApellidosPro.setText(newValue.replaceAll("[^\\D]", ""));
+			        }
+			    }
+			});
+			
 			//solo letras mayusculas
 			txtDireccionPro.textProperty().addListener(new ChangeListener<String>() {
 				@Override
@@ -198,6 +280,50 @@ public class BodegaIngresoRubrosC {
 					// TODO Auto-generated method stub
 					String cadena = txtDireccionPro.getText().toUpperCase();
 					txtDireccionPro.setText(cadena);
+				}
+			});
+			
+			//solo letras mayusculas
+			txtNumero.textProperty().addListener(new ChangeListener<String>() {
+				@Override
+				public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+					// TODO Auto-generated method stub
+					String cadena = txtNumero.getText().toUpperCase();
+					txtNumero.setText(cadena);
+				}
+			});
+			
+			//solo letras mayusculas
+			txtCodigoMat.textProperty().addListener(new ChangeListener<String>() {
+				@Override
+				public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+					// TODO Auto-generated method stub
+					String cadena = txtCodigoMat.getText().toUpperCase();
+					txtCodigoMat.setText(cadena);
+				}
+			});
+			
+			//validar solo numeros
+			txtTelefonoPro.textProperty().addListener(new ChangeListener<String>() {
+				@Override
+				public void changed(ObservableValue<? extends String> observable, String oldValue, 
+						String newValue) {
+					if (newValue.matches("\\d*")) {
+						//int value = Integer.parseInt(newValue);
+					} else {
+						txtTelefonoPro.setText(oldValue);
+					}
+				}
+			});
+			
+			//validar solo 10 valores
+			txtTelefonoPro.textProperty().addListener(new ChangeListener<String>() {
+				@Override
+				public void changed(final ObservableValue<? extends String> ov, final String oldValue, final String newValue) {
+					if (txtTelefonoPro.getText().length() > maxLength) {
+						String s = txtTelefonoPro.getText().substring(0, maxLength);
+						txtTelefonoPro.setText(s);
+					}
 				}
 			});
 			
@@ -611,7 +737,11 @@ public class BodegaIngresoRubrosC {
 					if (txtCodigoProv.getText().equals("0")) {// inserta nuevo proveedor
 						proveedorSeleccionado.setIdProveedor(null);
 						ingresoDao.getEntityManager().persist(proveedorSeleccionado);
+					}else {
+						proveedorSeleccionado.setIdProveedor(Integer.parseInt(txtCodigoProv.getText()));
+						ingresoDao.getEntityManager().merge(proveedorSeleccionado);
 					}
+					
 					//ingresoDao.getEntityManager().persist(ingreso);				
 					ingresoDao.getEntityManager().getTransaction().commit();
 

@@ -21,6 +21,14 @@ import java.util.List;
 	@NamedQuery(name="LiquidacionOrden.buscarLiquidacionOrdenPerfil", query="SELECT l FROM LiquidacionOrden l "
 			+ "where (lower(l.cuentaCliente.cliente.apellido) like :patron or lower(l.cuentaCliente.cliente.nombre) like :patron "
 			+ "or lower(l.cuentaCliente.cliente.cedula) like :patron) and l.solInspeccionIn.estadoInspeccion = 'REALIZADO' and l.estadoValor = 'CANCELADO' and l.estadoOrden = 'PENDIENTE'"
+			+ "and l.usuarioCrea = :idPerfilUsuario order by l.idLiquidacion asc"),
+	@NamedQuery(name="LiquidacionOrden.findAllInstalaciones", query="SELECT l FROM LiquidacionOrden l "
+			+ "where (lower(l.cuentaCliente.cliente.apellido) like :patron or lower(l.cuentaCliente.cliente.nombre) like :patron "
+			+ "or lower(l.cuentaCliente.cliente.cedula) like :patron) and l.estadoValor = 'CANCELADO' and l.estadoInstalacion = 'PENDIENTE'"
+			+ "order by l.idLiquidacion asc"),
+	@NamedQuery(name="LiquidacionOrden.buscarLiquidacionOrdenPerfilInstalaciones", query="SELECT l FROM LiquidacionOrden l "
+			+ "where (lower(l.cuentaCliente.cliente.apellido) like :patron or lower(l.cuentaCliente.cliente.nombre) like :patron "
+			+ "or lower(l.cuentaCliente.cliente.cedula) like :patron) and l.estadoValor = 'CANCELADO' and l.estadoInstalacion = 'PENDIENTE'"
 			+ "and l.usuarioCrea = :idPerfilUsuario order by l.idLiquidacion asc")
 })
 public class LiquidacionOrden implements Serializable {
@@ -38,6 +46,9 @@ public class LiquidacionOrden implements Serializable {
 
 	@Column(name="estado_valor")
 	private String estadoValor;
+	
+	@Column(name="estado_instalacion")
+	private String estadoInstalacion;
 
 	@Temporal(TemporalType.DATE)
 	private Date fecha;
@@ -99,6 +110,14 @@ public class LiquidacionOrden implements Serializable {
 
 	public void setEstadoOrden(String estadoOrden) {
 		this.estadoOrden = estadoOrden;
+	}
+	
+	public String getEstadoInstalacion() {
+		return this.estadoInstalacion;
+	}
+
+	public void setEstadoInstalacion(String estadoInstalacion) {
+		this.estadoInstalacion = estadoInstalacion;
 	}
 
 	public String getEstadoValor() {

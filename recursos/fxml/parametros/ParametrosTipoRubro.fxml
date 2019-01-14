@@ -13,65 +13,62 @@
     <GridPane hgap="1.0" minHeight="0.0" minWidth="0.0" prefHeight="331.0" prefWidth="699.0" vgap="1.0" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="22.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="50.0">
       <children>
         <Label alignment="CENTER" prefHeight="42.0" prefWidth="262.0" text="TIPO DE RUBRO" GridPane.columnSpan="7" GridPane.halignment="CENTER">
-          <font>
-            <Font name="Arial Bold" size="30.0" />
-          </font>
+          <font><Font name="Arial Bold" size="30.0" /></font>
         </Label>
         <TableView fx:id="tvDatos" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="3" GridPane.rowSpan="3" />
         <Label alignment="CENTER" prefHeight="17.0" prefWidth="144.0" text="LISTADO" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="2">
-               <font>
-                  <Font name="Arial Bold" size="12.0" />
-               </font></Label>
+               <font><Font name="Arial Bold" size="12.0" /></font>
+        </Label>
         <Label alignment="CENTER" prefHeight="17.0" prefWidth="109.0" text="DATOS" GridPane.columnIndex="4" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="2">
-               <font>
-                  <Font name="System Bold" size="12.0" />
-               </font></Label>
-        <GridPane alignment="CENTER" hgap="1.0" styleClass="BordesGrid" vgap="1.0" GridPane.columnIndex="4" GridPane.columnSpan="2" GridPane.rowIndex="3">
-          <children>
-            <Label text="Código:">
-                     <font>
-                        <Font name="System Bold" size="12.0" />
-                     </font></Label>
-            <Label text="Descripción:" GridPane.rowIndex="2">
-                     <font>
-                        <Font name="System Bold" size="12.0" />
-                     </font></Label>
-            <TextField fx:id="txtCodigo" GridPane.columnIndex="1" />
-            <TextField fx:id="txtDescripcion" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <Label text="Estado:" GridPane.rowIndex="4">
-                     <font>
-                        <Font name="System Bold" size="12.0" />
-                     </font></Label>
-            <CheckBox fx:id="chkEstado" alignment="CENTER" mnemonicParsing="false" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
-          </children>
-          <columnConstraints>
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="82.0" prefWidth="82.0" />
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="274.0" />
-          </columnConstraints>
-          <rowConstraints>
-            <RowConstraints maxHeight="71.0" minHeight="10.0" prefHeight="71.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="32.0" minHeight="0.0" prefHeight="0.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="64.0" minHeight="10.0" prefHeight="45.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="33.0" minHeight="5.0" prefHeight="5.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="71.0" minHeight="10.0" prefHeight="71.0" vgrow="SOMETIMES" />
-          </rowConstraints>
-        </GridPane>
-        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.columnSpan="2" GridPane.rowIndex="5">
+               <font><Font name="System Bold" size="12.0" /></font>
+        </Label>
+        
+        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" style="-fx-border-color: #bbc8d0; -fx-border-width: 1px; -fx-spacing: 8; -fx-background-radius: 6.0; -fx-max-height: 300" GridPane.columnIndex="4" GridPane.columnSpan="2" GridPane.rowIndex="5">
           <children>
             <Button fx:id="btnAceptar" alignment="BOTTOM_CENTER" contentDisplay="TOP" graphicTextGap="0.0" mnemonicParsing="false" onAction="#grabar" prefHeight="49.0" prefWidth="72.0" styleClass="botonGrabar" text="Grabar">
-                     <font>
-                        <Font name="System Bold" size="12.0" />
-                     </font></Button>
+            <font><Font name="System Bold" size="12.0" /></font>
+            </Button>
             <Button fx:id="btnNuevo" alignment="BOTTOM_CENTER" contentDisplay="TOP" graphicTextGap="0.0" mnemonicParsing="false" onAction="#nuevo" prefHeight="49.0" prefWidth="72.0" styleClass="botonNuevo" text="Nuevo">
-              <HBox.margin>
-                <Insets left="20.0" />
-              </HBox.margin>
-                     <font>
-                        <Font name="System Bold" size="12.0" />
-                     </font>
+              <HBox.margin><Insets left="20.0" /></HBox.margin>
+              <font><Font name="System Bold" size="12.0" /></font>
             </Button>
           </children>
         </HBox>
+        
+            <HBox prefHeight="100.0" prefWidth="200.0" style="-fx-border-color: #bbc8d0; -fx-border-width: 1px; -fx-spacing: 8; -fx-background-radius: 6.0; -fx-max-height: 300" GridPane.columnIndex="4" GridPane.columnSpan="2" GridPane.rowIndex="3">
+               <children>
+              <GridPane alignment="CENTER" hgap="1.0" styleClass="BordesGrid" vgap="1.0" HBox.hgrow="ALWAYS">
+                <children>
+                  <Label text="Código:">
+                           <font><Font name="System Bold" size="12.0" /></font>
+                        </Label>
+                  <Label text="Descripción:" GridPane.rowIndex="2">
+                           <font><Font name="System Bold" size="12.0" /></font>
+                        </Label>
+                  <TextField fx:id="txtCodigo" GridPane.columnIndex="1" />
+                  <TextField fx:id="txtDescripcion" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <Label text="Estado:" GridPane.rowIndex="4">
+                           <font><Font name="System Bold" size="12.0" /></font>
+                        </Label>
+                  <CheckBox fx:id="chkEstado" alignment="CENTER" mnemonicParsing="false" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
+                </children>
+                <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="82.0" prefWidth="82.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="274.0" />
+                </columnConstraints>
+                <rowConstraints>
+                  <RowConstraints maxHeight="71.0" minHeight="10.0" prefHeight="71.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="32.0" minHeight="0.0" prefHeight="0.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="64.0" minHeight="10.0" prefHeight="45.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="33.0" minHeight="5.0" prefHeight="5.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="71.0" minHeight="10.0" prefHeight="71.0" vgrow="SOMETIMES" />
+                </rowConstraints>
+                     <HBox.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </HBox.margin>
+              </GridPane>
+               </children>
+            </HBox>
       </children>
       <columnConstraints>
         <ColumnConstraints hgrow="SOMETIMES" maxWidth="95.0" minWidth="0.0" prefWidth="10.0" />
@@ -88,8 +85,8 @@
         <RowConstraints maxHeight="185.0" minHeight="7.0" prefHeight="12.0" vgrow="SOMETIMES" />
         <RowConstraints maxHeight="224.0" minHeight="10.0" prefHeight="197.0" vgrow="SOMETIMES" />
         <RowConstraints maxHeight="28.0" minHeight="4.0" prefHeight="4.0" vgrow="SOMETIMES" />
-        <RowConstraints maxHeight="57.0" minHeight="10.0" prefHeight="46.0" vgrow="SOMETIMES" />
-        <RowConstraints maxHeight="47.0" minHeight="10.0" prefHeight="47.0" vgrow="SOMETIMES" />
+        <RowConstraints maxHeight="57.0" minHeight="10.0" prefHeight="54.0" vgrow="SOMETIMES" />
+        <RowConstraints maxHeight="47.0" minHeight="10.0" prefHeight="39.0" vgrow="SOMETIMES" />
       </rowConstraints>
     </GridPane>
   </children>

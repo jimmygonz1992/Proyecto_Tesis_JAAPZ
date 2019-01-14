@@ -28,4 +28,26 @@ public class LiquidacionOrdenDAO extends ClaseDAO{
 		resultado = (List<LiquidacionOrden>) query.getResultList();
 		return resultado;
 	}
+	
+	//para recuperar en instalaciones
+	@SuppressWarnings("unchecked")
+	public List<LiquidacionOrden> getListaLiquidacionOrdenInstalaciones(String patron){
+		List<LiquidacionOrden> resultado = new ArrayList<LiquidacionOrden>();
+		Query query = getEntityManager().createNamedQuery("LiquidacionOrden.findAllInstalaciones");
+		query.setHint("javax.persistence.cache.storeMode", "REFRESH");
+		query.setParameter("patron", "%" + patron + "%");
+		resultado = (List<LiquidacionOrden>) query.getResultList();
+		return resultado;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<LiquidacionOrden> getListaLiquidacionOrdenPerfilInstalaciones(String patron){
+		List<LiquidacionOrden> resultado = new ArrayList<LiquidacionOrden>();
+		Query query = getEntityManager().createNamedQuery("LiquidacionOrden.buscarLiquidacionOrdenPerfilInstalaciones");
+		query.setHint("javax.persistence.cache.storeMode", "REFRESH");
+		query.setParameter("patron", "%" + patron + "%");
+		query.setParameter("idPerfilUsuario", Context.getInstance().getIdPerfil());
+		resultado = (List<LiquidacionOrden>) query.getResultList();
+		return resultado;
+	}
 }
