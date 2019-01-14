@@ -102,6 +102,42 @@ public class LecturasIngresoC {
 					return new SimpleObjectProperty<String>(String.valueOf(param.getValue().getPlanilla().getLecturaAnterior()));
 				}
 			});
+			/*
+			TableColumn<PlanillaDetalle, String> actColum = new TableColumn<PlanillaDetalle, String>("imprime");
+			actColum.setCellValueFactory(new Callback<CellDataFeatures<PlanillaDetalle, String>, ObservableValue<String>>() {
+				@Override
+				public ObservableValue<String> call(CellDataFeatures<PlanillaDetalle, String> param) {
+					PlanillaDetalle val = param.getValue();
+					SimpleStringProperty booleanProp;
+					if(val.getImprime() != null)
+						booleanProp = new SimpleBooleanProperty(val.getImprime());
+					else
+						booleanProp = new SimpleBooleanProperty(false);
+					
+					booleanProp.addListener(new ChangeListener<Boolean>() {
+						@Override
+						public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue,
+								Boolean newValue) {
+							val.setImprime(newValue);
+							int contador = 0;
+							for(Planilla pl : tvDatos.getItems()) {
+								if(pl.getImprime() != null)
+									if(pl.getImprime() == true)
+										contador = contador + 1;
+							}
+							if(contador == tvDatos.getItems().size())
+								chkImpTodo.setSelected(true);
+							else
+								chkImpTodo.setSelected(false);
+						}
+					});
+					return booleanProp;
+				}
+			});
+			*/
+			
+			
+			
 			TableColumn<PlanillaDetalle, String> actColum = new TableColumn<>("Lec. Actual");
 			actColum.setMinWidth(10);
 			actColum.setPrefWidth(90);
@@ -116,13 +152,21 @@ public class LecturasIngresoC {
 				    new EventHandler<CellEditEvent<PlanillaDetalle, String>>() {
 				        @Override
 				        public void handle(CellEditEvent<PlanillaDetalle, String> t) {
+				        	Integer anterior = Integer.parseInt(t.getOldValue());
+				        	Integer lecActerior = tvDatosLecturas.getSelectionModel().getSelectedItem().getPlanilla().getLecturaAnterior();
+				        	Integer nuevo = Integer.parseInt(t.getNewValue());
+				        	Integer valor = 0;
+				        	if(nuevo < lecActerior)
+				        		valor = anterior;
+				        	else
+				        		valor = nuevo;
 				            ((PlanillaDetalle) t.getTableView().getItems().get(
 				                t.getTablePosition().getRow())
-				                ).getPlanilla().setLecturaActual(Integer.parseInt(t.getNewValue()));
+				                ).getPlanilla().setLecturaActual(valor);
+				            tvDatosLecturas.refresh();
 				        }
 				    }
 				);
-			
 			tvDatosLecturas.getColumns().addAll(medidorColum,clienteColum,antColum,actColum);
 			tvDatosLecturas.setItems(datos);
 
@@ -197,7 +241,8 @@ public class LecturasIngresoC {
 	    			Integer lecturaActual = det.getPlanilla().getLecturaActual();
 	    			Integer lecturaAnterior = det.getPlanilla().getLecturaAnterior();
 	    			Integer consumo = lecturaActual - lecturaAnterior;
-	    			
+	    			det.getPlanilla().setUsuarioCrea(Context.getInstance().getIdUsuario());
+	    			det.getPlanilla().setOrigen(Constantes.ORIGEN_ESCRITORIO);
 	    			det.setCantidad(consumo);
 	    			det.getPlanilla().setConsumo(consumo);
 	    			det.setUsuarioCrea(Context.getInstance().getIdUsuario());

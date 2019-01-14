@@ -234,8 +234,8 @@ public class SolicitudesCierreInspeccionC {
 					//lleno los datos de la orden de despacho
 					ordenLiquidacion.setIdLiquidacion(null);
 					ordenLiquidacion.setMedidor(medidorSeleccionado);
-					ordenLiquidacion.setEstadoOrden("PENDIENTE");
-					ordenLiquidacion.setEstado("A");
+					ordenLiquidacion.setEstadoOrden(Constantes.EST_INSPECCION_PENDIENTE);
+					ordenLiquidacion.setEstado(Constantes.ESTADO_ACTIVO);
 					ordenLiquidacion.setHora(sqlTime);
 					
 					ordenLiquidacion.setUsuarioCrea(Context.getInstance().getIdUsuario());
@@ -243,7 +243,7 @@ public class SolicitudesCierreInspeccionC {
 					Date date = new Date();
 					Timestamp fecha = new Timestamp(date.getTime());
 					ordenLiquidacion.setFecha(fecha);
-					inspeccionSeleccionado.setEstadoInspeccion("REALIZADO");
+					inspeccionSeleccionado.setEstadoInspeccion(Constantes.EST_INSPECCION_REALIZADO);
 					//lista de detalle de la orden previa de inspeccion a insertar
 					
 					for(LiquidacionDetalle det : tvDatosOrdenPrevia.getItems()) {
@@ -272,7 +272,7 @@ public class SolicitudesCierreInspeccionC {
 					cuentaCliente.setBarrio(inspeccionSeleccionado.getBarrio());
 					cuentaCliente.setCategoria(categoriaDAO.getCategoriaNombre(inspeccionSeleccionado.getUsoMedidor()));
 					cuentaCliente.setFechaIngreso(fecha);
-					cuentaCliente.setEstado("A");
+					cuentaCliente.setEstado(Constantes.ESTADO_ACTIVO);
 					
 					//aqui para agregar la factura del 60% del costo de instalacion
 					List<Planilla> listaAdd = new ArrayList<Planilla>();
@@ -286,7 +286,7 @@ public class SolicitudesCierreInspeccionC {
 					planilla.setConsumo(0);
 					planilla.setConsumoMinimo(0);
 					
-					planilla.setIdentInstalacion("INS"); //verdadero cuando es una nueva instalacion.. caso contrario es una planilla normal
+					planilla.setIdentInstalacion(Constantes.IDENT_INSTALACION); //verdadero cuando es una nueva instalacion.. caso contrario es una planilla normal
 					planilla.setLecturaAnterior(0);//son cero en primera instancia
 					planilla.setLecturaActual(0);
 
@@ -307,7 +307,7 @@ public class SolicitudesCierreInspeccionC {
 					detallePlanilla.setUsuarioCrea(Context.getInstance().getIdUsuario());
 					detallePlanilla.setSubtotal(valorTotal);
 					detallePlanilla.setDescripcion("POR INSTALACIÓN DE NUEVO MEDIDOR");
-					detallePlanilla.setEstado("A");
+					detallePlanilla.setEstado(Constantes.ESTADO_ACTIVO);
 					detallePlanilla.setCantidad(1);
 					detallePlanilla.setPlanilla(planilla);
 					List<PlanillaDetalle> det = new ArrayList<PlanillaDetalle>();
@@ -343,6 +343,7 @@ public class SolicitudesCierreInspeccionC {
 					limpiarCliente();
 					limpiarOrden();
 					limpiarObservaciones();
+					cboFactible.getSelectionModel().select(Factible.NO_FACTIBLE);
 					tvDatosOrdenPrevia.getColumns().clear();
 					tvDatosOrdenPrevia.getItems().clear();
 					tvDatosOrdenPrevia.getColumns().clear();
@@ -353,7 +354,7 @@ public class SolicitudesCierreInspeccionC {
 					txtMarca.setText("");
 					medidorSeleccionado = null;
 				}else {
-					inspeccionSeleccionado.setEstadoInspeccion("REALIZADO");
+					inspeccionSeleccionado.setEstadoInspeccion(Constantes.EST_INSPECCION_REALIZADO);
 					inspeccionSeleccionado.setFactibilidad(cboFactible.getSelectionModel().getSelectedItem().toString());
 					//se procede a grabar los daotos
 					inspeccionDAO.getEntityManager().getTransaction().begin();
@@ -364,6 +365,7 @@ public class SolicitudesCierreInspeccionC {
 					limpiarCliente();
 					limpiarOrden();
 					limpiarObservaciones();
+					cboFactible.getSelectionModel().select(Factible.NO_FACTIBLE);
 					tvDatosOrdenPrevia.getColumns().clear();
 					tvDatosOrdenPrevia.getItems().clear();
 					tvDatosOrdenPrevia.getColumns().clear();
@@ -402,12 +404,10 @@ public class SolicitudesCierreInspeccionC {
 				bloquearResultados();
 				tvDatosOrdenPrevia.getColumns().clear();
 				tvDatosOrdenPrevia.getItems().clear();
-				
 				txtCodigoMedidor.setText("");
 				txtModelo.setText("");
 				txtMarca.setText("");
 				medidorSeleccionado = null;
-				
 			}
 		}catch(Exception ex) {
 			System.out.println(ex.getMessage());
@@ -425,36 +425,16 @@ public class SolicitudesCierreInspeccionC {
 			//llenar los datos en la tabla
 			TableColumn<LiquidacionDetalle, String> cantidadColum = new TableColumn<>("Cantidad");
 			cantidadColum.setMinWidth(10);
-			cantidadColum.setPrefWidth(90);
+			cantidadColum.setPrefWidth(110);
 			cantidadColum.setCellValueFactory(new PropertyValueFactory<LiquidacionDetalle, String>("cantidad"));
 
 			TableColumn<LiquidacionDetalle, String> descipcionColum = new TableColumn<>("Descripcion");
 			descipcionColum.setMinWidth(10);
-			descipcionColum.setPrefWidth(250);
+			descipcionColum.setPrefWidth(350);
 			descipcionColum.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<LiquidacionDetalle,String>, ObservableValue<String>>() {
 				@Override
 				public ObservableValue<String> call(CellDataFeatures<LiquidacionDetalle, String> param) {
 					return new SimpleObjectProperty<String>(param.getValue().getRubro().getDescripcion());
-				}
-			});
-
-			TableColumn<LiquidacionDetalle, String> precioColum = new TableColumn<>("Costo U.");
-			precioColum.setMinWidth(10);
-			precioColum.setPrefWidth(90);
-			precioColum.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<LiquidacionDetalle,String>, ObservableValue<String>>() {
-				@Override
-				public ObservableValue<String> call(CellDataFeatures<LiquidacionDetalle, String> param) {
-					return new SimpleObjectProperty<String>(String.valueOf(decimales.format(param.getValue().getRubro().getPrecio())));
-				}
-			});
-
-			TableColumn<LiquidacionDetalle, String> costoColum = new TableColumn<>("Costo Total");
-			costoColum.setMinWidth(10);
-			costoColum.setPrefWidth(90);
-			costoColum.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<LiquidacionDetalle,String>, ObservableValue<String>>() {
-				@Override
-				public ObservableValue<String> call(CellDataFeatures<LiquidacionDetalle, String> param) {
-					return new SimpleObjectProperty<String>(String.valueOf(decimales.format(param.getValue().getTotal())));
 				}
 			});
 
@@ -470,7 +450,7 @@ public class SolicitudesCierreInspeccionC {
 				datos.add(orden);
 			}
 
-			tvDatosOrdenPrevia.getColumns().addAll(cantidadColum,descipcionColum,precioColum,costoColum);
+			tvDatosOrdenPrevia.getColumns().addAll(cantidadColum,descipcionColum);
 			tvDatosOrdenPrevia.setItems(datos);
 
 		}catch(Exception ex) {

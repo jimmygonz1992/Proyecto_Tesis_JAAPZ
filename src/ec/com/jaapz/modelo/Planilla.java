@@ -63,6 +63,8 @@ public class Planilla implements Serializable, Comparable<Planilla> {
 	private Integer lecturaAnterior;
 
 	private String longitud;
+	
+	private String origen;
 
 	@Column(name="total_letras")
 	private String totalLetras;
@@ -354,6 +356,15 @@ public class Planilla implements Serializable, Comparable<Planilla> {
 	public void setEnvia(Boolean envia) {
 		this.envia = envia;
 	}
+	
+	public String getOrigen() {
+		return origen;
+	}
+
+	public void setOrigen(String origen) {
+		this.origen = origen;
+	}
+
 	@Override
 	public int compareTo(Planilla o) {
 		if (this.idPlanilla < o.idPlanilla) {

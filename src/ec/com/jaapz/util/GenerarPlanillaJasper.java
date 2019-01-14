@@ -1,5 +1,6 @@
 package ec.com.jaapz.util;
 
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.List;
@@ -14,6 +15,7 @@ public class GenerarPlanillaJasper {
 	public boolean crearPlanillaCliente(Planilla planilla) {
 		try {
 			boolean bandera = true;
+			DecimalFormat df = new DecimalFormat("#0.00");
 			SimpleDateFormat formateador = new SimpleDateFormat("dd-MM-yyyy");
 			
 			Map<String, Object> param = new HashMap<String, Object>();
@@ -23,7 +25,7 @@ public class GenerarPlanillaJasper {
 			param.put("LECTURA_ACTUAL", String.valueOf(planilla.getLecturaActual()));
 			param.put("LECTURA_ANTERIOR", String.valueOf(planilla.getLecturaAnterior()));
 			param.put("CONSUMO_MENSUAL", String.valueOf(planilla.getConsumo()));
-			param.put("SUBTOTAL_MENSUAL", String.valueOf("$ " + (planilla.getConsumo() * planilla.getCuentaCliente().getCategoria().getValorM3())));
+			param.put("SUBTOTAL_MENSUAL", String.valueOf("$ " + df.format(planilla.getConsumo() * planilla.getCuentaCliente().getCategoria().getValorM3())));
 			//calcular la deuda anterior
 	        double deudaAnterior = 0,deudaCero = 0;
 	        List<Planilla> planillasGeneradas = planillaDAO.getPlanillaCuenta(planilla.getCuentaCliente().getIdCuenta());
@@ -46,13 +48,13 @@ public class GenerarPlanillaJasper {
 	        else
 	        	deudaCero = deudaAnterior;
 	        
-			param.put("DEUDA_ANTERIOR", String.valueOf("$ " + (deudaCero - planilla.getTotalPagar())));
+			param.put("DEUDA_ANTERIOR", String.valueOf("$ " + df.format(deudaCero - planilla.getTotalPagar())));
 			
 			double otros = 0;
 	        for(int i = 1 ; i < planilla.getPlanillaDetalles().size() ; i ++)
 	        	otros = otros + planilla.getPlanillaDetalles().get(i).getSubtotal();
-			param.put("OTROS", String.valueOf("$ " + otros));
-			param.put("TOTAL_PAGAR", String.valueOf("$ " + deudaAnterior));
+			param.put("OTROS", String.valueOf("$ " + df.format(otros)));
+			param.put("TOTAL_PAGAR", String.valueOf("$ " + df.format(deudaAnterior)));
 			param.put("CANCELAR_ANTES", "CANCELAR ANTES DEL 15 DEL MES EN CURSO");
 			param.put("TOTAL_LETRAS", planilla.getTotalLetras());
 			String detalleOtros = "";

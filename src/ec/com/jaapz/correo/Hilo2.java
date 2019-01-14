@@ -7,12 +7,12 @@ import javax.mail.MessagingException;
 import javax.swing.JOptionPane;
 
 import ec.com.jaapz.util.Constantes;
-import ec.com.jaapz.util.Context;
+import ec.com.jaapz.util.ControllerHelper;
 import ec.com.jaapz.util.Encriptado;
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 
-public class Hilo2 extends Thread {
+public class Hilo2 {
 	private boolean continuar = true;
 	public static  boolean  envioExito= false;
 	private String adjunto;
@@ -26,7 +26,7 @@ public class Hilo2 extends Thread {
 	private String medidor;
 	private ImageView ivEnviandoMensaje;
 	private Button btnEnviarCorreo;
-	
+	ControllerHelper helper = new ControllerHelper();
 	
 	public Hilo2(String adjunto, String[] adjuntos, String[] destinatarios, int servidor, String destinatario,
 			String asunto, String mensaje,ImageView ivEnviandoMensaje, Button btnEnviarCorreo,String cliente, String medidor) {
@@ -47,7 +47,7 @@ public class Hilo2 extends Thread {
 		this.continuar = false;
 	}
 	int i = 0;
-	public void run() {
+	public void enviarCorreo() {
 		while (this.continuar) {
 			i = i + 1;
 			//adjunto es la direccion del archivo adjunto
@@ -56,10 +56,6 @@ public class Hilo2 extends Thread {
 						this.destinatarios, this.asunto, this.mensaje, this.servidor);
 				try {
 					propio.enviar();
-					Context.getInstance().setMensajeEnviado(true);
-					String notificacion = "Mensaje enviado exitosamente\n a:\n" + this.cliente + " Cod. Medidor: " + this.medidor;
-					System.out.println(notificacion);
-					JOptionPane.showMessageDialog(null, new Object[] { notificacion }, "Mensaje Enviado", 1, null);
 					ivEnviandoMensaje.setVisible(false);
 					btnEnviarCorreo.setDisable(false);
 				}
@@ -73,13 +69,6 @@ public class Hilo2 extends Thread {
 				EnviarMailComplejo propio = new EnviarMailComplejo(Encriptado.Desencriptar(Constantes.CORREO_ORIGEN), Encriptado.Desencriptar(Constantes.CONTRASENIA_CORREO), this.destinatarios, this.asunto, this.mensaje, this.adjuntos, this.servidor);
 				try {
 					propio.Enviar();
-					Context.getInstance().setMensajeEnviado(true);
-
-					String notificacion = "Su mensaje fué enviado exitosamente\n a los siguientes contactos:\n";
-					for (String value : this.destinatarios) {
-						notificacion = notificacion + "-" + value + " \n";
-					}
-					JOptionPane.showMessageDialog(null, new Object[] { notificacion }, "Mensaje Enviado", 1, null);
 					ivEnviandoMensaje.setVisible(false);
 					btnEnviarCorreo.setDisable(false);
 				}

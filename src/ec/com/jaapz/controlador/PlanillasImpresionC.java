@@ -3,8 +3,10 @@ package ec.com.jaapz.controlador;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import ec.com.jaapz.correo.EnviarCorreo;
+import ec.com.jaapz.correo.Hilo2;
 import ec.com.jaapz.modelo.AperturaLectura;
 import ec.com.jaapz.modelo.Planilla;
 import ec.com.jaapz.util.Context;
@@ -20,6 +22,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
@@ -174,8 +177,9 @@ public class PlanillasImpresionC {
 							val.setImprime(newValue);
 							int contador = 0;
 							for(Planilla pl : tvDatos.getItems()) {
-								if(pl.getImprime().equals(true) && pl.getImprime() != null)
-									contador = contador + 1;
+								if(pl.getImprime() != null)
+									if(pl.getImprime() == true)
+										contador = contador + 1;
 							}
 							if(contador == tvDatos.getItems().size())
 								chkImpTodo.setSelected(true);
@@ -213,8 +217,9 @@ public class PlanillasImpresionC {
 							
 							int contador = 0;
 							for(Planilla pl : tvDatos.getItems()) {
-								if(pl.getEnvia().equals(true) && pl.getEnvia() != null)
-									contador = contador + 1;
+								if(pl.getEnvia() != null)
+									if(pl.getEnvia() == true)
+										contador = contador + 1;
 							}
 							if(contador == tvDatos.getItems().size())
 								chkEnvTodo.setSelected(true);
@@ -282,9 +287,34 @@ public class PlanillasImpresionC {
 		}
 	}
 	public void imprimirPlanilla() {
-
+		try {
+			int contador = 0;
+			for(Planilla pl : tvDatos.getItems()) {
+				if(pl.getImprime() != null)
+					if(pl.getImprime() == true) 
+						contador = contador + 1;
+			}
+			if(contador == 0) {
+				helper.mostrarAlertaAdvertencia("No hay ningun cliente seleccionado para la impresión de planillas", Context.getInstance().getStage());
+				return;
+			}
+			Optional<ButtonType> result = helper.mostrarAlertaConfirmacion("Se imprimira la planilla de los clientes seleccionados\nDesea continuar?",Context.getInstance().getStage());
+			if(result.get() == ButtonType.OK){
+				GenerarPlanillaJasper planillaJasper;
+				for(Planilla pl : tvDatos.getItems()) {
+					if(pl.getImprime() != null)
+						if(pl.getImprime() == true) {
+							planillaJasper = new GenerarPlanillaJasper();
+							planillaJasper.crearPlanillaCliente(pl);
+						}
+				}
+				helper.mostrarAlertaInformacion("Planillas impresas correctamente!!!", Context.getInstance().getStage());
+			}
+		}catch(Exception ex) {
+			System.out.println(ex.getMessage());
+		}
 	}
-
+	//metodo que sirve solo para el envio de correos de los estados de cuenta de los clientes
 	public void enviarCorreo() {
 		try {
 			
@@ -292,43 +322,53 @@ public class PlanillasImpresionC {
 				helper.mostrarAlertaError("No se pudo establecer conexion a internet", Context.getInstance().getStage());
 				return;
 			}
-	        
-			Context.getInstance().setMensajeEnviado(false);
+			int contador = 0;
 			for(Planilla pl : tvDatos.getItems()) {
-				if(pl.getCuentaCliente().getCliente().getEmail() != null) {
-					GenerarPlanillasPDF planilaPDF = new GenerarPlanillasPDF();
-					planilaPDF.crearEstadoCuenta(pl);
-					
-					GenerarPlanillaJasper planillaJasper = new GenerarPlanillaJasper();
-					planillaJasper.crearPlanillaCliente(pl);
-					return;
-					/*
-					ivEnviandoMensaje.setVisible(true);
-					btnEnviarCorreo.setDisable(true);
-					String adjunto = "D:/consulta.txt";
-					String[] adjuntos = adjunto.split(",");
-					String asunto;
-					String destinatario;
-					String mensaje;
-					int servidor;
-					String medidor;
-					String cliente;
-					String[] destinatarios;
-					asunto = "Estado de cuenta";
-					destinatario = pl.getCuentaCliente().getCliente().getEmail();
-					destinatarios = destinatario.split(";");
-					servidor = 0;
-					mensaje = "Estado de cuenta de: " + pl.getCuentaCliente().getCliente().getNombre();
-					cliente = pl.getCuentaCliente().getCliente().getNombre();
-					if(pl.getCuentaCliente().getMedidor() != null)
-						medidor = pl.getCuentaCliente().getMedidor().getCodigo();
-					else
-						medidor = "SIN CODIGO DE MEDIDOR";
-					Hilo2 miHilo = new Hilo2(adjunto, adjuntos, destinatarios, servidor, destinatario, asunto, mensaje,ivEnviandoMensaje,btnEnviarCorreo,
-							cliente,medidor);
-					miHilo.start();
-					*/		
-				}
+				if(pl.getEnvia() != null)
+					if(pl.getEnvia() == true) 
+						contador = contador + 1;
+			}
+			if(contador == 0) {
+				helper.mostrarAlertaAdvertencia("No hay ningun cliente seleccionado para el envio de correo", Context.getInstance().getStage());
+				return;
+			}
+			Optional<ButtonType> result = helper.mostrarAlertaConfirmacion("Se procedera a enviar los estados de cuenta a los clientes\nel proceso dependera de su conexion a internet\ndesea continuar?",Context.getInstance().getStage());
+			if(result.get() == ButtonType.OK){	
+				//primero se envia los correos electronicos a las personas que tienen uno
+				GenerarPlanillasPDF planillaPDF;
+				for(Planilla pl : tvDatos.getItems()) {
+					if(pl.getEnvia() != null)
+						if(pl.getEnvia() == true) {
+							ivEnviandoMensaje.setVisible(true);
+							btnEnviarCorreo.setDisable(true);
+							if(pl.getCuentaCliente().getCliente().getEmail() != null) {
+								planillaPDF = new GenerarPlanillasPDF();
+								String adjunto = planillaPDF.crearEstadoCuenta(pl);
+								String[] adjuntos = adjunto.split(",");
+								String asunto;
+								String destinatario;
+								String mensaje;
+								int servidor;
+								String medidor;
+								String cliente;
+								String[] destinatarios;
+								asunto = "Estado de cuenta";
+								destinatario = pl.getCuentaCliente().getCliente().getEmail();
+								destinatarios = destinatario.split(";");
+								servidor = 0;
+								mensaje = "Estado de cuenta de: " + pl.getCuentaCliente().getCliente().getNombre();
+								cliente = pl.getCuentaCliente().getCliente().getNombre();
+								if(pl.getCuentaCliente().getMedidor() != null)
+									medidor = pl.getCuentaCliente().getMedidor().getCodigo();
+								else
+									medidor = "SIN CODIGO DE MEDIDOR";
+								Hilo2 miHilo = new Hilo2(adjunto, adjuntos, destinatarios, servidor, destinatario, asunto, mensaje,ivEnviandoMensaje,btnEnviarCorreo,
+										cliente,medidor);
+								miHilo.enviarCorreo();
+							}
+						}
+				}	
+				helper.mostrarAlertaInformacion("Mensajes enviados correctamente!!!", Context.getInstance().getStage());
 			}
 		}catch(Exception ex) {
 			System.out.println(ex.getMessage());
@@ -336,7 +376,71 @@ public class PlanillasImpresionC {
 	}
 
 	public void imprimirEnviar() {
-
+		try {
+			int contador = 0;
+			for(Planilla pl : tvDatos.getItems()) {
+				if(pl.getImprime() != null)
+					if(pl.getImprime() == true) 
+						contador = contador + 1;
+			}
+			for(Planilla pl : tvDatos.getItems()) {
+				if(pl.getEnvia() != null)
+					if(pl.getEnvia() == true) 
+						contador = contador + 1;
+			}
+			if(contador == 0) {
+				helper.mostrarAlertaAdvertencia("No hay ningun cliente seleccionado para la impresión de planilas, ni para envio de correo", Context.getInstance().getStage());
+				return;
+			}
+			Optional<ButtonType> result = helper.mostrarAlertaConfirmacion("Los correos con estados de cuenta se envian primero, luego se imprime la planilla de consumo\nDesea continuar?",Context.getInstance().getStage());
+			if(result.get() == ButtonType.OK){	
+				//primero se envia los correos electronicos a las personas que tienen uno
+				GenerarPlanillasPDF planillaPDF;
+				for(Planilla pl : tvDatos.getItems()) {
+					if(pl.getEnvia() != null)
+						if(pl.getEnvia() == true) {
+							ivEnviandoMensaje.setVisible(true);
+							btnEnviarCorreo.setDisable(true);
+							if(pl.getCuentaCliente().getCliente().getEmail() != null) {
+								planillaPDF = new GenerarPlanillasPDF();
+								String adjunto = planillaPDF.crearEstadoCuenta(pl);
+								String[] adjuntos = adjunto.split(",");
+								String asunto;
+								String destinatario;
+								String mensaje;
+								int servidor;
+								String medidor;
+								String cliente;
+								String[] destinatarios;
+								asunto = "Estado de cuenta";
+								destinatario = pl.getCuentaCliente().getCliente().getEmail();
+								destinatarios = destinatario.split(";");
+								servidor = 0;
+								mensaje = "Estado de cuenta de: " + pl.getCuentaCliente().getCliente().getNombre();
+								cliente = pl.getCuentaCliente().getCliente().getNombre();
+								if(pl.getCuentaCliente().getMedidor() != null)
+									medidor = pl.getCuentaCliente().getMedidor().getCodigo();
+								else
+									medidor = "SIN CODIGO DE MEDIDOR";
+								Hilo2 miHilo = new Hilo2(adjunto, adjuntos, destinatarios, servidor, destinatario, asunto, mensaje,ivEnviandoMensaje,btnEnviarCorreo,
+										cliente,medidor);
+								miHilo.enviarCorreo();
+							}
+						}
+				}	
+				GenerarPlanillaJasper planillaJasper;
+				for(Planilla pl : tvDatos.getItems()) {
+					if(pl.getImprime() != null)
+						if(pl.getImprime() == true) {
+							planillaJasper = new GenerarPlanillaJasper();
+							planillaJasper.crearPlanillaCliente(pl);
+						}
+				}
+				helper.mostrarAlertaInformacion("Mensajes y Planillas generadas correctamente!!!", Context.getInstance().getStage());
+			}
+		}catch(Exception ex) {
+			System.out.println(ex.getMessage());
+		}
 	}
 
 }

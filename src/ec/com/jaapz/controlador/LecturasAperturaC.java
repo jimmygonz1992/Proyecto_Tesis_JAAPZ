@@ -172,7 +172,7 @@ public class LecturasAperturaC {
 			if(result.get() == ButtonType.OK){
 				//declarar el objeto a grabar
 				AperturaLectura aperturaGrabar = new AperturaLectura();
-				aperturaGrabar.setEstado("A");
+				aperturaGrabar.setEstado(Constantes.ESTADO_ACTIVO);
 				aperturaGrabar.setEstadoApertura(Constantes.EST_APERTURA_PROCESO);
 				Date date = new Date();
 				Timestamp fecha = new Timestamp(date.getTime());
@@ -188,45 +188,47 @@ public class LecturasAperturaC {
 				aperturaDAO.getEntityManager().getTransaction().begin();
 				//recorrer las cuentas para asignar las aperturas
 				for(CuentaCliente cuentas : listaCuentasActivas) {
-					List<Planilla> listaAdd = new ArrayList<Planilla>();
-					Planilla planilla = new Planilla(); // planilla nueva para todos los clientes
-					planilla.setIdPlanilla(null);
-					planilla.setFecha(fecha);
-					planilla.setConvenio(Constantes.CONVENIO_NO);
-					//obtener el consumo del mes anterior
-					planilla.setConsumo(0);
-					planilla.setConsumoMinimo(0);
-					List<Planilla> listaPlanillasCuenta = new ArrayList<Planilla>(); //lista que guarda las planillas de la cuenta del cliente
-					listaPlanillasCuenta = planillaDAO.getPlanillaCuenta(cuentas.getIdCuenta());
-					if(listaPlanillasCuenta.size() != 0) {
-						planilla.setLecturaAnterior(listaPlanillasCuenta.get(0).getLecturaActual());//la lectura anterior y la lectura actual de la planilla
-						planilla.setLecturaActual(listaPlanillasCuenta.get(0).getLecturaActual());//son iguales de la lectura actual de la planilla anterior
-					}else {
-						planilla.setLecturaAnterior(0);//Caso contrario los dos son cero
-						planilla.setLecturaActual(0);
+					if(cuentas.getMedidor() != null) {
+						List<Planilla> listaAdd = new ArrayList<Planilla>();
+						Planilla planilla = new Planilla(); // planilla nueva para todos los clientes
+						planilla.setIdPlanilla(null);
+						planilla.setFecha(fecha);
+						planilla.setConvenio(Constantes.CONVENIO_NO);
+						//obtener el consumo del mes anterior
+						planilla.setConsumo(0);
+						planilla.setConsumoMinimo(0);
+						List<Planilla> listaPlanillasCuenta = new ArrayList<Planilla>(); //lista que guarda las planillas de la cuenta del cliente
+						listaPlanillasCuenta = planillaDAO.getPlanillaCuenta(cuentas.getIdCuenta());
+						if(listaPlanillasCuenta.size() != 0) {
+							planilla.setLecturaAnterior(listaPlanillasCuenta.get(0).getLecturaActual());//la lectura anterior y la lectura actual de la planilla
+							planilla.setLecturaActual(listaPlanillasCuenta.get(0).getLecturaActual());//son iguales de la lectura actual de la planilla anterior
+						}else {
+							planilla.setLecturaAnterior(0);//Caso contrario los dos son cero
+							planilla.setLecturaActual(0);
+						}
+
+						planilla.setEstado(Constantes.ESTADO_ACTIVO);
+						//enlace entre planilla y apertura
+						planilla.setAperturaLectura(aperturaGrabar);
+						listaAdd.add(planilla);
+						aperturaGrabar.setPlanillas(listaAdd);
+						//enlace entre cliente y planilla
+						planilla.setCuentaCliente(cuentas);
+						cuentas.setPlanillas(listaAdd);
+
+						//enlace entre detalle de planilla y planilla
+						PlanillaDetalle detallePlanilla = new PlanillaDetalle();
+						detallePlanilla.setIdPlanillaDet(null);
+						detallePlanilla.setDescripcion("Por consumo del mes de: " + cboMes.getSelectionModel().getSelectedItem().getDescripcion() + " del año: " + cboAnio.getSelectionModel().getSelectedItem().getDescripcion());
+						detallePlanilla.setEstado(Constantes.ESTADO_ACTIVO);
+						detallePlanilla.setCantidad(0);
+						detallePlanilla.setPlanilla(planilla);
+						List<PlanillaDetalle> det = new ArrayList<PlanillaDetalle>();
+						det.add(detallePlanilla);
+						planilla.setPlanillaDetalles(det);
+
+						aperturaDAO.getEntityManager().persist(aperturaGrabar);	
 					}
-
-					planilla.setEstado(Constantes.ESTADO_ACTIVO);
-					//enlace entre planilla y apertura
-					planilla.setAperturaLectura(aperturaGrabar);
-					listaAdd.add(planilla);
-					aperturaGrabar.setPlanillas(listaAdd);
-					//enlace entre cliente y planilla
-					planilla.setCuentaCliente(cuentas);
-					cuentas.setPlanillas(listaAdd);
-
-					//enlace entre detalle de planilla y planilla
-					PlanillaDetalle detallePlanilla = new PlanillaDetalle();
-					detallePlanilla.setIdPlanillaDet(null);
-					detallePlanilla.setDescripcion("Por consumo del mes de: " + cboMes.getSelectionModel().getSelectedItem().getDescripcion() + " del año: " + cboAnio.getSelectionModel().getSelectedItem().getDescripcion());
-					detallePlanilla.setEstado("A");
-					detallePlanilla.setCantidad(0);
-					detallePlanilla.setPlanilla(planilla);
-					List<PlanillaDetalle> det = new ArrayList<PlanillaDetalle>();
-					det.add(detallePlanilla);
-					planilla.setPlanillaDetalles(det);
-
-					aperturaDAO.getEntityManager().persist(aperturaGrabar);
 				}
 				aperturaDAO.getEntityManager().getTransaction().commit();
 				helper.mostrarAlertaInformacion("Datos Grabados Correctamente", Context.getInstance().getStage());

@@ -5,6 +5,10 @@ public abstract class Constantes {
 	public static String CORREO_ORIGEN = "f3iOsp4oT3ZoNGwbEs6BQCKx3Ue8sRSGlbkfwuJtg1U=";
 	public static String CONTRASENIA_CORREO = "Y73I1I1gzY/belRAnrLbIw==";
 	/*---------------------------------------------------------------------------*/
+	public static String ORIGEN_MOVIL = "MOVIL";
+	public static String ORIGEN_ESCRITORIO = "ESCRITORIO";
+	
+	public static String IDENT_INSTALACION = "INS";
 	//id de los diferentes usuarios que estan registrados en el sistema
 	public static int ID_USU_ADMINISTRADOR = 1;
 	public static int ID_USU_LECTURA = 2;

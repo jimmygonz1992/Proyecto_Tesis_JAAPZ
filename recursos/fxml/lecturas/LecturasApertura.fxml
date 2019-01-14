@@ -5,6 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
 
 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="508.0" prefWidth="698.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ec.com.jaapz.controlador.LecturasAperturaC">
    <children>
@@ -36,17 +37,22 @@
                </rowConstraints>
             </GridPane>
             <TableView fx:id="tvAperturas" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="5" GridPane.columnSpan="6" GridPane.rowIndex="2" GridPane.rowSpan="4" />
-            <Label text="Aperturas Realizadas" GridPane.columnIndex="5" GridPane.columnSpan="6" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+            <Label text="Aperturas de ciclo realizadas" GridPane.columnIndex="5" GridPane.columnSpan="6" GridPane.halignment="CENTER" GridPane.rowIndex="1">
                <font>
-                  <Font name="System Bold Italic" size="12.0" />
+                  <Font name="System Bold" size="14.0" />
                </font>
             </Label>
-            <Label text="Realizar Nueva Apertura" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+            <Label text="Aperturar nuevo ciclo" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.halignment="CENTER" GridPane.rowIndex="2">
                <font>
-                  <Font name="System Bold Italic" size="12.0" />
+                  <Font name="Arial Bold" size="14.0" />
                </font>
             </Label>
-            <Button fx:id="btnGrabarApertura" alignment="BOTTOM_CENTER" contentDisplay="TOP" graphicTextGap="0.0" mnemonicParsing="false" onAction="#grabarApertura" prefHeight="49.0" prefWidth="72.0" styleClass="botonGrabar" text="Grabar" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+            <HBox style="-fx-border-color: #bbc8d0; -fx-border-width: 1px; -fx-background-radius: 6; -fx-max-height: 600; -fx-max-width: 1500; -fx-min-height: 10; -fx-min-width: 10" 
+            alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER">
+               <children>
+                  <Button fx:id="btnGrabarApertura" alignment="BOTTOM_CENTER" contentDisplay="TOP" graphicTextGap="0.0" mnemonicParsing="false" onAction="#grabarApertura" prefHeight="49.0" prefWidth="72.0" styleClass="botonGrabar" text="Grabar" />
+               </children>
+            </HBox>
          </children>
          <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />

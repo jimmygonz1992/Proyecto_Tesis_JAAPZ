@@ -481,6 +481,27 @@ public class RecaudacionesRegistroCobroC {
 		try {
 			if(validarDatos() == false)
 				return;
+			//validar si el cobro que se va a realizar es de una instalacion... xq si no paga no se le puede instalar el medidor, ademas no puede tener otra factura
+			//xq aun no se le instala el medidor y x lo tanto no tiene lecturas registradas
+			boolean verificarInstalacion = false;
+			boolean verificarPago = false;
+			for(Planilla pl : tvDatos.getItems()) {
+				if(pl.getIdentInstalacion() != null)
+					if(pl.getIdentInstalacion().equals(Constantes.IDENT_INSTALACION))
+						verificarInstalacion = true;
+			}
+			if(verificarInstalacion == true) {//si es un pago de una instalacion.. entoces se debe calcular si esta pagando el 60% del valor
+				double porcentaje = Double.parseDouble(txtTotal.getText()) * 0.6;
+				double totalPago = 0;
+				for(FacturaDetalle det : tvDetallePago.getItems())
+					totalPago = totalPago + det.getSubtotal();
+				if(totalPago < porcentaje)
+					verificarPago = true;
+			}
+			if(verificarPago == true && verificarInstalacion == true) {//si es instalacion y el pago esta por debajo del 60%. manda un error
+				helper.mostrarAlertaAdvertencia("El pago mínimo debe ser el 60% del costo de instalación", Context.getInstance().getStage());
+				return;
+			}
 			Optional<ButtonType> result = helper.mostrarAlertaConfirmacion("Desea Grabar los Datos?",Context.getInstance().getStage());
 			if(result.get() == ButtonType.OK){
 				Factura factura = new Factura();

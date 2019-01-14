@@ -1,5 +1,6 @@
 package ec.com.jaapz.util;
 
+import java.io.File;
 import java.io.FileOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -29,9 +30,15 @@ public class GenerarPlanillasPDF {
 	PlanillaDAO planillaDAO = new PlanillaDAO();
 	FacturaDAO facturaDAO = new FacturaDAO();
 	
-	public boolean crearEstadoCuenta(Planilla planilla) {
+	public String crearEstadoCuenta(Planilla planilla) {
 		try {
-			boolean bandera = false;
+			String carpetaPDF = "";
+			carpetaPDF = "C:\\PlanillasPDF";
+			File folder = new File(carpetaPDF);
+			if(!folder.exists())
+				folder.mkdir();
+			
+			String bandera = "";
 			//-------------------------------------------------------------------------------------------------
 			Font fuenteTituloCuadro = new Font();
 			fuenteTituloCuadro.setSize(10);
@@ -42,7 +49,9 @@ public class GenerarPlanillasPDF {
 			fuenteContenido.setFamily("Calibri");
 		
 			//generar archivos pdf
-			String destino = "D:/imagen.pdf";
+			SimpleDateFormat format = new SimpleDateFormat("ddMMyyyy");
+			String destino = carpetaPDF + "\\" + planilla.getCuentaCliente().getCliente().getCedula() + "-" + planilla.getCuentaCliente().getIdCuenta() + "-"
+					+ "" + planilla.getAperturaLectura().getMe().getDescripcion() + "-" + format.format(planilla.getFecha()) + ".pdf";
 			Document document = new Document(PageSize.LETTER , 36, 36, 36, 36);
 			document.addTitle("ESTADO DE CUENTA");
 			com.itextpdf.text.Image imagen = com.itextpdf.text.Image.getInstance("recursos/img/encabezado.png");
@@ -210,11 +219,11 @@ public class GenerarPlanillasPDF {
 	        document.close();
 	        System.out.println("documento creado");
 			//-------------------------------------------------------------------------------------------------
-			bandera = true;
+			bandera = destino;
 			return bandera;
 		}catch(Exception ex) {
 			System.out.println(ex.getMessage());
-			return false;
+			return "";
 		}
 	}
 }
