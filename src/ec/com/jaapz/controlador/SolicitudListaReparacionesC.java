@@ -5,7 +5,6 @@ import java.util.List;
 
 import ec.com.jaapz.modelo.SolInspeccionRep;
 import ec.com.jaapz.modelo.SolInspeccionRepDAO;
-import ec.com.jaapz.util.Constantes;
 import ec.com.jaapz.util.Context;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ChangeListener;
@@ -18,7 +17,6 @@ import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TableColumn.CellDataFeatures;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.Callback;
 
 public class SolicitudListaReparacionesC {
@@ -69,7 +67,7 @@ public class SolicitudListaReparacionesC {
 			boolean bandera;
 			List<SolInspeccionRep> listaInspecciones;
 			List<SolInspeccionRep> listaAgregar = new ArrayList<SolInspeccionRep>();
-			if(Context.getInstance().getIdPerfil() == Constantes.ID_USU_ADMINISTRADOR) {
+			if(Context.getInstance().getIdPerfil() == 1) {
 				listaInspecciones = reparacionDAO.getListaInspeccionPendiente(patron);
 			}else {
 				listaInspecciones = reparacionDAO.getListaInspeccionPerfilPendiente(patron);
@@ -88,15 +86,25 @@ public class SolicitudListaReparacionesC {
 			datos.setAll(listaAgregar);
 
 			//llenar los datos en la tabla
-			TableColumn<SolInspeccionRep, String> idColum = new TableColumn<>("Código");
+			TableColumn<SolInspeccionRep, String> idColum = new TableColumn<>("Id");
 			idColum.setMinWidth(10);
-			idColum.setPrefWidth(50);
-			idColum.setCellValueFactory(new PropertyValueFactory<SolInspeccionRep, String>("idInspeccion"));
-
+			idColum.setPrefWidth(90);
+			idColum.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<SolInspeccionRep, String>, ObservableValue<String>>() {
+				@Override
+				public ObservableValue<String> call(CellDataFeatures<SolInspeccionRep, String> param) {
+					return new SimpleObjectProperty<String>(String.valueOf(param.getValue().getIdSolicitudRep()));
+				}
+			});
+			
 			TableColumn<SolInspeccionRep, String> fechaColum = new TableColumn<>("Fecha");
 			fechaColum.setMinWidth(10);
-			fechaColum.setPrefWidth(150);
-			fechaColum.setCellValueFactory(new PropertyValueFactory<SolInspeccionRep, String>("fecha"));
+			fechaColum.setPrefWidth(90);
+			fechaColum.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<SolInspeccionRep, String>, ObservableValue<String>>() {
+				@Override
+				public ObservableValue<String> call(CellDataFeatures<SolInspeccionRep, String> param) {
+					return new SimpleObjectProperty<String>(String.valueOf(param.getValue().getFecha()));
+				}
+			});
 
 			TableColumn<SolInspeccionRep, String> clienteColum = new TableColumn<>("Cliente");
 			clienteColum.setMinWidth(10);
@@ -109,18 +117,20 @@ public class SolicitudListaReparacionesC {
 					return new SimpleObjectProperty<String>(cliente);
 				}
 			});
+			
+			//falta recuperar referencia no lo he hecho xq no está en la BD ese campo
 
-			TableColumn<SolInspeccionRep, String> referenciaColum = new TableColumn<>("Referencia");
-			referenciaColum.setMinWidth(10);
-			referenciaColum.setPrefWidth(350);
-			referenciaColum.setCellValueFactory(new PropertyValueFactory<SolInspeccionRep, String>("referencia"));
-
-			TableColumn<SolInspeccionRep, String> estadoColum = new TableColumn<>("Estado");
+			TableColumn<SolInspeccionRep, String> estadoColum = new TableColumn<>("Estado Inspección");
 			estadoColum.setMinWidth(10);
 			estadoColum.setPrefWidth(90);
-			estadoColum.setCellValueFactory(new PropertyValueFactory<SolInspeccionRep, String>("estadoInspeccion"));
+			estadoColum.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<SolInspeccionRep, String>, ObservableValue<String>>() {
+				@Override
+				public ObservableValue<String> call(CellDataFeatures<SolInspeccionRep, String> param) {
+					return new SimpleObjectProperty<String>(param.getValue().getEstadoInspecRep());
+				}
+			});
 
-			tvDatos.getColumns().addAll(idColum, fechaColum,clienteColum,referenciaColum,estadoColum);
+			tvDatos.getColumns().addAll(idColum, fechaColum, clienteColum, estadoColum);
 			tvDatos.setItems(datos);
 		}catch(Exception ex){
 			System.out.println(ex.getMessage());

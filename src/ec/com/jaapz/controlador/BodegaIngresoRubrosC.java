@@ -92,7 +92,7 @@ public class BodegaIngresoRubrosC {
 			txtUsuario.setEditable(false);
 			txtDescripcionMat.setEditable(false);
 			txtStockMat.setEditable(false);
-			//dtpFecha.setValue(LocalDate.now());
+			dtpFecha.setValue(LocalDate.now());
 			txtRuc.requestFocus();
 			txtCodigo.setVisible(false);
 			txtCodigoProv.setVisible(false);

@@ -1,6 +1,7 @@
 package ec.com.jaapz.controlador;
 
 import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
@@ -88,6 +89,7 @@ public class SolicitudesCierreReparacionC {
 	
 	public void initialize() {
 		try {
+			dtpFecha.setValue(LocalDate.now());
 			bloquear();			
 			txtUsuario.setText(Encriptado.Desencriptar(String.valueOf(Context.getInstance().getUsuariosC().getUsuario())));
 			
@@ -252,6 +254,7 @@ public class SolicitudesCierreReparacionC {
 				reparacion.setSolInspeccionRep(inspeccionRepSeleccionado);
 				reparacion.setEstado(estado);
 				reparacion.setEstadoValor(Constantes.EST_FAC_PENDIENTE);
+				reparacion.setEstadoReparacion(Constantes.EST_FAC_PENDIENTE);
 				reparacion.setEstadoEntrega(Constantes.EST_FAC_PENDIENTE);
 				reparacion.setObservcion(txtNovedadesInspeccion.getText());
 				reparacion.setUsuarioCrea(Context.getInstance().getUsuariosC().getIdUsuario());

@@ -1,6 +1,7 @@
 package ec.com.jaapz.controlador;
 
 import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
@@ -67,6 +68,7 @@ public class SolicitudInstalacionC {
     
     public void initialize() {
     	try {
+    		dtpFechaIns.setValue(LocalDate.now());
     		llenarCombos();
     		txtCedula.setOnKeyPressed(new EventHandler<KeyEvent>(){
     			@Override
@@ -269,6 +271,12 @@ public class SolicitudInstalacionC {
 				helper.mostrarAlertaAdvertencia("Es recesario registrar número de contacto", Context.getInstance().getStage());
 				return;
 			}
+			
+			if(txtDireccionIns.getText().equals("")) {
+				helper.mostrarAlertaAdvertencia("Es recesario registrar dirección de inspección", Context.getInstance().getStage());
+				return;
+			}
+			
 			if(cboBarrio.getSelectionModel().getSelectedIndex() == -1) {
 				helper.mostrarAlertaAdvertencia("Debe seleccionar el barrio del cliente a inspeccionar", Context.getInstance().getStage());
 				return;
@@ -312,6 +320,7 @@ public class SolicitudInstalacionC {
 				inspeccion.setIdSolInspeccion(null);
 				inspeccion.setUsuarioCrea(Context.getInstance().getIdUsuario());
 				inspeccion.setReferencia(txtReferenciaIns.getText());
+				inspeccion.setDireccion(txtDireccionIns.getText());
 				inspeccion.setBarrio(cboBarrio.getSelectionModel().getSelectedItem());
 				
 				if(clienteRecuperado.getIdCliente() != null) {

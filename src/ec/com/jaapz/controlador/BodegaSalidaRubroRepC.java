@@ -1,5 +1,6 @@
 package ec.com.jaapz.controlador;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -54,6 +55,8 @@ public class BodegaSalidaRubroRepC {
 	
 	public void initialize() {
 		try {
+			dtpFecha.setValue(LocalDate.now());
+			
 			//validar solo numeros
 			txtIdCuenta.textProperty().addListener(new ChangeListener<String>() {
 				@Override

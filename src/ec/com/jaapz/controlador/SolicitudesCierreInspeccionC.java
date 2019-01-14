@@ -269,6 +269,7 @@ public class SolicitudesCierreInspeccionC {
 					cuentaCliente.setLatitud(txtLatitud.getText());
 					cuentaCliente.setLongitud(txtLongitud.getText());
 					cuentaCliente.setCliente(cliente);
+					cuentaCliente.setDireccion(inspeccionSeleccionado.getDireccion());
 					cuentaCliente.setBarrio(inspeccionSeleccionado.getBarrio());
 					cuentaCliente.setCategoria(categoriaDAO.getCategoriaNombre(inspeccionSeleccionado.getUsoMedidor()));
 					cuentaCliente.setFechaIngreso(fecha);

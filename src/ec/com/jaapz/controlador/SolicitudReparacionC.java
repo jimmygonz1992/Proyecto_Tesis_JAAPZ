@@ -1,5 +1,6 @@
 package ec.com.jaapz.controlador;
 
+import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
@@ -56,6 +57,7 @@ public class SolicitudReparacionC {
 
 	public void initialize() {
 		try {
+			dtpFechaIns.setValue(LocalDate.now());
 			nuevo();
 			Context.getInstance().setCuentaCliente(null);
 			//solo letras mayusculas
@@ -366,6 +368,7 @@ public class SolicitudReparacionC {
 			List<CuentaCliente> listaCuentaCliente = new ArrayList<CuentaCliente>();
 			listaCuentaCliente = cuentaClienteDao.getExisteCuentaMedidor(numMedidor);
 			if(listaCuentaCliente.size() > 0) {
+				txtCedula.setText(listaCuentaCliente.get(0).getCliente().getCedula());
 				txtNombres.setText(listaCuentaCliente.get(0).getCliente().getNombre());
 				txtApellidos.setText(listaCuentaCliente.get(0).getCliente().getApellido());
 				txtDireccion.setText(listaCuentaCliente.get(0).getDireccion());

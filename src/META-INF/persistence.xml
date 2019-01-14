@@ -45,9 +45,9 @@
 		<class>ec.com.jaapz.modelo.Kardex</class>
 		<class>ec.com.jaapz.modelo.Proveedor</class>
 		<properties>
-			<property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/bd_jaapz_2019"/>
+			<property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/bd_jaapz"/>
 			<property name="javax.persistence.jdbc.user" value="postgres"/>
-			<property name="javax.persistence.jdbc.password" value="alexisr20"/>
+			<property name="javax.persistence.jdbc.password" value="123"/>
 			<property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver"/>
 		</properties>
 	</persistence-unit>

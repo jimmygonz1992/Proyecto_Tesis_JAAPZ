@@ -1,5 +1,6 @@
 package ec.com.jaapz.controlador;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -60,6 +61,7 @@ public class InstalacionesAtencionSolicC {
 	@SuppressWarnings("static-access")
 	public void initialize() {
 		try {
+			dtpFecha.setValue(LocalDate.now());
 			bloquear();
 			llenarCombo();
 			Encriptado encriptado = new Encriptado();

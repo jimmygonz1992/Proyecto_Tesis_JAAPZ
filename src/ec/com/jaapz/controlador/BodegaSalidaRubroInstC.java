@@ -1,16 +1,19 @@
 package ec.com.jaapz.controlador;
 
+import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+import ec.com.jaapz.modelo.CuentaCliente;
 import ec.com.jaapz.modelo.Instalacion;
 import ec.com.jaapz.modelo.InstalacionDAO;
 import ec.com.jaapz.modelo.InstalacionDetalle;
 import ec.com.jaapz.modelo.LiquidacionDetalle;
 import ec.com.jaapz.modelo.LiquidacionOrden;
+import ec.com.jaapz.modelo.Medidor;
 import ec.com.jaapz.modelo.Rubro;
 import ec.com.jaapz.modelo.RubroDAO;
 import ec.com.jaapz.util.Constantes;
@@ -66,9 +69,12 @@ public class BodegaSalidaRubroInstC {
 	InstalacionDAO instalacionDao = new InstalacionDAO();
 	RubroDAO rubroDAO = new RubroDAO();	
 	LiquidacionOrden liquidacionSeleccionada = new LiquidacionOrden();
+	Medidor medidorSeleccionado = new Medidor();
+	CuentaCliente cuentaSeleccionada = new CuentaCliente();
 	
 	public void initialize() {
 		try {
+			dtpFecha.setValue(LocalDate.now());
 			//validar solo numeros
 			txtIdCuenta.textProperty().addListener(new ChangeListener<String>() {
 				@Override
@@ -327,12 +333,6 @@ public class BodegaSalidaRubroInstC {
 				return false;
 			}
 			
-			if(txtDireccion.getText().equals("")) {
-				helper.mostrarAlertaAdvertencia("Ingresar Dirección de Cliente", Context.getInstance().getStage());
-				txtDireccion.requestFocus();
-				return false;
-			}
-			
 			if(txtTelefono.getText().equals("")) {
 				helper.mostrarAlertaAdvertencia("Ingresar Teléfono de Cliente", Context.getInstance().getStage());
 				txtTelefono.requestFocus();
@@ -382,13 +382,12 @@ public class BodegaSalidaRubroInstC {
 			Optional<ButtonType> result = helper.mostrarAlertaConfirmacion("Desea Grabar los Datos?",Context.getInstance().getStage());
 			if(result.get() == ButtonType.OK){
 				Instalacion instalacion = new Instalacion();
-				String estado = "A";				
+				CuentaCliente cuentaCliente = liquidacionSeleccionada.getCuentaCliente();
+				Medidor medidor = liquidacionSeleccionada.getMedidor();
+				String estado = "A";
 				
-				//LiquidacionOrden liqSeleccionado = new LiquidacionOrden();
-				//liqSeleccionado = tvDatos.getSelectionModel().getSelectedItem();
 				liquidacionSeleccionada.setEstadoOrden(Constantes.EST_APERTURA_REALIZADO);
-				//liqSeleccionado.setEstadoOrden("REALIZADO");			
-				
+				cuentaCliente.setMedidor(medidor);
 				instalacion.setIdInstalacion(null);
 				Date date = Date.from(dtpFecha.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
 				//Timestamp fecha = new Timestamp(date.getTime());
@@ -412,8 +411,9 @@ public class BodegaSalidaRubroInstC {
 				instalacion.setInstalacionDetalles(listaAgregadaRubros);
 				instalacionDao.getEntityManager().getTransaction().begin();
 				instalacionDao.getEntityManager().persist(instalacion);
+				instalacionDao.getEntityManager().merge(cuentaCliente);
 				instalacionDao.getEntityManager().merge(liquidacionSeleccionada);
-				//junOrdenPreviaDespachoDao.getEntityManager().merge(actualizaOrdenEstado);
+				
 				instalacionDao.getEntityManager().getTransaction().commit();
 					
 				actualizarListaArticulos();
