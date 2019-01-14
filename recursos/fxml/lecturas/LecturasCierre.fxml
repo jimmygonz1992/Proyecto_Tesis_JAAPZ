@@ -13,53 +13,13 @@
          <children>
             <GridPane GridPane.columnIndex="5" GridPane.columnSpan="3" GridPane.rowIndex="1" GridPane.rowSpan="13">
                <children>
-<<<<<<< HEAD
                   <Label text="Aperturas Realizadas" GridPane.columnSpan="4" GridPane.halignment="CENTER">
                      <font>
                         <Font name="System Bold Italic" size="12.0" />
                      </font>
                   </Label>
                   <TableView fx:id="tvApRealizadas" prefHeight="200.0" prefWidth="200.0" GridPane.columnSpan="4" GridPane.rowIndex="1" GridPane.rowSpan="9" />
-=======
-                  <Label text="Periodo de facturación actual" GridPane.columnSpan="4" GridPane.halignment="CENTER" GridPane.rowIndex="1">
-                     <font><Font name="System Bold Italic" size="12.0" /></font>
-                  </Label>
-                  <Label text="Año:" GridPane.rowIndex="2">
-                     <font><Font name="System Bold" size="12.0" /></font>
-                  </Label>
-                  <TextField fx:id="txtAnio" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="2" />
-                  <Label text="Mes:" GridPane.rowIndex="3">
-                     <font><Font name="System Bold" size="12.0" /></font>
-                  </Label>
-                  <TextField fx:id="txtMes" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="3" />
-                  <Label text="Fecha de Inicio" GridPane.rowIndex="4">
-                     <font><Font name="System Bold" size="12.0" /></font>
-                  </Label>
-                  <TextField fx:id="txtFecha" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="4" />
-                  <Label text="Resultados de Tomas de Lecturas" GridPane.columnSpan="4" GridPane.halignment="CENTER" GridPane.rowIndex="5">
-                     <font><Font name="System Bold Italic" size="12.0" /></font>
-                  </Label>
-                  <Label text="Total Clientes:" GridPane.rowIndex="6">
-                     <font><Font name="System Bold" size="12.0" /></font>
-                  </Label>
-                  <TextField fx:id="txtTotalClientes" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="6" />
-                  <Label text="Clientes registrados:" GridPane.rowIndex="7">
-                     <font><Font name="System Bold" size="12.0" /></font>
-                  </Label>
-                  <TextField fx:id="txtClientesRegistrados" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="7" />
-                  <Label text="Clientes Faltantes:" GridPane.rowIndex="8">
-                     <font><Font name="System Bold" size="12.0" /></font>
-                  </Label>
-                  <TextField fx:id="txtClientesFaltantes" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="8" />
-                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnSpan="4" GridPane.halignment="CENTER" GridPane.rowIndex="9" GridPane.rowSpan="2" GridPane.valignment="CENTER">
-                     <children>
-                        <Button fx:id="btnResultados" alignment="CENTER" mnemonicParsing="false" onAction="#visualizarResultados" prefHeight="52.0" prefWidth="102.0" text="Resultados&#10;de Lecturas" />
-                        <Button fx:id="btnCerrarCiclo" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#cerrarCiclo" prefHeight="52.0" prefWidth="102.0" text="Realizar cierre &#10;del ciclo" textAlignment="CENTER">
-                           <HBox.margin><Insets left="10.0" /></HBox.margin>
-                        </Button>
-                     </children>
-                  </HBox>
->>>>>>> 65af8ff41f61cfc988e44bc67742563523c20ab1
+
                </children>
                <columnConstraints>
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -78,6 +38,7 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints />
                </rowConstraints>
             </GridPane>
             <Label text="Periodo de facturación actual" GridPane.columnIndex="1" GridPane.columnSpan="4" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
@@ -87,7 +48,6 @@
             </Label>
             <HBox prefHeight="100.0" prefWidth="200.0" style="-fx-border-color: #bbc8d0; -fx-border-width: 1px; -fx-background-radius: 6; -fx-max-height: 600; -fx-max-width: 1500; -fx-min-height: 10; -fx-min-width: 10" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="3" GridPane.rowSpan="3">
                <children>
-<<<<<<< HEAD
                   <GridPane>
                     <columnConstraints>
                       <ColumnConstraints hgrow="SOMETIMES" maxWidth="115.0" minWidth="115.0" prefWidth="115.0" />
@@ -123,12 +83,6 @@
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </HBox.margin>
                   </GridPane>
-=======
-                  <Label text="Aperturas Realizadas" GridPane.columnSpan="4" GridPane.halignment="CENTER" GridPane.rowIndex="1">
-                     <font><Font name="System Bold Italic" size="12.0" /></font>
-                  </Label>
-                  <TableView fx:id="tvApRealizadas" prefHeight="200.0" prefWidth="200.0" GridPane.columnSpan="4" GridPane.rowIndex="2" GridPane.rowSpan="9" />
->>>>>>> 65af8ff41f61cfc988e44bc67742563523c20ab1
                </children>
             </HBox>
             <HBox prefHeight="100.0" prefWidth="200.0" style="-fx-border-color: #bbc8d0; -fx-border-width: 1px; -fx-background-radius: 6; -fx-max-height: 600; -fx-max-width: 1500; -fx-min-height: 10; -fx-min-width: 10" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="8" GridPane.rowSpan="3">

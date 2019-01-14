@@ -12,7 +12,6 @@
       <GridPane layoutX="164.0" layoutY="135.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <TableView fx:id="tvAperturas" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="5" GridPane.columnSpan="6" GridPane.rowIndex="2" GridPane.rowSpan="4" />
-<<<<<<< HEAD
             <Label text="Aperturas de ciclo realizadas" GridPane.columnIndex="5" GridPane.columnSpan="6" GridPane.halignment="CENTER" GridPane.rowIndex="1">
                <font>
                   <Font name="System Bold" size="14.0" />
@@ -23,15 +22,7 @@
                   <Font name="Arial Bold" size="14.0" />
                </font>
             </Label>
-            <HBox style="-fx-border-color: #bbc8d0; -fx-border-width: 1px; -fx-background-radius: 6; -fx-max-height: 600; -fx-max-width: 1500; -fx-min-height: 10; -fx-min-width: 10" 
-            alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER">
-=======
-            <Label text="Aperturas Realizadas" GridPane.columnIndex="5" GridPane.columnSpan="6" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
-               <font><Font name="System Bold" size="12.0" /></font>
-            </Label>
-            <Label text="Realizar Nueva Apertura" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
-               <font><Font name="System Bold" size="12.0" /></font>
-            </Label>
+            
             <Label text="INICIO DE CICLO" GridPane.columnSpan="12" GridPane.halignment="CENTER">
                <font><Font name="System Bold" size="28.0" /></font>
             </Label>
@@ -61,7 +52,6 @@
                </children>
             </HBox>
             <HBox style="-fx-border-color: #bbc8d0; -fx-border-width: 1px; -fx-spacing: 8; -fx-background-radius: 6.0; -fx-max-height: 300" alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="5">
->>>>>>> 65af8ff41f61cfc988e44bc67742563523c20ab1
                <children>
                   <Button fx:id="btnGrabarApertura" alignment="BOTTOM_CENTER" contentDisplay="TOP" graphicTextGap="0.0" mnemonicParsing="false" onAction="#grabarApertura" prefHeight="49.0" prefWidth="72.0" styleClass="botonGrabar" text="Grabar" />
                </children>
