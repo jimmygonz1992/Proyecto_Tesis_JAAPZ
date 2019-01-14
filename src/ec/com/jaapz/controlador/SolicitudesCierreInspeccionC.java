@@ -235,12 +235,7 @@ public class SolicitudesCierreInspeccionC {
 					ordenLiquidacion.setIdLiquidacion(null);
 					ordenLiquidacion.setMedidor(medidorSeleccionado);
 					ordenLiquidacion.setEstadoOrden(Constantes.EST_INSPECCION_PENDIENTE);
-<<<<<<< HEAD
 					ordenLiquidacion.setEstado(Constantes.ESTADO_ACTIVO);
-=======
-					ordenLiquidacion.setEstadoInstalacion(Constantes.EST_INSPECCION_PENDIENTE);
-					ordenLiquidacion.setEstado("A");
->>>>>>> 65af8ff41f61cfc988e44bc67742563523c20ab1
 					ordenLiquidacion.setHora(sqlTime);
 					
 					ordenLiquidacion.setUsuarioCrea(Context.getInstance().getIdUsuario());
