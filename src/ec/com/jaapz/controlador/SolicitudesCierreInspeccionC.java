@@ -235,6 +235,7 @@ public class SolicitudesCierreInspeccionC {
 					ordenLiquidacion.setIdLiquidacion(null);
 					ordenLiquidacion.setMedidor(medidorSeleccionado);
 					ordenLiquidacion.setEstadoOrden(Constantes.EST_INSPECCION_PENDIENTE);
+					ordenLiquidacion.setEstadoValor(Constantes.EST_INSPECCION_PENDIENTE);
 					ordenLiquidacion.setEstado(Constantes.ESTADO_ACTIVO);
 					ordenLiquidacion.setHora(sqlTime);
 					
@@ -273,6 +274,7 @@ public class SolicitudesCierreInspeccionC {
 					cuentaCliente.setBarrio(inspeccionSeleccionado.getBarrio());
 					cuentaCliente.setCategoria(categoriaDAO.getCategoriaNombre(inspeccionSeleccionado.getUsoMedidor()));
 					cuentaCliente.setFechaIngreso(fecha);
+					cuentaCliente.setHoraIngreso(sqlTime);
 					cuentaCliente.setEstado(Constantes.ESTADO_ACTIVO);
 					
 					//aqui para agregar la factura del 60% del costo de instalacion

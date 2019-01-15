@@ -10,7 +10,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name="precio_unitario")
-@NamedQuery(name="PrecioUnitario.findAll", query="SELECT p FROM PrecioUnitario p where p.estado = 'A'")
+@NamedQuery(name="PrecioUnitario.findAll", query="SELECT p FROM PrecioUnitario p where p.estado = 'A' order by p.rubro.idRubro asc")
 public class PrecioUnitario implements Serializable {
 	private static final long serialVersionUID = 1L;
 

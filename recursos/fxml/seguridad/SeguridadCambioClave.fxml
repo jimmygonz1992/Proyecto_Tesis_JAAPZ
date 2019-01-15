@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.scene.control.*?>
 <?import java.lang.*?>
@@ -49,9 +50,9 @@
                         <RowConstraints maxHeight="142.0" minHeight="10.0" prefHeight="70.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
-                        <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                        <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
                            <children>
-                              <Label text="USUARIO:">
+                              <Label text="DIGITE SU CONTRASEÑA ACTUAL">
                                  <font>
                                     <Font name="Arial Bold" size="18.0" />
                                  </font>
@@ -86,11 +87,6 @@
                               <Label />
                            </children>
                         </VBox>
-                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
-                           <children>
-                              <TextField fx:id="txtUsuario" prefHeight="25.0" prefWidth="200.0" />
-                           </children>
-                        </HBox>
                         <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
                            <children>
                               <PasswordField fx:id="txtContraseñaActual" prefHeight="25.0" prefWidth="196.0" />
@@ -108,6 +104,11 @@
                            </children>
                         </VBox>
                         <Separator prefHeight="14.0" prefWidth="256.0" GridPane.columnSpan="5" GridPane.rowIndex="2" />
+                        <TextField fx:id="txtUsuario" prefHeight="25.0" prefWidth="75.0" GridPane.columnIndex="3">
+                           <GridPane.margin>
+                              <Insets left="75.0" />
+                           </GridPane.margin>
+                        </TextField>
                      </children>
                   </GridPane>
                </children>

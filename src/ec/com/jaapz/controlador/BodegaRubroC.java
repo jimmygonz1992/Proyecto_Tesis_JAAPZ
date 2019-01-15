@@ -78,6 +78,9 @@ public class BodegaRubroC {
 		pr.crearReporte("/recursos/informes/lista_materiales_disponibles.jasper", rubroDAO, null);
 		pr.showReport("Listado");*/
 		try {
+			java.util.Date utilDate = new java.util.Date(); 
+			long lnMilisegundos = utilDate.getTime();
+			java.sql.Time sqlTime = new java.sql.Time(lnMilisegundos);
 			String estado;
 			if(validarDatos() == false){
 				return;
@@ -93,6 +96,7 @@ public class BodegaRubroC {
 			rubro.setMarca(txtMarca.getText());
 			rubro.setCodigo(txtCodigoProducto.getText());
 			rubro.setUsuarioCrea(Context.getInstance().getUsuariosC().getIdUsuario());
+			rubro.setHoraCrea(sqlTime);
 			rubro.setFechaCrea(new Date());
 			//falta la hora
 			rubro.setPrecio(Double.parseDouble(txtPrecio.getText()));

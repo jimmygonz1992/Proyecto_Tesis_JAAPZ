@@ -90,4 +90,16 @@ public class SegUsuarioDAO extends ClaseDAO{
 		}
 		return usuarioInspeccion;
 	}
+	
+	//para cambio de contrasenia
+		@SuppressWarnings("unchecked")
+		public List<SegUsuario> getRecuperaUsuario(String clave, String usuario){
+			List<SegUsuario> resultado = new ArrayList<SegUsuario>();
+			Query query = getEntityManager().createNamedQuery("SegUsuario.recuperaUsuarioValidaContrasenia");
+			query.setHint("javax.persistence.cache.storeMode", "REFRESH");
+			query.setParameter("clave", clave);
+			query.setParameter("usuario", usuario);
+			resultado = (List<SegUsuario>) query.getResultList();
+			return resultado;
+		}
 }

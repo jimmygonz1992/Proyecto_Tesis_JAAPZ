@@ -175,8 +175,8 @@ public class SolicitudesCierreReparacionC {
 		txtUsuario.setEditable(false);
 		txtSubtotal.setEditable(false);
 		txtTotal.setEditable(false);
-		txtSubtotal.setVisible(false);
-		txtTotal.setVisible(false);
+		//txtSubtotal.setVisible(false);
+		//txtTotal.setVisible(false);
 	}
 	
 	//recupera datos del material

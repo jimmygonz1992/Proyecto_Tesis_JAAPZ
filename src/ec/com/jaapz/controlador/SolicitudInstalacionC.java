@@ -298,6 +298,10 @@ public class SolicitudInstalacionC {
     }
     private boolean grabarDatos() {
 		try {
+			java.util.Date utilDate = new java.util.Date(); 
+			long lnMilisegundos = utilDate.getTime();
+			java.sql.Time sqlTime = new java.sql.Time(lnMilisegundos);
+			
 			boolean bandera = false;
 			Optional<ButtonType> result = helper.mostrarAlertaConfirmacion("Desea Grabar los Datos?",Context.getInstance().getStage());
 			if(result.get() == ButtonType.OK){
@@ -322,7 +326,8 @@ public class SolicitudInstalacionC {
 				inspeccion.setReferencia(txtReferenciaIns.getText());
 				inspeccion.setDireccion(txtDireccionIns.getText());
 				inspeccion.setBarrio(cboBarrio.getSelectionModel().getSelectedItem());
-				
+				inspeccion.setTelefonoContacto(txtContacto.getText());
+				inspeccion.setHoraIngreso(sqlTime);
 				if(clienteRecuperado.getIdCliente() != null) {
 					inspeccion.setCliente(clienteRecuperado);
 					clienteRecuperado.addSolInspeccionIn(inspeccion);

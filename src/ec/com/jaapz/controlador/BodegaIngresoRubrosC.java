@@ -639,10 +639,16 @@ public class BodegaIngresoRubrosC {
 		}catch(Exception ex) {
 			System.out.println(ex.getMessage());
 		}
-	}
+	}	
+	
 	//aqui voy a intentar modificar el grabar
 	public void grabar() {
 	try {
+		//para obtener la hora
+		java.util.Date utilDate = new java.util.Date(); 
+		long lnMilisegundos = utilDate.getTime();
+		java.sql.Time sqlTime = new java.sql.Time(lnMilisegundos);
+		
 			if(validarDatos() == false)
 				return;
 			String estado = "A";
@@ -674,6 +680,7 @@ public class BodegaIngresoRubrosC {
 				ingreso.getProveedor().setTelefono(txtTelefonoPro.getText());
 				ingreso.getProveedor().setUsuarioCrea(Context.getInstance().getUsuariosC().getIdUsuario());
 				ingreso.getProveedor().setFechaCrea(date);
+				ingreso.setHora(sqlTime);
 				ingreso.getProveedor().setUsuarioModifica(Context.getInstance().getUsuariosC().getIdUsuario());
 				ingreso.getProveedor().setFechaModificacion(date);
 				ingreso.getProveedor().setEstado("A");

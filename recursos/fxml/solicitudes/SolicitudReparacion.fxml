@@ -109,7 +109,7 @@
                               <Font name="System Bold Italic" size="12.0" />
                            </font>
                         </Label>
-                        <DatePicker fx:id="dtpFechaIns" styleClass="textField" GridPane.columnIndex="2" />
+                        <DatePicker fx:id="dtpFechaRep" styleClass="textField" GridPane.columnIndex="2" />
                         <TextField fx:id="txtReferenciaIns" GridPane.columnIndex="2" GridPane.columnSpan="3" GridPane.rowIndex="1" />
                         <TextField fx:id="txtDireccionIns" GridPane.columnIndex="2" GridPane.columnSpan="3" GridPane.rowIndex="2" />
                         <TextField fx:id="txtContacto" GridPane.columnIndex="2" GridPane.rowIndex="3" />

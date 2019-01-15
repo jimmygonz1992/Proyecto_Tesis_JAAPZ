@@ -1,5 +1,6 @@
 package ec.com.jaapz.controlador;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,6 +26,8 @@ public class ClientesOrdePendienteC {
 	@FXML TableView<SolInspeccionIn> tvDatos;
 	SolInspeccionInDAO inspeccionDAO = new SolInspeccionInDAO();
 	List<SolInspeccionIn> listadoInspecciones = new ArrayList<SolInspeccionIn>();
+	SimpleDateFormat formateador = new SimpleDateFormat("dd/MM/yyyy");
+	
 	public void initialize() {
 		listadoInspecciones = Context.getInstance().getListaInspecciones();
 		//poner nuevamente a null
@@ -72,15 +75,25 @@ public class ClientesOrdePendienteC {
 			datos.setAll(listaAgregar);
 
 			//llenar los datos en la tabla
-			TableColumn<SolInspeccionIn, String> idColum = new TableColumn<>("Código");
+			TableColumn<SolInspeccionIn, String> idColum = new TableColumn<>("Id");
 			idColum.setMinWidth(10);
-			idColum.setPrefWidth(50);
-			idColum.setCellValueFactory(new PropertyValueFactory<SolInspeccionIn, String>("idInspeccion"));
+			idColum.setPrefWidth(100);
+			idColum.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<SolInspeccionIn,String>, ObservableValue<String>>() {
+				@Override
+				public ObservableValue<String> call(CellDataFeatures<SolInspeccionIn, String> param) {
+					return new SimpleObjectProperty<String>(String.valueOf(param.getValue().getIdSolInspeccion()));
+				}
+			});
 
 			TableColumn<SolInspeccionIn, String> fechaColum = new TableColumn<>("Fecha");
 			fechaColum.setMinWidth(10);
-			fechaColum.setPrefWidth(150);
-			fechaColum.setCellValueFactory(new PropertyValueFactory<SolInspeccionIn, String>("fecha"));
+			fechaColum.setPrefWidth(100);
+			fechaColum.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<SolInspeccionIn,String>, ObservableValue<String>>() {
+				@Override
+				public ObservableValue<String> call(CellDataFeatures<SolInspeccionIn, String> param) {
+					return new SimpleObjectProperty<String>(String.valueOf(formateador.format(param.getValue().getFechaIngreso())));
+				}
+			});
 
 			TableColumn<SolInspeccionIn, String> clienteColum = new TableColumn<>("Cliente");
 			clienteColum.setMinWidth(10);

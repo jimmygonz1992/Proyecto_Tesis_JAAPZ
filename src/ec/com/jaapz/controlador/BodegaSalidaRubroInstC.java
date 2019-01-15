@@ -384,8 +384,7 @@ public class BodegaSalidaRubroInstC {
 				Instalacion instalacion = new Instalacion();
 				CuentaCliente cuentaCliente = liquidacionSeleccionada.getCuentaCliente();
 				Medidor medidor = liquidacionSeleccionada.getMedidor();
-				String estado = "A";
-				
+								
 				liquidacionSeleccionada.setEstadoOrden(Constantes.EST_APERTURA_REALIZADO);
 				cuentaCliente.setMedidor(medidor);
 				instalacion.setIdInstalacion(null);
@@ -398,7 +397,7 @@ public class BodegaSalidaRubroInstC {
 				instalacion.setEstadoInstalacion(Constantes.EST_INSPECCION_PENDIENTE);
 				instalacion.setUsuarioCrea(Context.getInstance().getUsuariosC().getIdUsuario());
 				instalacion.setEstadoValor(txtEstadoValorInst.getText());
-				instalacion.setEstado(estado);
+				instalacion.setEstado(Constantes.ESTADO_ACTIVO);
 				List<InstalacionDetalle> listaAgregadaRubros = new ArrayList<InstalacionDetalle>();
 				for(InstalacionDetalle det : tvDatos.getItems()) {
 					det.setIdInstalacionDet(null);

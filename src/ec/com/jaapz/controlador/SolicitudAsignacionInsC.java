@@ -1,5 +1,6 @@
 package ec.com.jaapz.controlador;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -41,6 +42,8 @@ public class SolicitudAsignacionInsC {
 	SegUsuarioDAO usuarioDAO = new SegUsuarioDAO();
 	SolInspeccionInDAO inspeccionDAO = new SolInspeccionInDAO();
 	List<SolInspeccionIn> listaInspeccionesEliminar = new ArrayList<SolInspeccionIn>();
+	
+	SimpleDateFormat formateador = new SimpleDateFormat("dd/MM/yyyy");
 
 	ControllerHelper helper = new ControllerHelper();
 	public void initialize() {
@@ -242,7 +245,7 @@ public class SolicitudAsignacionInsC {
 				@Override
 				public ObservableValue<String> call(CellDataFeatures<SolInspeccionIn, String> param) {
 					String dato = "";
-					dato = String.valueOf(param.getValue().getFechaIngreso());
+					dato = String.valueOf(formateador.format(param.getValue().getFechaIngreso()));
 					return new SimpleObjectProperty<String>(dato);
 				}
 			});
@@ -361,7 +364,7 @@ public class SolicitudAsignacionInsC {
 				@Override
 				public ObservableValue<String> call(CellDataFeatures<SolInspeccionIn, String> param) {
 					String dato = "";
-					dato = String.valueOf(param.getValue().getFechaIngreso());
+					dato = String.valueOf(formateador.format(param.getValue().getFechaIngreso()));
 					return new SimpleObjectProperty<String>(dato);
 				}
 			});

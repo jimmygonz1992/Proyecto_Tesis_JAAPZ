@@ -38,7 +38,7 @@ public class SolicitudReparacionC {
 	@FXML private TextField txtTelefono;
 	@FXML private TextField txtCodigo;
 
-	@FXML private DatePicker dtpFechaIns;
+	@FXML private DatePicker dtpFechaRep;
 	@FXML private TextField txtReferenciaIns;
 	@FXML private TextField txtDireccionIns;
 	@FXML private TextField txtContacto;
@@ -57,7 +57,7 @@ public class SolicitudReparacionC {
 
 	public void initialize() {
 		try {
-			dtpFechaIns.setValue(LocalDate.now());
+			dtpFechaRep.setValue(LocalDate.now());
 			nuevo();
 			Context.getInstance().setCuentaCliente(null);
 			//solo letras mayusculas
@@ -338,7 +338,7 @@ public class SolicitudReparacionC {
 		txtApellidos.setText("");
 		txtDireccion.setText("");
 		txtTelefono.setText("");
-		dtpFechaIns.setValue(null);
+		//dtpFechaRep.setValue(null);
 		txtReferenciaIns.setText("");
 		txtDireccionIns.setText("");
 		txtContacto.setText("");
@@ -387,12 +387,16 @@ public class SolicitudReparacionC {
 
 	public void grabar() {
 		try {
+			java.util.Date utilDate = new java.util.Date(); 
+			long lnMilisegundos = utilDate.getTime();
+			java.sql.Time sqlTime = new java.sql.Time(lnMilisegundos);
+			
 			if(validarDatos() == false)
 				return;
 			Optional<ButtonType> result = helper.mostrarAlertaConfirmacion("Desea Grabar los Datos?",Context.getInstance().getStage());
 			if(result.get() == ButtonType.OK){
 
-				Date date = Date.from(dtpFechaIns.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
+				Date date = Date.from(dtpFechaRep.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
 
 				cuentaRecuperada.setIdCuenta(Integer.parseInt(txtCuenta.getText()));
 				
@@ -408,7 +412,8 @@ public class SolicitudReparacionC {
 				reparacion.setFecha(date);
 				reparacion.setEstadoInspecRep(Constantes.EST_INSPECCION_PENDIENTE);
 				reparacion.setObservacion(txtObservaciones.getText());
-				reparacion.setEstado("A");
+				reparacion.setHora(sqlTime);
+				reparacion.setEstado(Constantes.ESTADO_ACTIVO);
 
 				reparacionDao.getEntityManager().getTransaction().begin();
 				if (txtCodigo.getText().equals("0")) {
