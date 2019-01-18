@@ -2,9 +2,13 @@ package ec.com.jaapz.controlador;
 
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
+import ec.com.jaapz.modelo.CuentaCliente;
 import ec.com.jaapz.modelo.Estado;
 import ec.com.jaapz.modelo.Instalacion;
 import ec.com.jaapz.modelo.InstalacionDAO;
@@ -12,6 +16,8 @@ import ec.com.jaapz.modelo.InstalacionDetalle;
 import ec.com.jaapz.modelo.LiquidacionDetalle;
 import ec.com.jaapz.modelo.LiquidacionOrden;
 import ec.com.jaapz.modelo.LiquidacionOrdenDAO;
+import ec.com.jaapz.modelo.Medidor;
+import ec.com.jaapz.util.Constantes;
 import ec.com.jaapz.util.Context;
 import ec.com.jaapz.util.ControllerHelper;
 import ec.com.jaapz.util.Encriptado;
@@ -22,6 +28,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
@@ -137,7 +144,52 @@ public class InstalacionesAtencionSolicC {
 	
 	public void grabar() {
 		try {
-			
+			//para obtener la hora
+			java.util.Date utilDate = new java.util.Date(); 
+			long lnMilisegundos = utilDate.getTime();
+			java.sql.Time sqlTime = new java.sql.Time(lnMilisegundos);
+			if(validarDatos() == false)
+				return;
+			Optional<ButtonType> result = helper.mostrarAlertaConfirmacion("Desea Grabar los Datos?",Context.getInstance().getStage());
+			if(result.get() == ButtonType.OK){
+				Instalacion instalacion = new Instalacion();
+				Medidor medidor = liquidacionSeleccionada.getMedidor();
+								
+				liquidacionSeleccionada.setEstadoInstalacion(Constantes.EST_APERTURA_REALIZADO);
+				instalacion.setIdInstalacion(null);
+				Date date = Date.from(dtpFecha.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
+				//Timestamp fecha = new Timestamp(date.getTime());
+				instalacion.setCuentaCliente(liquidacionSeleccionada.getCuentaCliente());
+				instalacion.setSolInspeccionIn(liquidacionSeleccionada.getSolInspeccionIn());
+				instalacion.setFechaInst(date);
+				instalacion.setHoraInst(sqlTime);
+				instalacion.setTotal(liquidacionSeleccionada.getTotal());
+				instalacion.setEstadoValor(liquidacionSeleccionada.getEstadoValor());
+				instalacion.setEstadoInstalacion(Constantes.EST_INSPECCION_REALIZADO);
+				instalacion.setUsuarioCrea(liquidacionSeleccionada.getUsuarioCrea());
+				instalacion.setEstado(Constantes.ESTADO_ACTIVO);
+				instalacion.setUsuarioInstalacion(Context.getInstance().getUsuariosC().getIdUsuario());
+				List<InstalacionDetalle> listaAgregadaRubros = new ArrayList<InstalacionDetalle>();
+				for(InstalacionDetalle det : tvDatos.getItems()) {
+					det.setIdInstalacionDet(null);
+					det.setUsuarioCrea(Context.getInstance().getUsuariosC().getIdUsuario());
+					det.setEstado("A");
+					det.setInstalacion(instalacion);
+					listaAgregadaRubros.add(det);
+				}
+				
+				instalacion.setInstalacionDetalles(listaAgregadaRubros);
+				instalacionDao.getEntityManager().getTransaction().begin();
+				instalacionDao.getEntityManager().persist(instalacion);
+				instalacionDao.getEntityManager().merge(liquidacionSeleccionada);
+				
+				instalacionDao.getEntityManager().getTransaction().commit();
+				
+				helper.mostrarAlertaInformacion("Datos Grabados Correctamente", Context.getInstance().getStage());
+				nuevo();
+				tvDatos.getColumns().clear();
+				tvDatos.getItems().clear();
+			}
 		}catch(Exception ex) {
 			helper.mostrarAlertaError("Error al grabar", Context.getInstance().getStage());
 			System.out.println(ex.getMessage());
@@ -229,9 +281,7 @@ public class InstalacionesAtencionSolicC {
 		try{		
 			List<LiquidacionOrden> listaLiquidacion = new ArrayList<LiquidacionOrden>();
 			listaLiquidacion = liquidacionDao.getRecuperaLiquidacionEmitida(idLiquidacion);
-			
 			for(int i = 0 ; i < listaLiquidacion.size() ; i ++) {
-				
 				txtIdSolicitud.setText(Integer.toString(listaLiquidacion.get(i).getSolInspeccionIn().getIdSolInspeccion()));
 				txtEstadoValor.setText(listaLiquidacion.get(i).getEstadoValor());
 				txtFechaSolic.setText(String.valueOf(formateador.format(listaLiquidacion.get(i).getSolInspeccionIn().getFechaIngreso())));
