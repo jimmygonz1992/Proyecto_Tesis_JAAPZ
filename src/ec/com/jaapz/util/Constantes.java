@@ -8,6 +8,9 @@ public abstract class Constantes {
 	public static String ORIGEN_MOVIL = "MOVIL";
 	public static String ORIGEN_ESCRITORIO = "ESCRITORIO";
 	
+	public static int ID_MEDIDOR = 2;
+	public static int ID_TASA_CONEXION = 1;
+	
 	public static String IDENT_INSTALACION = "INS";
 	//id de los diferentes usuarios que estan registrados en el sistema
 	public static int ID_USU_ADMINISTRADOR = 1;

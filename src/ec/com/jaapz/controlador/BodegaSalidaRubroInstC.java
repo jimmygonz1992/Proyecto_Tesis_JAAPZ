@@ -30,10 +30,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.util.Callback;
 
 public class BodegaSalidaRubroInstC {
@@ -381,6 +381,12 @@ public class BodegaSalidaRubroInstC {
 				return;
 			Optional<ButtonType> result = helper.mostrarAlertaConfirmacion("Desea Grabar los Datos?",Context.getInstance().getStage());
 			if(result.get() == ButtonType.OK){
+				
+				if(validarStockRubro() == false) {
+					helper.mostrarAlertaError("Stock insuficiente de rubros", Context.getInstance().getStage());
+					return;
+				}
+				
 				Instalacion instalacion = new Instalacion();
 				CuentaCliente cuentaCliente = liquidacionSeleccionada.getCuentaCliente();
 				Medidor medidor = liquidacionSeleccionada.getMedidor();
@@ -406,17 +412,13 @@ public class BodegaSalidaRubroInstC {
 					det.setInstalacion(instalacion);
 					listaAgregadaRubros.add(det);
 				}
-				
 				instalacion.setInstalacionDetalles(listaAgregadaRubros);
 				instalacionDao.getEntityManager().getTransaction().begin();
 				instalacionDao.getEntityManager().persist(instalacion);
 				instalacionDao.getEntityManager().merge(cuentaCliente);
 				instalacionDao.getEntityManager().merge(liquidacionSeleccionada);
-				
 				instalacionDao.getEntityManager().getTransaction().commit();
-					
 				actualizarListaArticulos();
-				
 				helper.mostrarAlertaInformacion("Datos Grabados Correctamente", Context.getInstance().getStage());
 				nuevo();
 				dtpFecha.setValue(null);
@@ -428,7 +430,31 @@ public class BodegaSalidaRubroInstC {
 			System.out.println(ex.getMessage());
 		}
 	}
-	
+	private boolean validarStockRubro() {
+		try {
+			boolean bandera = false;
+			if(tvDatos != null) {
+				List<Rubro> listaSalidaRubros = new ArrayList<Rubro>();
+				for(InstalacionDetalle detalle: tvDatos.getItems()) {
+					listaSalidaRubros.add(detalle.getRubro());
+				}
+				for(Rubro rubro : listaSalidaRubros) {
+					if(rubro.getIdRubro() != Constantes.ID_MEDIDOR || rubro.getIdRubro() != Constantes.ID_TASA_CONEXION) {
+						for(InstalacionDetalle detalle : tvDatos.getItems()) {
+							if(rubro.getIdRubro() == detalle.getRubro().getIdRubro()) { 
+								if(rubro.getStock() >= detalle.getCantidad())//si es mayor o igual q permita grabar
+									bandera = true;
+							}
+						}	
+					}
+				}
+			}
+			return bandera;
+		}catch(Exception ex) {
+			System.out.println(ex.getMessage());
+			return false;
+		}
+	}
 	public void actualizarListaArticulos() {
 		if(tvDatos != null) {		
 			List<Rubro> listaSalidaRubros = new ArrayList<Rubro>();
@@ -437,11 +463,13 @@ public class BodegaSalidaRubroInstC {
 			}
 			rubroDAO.getEntityManager().getTransaction().begin();
 			for (Rubro rubro : listaSalidaRubros) {
-				for(InstalacionDetalle detalle : tvDatos.getItems()) {
-					if(rubro.getIdRubro() == detalle.getRubro().getIdRubro())
-						rubro.setStock(rubro.getStock() - detalle.getCantidad());
+				if(rubro.getIdRubro() != Constantes.ID_MEDIDOR || rubro.getIdRubro() != Constantes.ID_TASA_CONEXION) {
+					for(InstalacionDetalle detalle : tvDatos.getItems()) {
+						if(rubro.getIdRubro() == detalle.getRubro().getIdRubro())
+							rubro.setStock(rubro.getStock() - detalle.getCantidad());
+					}
+					rubroDAO.getEntityManager().merge(rubro);	
 				}
-				rubroDAO.getEntityManager().merge(rubro);
 			}
 			rubroDAO.getEntityManager().getTransaction().commit();
 		}

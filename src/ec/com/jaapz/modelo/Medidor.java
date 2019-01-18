@@ -34,6 +34,9 @@ public class Medidor implements Serializable {
 
 	private String marca;
 	
+	@Column(name="id_factura")
+	private Integer idFactura;
+	
 	private double precio;
 
 	private String modelo;
@@ -181,6 +184,14 @@ public class Medidor implements Serializable {
 
 	public void setUsado(boolean usado) {
 		this.usado = usado;
+	}
+
+	public Integer getIdFactura() {
+		return idFactura;
+	}
+
+	public void setIdFactura(Integer idFactura) {
+		this.idFactura = idFactura;
 	}
 
 }
