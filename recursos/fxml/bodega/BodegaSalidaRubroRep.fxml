@@ -260,6 +260,7 @@
                         <TextArea fx:id="txtObservaciones" prefHeight="58.0" prefWidth="788.0" HBox.hgrow="ALWAYS" />
                      </children>
                   </HBox>
+                  <TextField fx:id="txtIdReparacion" maxWidth="100.0" minWidth="100.0" prefHeight="25.0" prefWidth="160.0" GridPane.columnIndex="3" GridPane.rowIndex="2" />
                   
                </children>
                <columnConstraints>

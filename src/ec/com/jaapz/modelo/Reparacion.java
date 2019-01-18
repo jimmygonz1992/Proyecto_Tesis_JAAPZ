@@ -31,7 +31,9 @@ import java.util.List;
 	@NamedQuery(name="Reparacion.buscarReparacionListadoSalidaPerfilReparaciones", query="SELECT r FROM Reparacion r "
 			+ "where (lower(r.cuentaCliente.cliente.apellido) like :patron or lower(r.cuentaCliente.cliente.nombre) like :patron "
 			+ "or lower(r.cuentaCliente.cliente.cedula) like :patron) and r.estadoEntrega = 'PENDIENTE'"
-			+ "and r.usuarioCrea = :idPerfilUsuario order by r.idReparacion asc")
+			+ "and r.usuarioCrea = :idPerfilUsuario order by r.idReparacion asc"),
+	//esta consulta es provisional voy a hacer lo mismo q hice para editar una orden de liquidacion
+		@NamedQuery(name="Reparacion.recuperaReparaciones", query="SELECT r FROM Reparacion r WHERE (r.idReparacion = (:idReparacion) and r.estado = 'A')")
 })
 public class Reparacion implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -59,6 +61,10 @@ public class Reparacion implements Serializable {
 	private Date fechaReparacion;
 	
 	@Temporal(TemporalType.DATE)
+	@Column(name="fecha_cierre_inspeccion")
+	private Date fechaCierreInspeccion;
+	
+	@Temporal(TemporalType.DATE)
 	@Column(name="fecha_salida")
 	private Date fechaSalida;
 
@@ -78,6 +84,9 @@ public class Reparacion implements Serializable {
 
 	@Column(name="usuario_crea")
 	private Integer usuarioCrea;
+	
+	@Column(name="usuario_crea_salida")
+	private Integer usuarioCreaSalida;
 	
 	@Column(name="usuario_reparacion")
 	private Integer usuarioReparacion;
@@ -134,6 +143,16 @@ public class Reparacion implements Serializable {
 	public void setFechaSalida(Date fechaSalida) {
 		this.fechaSalida = fechaSalida;
 	}
+	
+	
+	public Date getFechaCierreInspeccion() {
+		return fechaCierreInspeccion;
+	}
+
+	public void setFechaCierreInspeccion(Date fechaCierreInspeccion) {
+		this.fechaCierreInspeccion = fechaCierreInspeccion;
+	}
+	
 
 	public String getReferencia() {
 		return referencia;
@@ -229,6 +248,14 @@ public class Reparacion implements Serializable {
 
 	public void setUsuarioCrea(Integer usuarioCrea) {
 		this.usuarioCrea = usuarioCrea;
+	}
+	
+	public Integer getUsuarioCreaSalida() {
+		return this.usuarioCreaSalida;
+	}
+
+	public void setUsuarioCreaSalida(Integer usuarioCreaSalida) {
+		this.usuarioCreaSalida = usuarioCreaSalida;
 	}
 
 	public List<PlanillaDetalle> getPlanillaDetalles() {

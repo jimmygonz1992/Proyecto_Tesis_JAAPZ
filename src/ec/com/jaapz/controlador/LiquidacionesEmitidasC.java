@@ -19,8 +19,8 @@ import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.Callback;
 
-public class BodegaSalidaListadoLiquidInstC {
-	LiquidacionOrdenDAO liquidacionOrdenDao = new LiquidacionOrdenDAO();
+public class LiquidacionesEmitidasC {
+	LiquidacionOrdenDAO liqOrdenDao = new LiquidacionOrdenDAO();
 	@FXML private TextField txtBuscar;
 	@FXML private TableView<LiquidacionOrden> tvDatos;
 	SimpleDateFormat formateador = new SimpleDateFormat("dd/MM/yyyy");
@@ -51,19 +51,24 @@ public class BodegaSalidaListadoLiquidInstC {
 			tvDatos.getColumns().clear();
 			List<LiquidacionOrden> listaLiquidaciones;
 			if(Context.getInstance().getIdPerfil() == 1) {
-				listaLiquidaciones = liquidacionOrdenDao.getListaLiquidacionOrden(patron);
+				listaLiquidaciones = liqOrdenDao.getListaLiqOrdenEmitida(patron);
 			}else {
-				listaLiquidaciones = liquidacionOrdenDao.getListaLiquidacionOrdenPerfil(patron);
+				listaLiquidaciones = liqOrdenDao.getListaLiqOrdenPerfilEmitida(patron);
 			}
 			
 			ObservableList<LiquidacionOrden> datosReq = FXCollections.observableArrayList();
 			datosReq.setAll(listaLiquidaciones);
 
-			//llenar los datos en la tabla
+			//llenar los datos en la tabla			
 			TableColumn<LiquidacionOrden, String> idColum = new TableColumn<>("Nº");
 			idColum.setMinWidth(10);
-			idColum.setPrefWidth(40);
-			idColum.setCellValueFactory(new PropertyValueFactory<LiquidacionOrden, String>("idLiquidacion"));
+			idColum.setPrefWidth(80);
+			idColum.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<LiquidacionOrden, String>, ObservableValue<String>>() {
+				@Override
+				public ObservableValue<String> call(CellDataFeatures<LiquidacionOrden, String> param) {
+					return new SimpleObjectProperty<String>(String.valueOf(param.getValue().getIdLiquidacion()));
+				}
+			});
 			
 			TableColumn<LiquidacionOrden, String> ordenColum = new TableColumn<>("Inspección");
 			ordenColum.setMinWidth(10);
@@ -140,12 +145,17 @@ public class BodegaSalidaListadoLiquidInstC {
 					return new SimpleObjectProperty<String>(String.valueOf(param.getValue().getSolInspeccionIn().getEstadoInspeccion()));
 				}
 			});
-
-			TableColumn<LiquidacionOrden, String> estadoOrdColum = new TableColumn<>("Estado Liquidacion");
-			estadoOrdColum.setMinWidth(10);
-			estadoOrdColum.setPrefWidth(85);
-			estadoOrdColum.setCellValueFactory(new PropertyValueFactory<LiquidacionOrden, String>("estadoOrden"));
 			
+			TableColumn<LiquidacionOrden, String> estadoOrdColum = new TableColumn<>("Estado Liquidación");
+			estadoOrdColum.setMinWidth(10);
+			estadoOrdColum.setPrefWidth(80);
+			estadoOrdColum.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<LiquidacionOrden, String>, ObservableValue<String>>() {
+				@Override
+				public ObservableValue<String> call(CellDataFeatures<LiquidacionOrden, String> param) {
+					return new SimpleObjectProperty<String>(String.valueOf(param.getValue().getEstadoOrden()));
+				}
+			});
+
 			tvDatos.getColumns().addAll(idColum, ordenColum, fechaOrdenColum, fechaInspColum, cedulaColum, clienteColum, direccionColum, referenciaColum, estadoInspColum, estadoOrdColum);
 			tvDatos.setItems(datosReq);
 		}catch(Exception ex){

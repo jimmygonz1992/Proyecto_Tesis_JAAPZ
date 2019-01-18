@@ -29,7 +29,19 @@ import java.util.List;
 	@NamedQuery(name="LiquidacionOrden.buscarLiquidacionOrdenPerfilInstalaciones", query="SELECT l FROM LiquidacionOrden l "
 			+ "where (lower(l.cuentaCliente.cliente.apellido) like :patron or lower(l.cuentaCliente.cliente.nombre) like :patron "
 			+ "or lower(l.cuentaCliente.cliente.cedula) like :patron) and l.estadoInstalacion = 'PENDIENTE'"
-			+ "and l.usuarioCrea = :idPerfilUsuario order by l.idLiquidacion asc")
+			+ "and l.usuarioCrea = :idPerfilUsuario order by l.idLiquidacion asc"),
+	//para agregar mas materiales solo cambia el estado
+	@NamedQuery(name="LiquidacionOrden.findAllEmitida", query="SELECT l FROM LiquidacionOrden l "
+			+ "where (lower(l.cuentaCliente.cliente.apellido) like :patron or lower(l.cuentaCliente.cliente.nombre) like :patron "
+			+ "or lower(l.cuentaCliente.cliente.cedula) like :patron) and l.solInspeccionIn.estadoInspeccion = 'REALIZADO' and l.estadoOrden = 'REALIZADO'"
+			+ "order by l.idLiquidacion asc"),
+	@NamedQuery(name="LiquidacionOrden.buscarLiqOrdenPerfilEmitida", query="SELECT l FROM LiquidacionOrden l "
+			+ "where (lower(l.cuentaCliente.cliente.apellido) like :patron or lower(l.cuentaCliente.cliente.nombre) like :patron "
+			+ "or lower(l.cuentaCliente.cliente.cedula) like :patron) and l.solInspeccionIn.estadoInspeccion = 'REALIZADO' and l.estadoOrden = 'REALIZADO'"
+			+ "and l.usuarioCrea = :idPerfilUsuario order by l.idLiquidacion asc"),
+	
+	//esta consulta es provisional para ver si sale editar una orden de liquidacion
+	@NamedQuery(name="LiquidacionOrden.recuperaLiquidacionEmitida", query="SELECT l FROM LiquidacionOrden l WHERE (l.idLiquidacion = (:idLiquidacion) and l.estado = 'A')")
 })
 public class LiquidacionOrden implements Serializable {
 	private static final long serialVersionUID = 1L;

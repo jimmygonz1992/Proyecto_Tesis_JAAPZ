@@ -1,5 +1,6 @@
 package ec.com.jaapz.controlador;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import ec.com.jaapz.modelo.SolInspeccionIn;
@@ -16,13 +17,14 @@ import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TableColumn.CellDataFeatures;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.Callback;
 
 public class SolicitudesListaOrdenC {
 	@FXML TextField txtBuscar;
 	@FXML TableView<SolInspeccionIn> tvDatos;
 	SolInspeccionInDAO inspeccionDAO = new SolInspeccionInDAO();
+	SimpleDateFormat formateador = new SimpleDateFormat("dd/MM/yyyy");
+	
 	public void initialize() {
 		llenarTablaInspecciones("");
 		tvDatos.setRowFactory(tv -> {
@@ -91,7 +93,7 @@ public class SolicitudesListaOrdenC {
 				@Override
 				public ObservableValue<String> call(CellDataFeatures<SolInspeccionIn, String> param) {
 					String dato = "";
-					dato = String.valueOf(param.getValue().getFechaIngreso());
+					dato = String.valueOf(formateador.format(param.getValue().getFechaIngreso()));
 					return new SimpleObjectProperty<String>(dato);
 				}
 			});
@@ -107,17 +109,26 @@ public class SolicitudesListaOrdenC {
 					return new SimpleObjectProperty<String>(cliente);
 				}
 			});
-
+			
 			TableColumn<SolInspeccionIn, String> referenciaColum = new TableColumn<>("Referencia");
 			referenciaColum.setMinWidth(10);
 			referenciaColum.setPrefWidth(350);
-			referenciaColum.setCellValueFactory(new PropertyValueFactory<SolInspeccionIn, String>("referencia"));
-
+			referenciaColum.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<SolInspeccionIn,String>, ObservableValue<String>>() {
+				@Override
+				public ObservableValue<String> call(CellDataFeatures<SolInspeccionIn, String> param) {
+					return new SimpleObjectProperty<String>(param.getValue().getReferencia());
+				}
+			});
+			
 			TableColumn<SolInspeccionIn, String> estadoColum = new TableColumn<>("Estado");
 			estadoColum.setMinWidth(10);
-			estadoColum.setPrefWidth(90);
-			estadoColum.setCellValueFactory(new PropertyValueFactory<SolInspeccionIn, String>("estadoInspeccion"));
-
+			estadoColum.setPrefWidth(350);
+			estadoColum.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<SolInspeccionIn,String>, ObservableValue<String>>() {
+				@Override
+				public ObservableValue<String> call(CellDataFeatures<SolInspeccionIn, String> param) {
+					return new SimpleObjectProperty<String>(param.getValue().getEstadoInspeccion());
+				}
+			});
 
 			tvDatos.getColumns().addAll(idColum, fechaColum,clienteColum,referenciaColum,estadoColum);
 			tvDatos.setItems(datos);

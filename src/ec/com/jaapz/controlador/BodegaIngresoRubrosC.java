@@ -77,11 +77,6 @@ public class BodegaIngresoRubrosC {
 	RubroDAO rubroDAO = new RubroDAO();
 	ProveedorDAO proveedorDAO = new ProveedorDAO();
 	Ingreso ingreso;
-
-	int idfactura;
-	int solorecupera = 0;
-	int accion;
-	int int_bandera;
 	
 	public void initialize(){
 		try {
@@ -491,11 +486,8 @@ public class BodegaIngresoRubrosC {
 				return new SimpleObjectProperty<String>(String.valueOf(param.getValue().getCantidad()*param.getValue().getPrecio()));
 			}
 		});
-
-		accion = 2;
 		tvDatos.getColumns().addAll(descripcionColum, cantidadColum, precioColum, totalColum);
 		tvDatos.setItems(datos);
-
 		//sumarDatos();
 	}
 
@@ -576,14 +568,9 @@ public class BodegaIngresoRubrosC {
 					return new SimpleObjectProperty<String>(String.valueOf(param.getValue().getCantidad()*param.getValue().getPrecio()));
 				}
 			});
-
-			accion = 1;
-			int_bandera = 0;
 			tvDatos.getColumns().addAll(descipcionColum, cantidadColum, precioColum, totalColum);
 			tvDatos.setItems(datos);
-
 			//sumarDatos();
-
 			rubroSeleccionado = null;
 			limpiar();
 		}catch(Exception ex) {

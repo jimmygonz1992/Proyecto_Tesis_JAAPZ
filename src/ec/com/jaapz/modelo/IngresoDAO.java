@@ -14,7 +14,7 @@ public class IngresoDAO extends ClaseDAO{
 		return resultado;
 	}
 	
-	//para recuperar proveedor
+	//para recuperar factura
 	@SuppressWarnings("unchecked")
 	public List<Ingreso> getRecuperaIngreso(String numIngreso){
 		List<Ingreso> resultado = new ArrayList<Ingreso>();

@@ -1,5 +1,6 @@
 package ec.com.jaapz.controlador;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -50,6 +51,7 @@ public class ReparacionesAtencionSolicC {
 	
 	ControllerHelper helper = new ControllerHelper();
 	Reparacion reparacionSeleccionada = new Reparacion();
+	SimpleDateFormat formateador = new SimpleDateFormat("dd/MM/yyyy");	
 	
 	@SuppressWarnings("static-access")
 	public void initialize() {
@@ -133,7 +135,7 @@ public class ReparacionesAtencionSolicC {
 			if(datoSeleccionado.getSolInspeccionRep().getFecha() == null)
 				txtFechaSolic.setText("");
 			else
-				txtFechaSolic.setText(String.valueOf(datoSeleccionado.getSolInspeccionRep().getFecha()));
+				txtFechaSolic.setText(String.valueOf(formateador.format(datoSeleccionado.getSolInspeccionRep().getFecha())));
 			
 			if(datoSeleccionado.getCuentaCliente().getDireccion() == null)
 				txtDireccion.setText("");

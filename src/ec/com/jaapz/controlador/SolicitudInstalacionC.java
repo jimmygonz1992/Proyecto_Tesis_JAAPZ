@@ -81,7 +81,7 @@ public class SolicitudInstalacionC {
     					}else {
     						recuperarDatos(txtCedula.getText());
     						
-    						dtpFechaIns.setValue(null);
+    						//dtpFechaIns.setValue(null);
     				    	cboUsoMedidor.getSelectionModel().select(-1);
     				    	txtReferenciaIns.setText("");
     				    	txtDireccionIns.setText("");
@@ -216,6 +216,7 @@ public class SolicitudInstalacionC {
     		}else {
     			helper.mostrarAlertaInformacion("Cliente no registrado.. debe ser registrado", Context.getInstance().getStage());
     			txtNombres.requestFocus();
+    			
     			clienteRecuperado = new Cliente();
     		}
     	}catch(Exception ex) {

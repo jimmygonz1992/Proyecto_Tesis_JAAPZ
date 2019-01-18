@@ -1,5 +1,6 @@
 package ec.com.jaapz.controlador;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import ec.com.jaapz.modelo.LiquidacionOrden;
@@ -22,6 +23,8 @@ public class InstalacionesListadoOrdenLiquidacionesC {
 	LiquidacionOrdenDAO liquidacionOrdenDao = new LiquidacionOrdenDAO();
 	@FXML private TextField txtBuscar;
 	@FXML private TableView<LiquidacionOrden> tvDatos;
+	SimpleDateFormat formateador = new SimpleDateFormat("dd/MM/yyyy");
+	
 	public void initialize() {
 		llenarDatos("");
 		tvDatos.setRowFactory(tv -> {
@@ -78,7 +81,7 @@ public class InstalacionesListadoOrdenLiquidacionesC {
 			fechaOrdenColum.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<LiquidacionOrden, String>, ObservableValue<String>>() {
 				@Override
 				public ObservableValue<String> call(CellDataFeatures<LiquidacionOrden, String> param) {
-					return new SimpleObjectProperty<String>(String.valueOf(param.getValue().getFecha()));
+					return new SimpleObjectProperty<String>(String.valueOf(formateador.format(param.getValue().getFecha())));
 				}
 			});
 			
@@ -88,7 +91,7 @@ public class InstalacionesListadoOrdenLiquidacionesC {
 			fechaInspColum.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<LiquidacionOrden, String>, ObservableValue<String>>() {
 				@Override
 				public ObservableValue<String> call(CellDataFeatures<LiquidacionOrden, String> param) {
-					return new SimpleObjectProperty<String>(String.valueOf(param.getValue().getSolInspeccionIn().getFechaIngreso()));
+					return new SimpleObjectProperty<String>(String.valueOf(formateador.format(param.getValue().getSolInspeccionIn().getFechaIngreso())));
 				}
 			});
 			
@@ -98,7 +101,6 @@ public class InstalacionesListadoOrdenLiquidacionesC {
 			cedulaColum.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<LiquidacionOrden, String>, ObservableValue<String>>() {
 				@Override
 				public ObservableValue<String> call(CellDataFeatures<LiquidacionOrden, String> param) {
-					//return new SimpleObjectProperty<String>(String.valueOf(param.getValue().getJunOrdenPreviaDespacho().getJunInspeccionNuevoCliente().getFecha()));
 					return new SimpleObjectProperty<String>(String.valueOf(param.getValue().getCuentaCliente().getCliente().getCedula()));
 				}
 			});

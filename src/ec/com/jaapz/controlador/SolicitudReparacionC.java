@@ -414,6 +414,8 @@ public class SolicitudReparacionC {
 				reparacion.setObservacion(txtObservaciones.getText());
 				reparacion.setHora(sqlTime);
 				reparacion.setEstado(Constantes.ESTADO_ACTIVO);
+				reparacion.setReferencia(txtReferenciaIns.getText());
+				reparacion.setTelfContacto(txtContacto.getText());
 
 				reparacionDao.getEntityManager().getTransaction().begin();
 				if (txtCodigo.getText().equals("0")) {

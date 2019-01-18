@@ -1,5 +1,6 @@
 package ec.com.jaapz.controlador;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import ec.com.jaapz.modelo.Reparacion;
@@ -23,6 +24,7 @@ public class BodegaListadoSalidaRepC {
 	@FXML private TextField txtBuscar;
 	@FXML private TableView<Reparacion> tvDatos;
 	ReparacionDAO reparacionDao = new ReparacionDAO();
+	SimpleDateFormat formateador = new SimpleDateFormat("dd/MM/yyyy");
 	
 	public void initialize() {
 		llenarDatos("");
@@ -81,7 +83,7 @@ public class BodegaListadoSalidaRepC {
 			fechaOrdenColum.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Reparacion, String>, ObservableValue<String>>() {
 				@Override
 				public ObservableValue<String> call(CellDataFeatures<Reparacion, String> param) {
-					return new SimpleObjectProperty<String>(String.valueOf(param.getValue().getSolInspeccionRep().getFecha()));
+					return new SimpleObjectProperty<String>(String.valueOf(formateador.format(param.getValue().getSolInspeccionRep().getFecha())));
 				}
 			});
 					

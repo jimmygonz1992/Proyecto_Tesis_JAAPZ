@@ -50,4 +50,41 @@ public class LiquidacionOrdenDAO extends ClaseDAO{
 		resultado = (List<LiquidacionOrden>) query.getResultList();
 		return resultado;
 	}
+	
+	//para agregar mas materiales solo cambia en el estado = REALIZADO
+	@SuppressWarnings("unchecked")
+	public List<LiquidacionOrden> getListaLiqOrdenEmitida(String patron){
+		List<LiquidacionOrden> resultado = new ArrayList<LiquidacionOrden>();
+		Query query = getEntityManager().createNamedQuery("LiquidacionOrden.findAllEmitida");
+		query.setHint("javax.persistence.cache.storeMode", "REFRESH");
+		query.setParameter("patron", "%" + patron + "%");
+		resultado = (List<LiquidacionOrden>) query.getResultList();
+		return resultado;
+	}
+	
+	//para agregar mas materiales solo cambia en el estado = REALIZADO
+	@SuppressWarnings("unchecked")
+	public List<LiquidacionOrden> getListaLiqOrdenPerfilEmitida(String patron){
+		List<LiquidacionOrden> resultado = new ArrayList<LiquidacionOrden>();
+		Query query = getEntityManager().createNamedQuery("LiquidacionOrden.buscarLiqOrdenPerfilEmitida");
+		query.setHint("javax.persistence.cache.storeMode", "REFRESH");
+		query.setParameter("patron", "%" + patron + "%");
+		query.setParameter("idPerfilUsuario", Context.getInstance().getIdPerfil());
+		resultado = (List<LiquidacionOrden>) query.getResultList();
+		return resultado;
+	}
+	
+	
+	//esta es provisional para ver si puedo editar una orden de liquidacion
+	//bueno en realidad si funcionó xD
+	//para recuperar factura
+	@SuppressWarnings("unchecked")
+	public List<LiquidacionOrden> getRecuperaLiquidacionEmitida(Integer idLiquidacion){
+		List<LiquidacionOrden> resultado = new ArrayList<LiquidacionOrden>();
+		Query query = getEntityManager().createNamedQuery("LiquidacionOrden.recuperaLiquidacionEmitida");
+		query.setHint("javax.persistence.cache.storeMode", "REFRESH");
+		query.setParameter("idLiquidacion", idLiquidacion);
+		resultado = (List<LiquidacionOrden>) query.getResultList();
+		return resultado;
+	}
 }

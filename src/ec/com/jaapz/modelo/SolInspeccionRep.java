@@ -34,6 +34,11 @@ public class SolInspeccionRep implements Serializable {
 	private Integer idSolicitudRep;
 
 	private String estado;
+	
+	private String referencia;
+	
+	@Column(name="telf_contacto")
+	private String telfContacto;
 
 	@Column(name="estado_inspec_rep")
 	private String estadoInspecRep;
@@ -76,6 +81,14 @@ public class SolInspeccionRep implements Serializable {
 		this.idSolicitudRep = idSolicitudRep;
 	}
 
+	public String getReferencia() {
+		return this.referencia;
+	}
+
+	public void setReferencia(String referencia) {
+		this.referencia = referencia;
+	}
+	
 	public String getEstado() {
 		return this.estado;
 	}
@@ -90,6 +103,14 @@ public class SolInspeccionRep implements Serializable {
 
 	public void setEstadoInspecRep(String estadoInspecRep) {
 		this.estadoInspecRep = estadoInspecRep;
+	}
+	
+	public String getTelfContacto() {
+		return this.telfContacto;
+	}
+
+	public void setTelfContacto(String telfContacto) {
+		this.telfContacto = telfContacto;
 	}
 
 	public Date getFecha() {
