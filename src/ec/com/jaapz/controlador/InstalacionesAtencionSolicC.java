@@ -8,7 +8,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
-import ec.com.jaapz.modelo.CuentaCliente;
 import ec.com.jaapz.modelo.Estado;
 import ec.com.jaapz.modelo.Instalacion;
 import ec.com.jaapz.modelo.InstalacionDAO;
@@ -16,7 +15,6 @@ import ec.com.jaapz.modelo.InstalacionDetalle;
 import ec.com.jaapz.modelo.LiquidacionDetalle;
 import ec.com.jaapz.modelo.LiquidacionOrden;
 import ec.com.jaapz.modelo.LiquidacionOrdenDAO;
-import ec.com.jaapz.modelo.Medidor;
 import ec.com.jaapz.util.Constantes;
 import ec.com.jaapz.util.Context;
 import ec.com.jaapz.util.ControllerHelper;
@@ -153,7 +151,6 @@ public class InstalacionesAtencionSolicC {
 			Optional<ButtonType> result = helper.mostrarAlertaConfirmacion("Desea Grabar los Datos?",Context.getInstance().getStage());
 			if(result.get() == ButtonType.OK){
 				Instalacion instalacion = new Instalacion();
-				Medidor medidor = liquidacionSeleccionada.getMedidor();
 								
 				liquidacionSeleccionada.setEstadoInstalacion(Constantes.EST_APERTURA_REALIZADO);
 				instalacion.setIdInstalacion(null);
@@ -169,11 +166,12 @@ public class InstalacionesAtencionSolicC {
 				instalacion.setUsuarioCrea(liquidacionSeleccionada.getUsuarioCrea());
 				instalacion.setEstado(Constantes.ESTADO_ACTIVO);
 				instalacion.setUsuarioInstalacion(Context.getInstance().getUsuariosC().getIdUsuario());
+				
 				List<InstalacionDetalle> listaAgregadaRubros = new ArrayList<InstalacionDetalle>();
 				for(InstalacionDetalle det : tvDatos.getItems()) {
 					det.setIdInstalacionDet(null);
 					det.setUsuarioCrea(Context.getInstance().getUsuariosC().getIdUsuario());
-					det.setEstado("A");
+					det.setEstado(Constantes.ESTADO_ACTIVO);
 					det.setInstalacion(instalacion);
 					listaAgregadaRubros.add(det);
 				}

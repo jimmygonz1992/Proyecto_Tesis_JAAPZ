@@ -12,7 +12,20 @@ import java.util.List;
  * 
  */
 @Entity
-@NamedQuery(name="Instalacion.findAll", query="SELECT i FROM Instalacion i")
+@Table(name="Instalacion")
+@NamedQueries({
+	@NamedQuery(name="Instalacion.findAll", query="SELECT i FROM Instalacion i"),
+	@NamedQuery(name="Instalacion.buscarInstalacionAsignada", query="SELECT i FROM Instalacion i "
+			+ "where i.usuarioInstalacion = :idPerfilUsuario and i.estado = 'A' order by i.idInstalacion desc"),
+	@NamedQuery(name="Instalacion.findAllPendiente", query="SELECT i FROM Instalacion i "
+			+ "where (lower(i.cuentaCliente.cliente.apellido) like :patron  or lower(i.cuentaCliente.cliente.nombre) like :patron) "
+			+ "and i.estadoInstalacion = 'PENDIENTE' and i.usuarioInstalacion = null and i.estado = 'A' order by i.idInstalacion desc"),
+	@NamedQuery(name="Instalacion.buscarInstalacionPerfilPendiente", query="SELECT i FROM Instalacion i "
+			+ "where lower(i.cuentaCliente.cliente.apellido) like :patron  or lower(i.cuentaCliente.cliente.nombre) like :patron "
+			+ " and i.usuarioInstalacion = :idPerfilUsuario and i.usuarioInstalacion = null "
+			+ " and i.estadoInstalacion = 'PENDIENTE' and i.estado = 'A' order by i.idInstalacion desc")
+})
+
 public class Instalacion implements Serializable {
 	private static final long serialVersionUID = 1L;
 
