@@ -35,4 +35,23 @@ public class IngresoDAO extends ClaseDAO{
 		resultado = (List<Ingreso>) query.getResultList();
 		return resultado;
 	}
+	
+	@SuppressWarnings("unchecked")
+	public Ingreso getUltimoRegistro() {
+		try {
+			Ingreso resultado = new Ingreso();
+			List<Ingreso> r = new ArrayList<Ingreso>();
+			Query query = getEntityManager().createNamedQuery("Ingreso.BuscaUltimo");
+			query.setHint("javax.persistence.cache.storeMode", "REFRESH");
+			r = (List<Ingreso>) query.getResultList();
+			if(r.size() > 0)
+				resultado = r.get(0);
+			else
+				resultado = null;
+			return resultado;
+		}catch(Exception ex) {
+			System.out.println(ex.getMessage());
+			return null;
+		}
+	}
 }

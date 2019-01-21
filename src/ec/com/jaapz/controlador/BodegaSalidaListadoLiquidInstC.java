@@ -1,10 +1,14 @@
 package ec.com.jaapz.controlador;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 import ec.com.jaapz.modelo.LiquidacionOrden;
 import ec.com.jaapz.modelo.LiquidacionOrdenDAO;
+import ec.com.jaapz.modelo.Pago;
+import ec.com.jaapz.modelo.Planilla;
+import ec.com.jaapz.util.Constantes;
 import ec.com.jaapz.util.Context;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ObservableValue;
@@ -49,12 +53,32 @@ public class BodegaSalidaListadoLiquidInstC {
 	void llenarDatos(String patron) {
 		try{
 			tvDatos.getColumns().clear();
-			List<LiquidacionOrden> listaLiquidaciones;
+			List<LiquidacionOrden> listado;
+			
 			if(Context.getInstance().getIdPerfil() == 1) {
-				listaLiquidaciones = liquidacionOrdenDao.getListaLiquidacionOrden(patron);
+				listado = liquidacionOrdenDao.getListaLiquidacionOrden(patron);
 			}else {
-				listaLiquidaciones = liquidacionOrdenDao.getListaLiquidacionOrdenPerfil(patron);
+				listado = liquidacionOrdenDao.getListaLiquidacionOrdenPerfil(patron);
 			}
+			
+			List<LiquidacionOrden> listaLiquidaciones = new ArrayList<>();
+			for(LiquidacionOrden liq : listado) {
+				double porcentaje = 0.0;
+				double valorPagado = 0.0;
+				for(Planilla pl : liq.getCuentaCliente().getPlanillas()) {
+					if(pl.getIdentInstalacion().equals(Constantes.IDENT_INSTALACION)) {
+						porcentaje = pl.getTotalPagar() * 0.6;//60 % del total a pagar
+						for(Pago pag : pl.getPagos()) {
+							if(pag.getEstado().equals(Constantes.ESTADO_ACTIVO))
+								valorPagado = valorPagado + pag.getValor();
+						}
+					}
+				}
+				if(valorPagado >= porcentaje)
+					listaLiquidaciones.add(liq);
+			}
+			
+			
 			
 			ObservableList<LiquidacionOrden> datosReq = FXCollections.observableArrayList();
 			datosReq.setAll(listaLiquidaciones);
