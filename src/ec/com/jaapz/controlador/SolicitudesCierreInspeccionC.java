@@ -501,12 +501,12 @@ public class SolicitudesCierreInspeccionC {
 			//llenar los datos en la tabla
 			TableColumn<LiquidacionDetalle, String> cantidadColum = new TableColumn<>("Cantidad");
 			cantidadColum.setMinWidth(10);
-			cantidadColum.setPrefWidth(90);
+			cantidadColum.setPrefWidth(110);
 			cantidadColum.setCellValueFactory(new PropertyValueFactory<LiquidacionDetalle, String>("cantidad"));
 
 			TableColumn<LiquidacionDetalle, String> descipcionColum = new TableColumn<>("Descripcion");
 			descipcionColum.setMinWidth(10);
-			descipcionColum.setPrefWidth(250);
+			descipcionColum.setPrefWidth(350);
 			descipcionColum.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<LiquidacionDetalle,String>, ObservableValue<String>>() {
 				@Override
 				public ObservableValue<String> call(CellDataFeatures<LiquidacionDetalle, String> param) {
@@ -514,28 +514,7 @@ public class SolicitudesCierreInspeccionC {
 				}
 			});
 
-			TableColumn<LiquidacionDetalle, String> precioColum = new TableColumn<>("Costo U.");
-			precioColum.setMinWidth(10);
-			precioColum.setPrefWidth(90);
-			precioColum.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<LiquidacionDetalle,String>, ObservableValue<String>>() {
-				@Override
-				public ObservableValue<String> call(CellDataFeatures<LiquidacionDetalle, String> param) {
-					return new SimpleObjectProperty<String>(String.valueOf(decimales.format(param.getValue().getRubro().getPrecio())));
-				}
-			});
-
-			TableColumn<LiquidacionDetalle, String> costoColum = new TableColumn<>("Costo Total");
-			costoColum.setMinWidth(10);
-			costoColum.setPrefWidth(90);
-			costoColum.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<LiquidacionDetalle,String>, ObservableValue<String>>() {
-				@Override
-				public ObservableValue<String> call(CellDataFeatures<LiquidacionDetalle, String> param) {
-					return new SimpleObjectProperty<String>(String.valueOf(decimales.format(param.getValue().getPrecio())));
-				}
-			});
-
-
-			tvDatosOrdenPrevia.getColumns().addAll(cantidadColum,descipcionColum,precioColum,costoColum);
+			tvDatosOrdenPrevia.getColumns().addAll(cantidadColum,descipcionColum);
 			tvDatosOrdenPrevia.setItems(datos);
 			rubroSeleccionado = null;
 			limpiarRubro();
