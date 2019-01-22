@@ -8,6 +8,7 @@ import ec.com.jaapz.modelo.Barrio;
 import ec.com.jaapz.modelo.Categoria;
 import ec.com.jaapz.modelo.Cliente;
 import ec.com.jaapz.modelo.CuentaCliente;
+import ec.com.jaapz.modelo.Instalacion;
 import ec.com.jaapz.modelo.LiquidacionOrden;
 import ec.com.jaapz.modelo.Medidor;
 import ec.com.jaapz.modelo.Planilla;
@@ -48,6 +49,7 @@ public class Context {
 	private Categoria categoria;
 	private Barrio barrio;
 	private List<SolInspeccionIn> listaInspecciones;
+	private List<Instalacion> listaInstalaciones;
 	private List<SolInspeccionRep> listaInspeccionesRep;
 	private List<Barrio> listaBarrios;
 	private List<SegUsuarioPerfil> listaPerfiles;
@@ -55,6 +57,7 @@ public class Context {
 	
 	private AperturaLectura apertura;
 	private SolInspeccionIn inspeccion;
+	private Instalacion instalacion;
 	private SolInspeccionRep reparacion;
 	
 	public static Context getInstance() {
@@ -128,6 +131,14 @@ public class Context {
 		this.listaInspecciones = listaInspecciones;
 	}
 	
+	public List<Instalacion> getListaInstalaciones() {
+		return listaInstalaciones;
+	}
+
+	public void setListaInstalaciones(List<Instalacion> listaInstalaciones) {
+		this.listaInstalaciones = listaInstalaciones;
+	}
+	
 	public List<SolInspeccionRep> getListaInspeccionesRep() {
 		return listaInspeccionesRep;
 	}
@@ -142,6 +153,14 @@ public class Context {
 
 	public void setInspeccion(SolInspeccionIn inspeccion) {
 		this.inspeccion = inspeccion;
+	}
+	
+	public Instalacion getInstalacion() {
+		return instalacion;
+	}
+
+	public void setInstalacion(Instalacion instalacion) {
+		this.instalacion = instalacion;
 	}
 	
 	public SolInspeccionRep getReparacion() {

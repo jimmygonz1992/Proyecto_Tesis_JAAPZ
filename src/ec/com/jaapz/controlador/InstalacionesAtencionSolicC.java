@@ -1,14 +1,20 @@
 package ec.com.jaapz.controlador;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
 import ec.com.jaapz.modelo.Estado;
+import ec.com.jaapz.modelo.Instalacion;
+import ec.com.jaapz.modelo.InstalacionDAO;
 import ec.com.jaapz.modelo.InstalacionDetalle;
 import ec.com.jaapz.modelo.LiquidacionDetalle;
 import ec.com.jaapz.modelo.LiquidacionOrden;
+import ec.com.jaapz.modelo.LiquidacionOrdenDAO;
 import ec.com.jaapz.util.Constantes;
 import ec.com.jaapz.util.Context;
 import ec.com.jaapz.util.ControllerHelper;
@@ -57,6 +63,10 @@ public class InstalacionesAtencionSolicC {
 	
 	ControllerHelper helper = new ControllerHelper();
 	LiquidacionOrden liquidacionSeleccionada = new LiquidacionOrden();
+	SimpleDateFormat formateador = new SimpleDateFormat("dd/MM/yyyy");
+	LiquidacionOrdenDAO liquidacionDao = new LiquidacionOrdenDAO();
+	InstalacionDAO instalacionDao = new InstalacionDAO();
+	Instalacion instalacion;
 	
 	@SuppressWarnings("static-access")
 	public void initialize() {
@@ -132,15 +142,51 @@ public class InstalacionesAtencionSolicC {
 	
 	public void grabar() {
 		try {
+			//para obtener la hora
+			java.util.Date utilDate = new java.util.Date(); 
+			long lnMilisegundos = utilDate.getTime();
+			java.sql.Time sqlTime = new java.sql.Time(lnMilisegundos);
 			if(validarDatos() == false)
 				return;
 			Optional<ButtonType> result = helper.mostrarAlertaConfirmacion("Desea Grabar los Datos?",Context.getInstance().getStage());
 			if(result.get() == ButtonType.OK){
-				
+				Instalacion instalacion = new Instalacion();
+								
 				liquidacionSeleccionada.setEstadoInstalacion(Constantes.EST_APERTURA_REALIZADO);
+				instalacion.setIdInstalacion(null);
+				Date date = Date.from(dtpFecha.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
+				//Timestamp fecha = new Timestamp(date.getTime());
+				instalacion.setCuentaCliente(liquidacionSeleccionada.getCuentaCliente());
+				instalacion.setSolInspeccionIn(liquidacionSeleccionada.getSolInspeccionIn());
+				instalacion.setFechaInst(date);
+				instalacion.setHoraInst(sqlTime);
+				instalacion.setTotal(liquidacionSeleccionada.getTotal());
+				instalacion.setEstadoValor(liquidacionSeleccionada.getEstadoValor());
+				instalacion.setEstadoInstalacion(Constantes.EST_INSPECCION_REALIZADO);
+				instalacion.setUsuarioCrea(liquidacionSeleccionada.getUsuarioCrea());
+				instalacion.setEstado(Constantes.ESTADO_ACTIVO);
+				instalacion.setUsuarioInstalacion(Context.getInstance().getUsuariosC().getIdUsuario());
+				
+				List<InstalacionDetalle> listaAgregadaRubros = new ArrayList<InstalacionDetalle>();
+				for(InstalacionDetalle det : tvDatos.getItems()) {
+					det.setIdInstalacionDet(null);
+					det.setUsuarioCrea(Context.getInstance().getUsuariosC().getIdUsuario());
+					det.setEstado(Constantes.ESTADO_ACTIVO);
+					det.setInstalacion(instalacion);
+					listaAgregadaRubros.add(det);
+				}
+				
+				instalacion.setInstalacionDetalles(listaAgregadaRubros);
+				instalacionDao.getEntityManager().getTransaction().begin();
+				instalacionDao.getEntityManager().persist(instalacion);
+				instalacionDao.getEntityManager().merge(liquidacionSeleccionada);
+				
+				instalacionDao.getEntityManager().getTransaction().commit();
 				
 				helper.mostrarAlertaInformacion("Datos Grabados Correctamente", Context.getInstance().getStage());
 				nuevo();
+				tvDatos.getColumns().clear();
+				tvDatos.getItems().clear();
 			}
 		}catch(Exception ex) {
 			helper.mostrarAlertaError("Error al grabar", Context.getInstance().getStage());
@@ -193,7 +239,8 @@ public class InstalacionesAtencionSolicC {
 			}
 			
 			if(cboEstadoInstalacion.getSelectionModel().getSelectedIndex() == -1) {
-				helper.mostrarAlertaAdvertencia("Debe seleccionar tipo de solicitud", Context.getInstance().getStage());
+				helper.mostrarAlertaAdvertencia("Indique si realizó la instalación", Context.getInstance().getStage());
+				cboEstadoInstalacion.requestFocus();
 				return false;
 			}
 			
@@ -220,7 +267,7 @@ public class InstalacionesAtencionSolicC {
 			helper.abrirPantallaModal("/instalaciones/ListadoOrdenLiquidaciones.fxml","Listado de Órdenes de Liquidaciones", Context.getInstance().getStage());
 			if (Context.getInstance().getLiquidaciones() != null) {
 				liquidacionSeleccionada = Context.getInstance().getLiquidaciones();
-				llenarDatosLiquidacion(liquidacionSeleccionada);
+				llenarDatosLiquidacion(liquidacionSeleccionada.getIdLiquidacion());
 				Context.getInstance().setLiquidaciones(null);
 			}
 		}catch(Exception ex){
@@ -228,69 +275,27 @@ public class InstalacionesAtencionSolicC {
 		}
 	}
 	
-	@SuppressWarnings("unused")
-	void llenarDatosLiquidacion(LiquidacionOrden datoSeleccionado){
-		try {
-			if(datoSeleccionado.getSolInspeccionIn().getIdSolInspeccion() == null)
-				txtIdSolicitud.setText("");
-			else
-				txtIdSolicitud.setText(String.valueOf(datoSeleccionado.getSolInspeccionIn().getIdSolInspeccion()));
-			
-			if(datoSeleccionado.getEstadoValor() == null)
-				txtEstadoValor.setText("");
-			else
-				txtEstadoValor.setText(datoSeleccionado.getEstadoValor());
-			
-			if(datoSeleccionado.getFecha() == null)
-				txtFechaSolic.setText("");
-			else
-				txtFechaSolic.setText(String.valueOf(datoSeleccionado.getFecha()));
-			
-			if(datoSeleccionado.getCuentaCliente().getDireccion() == null)
-				txtDireccion.setText("");
-			else
-				txtDireccion.setText(datoSeleccionado.getCuentaCliente().getDireccion());
-			
-			if(datoSeleccionado.getSolInspeccionIn().getReferencia() == null)
-				txtReferencia.setText("");
-			else
-				txtReferencia.setText(datoSeleccionado.getSolInspeccionIn().getReferencia());
-			
-			if(datoSeleccionado.getCuentaCliente().getCliente().getCedula() == null)
-				txtCedula.setText("");
-			else
-				txtCedula.setText(datoSeleccionado.getCuentaCliente().getCliente().getCedula());
-			
-			if(datoSeleccionado.getCuentaCliente().getCliente().getNombre() + " " + datoSeleccionado.getCuentaCliente().getCliente().getApellido() == null)
-				txtCliente.setText("");
-			else
-				txtCliente.setText(datoSeleccionado.getCuentaCliente().getCliente().getNombre() + " " + datoSeleccionado.getCuentaCliente().getCliente().getApellido());
-			
-			if(datoSeleccionado.getUsuarioCrea() == null)
-				txtUsuarioSolic.setText("");
-			else
-				txtUsuarioSolic.setText(String.valueOf(datoSeleccionado.getUsuarioCrea()));
-
-			if(datoSeleccionado.getMedidor().getCodigo() == null)
-				txtCodigoMedidor.setText("");
-			else
-				txtCodigoMedidor.setText(datoSeleccionado.getMedidor().getCodigo());
-			
-			if(datoSeleccionado.getMedidor().getMarca() == null)
-				txtMarca.setText("");
-			else
-				txtMarca.setText(datoSeleccionado.getMedidor().getMarca());
-			
-			if(datoSeleccionado.getMedidor().getModelo() == null)
-				txtModelo.setText("");
-			else
-				txtModelo.setText(datoSeleccionado.getMedidor().getModelo());
-			
-			txtPrecioMed.setText(String.valueOf(datoSeleccionado.getMedidor().getPrecio()));
-			
-			recuperarDetalleLiquidacion(datoSeleccionado);
-		}catch(Exception ex) {
-			System.out.println(ex.getMessage());
+	public void llenarDatosLiquidacion(Integer idLiquidacion){
+		try{		
+			List<LiquidacionOrden> listaLiquidacion = new ArrayList<LiquidacionOrden>();
+			listaLiquidacion = liquidacionDao.getRecuperaLiquidacionEmitida(idLiquidacion);
+			for(int i = 0 ; i < listaLiquidacion.size() ; i ++) {
+				txtIdSolicitud.setText(Integer.toString(listaLiquidacion.get(i).getSolInspeccionIn().getIdSolInspeccion()));
+				txtEstadoValor.setText(listaLiquidacion.get(i).getEstadoValor());
+				txtFechaSolic.setText(String.valueOf(formateador.format(listaLiquidacion.get(i).getSolInspeccionIn().getFechaIngreso())));
+				txtDireccion.setText(listaLiquidacion.get(i).getSolInspeccionIn().getDireccion());
+				txtReferencia.setText(listaLiquidacion.get(i).getSolInspeccionIn().getReferencia());
+				txtCedula.setText(listaLiquidacion.get(i).getCuentaCliente().getCliente().getCedula());
+				txtCliente.setText(listaLiquidacion.get(i).getCuentaCliente().getCliente().getNombre() + " " + listaLiquidacion.get(i).getCuentaCliente().getCliente().getApellido());
+				txtUsuarioSolic.setText(String.valueOf(listaLiquidacion.get(i).getUsuarioCrea()));
+				txtCodigoMedidor.setText(listaLiquidacion.get(i).getMedidor().getCodigo());
+				txtMarca.setText(listaLiquidacion.get(i).getMedidor().getMarca());
+				txtModelo.setText(listaLiquidacion.get(i).getMedidor().getModelo());
+				txtPrecioMed.setText(String.valueOf(listaLiquidacion.get(i).getMedidor().getPrecio()));
+				recuperarDetalleLiquidacion(listaLiquidacion.get(i));
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
 		}
 	}
 	
@@ -352,6 +357,7 @@ public class InstalacionesAtencionSolicC {
 		tvDatos.getColumns().addAll(descripcionColum, cantidadColum, precioColum, totalColum);
 		tvDatos.setItems(datos);
 	}
+
 	
 	public void imprimir() {
 		

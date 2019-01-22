@@ -1,5 +1,6 @@
 package ec.com.jaapz.controlador;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,6 +23,7 @@ import javafx.util.Callback;
 public class SolicitudListaReparacionesC {
 	@FXML TextField txtBuscar;
 	@FXML TableView<SolInspeccionRep> tvDatos;
+	SimpleDateFormat formateador = new SimpleDateFormat("dd/MM/yyyy");
 	
 	SolInspeccionRepDAO reparacionDAO = new SolInspeccionRepDAO();
 	List<SolInspeccionRep> listadoInspecciones = new ArrayList<SolInspeccionRep>();
@@ -102,7 +104,7 @@ public class SolicitudListaReparacionesC {
 			fechaColum.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<SolInspeccionRep, String>, ObservableValue<String>>() {
 				@Override
 				public ObservableValue<String> call(CellDataFeatures<SolInspeccionRep, String> param) {
-					return new SimpleObjectProperty<String>(String.valueOf(param.getValue().getFecha()));
+					return new SimpleObjectProperty<String>(String.valueOf(formateador.format(param.getValue().getFecha())));
 				}
 			});
 

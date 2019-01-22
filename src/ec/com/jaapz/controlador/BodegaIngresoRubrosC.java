@@ -7,10 +7,14 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+import ec.com.jaapz.modelo.EstadoMedidor;
+import ec.com.jaapz.modelo.EstadoMedidorDAO;
 import ec.com.jaapz.modelo.Ingreso;
 import ec.com.jaapz.modelo.IngresoDAO;
 import ec.com.jaapz.modelo.IngresoDetalle;
 import ec.com.jaapz.modelo.Kardex;
+import ec.com.jaapz.modelo.Medidor;
+import ec.com.jaapz.modelo.MedidorDAO;
 import ec.com.jaapz.modelo.Proveedor;
 import ec.com.jaapz.modelo.ProveedorDAO;
 import ec.com.jaapz.modelo.Rubro;
@@ -75,13 +79,10 @@ public class BodegaIngresoRubrosC {
 	SegUsuario usuarioLogueado = new SegUsuario();
 	IngresoDAO ingresoDao = new IngresoDAO();
 	RubroDAO rubroDAO = new RubroDAO();
+	MedidorDAO medidorDAO = new MedidorDAO();
 	ProveedorDAO proveedorDAO = new ProveedorDAO();
+	EstadoMedidorDAO estadoMedidorDAO = new EstadoMedidorDAO();
 	Ingreso ingreso;
-
-	int idfactura;
-	int solorecupera = 0;
-	int accion;
-	int int_bandera;
 	
 	public void initialize(){
 		try {
@@ -491,11 +492,8 @@ public class BodegaIngresoRubrosC {
 				return new SimpleObjectProperty<String>(String.valueOf(param.getValue().getCantidad()*param.getValue().getPrecio()));
 			}
 		});
-
-		accion = 2;
 		tvDatos.getColumns().addAll(descripcionColum, cantidadColum, precioColum, totalColum);
 		tvDatos.setItems(datos);
-
 		//sumarDatos();
 	}
 
@@ -576,14 +574,9 @@ public class BodegaIngresoRubrosC {
 					return new SimpleObjectProperty<String>(String.valueOf(param.getValue().getCantidad()*param.getValue().getPrecio()));
 				}
 			});
-
-			accion = 1;
-			int_bandera = 0;
 			tvDatos.getColumns().addAll(descipcionColum, cantidadColum, precioColum, totalColum);
 			tvDatos.setItems(datos);
-
 			//sumarDatos();
-
 			rubroSeleccionado = null;
 			limpiar();
 		}catch(Exception ex) {
@@ -625,7 +618,6 @@ public class BodegaIngresoRubrosC {
 			}else {
 				double subtotal = 0;
 				for(int i=0; i<tvDatos.getItems().size(); i++) {
-					//DecimalFormat df = new DecimalFormat ("########.00");
 					Double valorSubt = new Double(tvDatos.getItems().get(i).getCantidad()*tvDatos.getItems().get(i).getPrecio());
 					subtotal += valorSubt;
 					txtSubtotal.setText(String.valueOf(Double.valueOf(subtotal)));
@@ -639,10 +631,15 @@ public class BodegaIngresoRubrosC {
 		}catch(Exception ex) {
 			System.out.println(ex.getMessage());
 		}
-	}
+	}	
+	
 	//aqui voy a intentar modificar el grabar
 	public void grabar() {
 	try {
+		//para obtener la hora
+		java.util.Date utilDate = new java.util.Date(); 
+		long lnMilisegundos = utilDate.getTime();
+		java.sql.Time sqlTime = new java.sql.Time(lnMilisegundos);
 			if(validarDatos() == false)
 				return;
 			String estado = "A";
@@ -650,7 +647,6 @@ public class BodegaIngresoRubrosC {
 			//para guardar ingreso	
 			if(ingreso == null) {
 				ingreso = new Ingreso();
-				
 				proveedorSeleccionado.setNombreComercial(txtProveedor.getText());
 				proveedorSeleccionado.setNombres(txtNombresPro.getText());
 				proveedorSeleccionado.setApellidos(txtApellidosPro.getText());
@@ -674,6 +670,7 @@ public class BodegaIngresoRubrosC {
 				ingreso.getProveedor().setTelefono(txtTelefonoPro.getText());
 				ingreso.getProveedor().setUsuarioCrea(Context.getInstance().getUsuariosC().getIdUsuario());
 				ingreso.getProveedor().setFechaCrea(date);
+				ingreso.setHora(sqlTime);
 				ingreso.getProveedor().setUsuarioModifica(Context.getInstance().getUsuariosC().getIdUsuario());
 				ingreso.getProveedor().setFechaModificacion(date);
 				ingreso.getProveedor().setEstado("A");
@@ -689,9 +686,10 @@ public class BodegaIngresoRubrosC {
 
 			Optional<ButtonType> result = helper.mostrarAlertaConfirmacion("Desea Grabar los Datos?",Context.getInstance().getStage());
 			if(result.get() == ButtonType.OK){
-				if (ingreso.getIdIngreso() == null) {
+				if (ingreso.getIdIngreso() == null) {//se registra un nuevo registro
 					List<IngresoDetalle> listaAgregadaRubros = new ArrayList<IngresoDetalle>();
 					List<Kardex> listaProductos = new ArrayList<Kardex>();
+					
 					for(IngresoDetalle det : tvDatos.getItems()) {
 						det.setIdIngresoDet(null);
 						det.setEstado("A");
@@ -710,10 +708,13 @@ public class BodegaIngresoRubrosC {
 						kardex.setValorUnitario(det.getPrecio());
 						kardex.setCostoTotal(det.getCantidad()*det.getPrecio());
 						kardex.setTipoMovimiento("ING");
-						kardex.setEstado("A");								
+						kardex.setEstado("A");		
+						
+						
 						listaProductos.add(kardex);
 						listaAgregadaRubros.add(det);
 					}
+					
 					ingreso.setIngresoDetalles(listaAgregadaRubros);
 					//empieza la transaccion
 					ingresoDao.getEntityManager().getTransaction().begin();
@@ -734,17 +735,40 @@ public class BodegaIngresoRubrosC {
 						}
 					}
 
-					if (txtCodigoProv.getText().equals("0")) {// inserta nuevo proveedor
+					if (txtCodigoProv.getText().equals("0")) { //inserta nuevo proveedor
 						proveedorSeleccionado.setIdProveedor(null);
 						ingresoDao.getEntityManager().persist(proveedorSeleccionado);
-					}else {
+					}else {//la modifica
 						proveedorSeleccionado.setIdProveedor(Integer.parseInt(txtCodigoProv.getText()));
 						ingresoDao.getEntityManager().merge(proveedorSeleccionado);
 					}
 					
 					//ingresoDao.getEntityManager().persist(ingreso);				
 					ingresoDao.getEntityManager().getTransaction().commit();
-
+					
+					Integer ultimaFactura = 0;
+					Ingreso ing = ingresoDao.getUltimoRegistro();
+					EstadoMedidor estadoM = estadoMedidorDAO.getEstadoBueno();
+					if(ing != null)
+						ultimaFactura = ing.getIdIngreso();
+					
+					//preguntar si se ingresan medidores y registrarlos en la tbla de medidores
+					medidorDAO.getEntityManager().getTransaction().begin();
+					for(IngresoDetalle det : tvDatos.getItems()) {
+						if(det.getRubro().getIdRubro() == Constantes.ID_MEDIDOR) {//hay registros de medidores
+							for(int i = 0 ; i < det.getCantidad() ; i ++) {
+								Medidor medidor = new Medidor();
+								medidor.setIdMedidor(null);
+								medidor.setIdFactura(ultimaFactura);
+								medidor.setEstado(Constantes.ESTADO_ACTIVO);
+								medidor.setEstadoMedidor(estadoM);
+								medidor.setUsado(false);
+								medidor.setUsuarioCrea(Context.getInstance().getUsuariosC().getIdUsuario());
+								medidorDAO.getEntityManager().persist(medidor);
+							}
+						}
+					}
+					medidorDAO.getEntityManager().getTransaction().commit();
 					actualizarListaRubros();
 
 					helper.mostrarAlertaInformacion("Datos Grabados Correctamente", Context.getInstance().getStage());
@@ -909,11 +933,13 @@ public class BodegaIngresoRubrosC {
 			}
 			rubroDAO.getEntityManager().getTransaction().begin();
 			for (Rubro rubro : listaAgregadaRubros) {
-				for(IngresoDetalle detalle : tvDatos.getItems()) {
-					if(rubro.getIdRubro() == detalle.getRubro().getIdRubro())
-						rubro.setStock(rubro.getStock() + detalle.getCantidad());
+				if(rubro.getIdRubro() != Constantes.ID_MEDIDOR || rubro.getIdRubro() != Constantes.ID_TASA_CONEXION) {
+					for(IngresoDetalle detalle : tvDatos.getItems()) {
+						if(rubro.getIdRubro() == detalle.getRubro().getIdRubro())
+							rubro.setStock(rubro.getStock() + detalle.getCantidad());
+					}
+					rubroDAO.getEntityManager().merge(rubro);
 				}
-				rubroDAO.getEntityManager().merge(rubro);
 			}
 			rubroDAO.getEntityManager().getTransaction().commit();
 		}

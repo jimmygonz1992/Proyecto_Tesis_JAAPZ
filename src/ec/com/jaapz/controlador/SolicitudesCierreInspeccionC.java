@@ -2,6 +2,7 @@ package ec.com.jaapz.controlador;
 
 import java.sql.Timestamp;
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -75,8 +76,7 @@ public class SolicitudesCierreInspeccionC {
 	@FXML private Button btnBuscarMedidor;
 	
 	@FXML TableView<LiquidacionDetalle> tvDatosOrdenPrevia;
-
-
+	
 	SolInspeccionIn inspeccionSeleccionado = new SolInspeccionIn();
 	ControllerHelper helper = new ControllerHelper();
 	LiquidacionOrdenDAO ordenPreviaDAO = new LiquidacionOrdenDAO();
@@ -85,6 +85,7 @@ public class SolicitudesCierreInspeccionC {
 	Rubro rubroSeleccionado;
 	DecimalFormat decimales = new DecimalFormat("#0.00");
 	PrecioUnitarioDAO preciosDAO = new PrecioUnitarioDAO();
+	SimpleDateFormat formateador = new SimpleDateFormat("dd/MM/yyyy");
 	
 	public void initialize() {
 		limpiarCliente();
@@ -112,7 +113,7 @@ public class SolicitudesCierreInspeccionC {
 			txtTelefono.setText(inspeccion.getCliente().getTelefono());
 			txtGenero.setText(inspeccion.getCliente().getGenero());
 			txtCodigo.setText(String.valueOf(inspeccion.getIdSolInspeccion()));
-			txtFecha.setText(String.valueOf(inspeccion.getFechaIngreso()));
+			txtFecha.setText(String.valueOf(formateador.format(inspeccion.getFechaIngreso())));
 			txtReferencia.setText(inspeccion.getReferencia());
 			txtHabitar.setText(inspeccion.getUsoMedidor());
 
@@ -235,6 +236,8 @@ public class SolicitudesCierreInspeccionC {
 					ordenLiquidacion.setIdLiquidacion(null);
 					ordenLiquidacion.setMedidor(medidorSeleccionado);
 					ordenLiquidacion.setEstadoOrden(Constantes.EST_INSPECCION_PENDIENTE);
+					ordenLiquidacion.setEstadoInstalacion(Constantes.EST_INSPECCION_PENDIENTE);
+					ordenLiquidacion.setEstadoValor(Constantes.EST_INSPECCION_PENDIENTE);
 					ordenLiquidacion.setEstado(Constantes.ESTADO_ACTIVO);
 					ordenLiquidacion.setHora(sqlTime);
 					
@@ -273,6 +276,7 @@ public class SolicitudesCierreInspeccionC {
 					cuentaCliente.setBarrio(inspeccionSeleccionado.getBarrio());
 					cuentaCliente.setCategoria(categoriaDAO.getCategoriaNombre(inspeccionSeleccionado.getUsoMedidor()));
 					cuentaCliente.setFechaIngreso(fecha);
+					cuentaCliente.setHoraIngreso(sqlTime);
 					cuentaCliente.setEstado(Constantes.ESTADO_ACTIVO);
 					
 					//aqui para agregar la factura del 60% del costo de instalacion

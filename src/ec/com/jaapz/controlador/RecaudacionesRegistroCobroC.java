@@ -546,7 +546,10 @@ public class RecaudacionesRegistroCobroC {
 					pagoGrabar.setIdPago(null);
 					for(FacturaDetalle det : tvDetallePago.getItems()) {
 						if(det.getPlanilla().getIdPlanilla() == pla.getIdPlanilla()) {
+							//falta setear tipo de pago
+							pagoGrabar.setUsuarioCrea(Context.getInstance().getUsuariosC().getIdUsuario());
 							pagoGrabar.setValor(det.getSubtotal());
+							pagoGrabar.setEstado(Constantes.ESTADO_ACTIVO);
 						}
 					}
 					pagoGrabar.setPlanilla(pla);

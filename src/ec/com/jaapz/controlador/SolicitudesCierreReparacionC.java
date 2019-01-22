@@ -1,6 +1,7 @@
 package ec.com.jaapz.controlador;
 
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
@@ -86,6 +87,8 @@ public class SolicitudesCierreReparacionC {
 	Rubro rubroSeleccionado = new Rubro();
 	RubroDAO rubroDao = new RubroDAO();
 	ReparacionDAO reparacionDao = new ReparacionDAO();
+	
+	SimpleDateFormat formateador = new SimpleDateFormat("dd/MM/yyyy");
 	
 	public void initialize() {
 		try {
@@ -175,8 +178,8 @@ public class SolicitudesCierreReparacionC {
 		txtUsuario.setEditable(false);
 		txtSubtotal.setEditable(false);
 		txtTotal.setEditable(false);
-		txtSubtotal.setVisible(false);
-		txtTotal.setVisible(false);
+		//txtSubtotal.setVisible(false);
+		//txtTotal.setVisible(false);
 	}
 	
 	//recupera datos del material
@@ -248,8 +251,7 @@ public class SolicitudesCierreReparacionC {
 				reparacion.setIdReparacion(null);
 				Date date = Date.from(dtpFecha.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
 				Timestamp fecha = new Timestamp(date.getTime());
-				
-				reparacion.setFechaReparacion(fecha);
+				reparacion.setFechaCierreInspeccion(fecha);
 				reparacion.setCuentaCliente(cuentaRecuperada);
 				reparacion.setSolInspeccionRep(inspeccionRepSeleccionado);
 				reparacion.setEstado(estado);
@@ -257,6 +259,7 @@ public class SolicitudesCierreReparacionC {
 				reparacion.setEstadoReparacion(Constantes.EST_FAC_PENDIENTE);
 				reparacion.setEstadoEntrega(Constantes.EST_FAC_PENDIENTE);
 				reparacion.setObservcion(txtNovedadesInspeccion.getText());
+				reparacion.setReferencia(txtReferencia.getText());
 				reparacion.setUsuarioCrea(Context.getInstance().getUsuariosC().getIdUsuario());
 				reparacion.setSubtotal(Double.parseDouble(txtSubtotal.getText()));
 				reparacion.setTotal(Double.parseDouble(txtTotal.getText()));
@@ -358,16 +361,14 @@ public class SolicitudesCierreReparacionC {
 		try {			
 			txtCodigo.setText(String.valueOf(inspRep.getIdSolicitudRep()));
 			txtCodigoMedidor.setText(inspRep.getCuentaCliente().getMedidor().getCodigo());
-			txtFecha.setText(String.valueOf(inspRep.getFecha()));
+			txtFecha.setText(String.valueOf(formateador.format(inspRep.getFecha())));
 			txtIdCuenta.setText(String.valueOf(inspRep.getCuentaCliente().getIdCuenta()));
 			txtIdSolicRep.setText(String.valueOf(inspRep.getIdSolicitudRep()));
-			//falta Campo Referencia
-			//txtReferencia.setText(inspRep.getReferencia);
+			txtReferencia.setText(inspRep.getReferencia());
 			txtLatitud.setText(inspRep.getCuentaCliente().getLatitud());
 			txtLongitud.setText(inspRep.getCuentaCliente().getLongitud());
 			txtCedula.setText(inspRep.getCuentaCliente().getCliente().getCedula());
-			//falta Campo telefono de contacto
-			//txtContacto.setText(inspRep.getCuentaCliente().getC);
+			txtContacto.setText(inspRep.getTelfContacto());
 			txtDireccion.setText(inspRep.getCuentaCliente().getDireccion());
 			txtNombres.setText(inspRep.getCuentaCliente().getCliente().getNombre() + " " + inspRep.getCuentaCliente().getCliente().getApellido());
 			txtNovedadesReportadas.setText(inspRep.getObservacion());

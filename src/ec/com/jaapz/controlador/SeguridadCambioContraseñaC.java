@@ -1,5 +1,6 @@
 package ec.com.jaapz.controlador;
 
+import java.util.List;
 import java.util.Optional;
 
 import ec.com.jaapz.modelo.SegUsuario;
@@ -9,12 +10,15 @@ import ec.com.jaapz.util.ControllerHelper;
 import ec.com.jaapz.util.Encriptado;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 
 public class SeguridadCambioContraseñaC {
 	@FXML private TextField txtUsuario;
@@ -31,13 +35,13 @@ public class SeguridadCambioContraseñaC {
 	
 	public void initialize(){
 		try {
-			txtContraseñaNueva.requestFocus();
+			bloquear();
 			usuarioLogueado = Context.getInstance().getUsuariosC();
-			txtContraseñaActual.setText(Encriptado.Desencriptar(Context.getInstance().getUsuariosC().getClave()));
+			//txtContraseñaActual.setText(Encriptado.Desencriptar(Context.getInstance().getUsuariosC().getClave()));
 			txtUsuario.setText(Encriptado.Desencriptar(Context.getInstance().getUsuariosC().getUsuario()));
 			txtUsuario.setEditable(false);
-			txtContraseñaActual.setEditable(false);
-
+			txtUsuario.setVisible(false);
+			
 			txtConfirmaContraseña.textProperty().addListener(new ChangeListener<String>() {
 				@Override
 				public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
@@ -63,8 +67,51 @@ public class SeguridadCambioContraseñaC {
 						lblEtiqueta.setText("");
 				}
 			});
+			
+			txtContraseñaActual.setOnKeyPressed(new EventHandler<KeyEvent>(){
+				@Override
+				public void handle(KeyEvent ke){
+					if (ke.getCode().equals(KeyCode.ENTER) || ke.getCode().equals(KeyCode.TAB)){
+						if (validarContraseniaActual() == false) {
+							helper.mostrarAlertaAdvertencia("Contraseña incorrecta!", Context.getInstance().getStage());
+							txtContraseñaActual.setText("");
+							txtContraseñaActual.requestFocus();
+							bloquear();
+						}else {
+							desbloquear();
+							txtContraseñaNueva.requestFocus();
+						}
+					}
+				}
+			});
+			
+			txtContraseñaActual.requestFocus();
 		}catch (Exception ex){
 			System.out.println(ex.getMessage());
+		}
+	}
+	
+	void bloquear() {
+		txtContraseñaNueva.setEditable(false);
+		txtConfirmaContraseña.setEditable(false);
+	}
+	
+	void desbloquear() {
+		txtContraseñaNueva.setEditable(true);
+		txtConfirmaContraseña.setEditable(true);
+	}
+	
+	boolean validarContraseniaActual() {
+		try {
+			List<SegUsuario> listaUsuarios;
+			listaUsuarios = segUsuarioDAO.getRecuperaUsuario(Encriptado.Encriptar(txtContraseñaActual.getText()), Encriptado.Encriptar(txtUsuario.getText()));
+			if(listaUsuarios.size() != 0)
+				return true;
+			else
+				return false;
+		}catch(Exception ex) {
+			System.out.println(ex.getMessage());
+			return false;
 		}
 	}
 	

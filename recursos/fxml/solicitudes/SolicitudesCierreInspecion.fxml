@@ -23,12 +23,12 @@
 			<rowConstraints>
 				<RowConstraints maxHeight="5.0" minHeight="10.0" prefHeight="5.0" vgrow="SOMETIMES" />
 				<RowConstraints maxHeight="20.0" minHeight="10.0" prefHeight="20.0" vgrow="SOMETIMES" />
-				<RowConstraints maxHeight="91.0" minHeight="10.0" prefHeight="89.0" vgrow="SOMETIMES" />
-				<RowConstraints maxHeight="27.0" minHeight="10.0" prefHeight="27.0" vgrow="SOMETIMES" />
-				<RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-				<RowConstraints maxHeight="99.0" minHeight="10.0" prefHeight="80.0" vgrow="SOMETIMES" />
-				<RowConstraints maxHeight="93.0" minHeight="10.0" prefHeight="35.0" vgrow="SOMETIMES" />
-				<RowConstraints maxHeight="83.0" minHeight="10.0" prefHeight="28.0" vgrow="SOMETIMES" />
+				<RowConstraints maxHeight="112.0" minHeight="10.0" prefHeight="99.0" vgrow="SOMETIMES" />
+				<RowConstraints maxHeight="53.0" minHeight="10.0" prefHeight="35.0" vgrow="SOMETIMES" />
+				<RowConstraints maxHeight="40.0" minHeight="0.0" prefHeight="37.0" vgrow="SOMETIMES" />
+				<RowConstraints maxHeight="99.0" minHeight="10.0" prefHeight="56.0" vgrow="SOMETIMES" />
+				<RowConstraints maxHeight="93.0" minHeight="10.0" prefHeight="29.0" vgrow="SOMETIMES" />
+				<RowConstraints maxHeight="83.0" minHeight="10.0" prefHeight="22.0" vgrow="SOMETIMES" />
 				<RowConstraints maxHeight="84.0" minHeight="10.0" prefHeight="31.0" vgrow="SOMETIMES" />
 				<RowConstraints maxHeight="107.0" minHeight="10.0" prefHeight="61.0" vgrow="SOMETIMES" />
 				<RowConstraints maxHeight="111.0" minHeight="10.0" prefHeight="62.0" vgrow="SOMETIMES" />
@@ -57,12 +57,12 @@
 				<HBox alignment="CENTER" style="-fx-border-color: #bbc8d0; -fx-border-width: 1px; -fx-background-radius: 6; -fx-max-height: 600; -fx-max-width: 1500; -fx-min-height: 10; -fx-min-width: 10" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="2">
 					<children>
 
-						<GridPane GridPane.columnIndex="1" GridPane.columnSpan="1" GridPane.rowIndex="1" HBox.hgrow="ALWAYS">
+      						<GridPane GridPane.columnIndex="1" GridPane.columnSpan="1" GridPane.rowIndex="1" HBox.hgrow="ALWAYS">
 							<columnConstraints>
-								<ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-								<ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-								<ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-								<ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+								<ColumnConstraints hgrow="SOMETIMES" maxWidth="161.0" minWidth="10.0" prefWidth="80.0" />
+								<ColumnConstraints hgrow="SOMETIMES" maxWidth="303.0" minWidth="10.0" prefWidth="160.0" />
+								<ColumnConstraints hgrow="SOMETIMES" maxWidth="179.0" minWidth="10.0" prefWidth="142.0" />
+								<ColumnConstraints hgrow="SOMETIMES" maxWidth="181.0" minWidth="10.0" prefWidth="181.0" />
 							</columnConstraints>
 							<rowConstraints>
 								<RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -75,25 +75,16 @@
 										<Font name="Arial Bold" size="12.0" />
 									</font>
 								</Label>
-								<GridPane GridPane.columnIndex="1">
-									<columnConstraints>
-										<ColumnConstraints hgrow="SOMETIMES" maxWidth="100.0" minWidth="10.0" prefWidth="100.0" />
-										<ColumnConstraints hgrow="SOMETIMES" maxWidth="50.0" minWidth="50.0" prefWidth="50.0" />
-									</columnConstraints>
-									<rowConstraints>
-										<RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-									</rowConstraints>
-									<children>
-										<TextField fx:id="txtCodigo" />
-										<Button fx:id="btnBuscar" mnemonicParsing="false" onAction="#buscarOrden" text="?" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
-									</children>
-								</GridPane>
-								<Label text="Fecha:" GridPane.columnIndex="2" GridPane.halignment="CENTER">
+								<Label text="Fecha:" GridPane.columnIndex="2" GridPane.halignment="RIGHT">
 									<font>
 										<Font name="Arial Bold" size="12.0" />
 									</font>
 								</Label>
-								<TextField fx:id="txtFecha" maxWidth="150.0" minWidth="20.0" prefWidth="150.0" GridPane.columnIndex="3" />
+								<TextField fx:id="txtFecha" maxWidth="165.0" minWidth="20.0" prefHeight="25.0" prefWidth="115.0" GridPane.columnIndex="3">
+                           <GridPane.margin>
+                              <Insets left="25.0" />
+                           </GridPane.margin>
+                        </TextField>
 								<Label text="Ref. Domicilio:" GridPane.rowIndex="1">
 									<font>
 										<Font name="Arial Bold" size="12.0" />
@@ -106,6 +97,12 @@
 									</font>
 								</Label>
 								<TextField fx:id="txtHabitar" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            										<TextField fx:id="txtCodigo" GridPane.columnIndex="1">
+                           <GridPane.margin>
+                              <Insets right="50.0" />
+                           </GridPane.margin>
+                        </TextField>
+                        <Button fx:id="btnBuscar" mnemonicParsing="false" onAction="#buscarOrden" text="?" GridPane.columnIndex="1" GridPane.halignment="RIGHT" />
 							</children>
 							<HBox.margin>
 								<Insets bottom="2.0" left="13.0" right="13.0" top="2.0" />

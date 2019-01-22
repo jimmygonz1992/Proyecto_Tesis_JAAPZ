@@ -13,4 +13,15 @@ public class EstadoMedidorDAO extends ClaseDAO {
 		resultado = (List<EstadoMedidor>) query.getResultList();
 		return resultado;
 	}
+	public EstadoMedidor getEstadoBueno() {
+		try {
+			EstadoMedidor resultado = new EstadoMedidor();
+			Query query = getEntityManager().createNamedQuery("EstadoMedidor.buscarBueno");
+			resultado = (EstadoMedidor) query.getSingleResult();
+			return resultado;
+		}catch(Exception ex) {
+			System.out.println(ex.getMessage());
+			return null;
+		}
+	}
 }

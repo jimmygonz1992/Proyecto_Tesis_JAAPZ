@@ -1,5 +1,6 @@
 package ec.com.jaapz.controlador;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,6 +25,7 @@ import javafx.util.Callback;
 public class SolicitudListaRepC {
 	@FXML TextField txtBuscar;
 	@FXML TableView<SolInspeccionRep> tvDatos;
+	SimpleDateFormat formateador = new SimpleDateFormat("dd/MM/yyyy");
 	
 	SolInspeccionRepDAO reparacionDAO = new SolInspeccionRepDAO();
 	List<SolInspeccionRep> listadoInspecciones = new ArrayList<SolInspeccionRep>();
@@ -90,13 +92,23 @@ public class SolicitudListaRepC {
 			//llenar los datos en la tabla
 			TableColumn<SolInspeccionRep, String> idColum = new TableColumn<>("Código");
 			idColum.setMinWidth(10);
-			idColum.setPrefWidth(50);
-			idColum.setCellValueFactory(new PropertyValueFactory<SolInspeccionRep, String>("idInspeccion"));
-
+			idColum.setPrefWidth(200);
+			idColum.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<SolInspeccionRep,String>, ObservableValue<String>>() {
+				@Override
+				public ObservableValue<String> call(CellDataFeatures<SolInspeccionRep, String> param) {
+					return new SimpleObjectProperty<String>(String.valueOf(param.getValue().getIdSolicitudRep()));
+				}
+			});
+			
 			TableColumn<SolInspeccionRep, String> fechaColum = new TableColumn<>("Fecha");
 			fechaColum.setMinWidth(10);
-			fechaColum.setPrefWidth(150);
-			fechaColum.setCellValueFactory(new PropertyValueFactory<SolInspeccionRep, String>("fecha"));
+			fechaColum.setPrefWidth(200);
+			fechaColum.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<SolInspeccionRep,String>, ObservableValue<String>>() {
+				@Override
+				public ObservableValue<String> call(CellDataFeatures<SolInspeccionRep, String> param) {
+					return new SimpleObjectProperty<String>(String.valueOf(formateador.format(param.getValue().getFecha())));
+				}
+			});
 
 			TableColumn<SolInspeccionRep, String> clienteColum = new TableColumn<>("Cliente");
 			clienteColum.setMinWidth(10);
@@ -109,16 +121,33 @@ public class SolicitudListaRepC {
 					return new SimpleObjectProperty<String>(cliente);
 				}
 			});
+			
+			//falta campo referencia en la base de datos y en el modelo y luego borrar el llenado de abajo
+			
+			/*TableColumn<SolInspeccionRep, String> referenciaColum = new TableColumn<>("Referencia");
+			referenciaColum.setMinWidth(10);
+			referenciaColum.setPrefWidth(200);
+			referenciaColum.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<SolInspeccionRep,String>, ObservableValue<String>>() {
+				@Override
+				public ObservableValue<String> call(CellDataFeatures<SolInspeccionRep, String> param) {
+					return new SimpleObjectProperty<String>(param.getValue().getReferencia);
+				}
+			});*/
 
 			TableColumn<SolInspeccionRep, String> referenciaColum = new TableColumn<>("Referencia");
 			referenciaColum.setMinWidth(10);
 			referenciaColum.setPrefWidth(350);
 			referenciaColum.setCellValueFactory(new PropertyValueFactory<SolInspeccionRep, String>("referencia"));
-
+			
 			TableColumn<SolInspeccionRep, String> estadoColum = new TableColumn<>("Estado");
 			estadoColum.setMinWidth(10);
-			estadoColum.setPrefWidth(90);
-			estadoColum.setCellValueFactory(new PropertyValueFactory<SolInspeccionRep, String>("estadoInspeccion"));
+			estadoColum.setPrefWidth(200);
+			estadoColum.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<SolInspeccionRep,String>, ObservableValue<String>>() {
+				@Override
+				public ObservableValue<String> call(CellDataFeatures<SolInspeccionRep, String> param) {
+					return new SimpleObjectProperty<String>(param.getValue().getEstadoInspecRep());
+				}
+			});
 
 			tvDatos.getColumns().addAll(idColum, fechaColum,clienteColum,referenciaColum,estadoColum);
 			tvDatos.setItems(datos);

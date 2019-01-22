@@ -64,4 +64,16 @@ public class ReparacionDAO extends ClaseDAO{
 			resultado = (List<Reparacion>) query.getResultList();
 			return resultado;
 		}
+		
+		//esta forma la utilicé para agregar mas materiales en editar orden de liquidacion y funcionó jeje
+		//asi q voy a ver si funciona
+		@SuppressWarnings("unchecked")
+		public List<Reparacion> getRecuperaReparacion(Integer idReparacion){
+			List<Reparacion> resultado = new ArrayList<Reparacion>();
+			Query query = getEntityManager().createNamedQuery("Reparacion.recuperaReparaciones");
+			query.setHint("javax.persistence.cache.storeMode", "REFRESH");
+			query.setParameter("idReparacion", idReparacion);
+			resultado = (List<Reparacion>) query.getResultList();
+			return resultado;
+		}
 }

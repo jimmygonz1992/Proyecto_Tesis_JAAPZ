@@ -90,4 +90,33 @@ public class SegUsuarioDAO extends ClaseDAO{
 		}
 		return usuarioInspeccion;
 	}
+	
+	//para cambio de contrasenia
+	@SuppressWarnings("unchecked")
+	public List<SegUsuario> getRecuperaUsuario(String clave, String usuario){
+		List<SegUsuario> resultado = new ArrayList<SegUsuario>();
+		Query query = getEntityManager().createNamedQuery("SegUsuario.recuperaUsuarioValidaContrasenia");
+		query.setHint("javax.persistence.cache.storeMode", "REFRESH");
+		query.setParameter("clave", clave);
+		query.setParameter("usuario", usuario);
+		resultado = (List<SegUsuario>) query.getResultList();
+		return resultado;
+	}
+	
+	//para asigancion de instalaciones
+	@SuppressWarnings("unchecked")
+	public List<SegUsuario> getListaUsuariosInstalacion(){
+		List<SegUsuario> resultado;
+		List<SegUsuario> usuarioInspeccion = new ArrayList<SegUsuario>();
+		Query query = getEntityManager().createNamedQuery("SegUsuario.buscarTodosUsuarios");
+		query.setHint("javax.persistence.cache.storeMode", "REFRESH");
+		resultado = (List<SegUsuario>) query.getResultList();
+		for(SegUsuario usuario : resultado) {
+			for(SegUsuarioPerfil perfil : usuario.getSegUsuarioPerfils()) {
+				if(perfil.getSegPerfil().getIdPerfil() == Constantes.ID_USU_INSTALACIONES && perfil.getEstado().equals(Constantes.ESTADO_ACTIVO))
+					usuarioInspeccion.add(usuario);
+			}
+		}
+		return usuarioInspeccion;
+	}
 }

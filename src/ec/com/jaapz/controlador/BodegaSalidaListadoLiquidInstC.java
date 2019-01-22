@@ -1,9 +1,14 @@
 package ec.com.jaapz.controlador;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 import ec.com.jaapz.modelo.LiquidacionOrden;
 import ec.com.jaapz.modelo.LiquidacionOrdenDAO;
+import ec.com.jaapz.modelo.Pago;
+import ec.com.jaapz.modelo.Planilla;
+import ec.com.jaapz.util.Constantes;
 import ec.com.jaapz.util.Context;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ObservableValue;
@@ -22,6 +27,8 @@ public class BodegaSalidaListadoLiquidInstC {
 	LiquidacionOrdenDAO liquidacionOrdenDao = new LiquidacionOrdenDAO();
 	@FXML private TextField txtBuscar;
 	@FXML private TableView<LiquidacionOrden> tvDatos;
+	SimpleDateFormat formateador = new SimpleDateFormat("dd/MM/yyyy");
+	
 	public void initialize() {
 		llenarDatos("");
 		tvDatos.setRowFactory(tv -> {
@@ -46,12 +53,32 @@ public class BodegaSalidaListadoLiquidInstC {
 	void llenarDatos(String patron) {
 		try{
 			tvDatos.getColumns().clear();
-			List<LiquidacionOrden> listaLiquidaciones;
+			List<LiquidacionOrden> listado;
+			
 			if(Context.getInstance().getIdPerfil() == 1) {
-				listaLiquidaciones = liquidacionOrdenDao.getListaLiquidacionOrden(patron);
+				listado = liquidacionOrdenDao.getListaLiquidacionOrden(patron);
 			}else {
-				listaLiquidaciones = liquidacionOrdenDao.getListaLiquidacionOrdenPerfil(patron);
+				listado = liquidacionOrdenDao.getListaLiquidacionOrdenPerfil(patron);
 			}
+			
+			List<LiquidacionOrden> listaLiquidaciones = new ArrayList<>();
+			for(LiquidacionOrden liq : listado) {
+				double porcentaje = 0.0;
+				double valorPagado = 0.0;
+				for(Planilla pl : liq.getCuentaCliente().getPlanillas()) {
+					if(pl.getIdentInstalacion().equals(Constantes.IDENT_INSTALACION)) {
+						porcentaje = pl.getTotalPagar() * 0.6;//60 % del total a pagar
+						for(Pago pag : pl.getPagos()) {
+							if(pag.getEstado().equals(Constantes.ESTADO_ACTIVO))
+								valorPagado = valorPagado + pag.getValor();
+						}
+					}
+				}
+				if(valorPagado >= porcentaje)
+					listaLiquidaciones.add(liq);
+			}
+			
+			
 			
 			ObservableList<LiquidacionOrden> datosReq = FXCollections.observableArrayList();
 			datosReq.setAll(listaLiquidaciones);
@@ -78,7 +105,7 @@ public class BodegaSalidaListadoLiquidInstC {
 			fechaOrdenColum.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<LiquidacionOrden, String>, ObservableValue<String>>() {
 				@Override
 				public ObservableValue<String> call(CellDataFeatures<LiquidacionOrden, String> param) {
-					return new SimpleObjectProperty<String>(String.valueOf(param.getValue().getFecha()));
+					return new SimpleObjectProperty<String>(String.valueOf(formateador.format(param.getValue().getFecha())));
 				}
 			});
 			
@@ -88,7 +115,7 @@ public class BodegaSalidaListadoLiquidInstC {
 			fechaInspColum.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<LiquidacionOrden, String>, ObservableValue<String>>() {
 				@Override
 				public ObservableValue<String> call(CellDataFeatures<LiquidacionOrden, String> param) {
-					return new SimpleObjectProperty<String>(String.valueOf(param.getValue().getSolInspeccionIn().getFechaIngreso()));
+					return new SimpleObjectProperty<String>(String.valueOf(formateador.format(param.getValue().getSolInspeccionIn().getFechaIngreso())));
 				}
 			});
 			

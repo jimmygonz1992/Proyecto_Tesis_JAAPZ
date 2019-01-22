@@ -45,7 +45,6 @@ public class BodegaListadoMedidoresC {
 			datos.setAll(listaMedidores);
 
 			//llenar los datos en la tabla
-			//llenar los datos en la tabla
 			TableColumn<Medidor, String> idColum = new TableColumn<>("Id");
 			idColum.setMinWidth(10);
 			idColum.setPrefWidth(70);
