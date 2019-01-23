@@ -8,6 +8,8 @@ import ec.com.jaapz.modelo.Barrio;
 import ec.com.jaapz.modelo.Categoria;
 import ec.com.jaapz.modelo.Cliente;
 import ec.com.jaapz.modelo.CuentaCliente;
+import ec.com.jaapz.modelo.Ingreso;
+import ec.com.jaapz.modelo.IngresoDetalle;
 import ec.com.jaapz.modelo.Instalacion;
 import ec.com.jaapz.modelo.LiquidacionOrden;
 import ec.com.jaapz.modelo.Medidor;
@@ -59,6 +61,9 @@ public class Context {
 	private SolInspeccionIn inspeccion;
 	private Instalacion instalacion;
 	private SolInspeccionRep reparacion;
+	
+	private IngresoDetalle detalleMedidor;
+	private Ingreso ingresoSeleccionado;
 	
 	public static Context getInstance() {
 		return instance;
@@ -285,6 +290,22 @@ public class Context {
 
 	public void setMensajeEnviado(boolean mensajeEnviado) {
 		this.mensajeEnviado = mensajeEnviado;
+	}
+
+	public IngresoDetalle getDetalleMedidor() {
+		return detalleMedidor;
+	}
+
+	public void setDetalleMedidor(IngresoDetalle detalleMedidor) {
+		this.detalleMedidor = detalleMedidor;
+	}
+
+	public Ingreso getIngresoSeleccionado() {
+		return ingresoSeleccionado;
+	}
+
+	public void setIngresoSeleccionado(Ingreso ingresoSeleccionado) {
+		this.ingresoSeleccionado = ingresoSeleccionado;
 	}	
 	
 }
