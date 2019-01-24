@@ -76,4 +76,39 @@ public class ReparacionDAO extends ClaseDAO{
 			resultado = (List<Reparacion>) query.getResultList();
 			return resultado;
 		}
+		
+		//para asignar los trabajos de reparacion
+		@SuppressWarnings("unchecked")
+		public List<Reparacion> getListaReparacionAsignada(Integer patron){
+			List<Reparacion> resultado = new ArrayList<Reparacion>();
+			Query query = getEntityManager().createNamedQuery("Reparacion.buscarReparacionAsignada");
+			query.setHint("javax.persistence.cache.storeMode", "REFRESH");
+			query.setParameter("idPerfilUsuario", patron );
+			resultado = (List<Reparacion>) query.getResultList();
+			return resultado;
+		}
+		
+		//para asignacion de trabajos de reparacion
+		@SuppressWarnings("unchecked")
+		public List<Reparacion> getListaReparacionPendiente(String patron){
+			List<Reparacion> resultado = new ArrayList<Reparacion>();
+			Query query = getEntityManager().createNamedQuery("Reparacion.buscarListaReparacion");
+			query.setHint("javax.persistence.cache.storeMode", "REFRESH");
+			query.setParameter("patron", "%" + patron + "%");
+			resultado = (List<Reparacion>) query.getResultList();
+			return resultado;
+		}
+		
+		//para asignacion de trabajos de reparacion
+		//para asignaciones de trabajo
+		@SuppressWarnings("unchecked")
+		public List<Reparacion> getListaReparacionPerfilPendiente(String patron){
+			List<Reparacion> resultado = new ArrayList<Reparacion>();
+			Query query = getEntityManager().createNamedQuery("Reparacion.buscarListaReparacionPerfil");
+			query.setHint("javax.persistence.cache.storeMode", "REFRESH");
+			query.setParameter("patron", "%" + patron + "%");
+			query.setParameter("idPerfilUsuario", Context.getInstance().getIdUsuario());
+			resultado = (List<Reparacion>) query.getResultList();
+			return resultado;
+		}
 }

@@ -31,7 +31,7 @@ public class ClientesOrdePendienteC {
 	public void initialize() {
 		listadoInspecciones = Context.getInstance().getListaInspecciones();
 		//poner nuevamente a null
-		Context.getInstance().getListaInspecciones().clear();;
+		Context.getInstance().getListaInspecciones().clear();
 		llenarTablaInspecciones("");
 		tvDatos.setRowFactory(tv -> {
             TableRow<SolInspeccionIn> row = new TableRow<>();

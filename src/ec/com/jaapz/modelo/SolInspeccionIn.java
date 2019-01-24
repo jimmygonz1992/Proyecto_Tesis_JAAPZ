@@ -17,19 +17,24 @@ import java.util.List;
 	@NamedQuery(name="SolInspeccionIn.findAll", query="SELECT i FROM SolInspeccionIn i "
 			+ "where (lower(i.cliente.apellido) like :patron  or lower(i.cliente.nombre) like :patron) and i.estadoInspeccion = 'PENDIENTE' "
 			+ "and i.estado = 'A' order by i.estadoInspeccion asc"),
+	
 	@NamedQuery(name="SolInspeccionIn.buscarInspeccionesTodas", query="SELECT i FROM SolInspeccionIn i "
 			+ "where (lower(i.cliente.apellido) like lower(:patron)  or lower(i.cliente.nombre) like :patron) "
 			+ "and i.estado = 'A' order by i.estadoInspeccion asc"),
+	
 	@NamedQuery(name="SolInspeccionIn.findAllPendiente", query="SELECT i FROM SolInspeccionIn i "
 			+ "where (lower(i.cliente.apellido) like :patron  or lower(i.cliente.nombre) like :patron) "
 			+ "and i.estadoInspeccion = 'PENDIENTE' and i.idUsuEncargado = null and i.estado = 'A' order by i.idSolInspeccion desc"),
+	
 	@NamedQuery(name="SolInspeccionIn.buscarInspeccionPerfil", query="SELECT i FROM SolInspeccionIn i "
 			+ "where (lower(i.cliente.apellido) like :patron  or lower(i.cliente.nombre) like :patron) "
-			+ " and i.idUsuEncargado = :idPerfilUsuario and i.estado = 'A' order by i.idSolInspeccion desc"),
+			+ " and i.idUsuEncargado = :idPerfilUsuario and i.estado = 'A' and i.estadoInspeccion = 'PENDIENTE' order by i.idSolInspeccion desc"),
+	
 	@NamedQuery(name="SolInspeccionIn.buscarInspeccionPerfilPendiente", query="SELECT i FROM SolInspeccionIn i "
 			+ "where lower(i.cliente.apellido) like :patron  or lower(i.cliente.nombre) like :patron "
 			+ " and i.idUsuEncargado = :idPerfilUsuario and i.idUsuEncargado = null "
 			+ " and i.estadoInspeccion = 'PENDIENTE' and i.estado = 'A' order by i.idSolInspeccion desc"),
+	
 	@NamedQuery(name="SolInspeccionIn.buscarInspeccionAsignada", query="SELECT i FROM SolInspeccionIn i "
 			+ "where i.idUsuEncargado = :idPerfilUsuario and i.estado = 'A' order by i.idSolInspeccion desc")
 })

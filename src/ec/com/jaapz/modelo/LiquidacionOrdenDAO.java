@@ -29,6 +29,59 @@ public class LiquidacionOrdenDAO extends ClaseDAO{
 		return resultado;
 	}
 	
+	@SuppressWarnings("unchecked")
+	public List<LiquidacionOrden> getListaAsignacionLiquidacionOrden(String patron){
+		List<LiquidacionOrden> resultado = new ArrayList<LiquidacionOrden>();
+		Query query = getEntityManager().createNamedQuery("LiquidacionOrden.findAllPendiente");
+		query.setHint("javax.persistence.cache.storeMode", "REFRESH");
+		query.setParameter("patron", "%" + patron + "%");
+		resultado = (List<LiquidacionOrden>) query.getResultList();
+		return resultado;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<LiquidacionOrden> getListaAsignacionLiquidacionOrdenPerfil(String patron){
+		List<LiquidacionOrden> resultado = new ArrayList<LiquidacionOrden>();
+		Query query = getEntityManager().createNamedQuery("LiquidacionOrden.buscarAsignacionLiquidacionPerfilPendiente");
+		query.setHint("javax.persistence.cache.storeMode", "REFRESH");
+		query.setParameter("patron", "%" + patron + "%");
+		query.setParameter("idPerfilUsuario", Context.getInstance().getIdUsuario());
+		resultado = (List<LiquidacionOrden>) query.getResultList();
+		return resultado;
+	}
+	
+	/*//para las asignaciones
+	@SuppressWarnings("unchecked")
+	public List<LiquidacionOrden> getAsignacionListaLiquidacion(String patron){
+		List<LiquidacionOrden> resultado = new ArrayList<LiquidacionOrden>();
+		Query query = getEntityManager().createNamedQuery("LiquidacionOrden.findAllPendiente");
+		query.setHint("javax.persistence.cache.storeMode", "REFRESH");
+		query.setParameter("patron", "%" + patron + "%");
+		resultado = (List<LiquidacionOrden>) query.getResultList();
+		return resultado;
+	}*/
+	//para las asignaciones
+	/*@SuppressWarnings("unchecked")
+	public List<LiquidacionOrden> getAsignacionListaLiquidacionPendiente(String patron){
+		List<LiquidacionOrden> resultado = new ArrayList<LiquidacionOrden>();
+		Query query = getEntityManager().createNamedQuery("LiquidacionOrden.buscarAsignacionPerfilPendiente");
+		query.setHint("javax.persistence.cache.storeMode", "REFRESH");
+		query.setParameter("patron", "%" + patron + "%");
+		query.setParameter("idPerfilUsuario", Context.getInstance().getIdUsuario());
+		resultado = (List<LiquidacionOrden>) query.getResultList();
+		return resultado;
+	}*/
+	//para las asignaciones
+	@SuppressWarnings("unchecked")
+	public List<LiquidacionOrden> getListaLiquidacionAsignada(Integer patron){
+		List<LiquidacionOrden> resultado = new ArrayList<LiquidacionOrden>();
+		Query query = getEntityManager().createNamedQuery("LiquidacionOrden.buscarLiquidacionAsignada");
+		query.setHint("javax.persistence.cache.storeMode", "REFRESH");
+		query.setParameter("idPerfilUsuario", patron );
+		resultado = (List<LiquidacionOrden>) query.getResultList();
+		return resultado;
+	}
+	
 	//para recuperar en instalaciones
 	@SuppressWarnings("unchecked")
 	public List<LiquidacionOrden> getListaLiquidacionOrdenInstalaciones(String patron){
@@ -46,7 +99,7 @@ public class LiquidacionOrdenDAO extends ClaseDAO{
 		Query query = getEntityManager().createNamedQuery("LiquidacionOrden.buscarLiquidacionOrdenPerfilInstalaciones");
 		query.setHint("javax.persistence.cache.storeMode", "REFRESH");
 		query.setParameter("patron", "%" + patron + "%");
-		query.setParameter("idPerfilUsuario", Context.getInstance().getIdPerfil());
+		query.setParameter("idPerfilUsuario", Context.getInstance().getIdUsuario());
 		resultado = (List<LiquidacionOrden>) query.getResultList();
 		return resultado;
 	}
@@ -84,6 +137,29 @@ public class LiquidacionOrdenDAO extends ClaseDAO{
 		Query query = getEntityManager().createNamedQuery("LiquidacionOrden.recuperaLiquidacionEmitida");
 		query.setHint("javax.persistence.cache.storeMode", "REFRESH");
 		query.setParameter("idLiquidacion", idLiquidacion);
+		resultado = (List<LiquidacionOrden>) query.getResultList();
+		return resultado;
+	}
+	
+	//para asignaciones de trabajo
+	@SuppressWarnings("unchecked")
+	public List<LiquidacionOrden> getListaLiquidacionPendiente(String patron){
+		List<LiquidacionOrden> resultado = new ArrayList<LiquidacionOrden>();
+		Query query = getEntityManager().createNamedQuery("LiquidacionOrden.buscarListaLiquidacion");
+		query.setHint("javax.persistence.cache.storeMode", "REFRESH");
+		query.setParameter("patron", "%" + patron + "%");
+		resultado = (List<LiquidacionOrden>) query.getResultList();
+		return resultado;
+	}
+	
+	//para asignaciones de trabajo
+	@SuppressWarnings("unchecked")
+	public List<LiquidacionOrden> getListaLiquidacionPerfilPendiente(String patron){
+		List<LiquidacionOrden> resultado = new ArrayList<LiquidacionOrden>();
+		Query query = getEntityManager().createNamedQuery("LiquidacionOrden.buscarListaLiquidacionPerfil");
+		query.setHint("javax.persistence.cache.storeMode", "REFRESH");
+		query.setParameter("patron", "%" + patron + "%");
+		query.setParameter("idPerfilUsuario", Context.getInstance().getIdUsuario());
 		resultado = (List<LiquidacionOrden>) query.getResultList();
 		return resultado;
 	}

@@ -75,6 +75,23 @@ public class SegUsuarioDAO extends ClaseDAO{
 		return usuarioInspeccion;
 	}
 	
+	//para asigancion de trabajos de reparacion
+	@SuppressWarnings("unchecked")
+	public List<SegUsuario> getListaUsuariosReparacion(){
+		List<SegUsuario> resultado;
+		List<SegUsuario> usuarioInspeccion = new ArrayList<SegUsuario>();
+		Query query = getEntityManager().createNamedQuery("SegUsuario.buscarTodosUsuarios");
+		query.setHint("javax.persistence.cache.storeMode", "REFRESH");
+		resultado = (List<SegUsuario>) query.getResultList();
+		for(SegUsuario usuario : resultado) {
+			for(SegUsuarioPerfil perfil : usuario.getSegUsuarioPerfils()) {
+				if(perfil.getSegPerfil().getIdPerfil() == Constantes.ID_USU_REPARACIONES && perfil.getEstado().equals(Constantes.ESTADO_ACTIVO))
+					usuarioInspeccion.add(usuario);
+			}
+		}
+		return usuarioInspeccion;
+	}
+	
 	@SuppressWarnings("unchecked")
 	public List<SegUsuario> getListaUsuariosLectura(){
 		List<SegUsuario> resultado;

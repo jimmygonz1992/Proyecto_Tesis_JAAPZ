@@ -50,6 +50,8 @@ public class Context {
 	private Barrio barrio;
 	private List<SolInspeccionIn> listaInspecciones;
 	private List<Instalacion> listaInstalaciones;
+	private List<LiquidacionOrden> listaLiquidaciones;
+	private List<Reparacion> listaReparaciones;
 	private List<SolInspeccionRep> listaInspeccionesRep;
 	private List<Barrio> listaBarrios;
 	private List<SegUsuarioPerfil> listaPerfiles;
@@ -137,6 +139,24 @@ public class Context {
 
 	public void setListaInstalaciones(List<Instalacion> listaInstalaciones) {
 		this.listaInstalaciones = listaInstalaciones;
+	}
+	
+	public List<LiquidacionOrden> getListaLiquidaciones() {
+		return listaLiquidaciones;
+	}
+
+	public void setListaLiquidaciones(List<LiquidacionOrden> listaLiquidaciones) {
+		this.listaLiquidaciones = listaLiquidaciones;
+	}
+	
+	//para las asignaciones de reparaciones
+	public List<Reparacion> getListaReparaciones() {
+		return listaReparaciones;
+	}
+
+	//para las asignaciones de reparaciones
+	public void setListaReparaciones(List<Reparacion> listaReparaciones) {
+		this.listaReparaciones = listaReparaciones;
 	}
 	
 	public List<SolInspeccionRep> getListaInspeccionesRep() {

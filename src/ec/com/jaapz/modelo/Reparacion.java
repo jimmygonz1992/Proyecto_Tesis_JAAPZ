@@ -20,20 +20,38 @@ import java.util.List;
 			+ "where (lower(r.cuentaCliente.cliente.apellido) like :patron or lower(r.cuentaCliente.cliente.nombre) like :patron "
 			+ "or lower(r.cuentaCliente.cliente.cedula) like :patron) and r.estadoReparacion = 'PENDIENTE' "
 			+ "order by r.idReparacion asc"),
+	
 	@NamedQuery(name="Reparacion.buscarReparacionPerfilReparaciones", query="SELECT r FROM Reparacion r "
 			+ "where (lower(r.cuentaCliente.cliente.apellido) like :patron or lower(r.cuentaCliente.cliente.nombre) like :patron "
 			+ "or lower(r.cuentaCliente.cliente.cedula) like :patron) and r.estadoReparacion = 'PENDIENTE'"
 			+ "and r.usuarioCrea = :idPerfilUsuario order by r.idReparacion asc"),
+	
 	@NamedQuery(name="Reparacion.findAllReparacionesListadoSalida", query="SELECT r FROM Reparacion r "
 			+ "where (lower(r.cuentaCliente.cliente.apellido) like :patron or lower(r.cuentaCliente.cliente.nombre) like :patron "
 			+ "or lower(r.cuentaCliente.cliente.cedula) like :patron) and r.estadoEntrega = 'PENDIENTE' "
 			+ "order by r.idReparacion asc"),
+	
 	@NamedQuery(name="Reparacion.buscarReparacionListadoSalidaPerfilReparaciones", query="SELECT r FROM Reparacion r "
 			+ "where (lower(r.cuentaCliente.cliente.apellido) like :patron or lower(r.cuentaCliente.cliente.nombre) like :patron "
 			+ "or lower(r.cuentaCliente.cliente.cedula) like :patron) and r.estadoEntrega = 'PENDIENTE'"
 			+ "and r.usuarioCrea = :idPerfilUsuario order by r.idReparacion asc"),
 	//esta consulta es provisional voy a hacer lo mismo q hice para editar una orden de liquidacion
-		@NamedQuery(name="Reparacion.recuperaReparaciones", query="SELECT r FROM Reparacion r WHERE (r.idReparacion = (:idReparacion) and r.estado = 'A')")
+	@NamedQuery(name="Reparacion.recuperaReparaciones", query="SELECT r FROM Reparacion r WHERE (r.idReparacion = (:idReparacion) and r.estado = 'A')"),
+		
+	//para asignar los trabajos de reparaciones
+	@NamedQuery(name="Reparacion.buscarReparacionAsignada", query="SELECT r FROM Reparacion r "
+			+ "where r.usuarioReparacion = :idPerfilUsuario and r.estado = 'A' order by r.idReparacion desc"),
+		
+	//para asignacion de trabajos de reparacion
+	@NamedQuery(name="Reparacion.buscarListaReparacion", query="SELECT r FROM Reparacion r "
+			+ "where (lower(r.cuentaCliente.cliente.apellido) like :patron  or lower(r.cuentaCliente.cliente.nombre) like :patron) "
+			+ "and r.estadoReparacion = 'PENDIENTE' and r.usuarioReparacion = null and r.estado = 'A' order by r.idReparacion desc"),
+	
+	//para asignar trabajos de reparacion
+	@NamedQuery(name="Reparacion.buscarListaReparacionPerfil", query="SELECT r FROM Reparacion r "
+			+ "where (lower(r.cuentaCliente.cliente.apellido) like :patron  or lower(r.cuentaCliente.cliente.nombre) like :patron) "
+			+ " and r.usuarioReparacion = :idPerfilUsuario and r.usuarioReparacion = null "
+			+ " and r.estadoReparacion = 'PENDIENTE' and r.estado = 'A' order by r.idReparacion desc")
 })
 public class Reparacion implements Serializable {
 	private static final long serialVersionUID = 1L;

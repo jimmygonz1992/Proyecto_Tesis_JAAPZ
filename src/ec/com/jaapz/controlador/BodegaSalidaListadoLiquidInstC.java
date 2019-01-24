@@ -55,7 +55,7 @@ public class BodegaSalidaListadoLiquidInstC {
 			tvDatos.getColumns().clear();
 			List<LiquidacionOrden> listado;
 			
-			if(Context.getInstance().getIdPerfil() == 1) {
+			if(Context.getInstance().getIdPerfil() == Constantes.ID_USU_ADMINISTRADOR) {
 				listado = liquidacionOrdenDao.getListaLiquidacionOrden(patron);
 			}else {
 				listado = liquidacionOrdenDao.getListaLiquidacionOrdenPerfil(patron);

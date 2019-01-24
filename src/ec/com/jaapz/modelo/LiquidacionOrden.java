@@ -18,30 +18,68 @@ import java.util.List;
 			+ "where (lower(l.cuentaCliente.cliente.apellido) like :patron or lower(l.cuentaCliente.cliente.nombre) like :patron "
 			+ "or lower(l.cuentaCliente.cliente.cedula) like :patron) and l.solInspeccionIn.estadoInspeccion = 'REALIZADO' and l.estadoOrden = 'PENDIENTE'"
 			+ "order by l.idLiquidacion asc"),
+	
 	@NamedQuery(name="LiquidacionOrden.buscarLiquidacionOrdenPerfil", query="SELECT l FROM LiquidacionOrden l "
 			+ "where (lower(l.cuentaCliente.cliente.apellido) like :patron or lower(l.cuentaCliente.cliente.nombre) like :patron "
 			+ "or lower(l.cuentaCliente.cliente.cedula) like :patron) and l.solInspeccionIn.estadoInspeccion = 'REALIZADO' and l.estadoOrden = 'PENDIENTE'"
 			+ "and l.usuarioCrea = :idPerfilUsuario order by l.idLiquidacion asc"),
+	
 	@NamedQuery(name="LiquidacionOrden.findAllInstalaciones", query="SELECT l FROM LiquidacionOrden l "
 			+ "where (lower(l.cuentaCliente.cliente.apellido) like :patron or lower(l.cuentaCliente.cliente.nombre) like :patron "
-			+ "or lower(l.cuentaCliente.cliente.cedula) like :patron) and l.estadoInstalacion = 'PENDIENTE'"
-			+ "order by l.idLiquidacion asc"),
+			+ "or lower(l.cuentaCliente.cliente.cedula) like :patron) and l.estadoInstalacion = 'PENDIENTE' and l.estado = 'A' "
+			+ "order by l.estadoInstalacion asc"),
+	
 	@NamedQuery(name="LiquidacionOrden.buscarLiquidacionOrdenPerfilInstalaciones", query="SELECT l FROM LiquidacionOrden l "
 			+ "where (lower(l.cuentaCliente.cliente.apellido) like :patron or lower(l.cuentaCliente.cliente.nombre) like :patron "
-			+ "or lower(l.cuentaCliente.cliente.cedula) like :patron) and l.estadoInstalacion = 'PENDIENTE'"
-			+ "and l.usuarioCrea = :idPerfilUsuario order by l.idLiquidacion asc"),
+			+ "or lower(l.cuentaCliente.cliente.cedula) like :patron) and l.estadoInstalacion = 'PENDIENTE' "
+			+ "and l.usuarioInstalacion = :idPerfilUsuario and l.estado = 'A' order by l.idLiquidacion desc"),
+	
 	//para agregar mas materiales solo cambia el estado
 	@NamedQuery(name="LiquidacionOrden.findAllEmitida", query="SELECT l FROM LiquidacionOrden l "
 			+ "where (lower(l.cuentaCliente.cliente.apellido) like :patron or lower(l.cuentaCliente.cliente.nombre) like :patron "
 			+ "or lower(l.cuentaCliente.cliente.cedula) like :patron) and l.solInspeccionIn.estadoInspeccion = 'REALIZADO' and l.estadoOrden = 'REALIZADO'"
 			+ "order by l.idLiquidacion asc"),
+	
 	@NamedQuery(name="LiquidacionOrden.buscarLiqOrdenPerfilEmitida", query="SELECT l FROM LiquidacionOrden l "
 			+ "where (lower(l.cuentaCliente.cliente.apellido) like :patron or lower(l.cuentaCliente.cliente.nombre) like :patron "
 			+ "or lower(l.cuentaCliente.cliente.cedula) like :patron) and l.solInspeccionIn.estadoInspeccion = 'REALIZADO' and l.estadoOrden = 'REALIZADO'"
 			+ "and l.usuarioCrea = :idPerfilUsuario order by l.idLiquidacion asc"),
 	
 	//esta consulta es provisional para ver si sale editar una orden de liquidacion
-	@NamedQuery(name="LiquidacionOrden.recuperaLiquidacionEmitida", query="SELECT l FROM LiquidacionOrden l WHERE (l.idLiquidacion = (:idLiquidacion) and l.estado = 'A')")
+	@NamedQuery(name="LiquidacionOrden.recuperaLiquidacionEmitida", query="SELECT l FROM LiquidacionOrden l WHERE (l.idLiquidacion = (:idLiquidacion) and l.estado = 'A')"),
+	
+	@NamedQuery(name="LiquidacionOrden.findAllPendiente", query="SELECT l FROM LiquidacionOrden l "
+			+ "where (lower(l.cuentaCliente.cliente.apellido) like :patron  or lower(l.cuentaCliente.cliente.nombre) like :patron) "
+			+ "and (l.estadoInstalacion = 'PENDIENTE' and l.usuarioInstalacion = null and l.estado = 'A') order by l.idLiquidacion desc"),
+	
+	@NamedQuery(name="LiquidacionOrden.buscarAsignacionLiquidacionPerfilPendiente", query="SELECT l FROM LiquidacionOrden l "
+			+ "where lower(l.cuentaCliente.cliente.apellido) like :patron  or lower(l.cuentaCliente.cliente.nombre) like :patron "
+			+ " and l.usuarioInstalacion = :idPerfilUsuario and l.usuarioInstalacion = null "
+			+ " and l.estadoInstalacion = 'PENDIENTE' and l.estado = 'A' order by l.idLiquidacion desc"),
+	
+	//para las asignaciones
+	/*@NamedQuery(name="LiquidacionOrden.findAllPendiente", query="SELECT l FROM LiquidacionOrden l "
+			+ "where (lower(l.cuentaCliente.cliente.apellido) like :patron  or lower(l.cuentaCliente.cliente.nombre) like :patron) "
+			+ "and l.estadoInstalacion = 'PENDIENTE' and l.usuarioInstalacion = null and l.estado = 'A' order by l.idLiquidacion desc"),*/
+	
+	/*@NamedQuery(name="LiquidacionOrden.buscarAsignacionPerfilPendiente", query="SELECT l FROM LiquidacionOrden l "
+			+ "where (lower(l.cuentaCliente.cliente.apellido) like :patron  or lower(l.cuentaCliente.cliente.nombre) like :patron) "
+			+ " and l.usuarioInstalacion = :idPerfilUsuario and l.usuarioInstalacion = null"
+			+ " and l.estadoInstalacion = 'PENDIENTE' and l.estado = 'A' order by l.idLiquidacion desc"),*/
+	
+	@NamedQuery(name="LiquidacionOrden.buscarLiquidacionAsignada", query="SELECT l FROM LiquidacionOrden l "
+			+ "where l.usuarioInstalacion = :idPerfilUsuario and l.estado = 'A' order by l.idLiquidacion desc"),
+	
+	//para asignar trabajos de instalacion
+	@NamedQuery(name="LiquidacionOrden.buscarListaLiquidacion", query="SELECT l FROM LiquidacionOrden l "
+			+ "where (lower(l.solInspeccionIn.cliente.apellido) like :patron  or lower(l.solInspeccionIn.cliente.nombre) like :patron) "
+			+ "and l.estadoInstalacion = 'PENDIENTE' and l.usuarioInstalacion = null and l.estado = 'A' order by l.idLiquidacion desc"),
+
+	//para asignar trabajos de instalacion
+	@NamedQuery(name="LiquidacionOrden.buscarListaLiquidacionPerfil", query="SELECT l FROM LiquidacionOrden l "
+			+ "where lower(l.solInspeccionIn.cliente.apellido) like :patron  or lower(l.solInspeccionIn.cliente.nombre) like :patron "
+			+ " and l.usuarioInstalacion = :idPerfilUsuario and l.usuarioInstalacion = null "
+			+ " and l.estadoInstalacion = 'PENDIENTE' and l.estado = 'A' order by l.idLiquidacion desc"),
 })
 public class LiquidacionOrden implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -64,6 +102,13 @@ public class LiquidacionOrden implements Serializable {
 
 	@Temporal(TemporalType.DATE)
 	private Date fecha;
+	
+	@Temporal(TemporalType.DATE)
+	@Column(name="fecha_instalacion")
+	private Date fechaInstalacion;
+	
+	@Column(name="hora_instalacion")
+	private Time horaInstalacion;
 
 	@Column(name="foto_predio")
 	private byte[] fotoPredio;
@@ -74,6 +119,9 @@ public class LiquidacionOrden implements Serializable {
 
 	@Column(name="usuario_crea")
 	private Integer usuarioCrea;
+	
+	@Column(name="usuario_instalacion")
+	private Integer usuarioInstalacion;
 
 	@Column(name="valor_pendiente")
 	private double valorPendiente;
@@ -110,6 +158,30 @@ public class LiquidacionOrden implements Serializable {
 
 	public String getEstado() {
 		return this.estado;
+	}
+
+	public Date getFechaInstalacion() {
+		return fechaInstalacion;
+	}
+
+	public void setFechaInstalacion(Date fechaInstalacion) {
+		this.fechaInstalacion = fechaInstalacion;
+	}
+
+	public Time getHoraInstalacion() {
+		return horaInstalacion;
+	}
+
+	public void setHoraInstalacion(Time horaInstalacion) {
+		this.horaInstalacion = horaInstalacion;
+	}
+
+	public Integer getUsuarioInstalacion() {
+		return usuarioInstalacion;
+	}
+
+	public void setUsuarioInstalacion(Integer usuarioInstalacion) {
+		this.usuarioInstalacion = usuarioInstalacion;
 	}
 
 	public void setEstado(String estado) {

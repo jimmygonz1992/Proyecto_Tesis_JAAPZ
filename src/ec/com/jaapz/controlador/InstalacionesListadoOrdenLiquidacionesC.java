@@ -5,6 +5,7 @@ import java.util.List;
 
 import ec.com.jaapz.modelo.LiquidacionOrden;
 import ec.com.jaapz.modelo.LiquidacionOrdenDAO;
+import ec.com.jaapz.util.Constantes;
 import ec.com.jaapz.util.Context;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ObservableValue;
@@ -16,17 +17,16 @@ import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TableColumn.CellDataFeatures;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.Callback;
 
 public class InstalacionesListadoOrdenLiquidacionesC {
-	LiquidacionOrdenDAO liquidacionOrdenDao = new LiquidacionOrdenDAO();
+	LiquidacionOrdenDAO liquidacionDao = new LiquidacionOrdenDAO();
 	@FXML private TextField txtBuscar;
 	@FXML private TableView<LiquidacionOrden> tvDatos;
 	SimpleDateFormat formateador = new SimpleDateFormat("dd/MM/yyyy");
 	
 	public void initialize() {
-		llenarDatos("");
+		llenarTablaLiquidaciones("");
 		tvDatos.setRowFactory(tv -> {
             TableRow<LiquidacionOrden> row = new TableRow<>();
             row.setOnMouseClicked(event -> {
@@ -42,28 +42,38 @@ public class InstalacionesListadoOrdenLiquidacionesC {
 	}
 	
 	public void buscarLiquidCuenta() {
-		llenarDatos(txtBuscar.getText());
+		try {
+			llenarTablaLiquidaciones(txtBuscar.getText());	
+		}catch(Exception ex){
+			System.out.println(ex.getMessage());
+		}
 	}
 	
 	@SuppressWarnings("unchecked")
-	void llenarDatos(String patron) {
+	private void llenarTablaLiquidaciones(String patron) {
 		try{
 			tvDatos.getColumns().clear();
 			List<LiquidacionOrden> listaLiquidaciones;
-			if(Context.getInstance().getIdPerfil() == 1) {
-				listaLiquidaciones = liquidacionOrdenDao.getListaLiquidacionOrdenInstalaciones(patron);
+			
+			if(Context.getInstance().getIdPerfil() == Constantes.ID_USU_ADMINISTRADOR) {
+				listaLiquidaciones = liquidacionDao.getListaLiquidacionOrdenInstalaciones(patron);
 			}else {
-				listaLiquidaciones = liquidacionOrdenDao.getListaLiquidacionOrdenPerfilInstalaciones(patron);
+				listaLiquidaciones = liquidacionDao.getListaLiquidacionOrdenPerfilInstalaciones(patron);
 			}
 			
-			ObservableList<LiquidacionOrden> datosReq = FXCollections.observableArrayList();
-			datosReq.setAll(listaLiquidaciones);
-
+			ObservableList<LiquidacionOrden> datos = FXCollections.observableArrayList();
+			datos.setAll(listaLiquidaciones);
+			
 			//llenar los datos en la tabla
 			TableColumn<LiquidacionOrden, String> idColum = new TableColumn<>("Nº");
 			idColum.setMinWidth(10);
 			idColum.setPrefWidth(40);
-			idColum.setCellValueFactory(new PropertyValueFactory<LiquidacionOrden, String>("idLiquidacion"));
+			idColum.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<LiquidacionOrden, String>, ObservableValue<String>>() {
+				@Override
+				public ObservableValue<String> call(CellDataFeatures<LiquidacionOrden, String> param) {
+					return new SimpleObjectProperty<String>(String.valueOf(param.getValue().getIdLiquidacion()));
+				}
+			});
 			
 			TableColumn<LiquidacionOrden, String> ordenColum = new TableColumn<>("Inspección");
 			ordenColum.setMinWidth(10);
@@ -107,8 +117,13 @@ public class InstalacionesListadoOrdenLiquidacionesC {
 			
 			TableColumn<LiquidacionOrden, String> clienteColum = new TableColumn<>("Cliente");
 			clienteColum.setMinWidth(10);
-			clienteColum.setPrefWidth(240);
-			clienteColum.setCellValueFactory(new PropertyValueFactory<LiquidacionOrden, String>("cuentaCliente"));
+			clienteColum.setPrefWidth(80);
+			clienteColum.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<LiquidacionOrden, String>, ObservableValue<String>>() {
+				@Override
+				public ObservableValue<String> call(CellDataFeatures<LiquidacionOrden, String> param) {
+					return new SimpleObjectProperty<String>(param.getValue().getCuentaCliente().getCliente().getNombre() + " " + param.getValue().getCuentaCliente().getCliente().getApellido());
+				}
+			});
 			
 			TableColumn<LiquidacionOrden, String> direccionColum = new TableColumn<>("Dirección");
 			direccionColum.setMinWidth(10);
@@ -139,14 +154,19 @@ public class InstalacionesListadoOrdenLiquidacionesC {
 					return new SimpleObjectProperty<String>(String.valueOf(param.getValue().getSolInspeccionIn().getEstadoInspeccion()));
 				}
 			});
-
+			
 			TableColumn<LiquidacionOrden, String> estadoOrdColum = new TableColumn<>("Estado Liquidacion");
 			estadoOrdColum.setMinWidth(10);
-			estadoOrdColum.setPrefWidth(85);
-			estadoOrdColum.setCellValueFactory(new PropertyValueFactory<LiquidacionOrden, String>("estadoOrden"));
+			estadoOrdColum.setPrefWidth(80);
+			estadoOrdColum.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<LiquidacionOrden, String>, ObservableValue<String>>() {
+				@Override
+				public ObservableValue<String> call(CellDataFeatures<LiquidacionOrden, String> param) {
+					return new SimpleObjectProperty<String>(param.getValue().getEstadoOrden());
+				}
+			});
 			
 			tvDatos.getColumns().addAll(idColum, ordenColum, fechaOrdenColum, fechaInspColum, cedulaColum, clienteColum, direccionColum, referenciaColum, estadoInspColum, estadoOrdColum);
-			tvDatos.setItems(datosReq);
+			tvDatos.setItems(datos);
 		}catch(Exception ex){
 			System.out.println(ex.getMessage());
 		}
