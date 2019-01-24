@@ -33,4 +33,15 @@ public class MedidorDAO extends ClaseDAO{
 		resultado = (List<Medidor>) query.getResultList();
 		return resultado;
 	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Medidor> getRecuperarMedidorFactura(Integer idFactura) {
+		List<Medidor> resultado; 
+		Query query = getEntityManager().createNamedQuery("Medidor.recuMedidorFactura");
+		query.setHint("javax.persistence.cache.storeMode", "REFRESH");
+		query.setParameter("idFactura", idFactura);
+		resultado = (List<Medidor>) query.getResultList();
+		return resultado;
+	}
+	
 }

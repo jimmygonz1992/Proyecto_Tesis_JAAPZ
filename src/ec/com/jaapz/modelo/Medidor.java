@@ -14,8 +14,8 @@ import java.util.List;
 @NamedQueries({
 	@NamedQuery(name="Medidor.medidoresDisponibles", query="SELECT m FROM Medidor m where m.estado = 'A' and m.usado = false"),
 	@NamedQuery(name="Medidor.recuperaMedidor", query="SELECT m FROM Medidor m WHERE m.codigo = (:codigo) and m.estado = 'A'"),
-	@NamedQuery(name="Medidor.validarCodigo", query="SELECT m FROM Medidor m "
-			+ "WHERE m.codigo = (:codigo) and m.estado = 'A'")
+	@NamedQuery(name="Medidor.validarCodigo", query="SELECT m FROM Medidor m WHERE m.codigo = (:codigo) and m.estado = 'A'"),
+	@NamedQuery(name="Medidor.recuMedidorFactura", query="SELECT m FROM Medidor m WHERE m.idFactura = (:idFactura) and m.estado = 'A' order by m.idMedidor asc")
 })
 
 public class Medidor implements Serializable {

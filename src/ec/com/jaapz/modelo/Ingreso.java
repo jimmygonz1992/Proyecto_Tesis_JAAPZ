@@ -17,7 +17,8 @@ import java.util.List;
  	@NamedQuery(name="Ingreso.findAll", query="SELECT i FROM Ingreso i"),
  	@NamedQuery(name="Ingreso.recuperaIngreso", query="SELECT i FROM Ingreso i, Proveedor p WHERE (i.proveedor.idProveedor=p.idProveedor and i.numeroIngreso = (:numIngreso) and i.estado = 'A')"),
  	@NamedQuery(name="Ingreso.BuscaFactura", query="SELECT i FROM Ingreso i WHERE (i.numeroIngreso = (:numIngreso) and i.proveedor.idProveedor = (:idProveedor) and i.estado = 'A')"),
- 	@NamedQuery(name="Ingreso.BuscaUltimo", query="SELECT i FROM Ingreso i order by i.idIngreso desc")
+ 	@NamedQuery(name="Ingreso.BuscaUltimo", query="SELECT i FROM Ingreso i order by i.idIngreso desc"),
+ 	@NamedQuery(name="Ingreso.BuscarTodoIngreso", query="SELECT i FROM Ingreso i where i.estado = 'A' and lower(i.numeroIngreso) like lower (:numIngreso) order by i.idIngreso desc")
  })
 public class Ingreso implements Serializable {
 	private static final long serialVersionUID = 1L;

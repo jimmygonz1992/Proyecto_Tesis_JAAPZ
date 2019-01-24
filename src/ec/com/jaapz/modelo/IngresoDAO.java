@@ -54,4 +54,13 @@ public class IngresoDAO extends ClaseDAO{
 			return null;
 		}
 	}
+	@SuppressWarnings("unchecked")
+	public List<Ingreso> getAllFacturaTodo(String numIngreso){
+		List<Ingreso> resultado = new ArrayList<Ingreso>();
+		Query query = getEntityManager().createNamedQuery("Ingreso.BuscarTodoIngreso");
+		query.setHint("javax.persistence.cache.storeMode", "REFRESH");
+		query.setParameter("numIngreso","%" + numIngreso + "%");
+		resultado = (List<Ingreso>) query.getResultList();
+		return resultado;
+	}
 }
