@@ -10,6 +10,8 @@ import java.util.List;
 import java.util.Optional;
 
 import ec.com.jaapz.modelo.CuentaCliente;
+import ec.com.jaapz.modelo.Planilla;
+import ec.com.jaapz.modelo.PlanillaDetalle;
 import ec.com.jaapz.modelo.Reparacion;
 import ec.com.jaapz.modelo.ReparacionDAO;
 import ec.com.jaapz.modelo.ReparacionDetalle;
@@ -245,6 +247,13 @@ public class SolicitudesCierreReparacionC {
 			cuentaRecuperada.setIdCuenta(inspeccionRepSeleccionado.getCuentaCliente().getIdCuenta());
 			Optional<ButtonType> result = helper.mostrarAlertaConfirmacion("Desea Grabar los Datos?",Context.getInstance().getStage());
 			if(result.get() == ButtonType.OK){
+				
+				//para obtener la hora
+				java.util.Date utilDate = new java.util.Date(); 
+				long lnMilisegundos = utilDate.getTime();
+				java.sql.Time sqlTime = new java.sql.Time(lnMilisegundos);
+				
+				double valorTotal = 0.0;
 				Reparacion reparacion = new Reparacion();
 				
 				String estado = "A";
@@ -264,11 +273,6 @@ public class SolicitudesCierreReparacionC {
 				reparacion.setSubtotal(Double.parseDouble(txtSubtotal.getText()));
 				reparacion.setTotal(Double.parseDouble(txtTotal.getText()));
 				inspeccionRepSeleccionado.setEstadoInspecRep(Constantes.EST_INSPECCION_REALIZADO);
-
-				///////////////////////////////////////////////////////////////////////////////////////////////////
-				////   falta de considerar si se hace o no descuento
-				////  falta guardar hora, foto (no se si se vaya a ocupar) 
-				//////////////////////////////////////////////////////////////////////////////////////////////////////////
 				
 				List<ReparacionDetalle> listaAgregadaRubros = new ArrayList<ReparacionDetalle>();
 				
@@ -278,13 +282,60 @@ public class SolicitudesCierreReparacionC {
 					det.setReparacion(reparacion);
 					det.setUsuarioCrea(Context.getInstance().getUsuariosC().getIdUsuario());
 					det.setFechaCrea(fecha);
-					
+					valorTotal = valorTotal + det.getPrecio();
 					listaAgregadaRubros.add(det);
 				}
 				
 				reparacion.setReparacionDetalles(listaAgregadaRubros);
+				
+				
+				//para grabar planilla que existe una reparacion
+				//aqui para agregar la factura del 60% del costo de instalacion
+				List<Planilla> listaAdd = new ArrayList<Planilla>();
+				Planilla planilla = new Planilla(); // planilla nueva para el cliente
+				planilla.setIdPlanilla(null);
+				
+				planilla.setHora(sqlTime);
+				planilla.setFecha(fecha);
+				planilla.setConvenio(Constantes.CONVENIO_NO);
+				//obtener el consumo del mes anterior
+				planilla.setConsumo(0);
+				planilla.setConsumoMinimo(0);
+				
+				planilla.setIdentInstalacion(Constantes.IDENT_REPARACION); //verdadero cuando es una nueva instalacion.. caso contrario es una planilla normal
+				planilla.setLecturaAnterior(0);//son cero en primera instancia
+				planilla.setLecturaActual(0);
+
+				planilla.setTotalPagar(valorTotal);
+				planilla.setTotalLetras(helper.cantidadConLetra(String.valueOf(valorTotal)));
+				planilla.setEstado(Constantes.ESTADO_ACTIVO);
+				planilla.setCancelado(Constantes.EST_FAC_PENDIENTE);
+				planilla.setUsuarioCrea(Context.getInstance().getIdUsuario());
+				listaAdd.add(planilla);
+				//enlace entre cliente y planilla
+				planilla.setCuentaCliente(cuentaRecuperada);
+				cuentaRecuperada.setPlanillas(listaAdd);
+
+				//enlace entre detalle de planilla y planilla
+				PlanillaDetalle detallePlanilla = new PlanillaDetalle();
+				detallePlanilla.setIdPlanillaDet(null);
+				detallePlanilla.setCantidad(1);
+				detallePlanilla.setUsuarioCrea(Context.getInstance().getIdUsuario());
+				detallePlanilla.setSubtotal(valorTotal);
+				detallePlanilla.setDescripcion("POR REPARACION EN EL SERVIO DE AGUA");
+				detallePlanilla.setEstado(Constantes.ESTADO_ACTIVO);
+				detallePlanilla.setCantidad(1);
+				detallePlanilla.setPlanilla(planilla);
+				List<PlanillaDetalle> det = new ArrayList<PlanillaDetalle>();
+				det.add(detallePlanilla);
+				planilla.setPlanillaDetalles(det);
+				
+				
+				
+				
 				reparacionDao.getEntityManager().getTransaction().begin();
 				reparacionDao.getEntityManager().persist(reparacion);
+				reparacionDao.getEntityManager().persist(planilla);
 				reparacionDao.getEntityManager().merge(inspeccionRepSeleccionado);
 				reparacionDao.getEntityManager().getTransaction().commit();
 					

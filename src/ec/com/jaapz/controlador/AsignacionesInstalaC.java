@@ -49,6 +49,7 @@ public class AsignacionesInstalaC {
 	public void initialize() {
 		try {
 			llenarListaResponsables();
+			cargarDatos();
 			if(tpRealizadas.isSelected())
 				bloquearBotonesAsignacion();
 
@@ -146,9 +147,11 @@ public class AsignacionesInstalaC {
 			//pasar por parametro la lista de inspecciones a realzar para ir aminorando en el listado
 			Context.getInstance().setListaLiquidaciones(tvNuevosAsig.getItems());
 			helper.abrirPantallaModal("/asignaciones/AsignacionListadoLiquidaciones.fxml","Listado de Órdenes de Liquidación", Context.getInstance().getStage());
+			
 			if (Context.getInstance().getLiquidaciones() != null) {
 				LiquidacionOrden ordenAgregar = Context.getInstance().getLiquidaciones();
 				agregarOrden(ordenAgregar);
+				Context.getInstance().setListaLiquidaciones(null);
 				Context.getInstance().setLiquidaciones(null);
 			}
 		}catch(Exception ex) {
@@ -156,15 +159,18 @@ public class AsignacionesInstalaC {
 		}
 	}
 	
-	@SuppressWarnings("unchecked")
 	private void agregarOrden(LiquidacionOrden ordenAgregar) {
 		try {
+			tvNuevosAsig.getItems().add(ordenAgregar);
+			tvNuevosAsig.refresh();
+		}catch(Exception ex) {
+			System.out.println(ex.getMessage());
+		}
+	}
+	@SuppressWarnings("unchecked")
+	private void cargarDatos() {
+		try {
 			ObservableList<LiquidacionOrden> datos = FXCollections.observableArrayList();
-			datos.setAll(tvNuevosAsig.getItems());
-			datos.add(ordenAgregar);
-
-			tvNuevosAsig.getItems().clear();
-			tvNuevosAsig.getColumns().clear();
 
 			//llenar los datos en la tabla
 			TableColumn<LiquidacionOrden, String> idColum = new TableColumn<>("Código");
@@ -230,12 +236,10 @@ public class AsignacionesInstalaC {
 
 			tvNuevosAsig.getColumns().addAll(idColum, fechaColum,clienteColum,referenciaColum,estadoColum);
 			tvNuevosAsig.setItems(datos);
-
 		}catch(Exception ex) {
 			System.out.println(ex.getMessage());
 		}
 	}
-	
 	public void quitarAsignacion() {
 		try {
 			if(tpRealizadas.isSelected()) {
@@ -260,6 +264,8 @@ public class AsignacionesInstalaC {
 					tvNuevosAsig.getColumns().clear();
 				}	
 			}
+			if(tvNuevosAsig.getItems().size() == 0)
+				cargarDatos();
 		}catch(Exception ex) {
 			System.out.println(ex.getMessage());
 		}

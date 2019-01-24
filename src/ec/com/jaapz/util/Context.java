@@ -1,7 +1,6 @@
 package ec.com.jaapz.util;
 
 import java.sql.Connection;
-import java.util.ArrayList;
 import java.util.List;
 
 import ec.com.jaapz.modelo.AperturaLectura;

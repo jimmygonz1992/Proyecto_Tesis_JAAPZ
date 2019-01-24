@@ -329,6 +329,7 @@ public class RecaudacionesRegistroCobroC {
 		try {
 			tvDatos.getColumns().clear();
 			tvDatos.getItems().clear();
+			
 			if(datoSeleccionado.getMedidor() != null)
 				if(datoSeleccionado.getMedidor().getCodigo() == null)
 					txtNumMedidor.setText("");
@@ -355,14 +356,17 @@ public class RecaudacionesRegistroCobroC {
 			else
 				txtDireccion.setText(datoSeleccionado.getDireccion());
 
-			if (!datoSeleccionado.getPlanillas().isEmpty()) {
-
+			System.out.println("Planillas: " + datoSeleccionado.getPlanillas().size());
+			
+			if (datoSeleccionado.getPlanillas().size() > 0) {
+				
 				ObservableList<Planilla> planillas = FXCollections.observableArrayList();
 				for(Planilla pla : datoSeleccionado.getPlanillas()) {
-					if (pla.getCancelado().equals(Constantes.EST_FAC_PENDIENTE)) {
-						planillas.add(pla);
-					}
+					if (pla.getCancelado() != null) 
+						if (pla.getCancelado().equals(Constantes.EST_FAC_PENDIENTE)) 
+							planillas.add(pla);
 				}
+				System.out.println(planillas.size());
 				Collections.sort(planillas);
 
 				TableColumn<Planilla, String> idColum = new TableColumn<>("Id");
@@ -490,6 +494,7 @@ public class RecaudacionesRegistroCobroC {
 					if(pl.getIdentInstalacion().equals(Constantes.IDENT_INSTALACION))
 						verificarInstalacion = true;
 			}
+			
 			if(verificarInstalacion == true) {//si es un pago de una instalacion.. entoces se debe calcular si esta pagando el 60% del valor
 				double porcentaje = Double.parseDouble(txtTotal.getText()) * 0.6;
 				double totalPago = 0;
@@ -502,6 +507,8 @@ public class RecaudacionesRegistroCobroC {
 				helper.mostrarAlertaAdvertencia("El pago mínimo debe ser el 60% del costo de instalación", Context.getInstance().getStage());
 				return;
 			}
+			
+			
 			Optional<ButtonType> result = helper.mostrarAlertaConfirmacion("Desea Grabar los Datos?",Context.getInstance().getStage());
 			if(result.get() == ButtonType.OK){
 				Factura factura = new Factura();
@@ -660,9 +667,13 @@ public class RecaudacionesRegistroCobroC {
 			descripcionColum.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<FacturaDetalle, String>, ObservableValue<String>>() {
 				@Override
 				public ObservableValue<String> call(CellDataFeatures<FacturaDetalle, String> param) {
-					String descripcion;
-					if(param.getValue().getPlanilla().getIdentInstalacion() != null)
-						descripcion = "Por instalacion de nuevo medidor";
+					String descripcion = "";
+					if(param.getValue().getPlanilla().getIdentInstalacion() != null) {
+						if(param.getValue().getPlanilla().getIdentInstalacion().equals(Constantes.IDENT_INSTALACION))
+							descripcion = "Por instalacion de nuevo medidor";
+						else if(param.getValue().getPlanilla().getIdentInstalacion().equals(Constantes.IDENT_REPARACION))
+							descripcion = "Por reparacion en el servicio";
+					}
 					else
 						descripcion = "Factura mes de: " + String.valueOf(param.getValue().getPlanilla().getAperturaLectura().getMe());
 					return new SimpleObjectProperty<String>(descripcion);

@@ -8,6 +8,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+import ec.com.jaapz.correo.Hilo2;
 import ec.com.jaapz.modelo.Categoria;
 import ec.com.jaapz.modelo.CategoriaDAO;
 import ec.com.jaapz.modelo.Cliente;
@@ -345,6 +346,8 @@ public class SolicitudesCierreInspeccionC {
 					inspeccionDAO.getEntityManager().getTransaction().commit();
 					
 					helper.mostrarAlertaInformacion("Datos Grabados", Context.getInstance().getStage());
+					enviarCorreoCliente(valorTotal,cuentaCliente);
+					
 					limpiarCliente();
 					limpiarOrden();
 					limpiarObservaciones();
@@ -386,6 +389,32 @@ public class SolicitudesCierreInspeccionC {
 		}catch(Exception ex) {
 			inspeccionDAO.getEntityManager().getTransaction().rollback();
 			helper.mostrarAlertaError("Error al grabar", Context.getInstance().getStage());
+			System.out.println(ex.getMessage());
+		}
+	}
+	private void enviarCorreoCliente(double totalPagar,CuentaCliente cuenta) {
+		try {
+			if(cuenta.getCliente().getEmail() != null) {
+				String adjunto = "";
+				String[] adjuntos = adjunto.split(",");
+				String asunto;
+				String destinatario;
+				String mensaje;
+				int servidor;
+				String[] destinatarios;
+				asunto = "Planilla generada por solicitud de instalación de nuevo medidor";
+				destinatario = cuenta.getCliente().getEmail();
+				destinatarios = destinatario.split(";");
+				servidor = 0;
+				mensaje = "Se ha generado planilla por solicitud de nuevo medidor por la cantidad de " + totalPagar + ".\n"
+						+ "Es obligación del cliente cancelar al menos el 60% del total a pagar, para que se puede efectuar la instalación del \n"
+						+ "medidor en el domicilio.. muchas gracias!!!";
+				
+				Hilo2 miHilo = new Hilo2(adjunto, adjuntos, destinatarios, servidor, destinatario, asunto, mensaje);
+				miHilo.enviarCorreoSolicitud();	
+				helper.mostrarAlertaInformacion("Mensaje enviado a dirección de correo electrónico del cliente", Context.getInstance().getStage());
+			}
+		}catch(Exception ex) {
 			System.out.println(ex.getMessage());
 		}
 	}

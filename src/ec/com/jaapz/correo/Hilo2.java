@@ -42,7 +42,16 @@ public class Hilo2 {
 		this.cliente = cliente;
 		this.medidor = medidor;
 	}
-
+	public Hilo2(String adjunto, String[] adjuntos, String[] destinatarios, int servidor, String destinatario,
+			String asunto, String mensaje) {
+		this.adjunto = adjunto;
+		this.adjuntos = adjuntos;
+		this.destinatarios = destinatarios;
+		this.servidor = servidor;
+		this.destinatario = destinatario;
+		this.asunto = asunto;
+		this.mensaje = mensaje;
+	}
 	public void detenElHilo(){
 		this.continuar = false;
 	}
@@ -66,11 +75,43 @@ public class Hilo2 {
 				}
 			}
 			else {
-				EnviarMailComplejo propio = new EnviarMailComplejo(Encriptado.Desencriptar(Constantes.CORREO_ORIGEN), Encriptado.Desencriptar(Constantes.CONTRASENIA_CORREO), this.destinatarios, this.asunto, this.mensaje, this.adjuntos, this.servidor);
+				EnviarMailComplejo propio = new EnviarMailComplejo(Encriptado.Desencriptar(Constantes.CORREO_ORIGEN), 
+						Encriptado.Desencriptar(Constantes.CONTRASENIA_CORREO), this.destinatarios, this.asunto, this.mensaje, this.adjuntos, this.servidor);
 				try {
 					propio.Enviar();
 					ivEnviandoMensaje.setVisible(false);
 					btnEnviarCorreo.setDisable(false);
+				}
+				catch (MessagingException ex){
+					JOptionPane.showMessageDialog(null, "Error" + ex.getMessage());
+					Logger.getLogger(Hilo2.class.getName()).log(Level.SEVERE, null, ex);
+					detenElHilo();
+				}
+			}
+			detenElHilo();
+			System.out.println(i);
+		}
+	}
+	public void enviarCorreoSolicitud() {
+		while (this.continuar) {
+			i = i + 1;
+			//adjunto es la direccion del archivo adjunto
+			if (this.adjunto.isEmpty()) {
+				EnviarMail propio = new EnviarMail(Encriptado.Desencriptar(Constantes.CORREO_ORIGEN), Encriptado.Desencriptar(Constantes.CONTRASENIA_CORREO), 
+						this.destinatarios, this.asunto, this.mensaje, this.servidor);
+				try {
+					propio.enviar();
+				}
+				catch (MessagingException ex){
+					JOptionPane.showMessageDialog(null, "Error" + ex.getMessage());
+					Logger.getLogger(Hilo2.class.getName()).log(Level.SEVERE, null, ex);
+					detenElHilo();
+				}
+			}
+			else {
+				EnviarMailComplejo propio = new EnviarMailComplejo(Encriptado.Desencriptar(Constantes.CORREO_ORIGEN), Encriptado.Desencriptar(Constantes.CONTRASENIA_CORREO), this.destinatarios, this.asunto, this.mensaje, this.adjuntos, this.servidor);
+				try {
+					propio.Enviar();
 				}
 				catch (MessagingException ex){
 					JOptionPane.showMessageDialog(null, "Error" + ex.getMessage());
@@ -171,4 +212,3 @@ public class Hilo2 {
 	}
 	
 }
-

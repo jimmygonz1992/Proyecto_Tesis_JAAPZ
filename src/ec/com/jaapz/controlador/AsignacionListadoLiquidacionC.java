@@ -34,9 +34,9 @@ public class AsignacionListadoLiquidacionC {
 	
 	public void initialize() {
 		listadoLiquidaciones = Context.getInstance().getListaLiquidaciones();
-		
 		//poner nuevamente a null
-		Context.getInstance().getListaLiquidaciones().clear();
+		Context.getInstance().setListaLiquidaciones(null);
+		
 		llenarTablaLiquidaciones("");
 		tvDatos.setRowFactory(tv -> {
             TableRow<LiquidacionOrden> row = new TableRow<>();
@@ -59,6 +59,7 @@ public class AsignacionListadoLiquidacionC {
 	@SuppressWarnings("unchecked")
 	void llenarTablaLiquidaciones(String patron) {
 		try{
+			System.out.println("est ees");
 			tvDatos.getColumns().clear();
 			List<LiquidacionOrden> listado;
 			
@@ -68,6 +69,14 @@ public class AsignacionListadoLiquidacionC {
 				listado = liquidacionOrdenDao.getListaLiquidacionOrdenPerfil(patron);
 			}
 			
+			for(LiquidacionOrden orden : listadoLiquidaciones) {
+				for(int i = 0 ; i < listado.size() ; i ++) {
+					if(orden.getIdLiquidacion() == listado.get(i).getIdLiquidacion()) {
+						listado.remove(i);
+						break;
+					}
+				}
+			}
 			List<LiquidacionOrden> listaLiquidaciones = new ArrayList<>();
 			for(LiquidacionOrden liq : listado) {
 				if(liq.getUsuarioInstalacion() == null) {
