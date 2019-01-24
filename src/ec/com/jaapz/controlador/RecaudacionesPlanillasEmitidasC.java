@@ -120,8 +120,9 @@ public class RecaudacionesPlanillasEmitidasC {
 				public ObservableValue<String> call(CellDataFeatures<CuentaCliente, String> param) {
 					int cont = 0;
 					for(Planilla planilla : param.getValue().getPlanillas()) {
-						if(planilla.getCancelado().equals(Constantes.EST_FAC_PENDIENTE))
-							cont = cont + 1;
+						if(planilla.getCancelado() != null)
+							if(planilla.getCancelado().equals(Constantes.EST_FAC_PENDIENTE))
+								cont = cont + 1;
 					}
 					return new SimpleObjectProperty<String>(String.valueOf(cont));
 				}

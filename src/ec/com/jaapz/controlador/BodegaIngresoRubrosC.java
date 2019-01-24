@@ -792,6 +792,7 @@ public class BodegaIngresoRubrosC {
 								medidor.setModelo(det.getRubro().getMarca());
 								medidor.setEstado(Constantes.ESTADO_ACTIVO);
 								medidor.setEstadoMedidor(estadoM);
+								medidor.setPrecio(det.getRubro().getPrecio());
 								medidor.setUsado(false);
 								medidor.setUsuarioCrea(Context.getInstance().getUsuariosC().getIdUsuario());
 								medidorDAO.getEntityManager().persist(medidor);

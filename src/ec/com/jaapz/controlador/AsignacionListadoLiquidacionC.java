@@ -6,6 +6,8 @@ import java.util.List;
 
 import ec.com.jaapz.modelo.LiquidacionOrden;
 import ec.com.jaapz.modelo.LiquidacionOrdenDAO;
+import ec.com.jaapz.modelo.Pago;
+import ec.com.jaapz.modelo.Planilla;
 import ec.com.jaapz.util.Constantes;
 import ec.com.jaapz.util.Context;
 import javafx.beans.property.SimpleObjectProperty;
@@ -18,6 +20,7 @@ import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TableColumn.CellDataFeatures;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.Callback;
 
 public class AsignacionListadoLiquidacionC {
@@ -26,9 +29,12 @@ public class AsignacionListadoLiquidacionC {
 	LiquidacionOrdenDAO liquidacionDAO = new LiquidacionOrdenDAO();
 	List<LiquidacionOrden> listadoLiquidaciones = new ArrayList<LiquidacionOrden>();
 	SimpleDateFormat formateador = new SimpleDateFormat("dd/MM/yyyy");
+	LiquidacionOrdenDAO liquidacionOrdenDao = new LiquidacionOrdenDAO();
+	
 	
 	public void initialize() {
 		listadoLiquidaciones = Context.getInstance().getListaLiquidaciones();
+		
 		//poner nuevamente a null
 		Context.getInstance().getListaLiquidaciones().clear();
 		llenarTablaLiquidaciones("");
@@ -54,82 +60,127 @@ public class AsignacionListadoLiquidacionC {
 	void llenarTablaLiquidaciones(String patron) {
 		try{
 			tvDatos.getColumns().clear();
-			boolean bandera;
-			List<LiquidacionOrden> listaLiquidaciones;
-			List<LiquidacionOrden> listaAgregar = new ArrayList<LiquidacionOrden>();
+			List<LiquidacionOrden> listado;
+			
 			if(Context.getInstance().getIdPerfil() == Constantes.ID_USU_ADMINISTRADOR) {
-				listaLiquidaciones = liquidacionDAO.getListaLiquidacionPendiente(patron);
+				listado = liquidacionOrdenDao.getListaLiquidacionOrden(patron);
 			}else {
-				listaLiquidaciones = liquidacionDAO.getListaLiquidacionPerfilPendiente(patron);
-			}
-			for(LiquidacionOrden liquidacionAdd : listaLiquidaciones) {
-				bandera = false;
-				for(LiquidacionOrden liquidacionLst : listaLiquidaciones) {
-					if(liquidacionAdd.getIdLiquidacion() == liquidacionLst.getIdLiquidacion())
-						bandera = true;
-				}
-				if(bandera == false)
-					listaAgregar.add(liquidacionAdd);
+				listado = liquidacionOrdenDao.getListaLiquidacionOrdenPerfil(patron);
 			}
 			
-			ObservableList<LiquidacionOrden> datos = FXCollections.observableArrayList();
-			datos.setAll(listaAgregar);
+			List<LiquidacionOrden> listaLiquidaciones = new ArrayList<>();
+			for(LiquidacionOrden liq : listado) {
+				if(liq.getUsuarioInstalacion() == null) {
+					double porcentaje = 0.0;
+					double valorPagado = 0.0;
+					for(Planilla pl : liq.getCuentaCliente().getPlanillas()) {
+						if(pl.getIdentInstalacion().equals(Constantes.IDENT_INSTALACION)) {
+							porcentaje = pl.getTotalPagar() * 0.6;//60 % del total a pagar
+							for(Pago pag : pl.getPagos()) {
+								if(pag.getEstado().equals(Constantes.ESTADO_ACTIVO))
+									valorPagado = valorPagado + pag.getValor();
+							}
+						}
+					}
+					if(valorPagado >= porcentaje)
+						listaLiquidaciones.add(liq);
+				}
+			}
+			
+			
+			
+			ObservableList<LiquidacionOrden> datosReq = FXCollections.observableArrayList();
+			datosReq.setAll(listaLiquidaciones);
 
 			//llenar los datos en la tabla
-			TableColumn<LiquidacionOrden, String> idColum = new TableColumn<>("Id");
+			TableColumn<LiquidacionOrden, String> idColum = new TableColumn<>("Nº");
 			idColum.setMinWidth(10);
-			idColum.setPrefWidth(100);
-			idColum.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<LiquidacionOrden,String>, ObservableValue<String>>() {
+			idColum.setPrefWidth(40);
+			idColum.setCellValueFactory(new PropertyValueFactory<LiquidacionOrden, String>("idLiquidacion"));
+			
+			TableColumn<LiquidacionOrden, String> ordenColum = new TableColumn<>("Inspección");
+			ordenColum.setMinWidth(10);
+			ordenColum.setPrefWidth(40);
+			ordenColum.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<LiquidacionOrden, String>, ObservableValue<String>>() {
 				@Override
 				public ObservableValue<String> call(CellDataFeatures<LiquidacionOrden, String> param) {
-					return new SimpleObjectProperty<String>(String.valueOf(param.getValue().getIdLiquidacion()));
+					return new SimpleObjectProperty<String>(String.valueOf(param.getValue().getSolInspeccionIn().getIdSolInspeccion()));
 				}
 			});
 
-			TableColumn<LiquidacionOrden, String> fechaColum = new TableColumn<>("Fecha");
-			fechaColum.setMinWidth(10);
-			fechaColum.setPrefWidth(100);
-			fechaColum.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<LiquidacionOrden,String>, ObservableValue<String>>() {
+			TableColumn<LiquidacionOrden, String> fechaOrdenColum = new TableColumn<>("Fecha de emisión");
+			fechaOrdenColum.setMinWidth(10);
+			fechaOrdenColum.setPrefWidth(80);
+			fechaOrdenColum.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<LiquidacionOrden, String>, ObservableValue<String>>() {
 				@Override
 				public ObservableValue<String> call(CellDataFeatures<LiquidacionOrden, String> param) {
 					return new SimpleObjectProperty<String>(String.valueOf(formateador.format(param.getValue().getFecha())));
 				}
 			});
-
-			TableColumn<LiquidacionOrden, String> clienteColum = new TableColumn<>("Cliente");
-			clienteColum.setMinWidth(10);
-			clienteColum.setPrefWidth(250);
-			clienteColum.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<LiquidacionOrden,String>, ObservableValue<String>>() {
+			
+			TableColumn<LiquidacionOrden, String> fechaInspColum = new TableColumn<>("Fecha de Inspección");
+			fechaInspColum.setMinWidth(10);
+			fechaInspColum.setPrefWidth(80);
+			fechaInspColum.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<LiquidacionOrden, String>, ObservableValue<String>>() {
 				@Override
 				public ObservableValue<String> call(CellDataFeatures<LiquidacionOrden, String> param) {
-					String cliente = "";
-					cliente = param.getValue().getSolInspeccionIn().getCliente().getNombre() + " " + param.getValue().getSolInspeccionIn().getCliente().getApellido();
-					return new SimpleObjectProperty<String>(cliente);
+					return new SimpleObjectProperty<String>(String.valueOf(formateador.format(param.getValue().getSolInspeccionIn().getFechaIngreso())));
+				}
+			});
+			
+			TableColumn<LiquidacionOrden, String> cedulaColum = new TableColumn<>("Cédula");
+			cedulaColum.setMinWidth(10);
+			cedulaColum.setPrefWidth(80);
+			cedulaColum.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<LiquidacionOrden, String>, ObservableValue<String>>() {
+				@Override
+				public ObservableValue<String> call(CellDataFeatures<LiquidacionOrden, String> param) {
+					//return new SimpleObjectProperty<String>(String.valueOf(param.getValue().getJunOrdenPreviaDespacho().getJunInspeccionNuevoCliente().getFecha()));
+					return new SimpleObjectProperty<String>(String.valueOf(param.getValue().getCuentaCliente().getCliente().getCedula()));
+				}
+			});
+			
+			TableColumn<LiquidacionOrden, String> clienteColum = new TableColumn<>("Cliente");
+			clienteColum.setMinWidth(10);
+			clienteColum.setPrefWidth(240);
+			clienteColum.setCellValueFactory(new PropertyValueFactory<LiquidacionOrden, String>("cuentaCliente"));
+			
+			TableColumn<LiquidacionOrden, String> direccionColum = new TableColumn<>("Dirección");
+			direccionColum.setMinWidth(10);
+			direccionColum.setPrefWidth(80);
+			direccionColum.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<LiquidacionOrden, String>, ObservableValue<String>>() {
+				@Override
+				public ObservableValue<String> call(CellDataFeatures<LiquidacionOrden, String> param) {
+					return new SimpleObjectProperty<String>(String.valueOf(param.getValue().getCuentaCliente().getDireccion()));
 				}
 			});
 			
 			TableColumn<LiquidacionOrden, String> referenciaColum = new TableColumn<>("Referencia");
 			referenciaColum.setMinWidth(10);
-			referenciaColum.setPrefWidth(100);
-			referenciaColum.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<LiquidacionOrden,String>, ObservableValue<String>>() {
+			referenciaColum.setPrefWidth(80);
+			referenciaColum.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<LiquidacionOrden, String>, ObservableValue<String>>() {
 				@Override
 				public ObservableValue<String> call(CellDataFeatures<LiquidacionOrden, String> param) {
-					return new SimpleObjectProperty<String>(param.getValue().getSolInspeccionIn().getReferencia());
+					return new SimpleObjectProperty<String>(String.valueOf(param.getValue().getSolInspeccionIn().getReferencia()));
 				}
 			});
 			
-			TableColumn<LiquidacionOrden, String> estadoColum = new TableColumn<>("Estado Inspección");
-			estadoColum.setMinWidth(10);
-			estadoColum.setPrefWidth(100);
-			estadoColum.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<LiquidacionOrden,String>, ObservableValue<String>>() {
+			TableColumn<LiquidacionOrden, String> estadoInspColum = new TableColumn<>("Estado Inspección");
+			estadoInspColum.setMinWidth(10);
+			estadoInspColum.setPrefWidth(80);
+			estadoInspColum.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<LiquidacionOrden, String>, ObservableValue<String>>() {
 				@Override
 				public ObservableValue<String> call(CellDataFeatures<LiquidacionOrden, String> param) {
-					return new SimpleObjectProperty<String>(param.getValue().getSolInspeccionIn().getEstadoInspeccion());
+					return new SimpleObjectProperty<String>(String.valueOf(param.getValue().getSolInspeccionIn().getEstadoInspeccion()));
 				}
 			});
 
-			tvDatos.getColumns().addAll(idColum, fechaColum,clienteColum,referenciaColum,estadoColum);
-			tvDatos.setItems(datos);
+			TableColumn<LiquidacionOrden, String> estadoOrdColum = new TableColumn<>("Estado Liquidacion");
+			estadoOrdColum.setMinWidth(10);
+			estadoOrdColum.setPrefWidth(85);
+			estadoOrdColum.setCellValueFactory(new PropertyValueFactory<LiquidacionOrden, String>("estadoOrden"));
+			
+			tvDatos.getColumns().addAll(idColum, ordenColum, fechaOrdenColum, fechaInspColum, cedulaColum, clienteColum, direccionColum, referenciaColum, estadoInspColum, estadoOrdColum);
+			tvDatos.setItems(datosReq);
 		}catch(Exception ex){
 			System.out.println(ex.getMessage());
 		}

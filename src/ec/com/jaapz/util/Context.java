@@ -1,6 +1,7 @@
 package ec.com.jaapz.util;
 
 import java.sql.Connection;
+import java.util.ArrayList;
 import java.util.List;
 
 import ec.com.jaapz.modelo.AperturaLectura;
@@ -66,6 +67,8 @@ public class Context {
 	
 	private IngresoDetalle detalleMedidor;
 	private Ingreso ingresoSeleccionado;
+	
+	List<LiquidacionOrden> listadoAsignados;
 	
 	public static Context getInstance() {
 		return instance;
@@ -326,6 +329,14 @@ public class Context {
 
 	public void setIngresoSeleccionado(Ingreso ingresoSeleccionado) {
 		this.ingresoSeleccionado = ingresoSeleccionado;
+	}
+
+	public List<LiquidacionOrden> getListadoAsignados() {
+		return listadoAsignados;
+	}
+
+	public void setListadoAsignados(List<LiquidacionOrden> listadoAsignados) {
+		this.listadoAsignados = listadoAsignados;
 	}	
 	
 }
