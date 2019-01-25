@@ -19,7 +19,6 @@ import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TableColumn.CellDataFeatures;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.Callback;
 
 public class SolicitudListaRepC {
@@ -31,9 +30,9 @@ public class SolicitudListaRepC {
 	List<SolInspeccionRep> listadoInspecciones = new ArrayList<SolInspeccionRep>();
 	
 	public void initialize() {
-		/*listadoInspecciones = Context.getInstance().getListaInspeccionesRep();
+		listadoInspecciones = Context.getInstance().getListaInspeccionesRep();
 		//poner nuevamente a null
-		Context.getInstance().getListaInspeccionesRep().clear();*/
+		Context.getInstance().getListaInspeccionesRep().clear();
 		
 		llenarTablaInspecciones("");
 		tvDatos.setRowFactory(tv -> {
@@ -50,14 +49,14 @@ public class SolicitudListaRepC {
         });
 		
 		//solo letras mayusculas
-				txtBuscar.textProperty().addListener(new ChangeListener<String>() {
-					@Override
-					public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-						// TODO Auto-generated method stub
-						String cadena = txtBuscar.getText().toUpperCase();
-						txtBuscar.setText(cadena);
-					}
-				});
+		txtBuscar.textProperty().addListener(new ChangeListener<String>() {
+			@Override
+			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+				// TODO Auto-generated method stub
+				String cadena = txtBuscar.getText().toUpperCase();
+				txtBuscar.setText(cadena);
+			}
+		});
 	}
 	
 	public void buscarCliente() {
@@ -68,7 +67,6 @@ public class SolicitudListaRepC {
 	void llenarTablaInspecciones(String patron) {
 		try{
 			tvDatos.getColumns().clear();
-			boolean bandera;
 			List<SolInspeccionRep> listaInspecciones;
 			List<SolInspeccionRep> listaAgregar = new ArrayList<SolInspeccionRep>();
 			if(Context.getInstance().getIdPerfil() == Constantes.ID_USU_ADMINISTRADOR) {
@@ -76,7 +74,17 @@ public class SolicitudListaRepC {
 			}else {
 				listaInspecciones = reparacionDAO.getListaInspeccionPerfilPendiente(patron);
 			}
-			for(SolInspeccionRep inspeccionAdd : listaInspecciones) {
+			
+			for(SolInspeccionRep orden : listadoInspecciones) {
+				for(int i = 0 ; i < listaInspecciones.size() ; i ++) {
+					if(orden.getIdSolicitudRep() == listaInspecciones.get(i).getIdSolicitudRep()) {
+						listaInspecciones.remove(i);
+						break;
+					}
+				}
+			}
+			
+			/*for(SolInspeccionRep inspeccionAdd : listaInspecciones) {
 				bandera = false;
 				for(SolInspeccionRep inspeccionLst : listadoInspecciones) {
 					if(inspeccionAdd.getIdSolicitudRep() == inspeccionLst.getIdSolicitudRep())
@@ -84,7 +92,7 @@ public class SolicitudListaRepC {
 				}
 				if(bandera == false)
 					listaAgregar.add(inspeccionAdd);
-			}
+			}*/
 			
 			ObservableList<SolInspeccionRep> datos = FXCollections.observableArrayList();
 			datos.setAll(listaAgregar);
@@ -122,22 +130,15 @@ public class SolicitudListaRepC {
 				}
 			});
 			
-			//falta campo referencia en la base de datos y en el modelo y luego borrar el llenado de abajo
-			
-			/*TableColumn<SolInspeccionRep, String> referenciaColum = new TableColumn<>("Referencia");
+			TableColumn<SolInspeccionRep, String> referenciaColum = new TableColumn<>("Referencia");
 			referenciaColum.setMinWidth(10);
 			referenciaColum.setPrefWidth(200);
 			referenciaColum.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<SolInspeccionRep,String>, ObservableValue<String>>() {
 				@Override
 				public ObservableValue<String> call(CellDataFeatures<SolInspeccionRep, String> param) {
-					return new SimpleObjectProperty<String>(param.getValue().getReferencia);
+					return new SimpleObjectProperty<String>(param.getValue().getReferencia());
 				}
-			});*/
-
-			TableColumn<SolInspeccionRep, String> referenciaColum = new TableColumn<>("Referencia");
-			referenciaColum.setMinWidth(10);
-			referenciaColum.setPrefWidth(350);
-			referenciaColum.setCellValueFactory(new PropertyValueFactory<SolInspeccionRep, String>("referencia"));
+			});
 			
 			TableColumn<SolInspeccionRep, String> estadoColum = new TableColumn<>("Estado");
 			estadoColum.setMinWidth(10);

@@ -282,7 +282,7 @@ public class SolicitudesCierreReparacionC {
 					det.setReparacion(reparacion);
 					det.setUsuarioCrea(Context.getInstance().getUsuariosC().getIdUsuario());
 					det.setFechaCrea(fecha);
-					valorTotal = valorTotal + det.getPrecio();
+					valorTotal = valorTotal + (det.getPrecio()*det.getCantidad());
 					listaAgregadaRubros.add(det);
 				}
 				

@@ -30,7 +30,8 @@ public class AsignacionListadoReparacionC {
 	public void initialize() {
 		listadoReparaciones = Context.getInstance().getListaReparaciones();
 		//poner nuevamente a null
-		Context.getInstance().getListaReparaciones().clear();
+		Context.getInstance().setListaReparaciones(null);
+		
 		llenarTablaReparaciones("");
 		tvDatos.setRowFactory(tv -> {
             TableRow<Reparacion> row = new TableRow<>();

@@ -16,6 +16,7 @@ import java.util.List;
 @NamedQueries({
 	@NamedQuery(name="Reparacion.findAll", query="SELECT r FROM Reparacion r WHERE r.estado = 'A'"),
 	@NamedQuery(name="Reparacion.buscarIDRepar", query="SELECT r FROM Reparacion r WHERE r.estado = 'A' order by r.idReparacion desc"),
+	
 	@NamedQuery(name="Reparacion.findAllReparaciones", query="SELECT r FROM Reparacion r "
 			+ "where (lower(r.cuentaCliente.cliente.apellido) like :patron or lower(r.cuentaCliente.cliente.nombre) like :patron "
 			+ "or lower(r.cuentaCliente.cliente.cedula) like :patron) and r.estadoReparacion = 'PENDIENTE' "
@@ -25,7 +26,7 @@ import java.util.List;
 			+ "where (lower(r.cuentaCliente.cliente.apellido) like :patron or lower(r.cuentaCliente.cliente.nombre) like :patron "
 			+ "or lower(r.cuentaCliente.cliente.cedula) like :patron) and r.estadoReparacion = 'PENDIENTE'"
 			+ "and r.usuarioCrea = :idPerfilUsuario order by r.idReparacion asc"),
-	
+	//////
 	@NamedQuery(name="Reparacion.findAllReparacionesListadoSalida", query="SELECT r FROM Reparacion r "
 			+ "where (lower(r.cuentaCliente.cliente.apellido) like :patron or lower(r.cuentaCliente.cliente.nombre) like :patron "
 			+ "or lower(r.cuentaCliente.cliente.cedula) like :patron) and r.estadoEntrega = 'PENDIENTE' "
@@ -41,11 +42,12 @@ import java.util.List;
 	//para asignar los trabajos de reparaciones
 	@NamedQuery(name="Reparacion.buscarReparacionAsignada", query="SELECT r FROM Reparacion r "
 			+ "where r.usuarioReparacion = :idPerfilUsuario and r.estado = 'A' order by r.idReparacion desc"),
-		
+	
+	////////
 	//para asignacion de trabajos de reparacion
 	@NamedQuery(name="Reparacion.buscarListaReparacion", query="SELECT r FROM Reparacion r "
-			+ "where (lower(r.cuentaCliente.cliente.apellido) like :patron  or lower(r.cuentaCliente.cliente.nombre) like :patron) "
-			+ "and r.estadoReparacion = 'PENDIENTE' and r.usuarioReparacion = null and r.estado = 'A' order by r.idReparacion desc"),
+			+ "where lower(r.cuentaCliente.cliente.apellido) like :patron or lower(r.cuentaCliente.cliente.nombre) like :patron "
+			+ "and r.estadoReparacion='PENDIENTE' and r.usuarioReparacion = null and r.estado = 'A' order by r.idReparacion desc"),
 	
 	//para asignar trabajos de reparacion
 	@NamedQuery(name="Reparacion.buscarListaReparacionPerfil", query="SELECT r FROM Reparacion r "

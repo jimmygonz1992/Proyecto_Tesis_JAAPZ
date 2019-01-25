@@ -290,6 +290,7 @@ public class AsignacionesReparaC {
 			}
 			//pasar por parametro la lista de inspecciones a realzar para ir aminorando en el listado
 			Context.getInstance().setListaReparaciones(tvNuevosAsig.getItems());
+			//helper.abrirPantallaModal("/reparaciones/ReparacionesListadoInspRep.fxml","Listado de Órdenes de Reparación", Context.getInstance().getStage());
 			helper.abrirPantallaModal("/asignaciones/AsignacionListadoReparaciones.fxml","Listado de Órdenes de Reparación", Context.getInstance().getStage());
 			if (Context.getInstance().getReparaciones() != null) {
 				Reparacion ordenAgregar = Context.getInstance().getReparaciones();
