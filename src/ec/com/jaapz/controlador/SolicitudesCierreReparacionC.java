@@ -9,8 +9,10 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+import ec.com.jaapz.modelo.AperturaLecturaDAO;
 import ec.com.jaapz.modelo.CuentaCliente;
 import ec.com.jaapz.modelo.Planilla;
+import ec.com.jaapz.modelo.PlanillaDAO;
 import ec.com.jaapz.modelo.PlanillaDetalle;
 import ec.com.jaapz.modelo.Reparacion;
 import ec.com.jaapz.modelo.ReparacionDAO;
@@ -32,10 +34,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -247,11 +249,7 @@ public class SolicitudesCierreReparacionC {
 			cuentaRecuperada.setIdCuenta(inspeccionRepSeleccionado.getCuentaCliente().getIdCuenta());
 			Optional<ButtonType> result = helper.mostrarAlertaConfirmacion("Desea Grabar los Datos?",Context.getInstance().getStage());
 			if(result.get() == ButtonType.OK){
-				
-				//para obtener la hora
-				java.util.Date utilDate = new java.util.Date(); 
-				long lnMilisegundos = utilDate.getTime();
-				java.sql.Time sqlTime = new java.sql.Time(lnMilisegundos);
+			
 				
 				double valorTotal = 0.0;
 				Reparacion reparacion = new Reparacion();
@@ -291,31 +289,13 @@ public class SolicitudesCierreReparacionC {
 				
 				//para grabar planilla que existe una reparacion
 				//aqui para agregar la factura del 60% del costo de instalacion
-				List<Planilla> listaAdd = new ArrayList<Planilla>();
-				Planilla planilla = new Planilla(); // planilla nueva para el cliente
-				planilla.setIdPlanilla(null);
+				PlanillaDAO planillaDAO = new PlanillaDAO();
 				
-				planilla.setHora(sqlTime);
-				planilla.setFecha(fecha);
-				planilla.setConvenio(Constantes.CONVENIO_NO);
-				//obtener el consumo del mes anterior
-				planilla.setConsumo(0);
-				planilla.setConsumoMinimo(0);
+				List<Planilla> listaPlanilla = planillaDAO.getPlanillaActual(cuentaRecuperada.getIdCuenta());
+				Planilla planilla = new Planilla();
+				if(listaPlanilla.size() > 0)
+					planilla = listaPlanilla.get(0);
 				
-				planilla.setIdentInstalacion(Constantes.IDENT_REPARACION); //verdadero cuando es una nueva instalacion.. caso contrario es una planilla normal
-				planilla.setLecturaAnterior(0);//son cero en primera instancia
-				planilla.setLecturaActual(0);
-
-				planilla.setTotalPagar(valorTotal);
-				planilla.setTotalLetras(helper.cantidadConLetra(String.valueOf(valorTotal)));
-				planilla.setEstado(Constantes.ESTADO_ACTIVO);
-				planilla.setCancelado(Constantes.EST_FAC_PENDIENTE);
-				planilla.setUsuarioCrea(Context.getInstance().getIdUsuario());
-				listaAdd.add(planilla);
-				//enlace entre cliente y planilla
-				planilla.setCuentaCliente(cuentaRecuperada);
-				cuentaRecuperada.setPlanillas(listaAdd);
-
 				//enlace entre detalle de planilla y planilla
 				PlanillaDetalle detallePlanilla = new PlanillaDetalle();
 				detallePlanilla.setIdPlanillaDet(null);
@@ -325,17 +305,15 @@ public class SolicitudesCierreReparacionC {
 				detallePlanilla.setDescripcion("POR REPARACION EN EL SERVIO DE AGUA");
 				detallePlanilla.setEstado(Constantes.ESTADO_ACTIVO);
 				detallePlanilla.setCantidad(1);
-				detallePlanilla.setPlanilla(planilla);
-				List<PlanillaDetalle> det = new ArrayList<PlanillaDetalle>();
-				det.add(detallePlanilla);
-				planilla.setPlanillaDetalles(det);
+				
+				planilla.addPlanillaDetalle(detallePlanilla);
 				
 				
 				
 				
 				reparacionDao.getEntityManager().getTransaction().begin();
 				reparacionDao.getEntityManager().persist(reparacion);
-				reparacionDao.getEntityManager().persist(planilla);
+				reparacionDao.getEntityManager().merge(planilla);
 				reparacionDao.getEntityManager().merge(inspeccionRepSeleccionado);
 				reparacionDao.getEntityManager().getTransaction().commit();
 					
@@ -376,6 +354,7 @@ public class SolicitudesCierreReparacionC {
 	
 	boolean validarDatos() {
 		try {
+			AperturaLecturaDAO aperturaDAO = new AperturaLecturaDAO();
 			if(dtpFecha.getValue().equals(null)) {
 				helper.mostrarAlertaAdvertencia("Escoja una fecha", Context.getInstance().getStage());
 				dtpFecha.requestFocus();
@@ -387,7 +366,11 @@ public class SolicitudesCierreReparacionC {
 				tvDatosDetalle.requestFocus();
 				return false;
 			}
-			
+			//valida si esq hay un ciclo en proceso
+			if(aperturaDAO.validarApertura() == false) {
+				helper.mostrarAlertaAdvertencia("No existe un ciclo iniciado.. por lo que no se puede procesar el pago", Context.getInstance().getStage());
+				return false;
+			}
 			return true;
 		}catch(Exception ex) {
 			System.out.println(ex.getMessage());

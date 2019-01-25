@@ -25,7 +25,10 @@ import java.util.List;
 			+ "order by p.idPlanilla desc"),
 	@NamedQuery(name="Planilla.buscarPorCuentaPlanilla", query="SELECT p FROM Planilla p "
 			+ "where p.cuentaCliente.idCuenta = :idCuenta and p.idPlanilla < (:idPlanillaActual) and p.estado = 'A' "
-			+ "order by p.idPlanilla asc")
+			+ "order by p.idPlanilla asc"),
+	@NamedQuery(name="Planilla.buscarUltimaPlanilla", query="SELECT p FROM Planilla p "
+			+ "where p.cuentaCliente.idCuenta = :idCuenta and p.estado = 'A' and p.aperturaLectura.estadoApertura = 'EN PROCESO' "
+			+ "order by p.idPlanilla desc")
 })
 public class Planilla implements Serializable, Comparable<Planilla> {
 	private static final long serialVersionUID = 1L;
