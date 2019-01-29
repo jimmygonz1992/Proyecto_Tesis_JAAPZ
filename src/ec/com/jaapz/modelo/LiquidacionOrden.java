@@ -67,8 +67,10 @@ import java.util.List;
 			+ " and l.usuarioInstalacion = :idPerfilUsuario and l.usuarioInstalacion = null"
 			+ " and l.estadoInstalacion = 'PENDIENTE' and l.estado = 'A' order by l.idLiquidacion desc"),*/
 	
+	//aqui agregue la condicion estadoInstalacion = 'PENDIENTE'
+	//para q obviamente solo aparezacan esas
 	@NamedQuery(name="LiquidacionOrden.buscarLiquidacionAsignada", query="SELECT l FROM LiquidacionOrden l "
-			+ "where l.usuarioInstalacion = :idPerfilUsuario and l.estado = 'A' order by l.idLiquidacion desc"),
+			+ "where l.usuarioInstalacion = :idPerfilUsuario and l.estadoInstalacion = 'PENDIENTE' and l.estado = 'A' order by l.idLiquidacion desc"),
 	
 	//para asignar trabajos de instalacion
 	@NamedQuery(name="LiquidacionOrden.buscarListaLiquidacion", query="SELECT l FROM LiquidacionOrden l "

@@ -132,8 +132,7 @@
 .labels3 {
     -fx-font-family: "Calibri (Cuerpo)";
     -fx-font-weight: bold;
-    -fx-font-size: 20px;
-    
+    -fx-font-size: 20px;  
 }
 .imagenPortada {
     -fx-background-image: url("logo_centro.png");
@@ -187,6 +186,24 @@
 }
 .botonQuitarR {
 	-fx-graphic: url("quitar.png");
+}
+.botonBuscar {
+	-fx-graphic: url("icono_buscar.png");
+}
+.botonCargar {
+	-fx-graphic: url("preview.png");
+}
+.botonAsignacion {
+	-fx-graphic: url("icono_asignacion.png");
+}
+.botonQuitarAsignacion {
+	-fx-graphic: url("quitar_asignacion.png");
+}
+.botonCierreCiclo {
+	-fx-graphic: url("cierre_ciclo.png");
+}
+.botonEnviarEmail {
+	-fx-graphic: url("enviar_email.png");
 }
 .imagenViewInicio{
 	-fx-background-image: url("sesiones.png");

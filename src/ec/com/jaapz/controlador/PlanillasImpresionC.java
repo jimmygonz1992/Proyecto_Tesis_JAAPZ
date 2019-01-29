@@ -53,6 +53,7 @@ public class PlanillasImpresionC {
 
 	public void initialize() {
 		try {
+			btnImprimirPlanilla.setStyle("-fx-graphic: url('/imprimir.png');-fx-cursor: hand;");
 			tvDatos.setEditable(true);
 			Image image = new Image("enviando-mensaje.gif", 400, 200, true, true);
 			ivEnviandoMensaje.setImage(image);

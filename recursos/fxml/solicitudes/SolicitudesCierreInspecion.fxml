@@ -102,7 +102,7 @@
                               <Insets right="50.0" />
                            </GridPane.margin>
                         </TextField>
-                        <Button fx:id="btnBuscar" mnemonicParsing="false" onAction="#buscarOrden" text="?" GridPane.columnIndex="1" GridPane.halignment="RIGHT" />
+                        <Button fx:id="btnBuscar" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#buscarOrden" styleClass="botonBuscar" GridPane.columnIndex="1" GridPane.halignment="RIGHT" />
 							</children>
 							<HBox.margin>
 								<Insets bottom="2.0" left="13.0" right="13.0" top="2.0" />
@@ -187,14 +187,14 @@
 							</rowConstraints>
 							<children>
 								<TableView fx:id="tvDatosOrdenPrevia" GridPane.columnIndex="3" GridPane.columnSpan="2" GridPane.rowIndex="2" GridPane.rowSpan="5" />
-								<VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="5" GridPane.rowIndex="3" GridPane.rowSpan="4" GridPane.valignment="CENTER">
+								<VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="5" GridPane.rowIndex="2" GridPane.rowSpan="4" GridPane.valignment="CENTER">
 									<children>
-										<Button fx:id="btnAgregar" mnemonicParsing="false" onAction="#agregarPrecioUnitario" prefHeight="25.0" prefWidth="65.0" text="Agregar">
+										<Button fx:id="btnAgregar" alignment="BOTTOM_CENTER" contentDisplay="TOP" mnemonicParsing="false" onAction="#agregarPrecioUnitario" prefHeight="25.0" prefWidth="65.0" styleClass="botonAgregar" text="Agregar">
 											<VBox.margin>
 												<Insets bottom="20.0" />
 											</VBox.margin>
 										</Button>
-										<Button fx:id="btnQuitar" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#quitarPrecioUnitario" prefHeight="25.0" prefWidth="65.0" text="Quitar" />
+										<Button fx:id="btnQuitar" alignment="BOTTOM_CENTER" contentDisplay="TOP" mnemonicParsing="false" onAction="#quitarPrecioUnitario" prefHeight="25.0" prefWidth="65.0" styleClass="botonQuitarR" text="Quitar" />
 									</children>
 								</VBox>
 								<HBox alignment="CENTER" style="-fx-border-color: #bbc8d0; -fx-border-width: 1px; -fx-background-radius: 6; -fx-max-height: 600; -fx-max-width: 1500; -fx-min-height: 10; -fx-min-width: 10" GridPane.columnIndex="3" GridPane.columnSpan="3" GridPane.rowSpan="2">
@@ -240,7 +240,7 @@
 													</font>
 												</Label>
 												<TextField fx:id="txtStock" GridPane.columnIndex="7" GridPane.rowIndex="3" />
-												<Button fx:id="btnBuscarRubro" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#buscarRubro" text="?" GridPane.columnIndex="6" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+												<Button fx:id="btnBuscarRubro" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#buscarRubro" styleClass="botonBuscar" GridPane.columnIndex="6" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
 												<TextField fx:id="txtCantidad" GridPane.columnIndex="4" GridPane.rowIndex="1" />
 												<Label text="Precio U:" GridPane.columnIndex="3" GridPane.rowIndex="3">
 													<font>
@@ -316,7 +316,7 @@
 												<GridPane GridPane.columnIndex="1" GridPane.rowIndex="1">
 													<children>
 														<TextField fx:id="txtCodigoMedidor" />
-														<Button fx:id="btnBuscarMedidor" mnemonicParsing="false" onAction="#buscarMedidor" text="?" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
+														<Button fx:id="btnBuscarMedidor" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#buscarMedidor" styleClass="botonBuscar" text="?" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
 													</children>
 													<columnConstraints>
 														<ColumnConstraints hgrow="SOMETIMES" maxWidth="100.0" minWidth="10.0" prefWidth="100.0" />

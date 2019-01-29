@@ -19,16 +19,17 @@
         </columnConstraints>
         <rowConstraints>
           <RowConstraints maxHeight="286.0" minHeight="0.0" prefHeight="33.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="286.0" minHeight="10.0" prefHeight="48.0" vgrow="SOMETIMES" />
-          <RowConstraints maxHeight="790.0" minHeight="10.0" prefHeight="97.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="286.0" minHeight="10.0" prefHeight="56.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="790.0" minHeight="10.0" prefHeight="108.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="790.0" minHeight="10.0" prefHeight="19.0" vgrow="SOMETIMES" />
             <RowConstraints maxHeight="790.0" minHeight="10.0" prefHeight="20.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="790.0" minHeight="10.0" prefHeight="54.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="790.0" minHeight="10.0" prefHeight="74.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="790.0" minHeight="10.0" prefHeight="71.0" vgrow="SOMETIMES" />
             <RowConstraints maxHeight="790.0" minHeight="10.0" prefHeight="44.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="790.0" minHeight="10.0" prefHeight="31.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="790.0" minHeight="8.0" prefHeight="21.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="790.0" minHeight="10.0" prefHeight="73.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="790.0" minHeight="8.0" prefHeight="33.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="790.0" minHeight="10.0" prefHeight="52.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="790.0" minHeight="8.0" prefHeight="35.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="790.0" minHeight="10.0" prefHeight="58.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="790.0" minHeight="8.0" prefHeight="28.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="790.0" minHeight="10.0" prefHeight="59.0" vgrow="SOMETIMES" />
             <RowConstraints maxHeight="755.0" minHeight="0.0" prefHeight="1.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
@@ -37,7 +38,7 @@
                   <Font name="Arial Bold" size="24.0" />
                </font>
             </Label>
-            <Button fx:id="btnBuscaCuentas" mnemonicParsing="false" onAction="#buscarCuenta" prefHeight="25.0" prefWidth="130.0" text="Buscar Cuentas" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.valignment="TOP">
+            <Button fx:id="btnBuscaCuentas" alignment="CENTER" mnemonicParsing="false" onAction="#buscarCuenta" prefHeight="20.0" prefWidth="130.0" styleClass="botonBuscar" text="Buscar" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.valignment="TOP">
                <GridPane.margin><Insets /></GridPane.margin>
                <font><Font name="Arial Bold" size="13.0" /></font>
             </Button>
@@ -121,12 +122,12 @@
                   </GridPane>
                </children>
                </HBox>
-            <HBox alignment="CENTER" prefHeight="134.0" prefWidth="603.0" GridPane.columnIndex="1" GridPane.rowIndex="4" GridPane.rowSpan="2">
+            <HBox alignment="CENTER" prefHeight="134.0" prefWidth="603.0" GridPane.columnIndex="1" GridPane.rowIndex="5" GridPane.rowSpan="2">
                <children>
                   <TableView fx:id="tvDatos" prefHeight="110.0" prefWidth="643.0" />
                </children>
             </HBox>
-            <HBox alignment="TOP_RIGHT" prefHeight="57.0" prefWidth="274.0" GridPane.columnIndex="1" GridPane.rowIndex="6">
+            <HBox alignment="TOP_RIGHT" prefHeight="57.0" prefWidth="274.0" GridPane.columnIndex="1" GridPane.rowIndex="7">
                <children>
                   <Label text="Total:">
                      <font><Font name="Arial Bold" size="14.0" /></font>
@@ -136,12 +137,12 @@
                   </TextField>
                </children>
             </HBox>
-             <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="8" GridPane.rowSpan="2">
+             <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="9" GridPane.rowSpan="3">
                <children>
                   <TableView fx:id="tvDetalle" prefHeight="110.0" prefWidth="643.0" />
                </children>
             </HBox>
-            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" style="-fx-border-color: #bbc8d0; -fx-border-width: 1px; -fx-background-radius: 6; -fx-max-height: 600; -fx-max-width: 1500; -fx-min-height: 10; -fx-min-width: 10" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" style="-fx-border-color: #bbc8d0; -fx-border-width: 1px; -fx-background-radius: 6; -fx-max-height: 600; -fx-max-width: 1500; -fx-min-height: 10; -fx-min-width: 10" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.rowSpan="2" GridPane.valignment="CENTER">
                <children>
                   <GridPane alignment="CENTER" prefHeight="64.0" prefWidth="427.0">
                      <children>
@@ -200,7 +201,7 @@
                         </HBox>
                         <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.columnSpan="5" GridPane.rowIndex="3">
                            <children>
-                              <Button fx:id="btnAceptar" mnemonicParsing="false" onAction="#aceptar" prefHeight="55.0" prefWidth="70.0" text="Aceptar">
+                              <Button fx:id="btnAceptar" alignment="CENTER" mnemonicParsing="false" onAction="#aceptar" prefHeight="28.0" prefWidth="112.0" styleClass="botonAceptar" text="Aceptar">
                                  <font><Font name="Arial Bold" size="13.0" /></font>
                               </Button>
                            </children>
@@ -216,17 +217,17 @@
                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="593.0" minWidth="8.0" prefWidth="15.0" />
                      </columnConstraints>
                      <rowConstraints>
-                        <RowConstraints maxHeight="65.0" minHeight="10.0" prefHeight="16.0" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="65.0" minHeight="0.0" prefHeight="23.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="65.0" minHeight="10.0" prefHeight="17.0" vgrow="SOMETIMES" />
                         <RowConstraints maxHeight="65.0" minHeight="0.0" prefHeight="28.0" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="65.0" minHeight="9.0" prefHeight="23.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="65.0" minHeight="0.0" prefHeight="28.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="65.0" minHeight="9.0" prefHeight="37.0" vgrow="SOMETIMES" />
                      </rowConstraints>
                   </GridPane>
                </children>
             </HBox>
             
             
-            <HBox prefHeight="100.0" prefWidth="200.0" style="-fx-border-color: #bbc8d0; -fx-border-width: 1px; -fx-background-radius: 6; -fx-max-height: 600; -fx-max-width: 1500; -fx-min-height: 10; -fx-min-width: 10" GridPane.columnIndex="3" GridPane.rowIndex="4">
+            <HBox prefHeight="100.0" prefWidth="200.0" style="-fx-border-color: #bbc8d0; -fx-border-width: 1px; -fx-background-radius: 6; -fx-max-height: 600; -fx-max-width: 1500; -fx-min-height: 10; -fx-min-width: 10" GridPane.columnIndex="3" GridPane.rowIndex="5">
                <children>
                   <GridPane alignment="CENTER" prefHeight="64.0" prefWidth="427.0" HBox.hgrow="ALWAYS">
                      <children>
@@ -285,20 +286,20 @@
                <GridPane.margin><Insets /></GridPane.margin>
                <font><Font name="System Bold Italic" size="13.0" /></font>
             </Label>
-            <Label alignment="BOTTOM_CENTER" contentDisplay="BOTTOM" text="Facturas por Cobrar" GridPane.columnIndex="1" GridPane.rowIndex="3" GridPane.valignment="BOTTOM">
+            <Label alignment="BOTTOM_CENTER" contentDisplay="BOTTOM" text="Facturas por Cobrar" GridPane.columnIndex="1" GridPane.rowIndex="4" GridPane.valignment="BOTTOM">
                <font><Font name="Arial Bold Italic" size="13.0" /></font>
             </Label>
             <Label alignment="BOTTOM_CENTER" contentDisplay="BOTTOM" text="Registrar Abono" GridPane.columnIndex="3" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
                <font><Font name="Arial Bold Italic" size="13.0" /></font>
             </Label>
            
-            <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="6" GridPane.rowSpan="3">
+            <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="7" GridPane.rowSpan="3">
                <children>
                   <TableView fx:id="tvDetallePago" prefHeight="110.0" prefWidth="643.0" />
                </children>
             </HBox>
             
-            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" style="-fx-border-color: #bbc8d0; -fx-border-width: 1px; -fx-background-radius: 6; -fx-max-height: 600; -fx-max-width: 1500; -fx-min-height: 10; -fx-min-width: 10" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="10" GridPane.valignment="CENTER">
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" style="-fx-border-color: #bbc8d0; -fx-border-width: 1px; -fx-background-radius: 6; -fx-max-height: 600; -fx-max-width: 1500; -fx-min-height: 10; -fx-min-width: 10" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="11" GridPane.valignment="CENTER">
                <children>
                   <GridPane alignment="CENTER" prefHeight="64.0" prefWidth="427.0">
                      <children>
@@ -318,7 +319,7 @@
                         </HBox>
                         <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="3">
                            <children>
-                              <Button fx:id="btnLimpiar" alignment="BOTTOM_CENTER" contentDisplay="TOP" mnemonicParsing="false" onAction="#limpiar" prefHeight="55.0" prefWidth="70.0" styleClass="botonLimpiar" text="Limpiar">
+                              <Button fx:id="btnLimpiar" alignment="BOTTOM_CENTER" contentDisplay="TOP" mnemonicParsing="false" onAction="#limpiar" prefHeight="55.0" prefWidth="70.0" styleClass="botonNuevo" text="Nuevo">
                                  <font><Font name="Arial Bold" size="13.0" /></font>
                               </Button>
                            </children>
@@ -337,13 +338,13 @@
                   </GridPane>
                </children>
             </HBox>
-            <Label alignment="BOTTOM_CENTER" contentDisplay="BOTTOM" text="Detalle de Factura Seleccionada" GridPane.columnIndex="1" GridPane.rowIndex="7" GridPane.valignment="BOTTOM">
+            <Label alignment="BOTTOM_CENTER" contentDisplay="BOTTOM" text="Detalle de Factura Seleccionada" GridPane.columnIndex="1" GridPane.rowIndex="8" GridPane.valignment="BOTTOM">
                <font><Font name="Arial Bold Italic" size="13.0" /></font>
             </Label>
-            <Label alignment="BOTTOM_CENTER" contentDisplay="BOTTOM" text="Detalle de Factura a Cancelar" GridPane.columnIndex="3" GridPane.rowIndex="5" GridPane.valignment="BOTTOM">
+            <Label alignment="BOTTOM_CENTER" contentDisplay="BOTTOM" text="Detalle de Factura a Cancelar" GridPane.columnIndex="3" GridPane.rowIndex="6" GridPane.valignment="BOTTOM">
                <font><Font name="Arial Bold Italic" size="13.0" /></font>
             </Label>
-            <HBox alignment="TOP_RIGHT" prefHeight="57.0" prefWidth="274.0" GridPane.columnIndex="3" GridPane.rowIndex="9">
+            <HBox alignment="TOP_RIGHT" prefHeight="57.0" prefWidth="274.0" GridPane.columnIndex="3" GridPane.rowIndex="10">
                <children>
                   <Label text="Total:">
                      <font><Font name="Arial Bold" size="14.0" /></font>

@@ -1,5 +1,6 @@
 package ec.com.jaapz.controlador;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,6 +31,8 @@ public class ClientesListaClientesJuntaC {
 	@FXML private Button btnEliminar;
 	CuentaClienteDAO cuentaDAO = new CuentaClienteDAO();
 	ControllerHelper helper = new ControllerHelper();
+	SimpleDateFormat formateador = new SimpleDateFormat("dd/MM/yyyy");
+	
 	public void initialize() {	
 		try {
 			btnEditar.setStyle("-fx-graphic: url('/editar.png');-fx-cursor: hand;");
@@ -84,7 +87,7 @@ public class ClientesListaClientesJuntaC {
 			fechaColum.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<CuentaCliente,String>, ObservableValue<String>>() {
 				@Override
 				public ObservableValue<String> call(CellDataFeatures<CuentaCliente, String> param) {
-					return new SimpleObjectProperty<String>(param.getValue().getFechaIngreso().toString());
+					return new SimpleObjectProperty<String>(formateador.format(param.getValue().getFechaIngreso()));
 				}
 			});
 

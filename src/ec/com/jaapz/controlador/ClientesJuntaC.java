@@ -1,5 +1,6 @@
 package ec.com.jaapz.controlador;
 
+import java.text.SimpleDateFormat;
 import java.util.Optional;
 
 import ec.com.jaapz.modelo.Barrio;
@@ -43,6 +44,7 @@ public class ClientesJuntaC {
 	CuentaCliente cuentaSeleccionada = new CuentaCliente();
 	Barrio barrioSeleccionado = new Barrio();
 	Categoria categoriaSeleccionado = new Categoria();
+	SimpleDateFormat formateador = new SimpleDateFormat("dd/MM/yyyy");
 	
 	CuentaClienteDAO cuentaDAO = new CuentaClienteDAO();
 	public void initialize() {
@@ -61,7 +63,7 @@ public class ClientesJuntaC {
 			txtTelefono.setText(cuentaCliente.getCliente().getTelefono());
 			//datos de la cuenta
 			txtCodigoCuenta.setText(String.valueOf(cuentaCliente.getIdCuenta()));
-			txtFechaIngreso.setText(String.valueOf(cuentaCliente.getFechaIngreso()));
+			txtFechaIngreso.setText(formateador.format(cuentaCliente.getFechaIngreso()));
 			//Datos de categoria
 			if(cuentaCliente.getCategoria() != null) {
 				categoriaSeleccionado = cuentaCliente.getCategoria();

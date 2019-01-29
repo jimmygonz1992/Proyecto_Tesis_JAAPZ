@@ -10,7 +10,7 @@
 
 <AnchorPane prefHeight="586.0" prefWidth="823.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ec.com.jaapz.controlador.PlanillasImpresionC">
    <children>
-      <GridPane layoutX="75.0" layoutY="50.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+      <GridPane layoutX="75.0" layoutY="50.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="0.0">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -26,14 +26,14 @@
         </columnConstraints>
         <rowConstraints>
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="23.0" minHeight="10.0" prefHeight="19.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="37.0" minHeight="10.0" prefHeight="37.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="43.0" minHeight="10.0" prefHeight="35.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="41.0" minHeight="10.0" prefHeight="28.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="27.0" minHeight="10.0" prefHeight="14.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="42.0" minHeight="10.0" prefHeight="28.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="23.0" minHeight="10.0" prefHeight="14.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -43,8 +43,8 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="22.0" minHeight="10.0" prefHeight="16.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="38.0" minHeight="10.0" prefHeight="38.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
@@ -58,7 +58,7 @@
                         <Label text="Mes:" GridPane.rowIndex="1" />
                         <Label text="Fecha:" GridPane.rowIndex="2" />
                         <TextField fx:id="txtFecha" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                        <Button fx:id="btnBuscarApertura" mnemonicParsing="false" onAction="#buscarApertura" text="?" GridPane.columnIndex="3" />
+                        <Button fx:id="btnBuscarApertura" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#buscarApertura" styleClass="botonBuscar" GridPane.columnIndex="3" />
                      </children>
                      <columnConstraints>
                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="50.0" minWidth="10.0" prefWidth="50.0" />
@@ -67,9 +67,9 @@
                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="50.0" minWidth="4.0" prefWidth="50.0" />
                      </columnConstraints>
                      <rowConstraints>
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="39.0" minHeight="10.0" prefHeight="39.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="37.0" minHeight="10.0" prefHeight="29.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="29.0" minHeight="10.0" prefHeight="27.0" vgrow="SOMETIMES" />
                      </rowConstraints>
                      <HBox.margin>
                         <Insets left="5.0" />
@@ -102,16 +102,25 @@
             </Label>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" style="-fx-border-color: #bbc8d0; -fx-border-width: 1px; -fx-background-radius: 6; -fx-max-height: 600; -fx-max-width: 1500; -fx-min-height: 10; -fx-min-width: 10" GridPane.columnSpan="11" GridPane.halignment="CENTER" GridPane.rowIndex="19" GridPane.rowSpan="2">
                <children>
-                  <Button fx:id="btnImprimirPlanilla" mnemonicParsing="false" onAction="#imprimirPlanilla" prefHeight="42.0" prefWidth="90.0" text="Imprimir Planillas" textAlignment="CENTER" wrapText="true" />
-                  <Button fx:id="btnEnviarCorreo" mnemonicParsing="false" onAction="#enviarCorreo" prefHeight="42.0" prefWidth="90.0" text="Enviar correo" wrapText="true">
+                  <Button fx:id="btnImprimirPlanilla" alignment="BOTTOM_CENTER" contentDisplay="TOP" mnemonicParsing="false" onAction="#imprimirPlanilla" prefHeight="65.0" prefWidth="95.0" text="Imp. Planillas" textAlignment="CENTER">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font></Button>
+                  <Button fx:id="btnEnviarCorreo" alignment="BOTTOM_CENTER" contentDisplay="TOP" mnemonicParsing="false" onAction="#enviarCorreo" prefHeight="65.0" prefWidth="95.0" styleClass="botonEnviarEmail" text="Enviar correo">
                      <HBox.margin>
                         <Insets left="15.0" />
                      </HBox.margin>
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
                   </Button>
-                  <Button fx:id="btnImprimirEnviar" mnemonicParsing="false" onAction="#imprimirEnviar" prefHeight="42.0" prefWidth="90.0" text="Imprimir y enviar correo" textAlignment="CENTER" wrapText="true">
+                  <Button fx:id="btnImprimirEnviar" mnemonicParsing="false" onAction="#imprimirEnviar" prefHeight="65.0" prefWidth="95.0" text="Imprimir y enviar correo" textAlignment="CENTER" wrapText="true">
                      <HBox.margin>
                         <Insets left="15.0" />
                      </HBox.margin>
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
                   </Button>
                </children></HBox>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="8" GridPane.columnSpan="3" GridPane.halignment="CENTER" GridPane.rowIndex="5" GridPane.valignment="CENTER">

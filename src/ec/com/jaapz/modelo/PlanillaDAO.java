@@ -49,4 +49,13 @@ public class PlanillaDAO extends ClaseDAO{
 		resultado = (List<Planilla>) query.getResultList();
 		return resultado;
 	}
+	@SuppressWarnings("unchecked")
+	public List<Planilla> getPlanillaActual(Integer idCuenta){
+		List<Planilla> resultado = new  ArrayList<Planilla>();
+		Query query = getEntityManager().createNamedQuery("Planilla.buscarUltimaPlanilla");
+		query.setHint("javax.persistence.cache.storeMode", "REFRESH");
+		query.setParameter("idCuenta", idCuenta);
+		resultado = (List<Planilla>) query.getResultList();
+		return resultado;
+	}
 }

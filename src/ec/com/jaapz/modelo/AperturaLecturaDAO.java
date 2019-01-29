@@ -48,4 +48,20 @@ public class AperturaLecturaDAO extends ClaseDAO{
 		resultado = (AperturaLectura) query.getSingleResult();
 		return resultado;
 	}
+	@SuppressWarnings("unchecked")
+	public boolean validarApertura() {
+		try {
+			boolean bandera = false;
+			List<AperturaLectura> resultado = new ArrayList<AperturaLectura>();
+			Query query = getEntityManager().createNamedQuery("AperturaLectura.buscarCiclo");
+			query.setHint("javax.persistence.cache.storeMode", "REFRESH");
+			resultado = (List<AperturaLectura>) query.getResultList();
+			if(resultado.size() > 0)
+				bandera = true;
+			return bandera;
+		}catch(Exception ex) {
+			System.out.println(ex.getMessage());
+			return false;
+		}
+	}
 }

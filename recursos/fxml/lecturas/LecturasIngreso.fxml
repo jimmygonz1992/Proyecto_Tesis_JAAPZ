@@ -41,7 +41,7 @@
                </font></Label>
             <TableView fx:id="tvDatosLecturas" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.columnSpan="6" GridPane.rowIndex="4" GridPane.rowSpan="5" />
             <Button fx:id="btnGrabar" alignment="BOTTOM_CENTER" contentDisplay="TOP" mnemonicParsing="false" onAction="#grabarLecturas" prefHeight="52.0" prefWidth="66.0" styleClass="botonGrabar" text="Grabar" GridPane.columnIndex="8" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
-            <HBox style="-fx-border-color: #bbc8d0; -fx-border-width: 1px; -fx-spacing: 8; -fx-background-radius: 6.0; -fx-max-height: 300" alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.columnSpan="6" GridPane.rowIndex="1" GridPane.rowSpan="2" GridPane.valignment="CENTER">
+            <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" style="-fx-border-color: #bbc8d0; -fx-border-width: 1px; -fx-spacing: 8; -fx-background-radius: 6.0; -fx-max-height: 300" GridPane.columnIndex="1" GridPane.columnSpan="6" GridPane.rowIndex="1" GridPane.rowSpan="2" GridPane.valignment="CENTER">
                <children>
                   <GridPane HBox.hgrow="ALWAYS">
                     <columnConstraints>
@@ -64,7 +64,7 @@
                         <Label text="Mes:" GridPane.rowIndex="2" />
                         <Label text="Fecha:" GridPane.rowIndex="3" />
                         <TextField fx:id="txtFecha" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                        <Button fx:id="btnBuscarApertura" mnemonicParsing="false" onAction="#buscarApertura" text="?" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                        <Button fx:id="btnBuscarApertura" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#buscarApertura" styleClass="botonBuscar" GridPane.columnIndex="3" GridPane.rowIndex="1" />
                      </children>
                      <HBox.margin>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
