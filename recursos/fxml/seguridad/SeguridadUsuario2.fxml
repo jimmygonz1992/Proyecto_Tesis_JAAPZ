@@ -96,7 +96,7 @@
                                     <Font name="Arial Bold" size="12.0" />
                                  </font>
                                  <GridPane.margin>
-                                    <Insets left="50.0" />
+                                    <Insets left="70.0" />
                                  </GridPane.margin>
                               </Label>
                               <TextField fx:id="txtCedula" GridPane.columnIndex="2" />
@@ -107,7 +107,10 @@
                               <TextField fx:id="txtDireccion" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.rowIndex="5" />
                               <TextField fx:id="txtUsuario" GridPane.columnIndex="2" GridPane.rowIndex="6" />
                               <PasswordField fx:id="txtClave" GridPane.columnIndex="2" GridPane.rowIndex="7" />
-                              <CheckBox fx:id="chkEstado" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" GridPane.columnIndex="3" GridPane.halignment="RIGHT" />
+                              <CheckBox fx:id="chkEstado" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" GridPane.columnIndex="3" GridPane.halignment="RIGHT">
+                                 <GridPane.margin>
+                                    <Insets />
+                                 </GridPane.margin></CheckBox>
                               <Label text="Foto" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.valignment="TOP">
                                  <font>
                                     <Font name="Arial Bold" size="12.0" />
@@ -115,12 +118,12 @@
                               </Label>
                               <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER">
                                  <children>
-                                    <Button fx:id="btnExaminar" mnemonicParsing="false" onAction="#examinar" prefHeight="25.0" prefWidth="77.0" text="Examinar..">
+                                    <Button fx:id="btnExaminar" alignment="BOTTOM_CENTER" contentDisplay="TOP" mnemonicParsing="false" onAction="#examinar" prefHeight="37.0" prefWidth="71.0" styleClass="botonAgregar" text="Examinar">
                                        <font>
                                           <Font name="Arial Bold" size="12.0" />
                                        </font>
                                     </Button>
-                                    <Button fx:id="btnQuitar" mnemonicParsing="false" onAction="#quitar" text="Quitar">
+                                    <Button fx:id="btnQuitar" alignment="BOTTOM_CENTER" contentDisplay="TOP" mnemonicParsing="false" onAction="#quitar" prefHeight="37.0" prefWidth="71.0" styleClass="botonQuitarR" text="Quitar">
                                        <font>
                                           <Font name="Arial Bold" size="12.0" />
                                        </font>
@@ -135,12 +138,12 @@
                                     <Font name="System Bold" size="12.0" />
                                  </font>
                                  <GridPane.margin>
-                                    <Insets left="5.0" />
+                                    <Insets left="3.0" />
                                  </GridPane.margin>
                               </Label>
-                              <Button fx:id="btnBuscar" mnemonicParsing="false" onAction="#buscar" text="?" GridPane.columnIndex="3">
+                              <Button fx:id="btnBuscar" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#buscar" styleClass="botonBuscar" GridPane.columnIndex="3">
                                  <GridPane.margin>
-                                    <Insets left="50.0" />
+                                    <Insets left="45.0" />
                                  </GridPane.margin>
                               </Button>
                               <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.rowSpan="3" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
@@ -158,8 +161,8 @@
                                     <TableView fx:id="tvPerfiles" prefHeight="121.0" prefWidth="243.0" />
                                     <HBox alignment="CENTER" prefHeight="0.0" prefWidth="243.0" VBox.vgrow="ALWAYS">
                                        <children>
-                                          <Button fx:id="btnAgregarPerfil" mnemonicParsing="false" onAction="#agregarPerfil" text="Agregar" />
-                                          <Button fx:id="btnQuitarPerfil" mnemonicParsing="false" onAction="#quitarPerfil" text="Quitar">
+                                          <Button fx:id="btnAgregarPerfil" alignment="BOTTOM_CENTER" contentDisplay="TOP" mnemonicParsing="false" onAction="#agregarPerfil" prefHeight="46.0" prefWidth="59.0" styleClass="botonAgregar" text="Agregar" />
+                                          <Button fx:id="btnQuitarPerfil" alignment="BOTTOM_CENTER" contentDisplay="TOP" mnemonicParsing="false" onAction="#quitarPerfil" prefHeight="45.0" prefWidth="59.0" styleClass="botonQuitarR" text="Quitar">
                                              <HBox.margin>
                                                 <Insets left="15.0" />
                                              </HBox.margin>
@@ -180,14 +183,14 @@
                            </columnConstraints>
                            <rowConstraints>
                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="9.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints maxHeight="44.0" minHeight="10.0" prefHeight="44.0" vgrow="SOMETIMES" />
+                              <RowConstraints maxHeight="54.0" minHeight="10.0" prefHeight="44.0" vgrow="SOMETIMES" />
+                              <RowConstraints maxHeight="39.0" minHeight="10.0" prefHeight="34.0" vgrow="SOMETIMES" />
+                              <RowConstraints maxHeight="61.0" minHeight="10.0" prefHeight="55.0" vgrow="SOMETIMES" />
+                              <RowConstraints maxHeight="68.0" minHeight="10.0" prefHeight="51.0" vgrow="SOMETIMES" />
+                              <RowConstraints maxHeight="57.0" minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                              <RowConstraints maxHeight="41.0" minHeight="10.0" prefHeight="36.0" vgrow="SOMETIMES" />
+                              <RowConstraints maxHeight="62.0" minHeight="9.0" prefHeight="62.0" vgrow="SOMETIMES" />
                            </rowConstraints>
                         </GridPane>
                      </children>

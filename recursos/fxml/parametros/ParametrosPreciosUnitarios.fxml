@@ -62,7 +62,7 @@
                         </Label>
                         <TextField fx:id="txtTipoRubro" GridPane.columnIndex="1" />
                         <TextField fx:id="txtCantidad" GridPane.columnIndex="4" />
-                        <Button fx:id="btnBuscarRubro" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#buscarRubro" text="?" GridPane.columnIndex="5" GridPane.halignment="CENTER" />
+                        <Button fx:id="btnBuscarRubro" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#buscarRubro" styleClass="botonBuscar" GridPane.columnIndex="5" GridPane.halignment="CENTER" />
                         <TextField fx:id="txtDescripcion" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                         <TextField fx:id="txtPrecio" GridPane.columnIndex="4" GridPane.rowIndex="1" />
                         <Label text="Cantidad:" GridPane.columnIndex="3">

@@ -50,7 +50,7 @@
                   <Button fx:id="btnImprimirAsig" mnemonicParsing="false" onAction="#imprimirAsignacion" text="Imprimir" />
                   <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1">
                      <children>
-                        <Button fx:id="btnAsignarAsig" alignment="BOTTOM_CENTER" contentDisplay="TOP" mnemonicParsing="false" onAction="#buscarOrdenEmitida" styleClass="botonAsignar" text="Asignar">
+                        <Button fx:id="btnAsignarAsig" alignment="BOTTOM_CENTER" contentDisplay="TOP" mnemonicParsing="false" onAction="#buscarOrdenEmitida" styleClass="botonAsignacion" text="Asignar">
                            <HBox.margin>
                               <Insets right="15.0" />
                            </HBox.margin>
