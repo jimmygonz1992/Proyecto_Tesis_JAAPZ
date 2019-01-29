@@ -30,9 +30,9 @@ public class SolicitudListaRepC {
 	List<SolInspeccionRep> listadoInspecciones = new ArrayList<SolInspeccionRep>();
 	
 	public void initialize() {
-		listadoInspecciones = Context.getInstance().getListaInspeccionesRep();
+		/*listadoInspecciones = Context.getInstance().getListaInspeccionesRep();
 		//poner nuevamente a null
-		Context.getInstance().getListaInspeccionesRep().clear();
+		Context.getInstance().getListaInspeccionesRep().clear();*/
 		
 		llenarTablaInspecciones("");
 		tvDatos.setRowFactory(tv -> {
@@ -67,6 +67,7 @@ public class SolicitudListaRepC {
 	void llenarTablaInspecciones(String patron) {
 		try{
 			tvDatos.getColumns().clear();
+			boolean bandera;
 			List<SolInspeccionRep> listaInspecciones;
 			List<SolInspeccionRep> listaAgregar = new ArrayList<SolInspeccionRep>();
 			if(Context.getInstance().getIdPerfil() == Constantes.ID_USU_ADMINISTRADOR) {
@@ -75,16 +76,16 @@ public class SolicitudListaRepC {
 				listaInspecciones = reparacionDAO.getListaInspeccionPerfilPendiente(patron);
 			}
 			
-			for(SolInspeccionRep orden : listadoInspecciones) {
+			/*for(SolInspeccionRep orden : listadoInspecciones) {
 				for(int i = 0 ; i < listaInspecciones.size() ; i ++) {
 					if(orden.getIdSolicitudRep() == listaInspecciones.get(i).getIdSolicitudRep()) {
 						listaInspecciones.remove(i);
 						break;
 					}
 				}
-			}
+			}*/
 			
-			/*for(SolInspeccionRep inspeccionAdd : listaInspecciones) {
+			for(SolInspeccionRep inspeccionAdd : listaInspecciones) {
 				bandera = false;
 				for(SolInspeccionRep inspeccionLst : listadoInspecciones) {
 					if(inspeccionAdd.getIdSolicitudRep() == inspeccionLst.getIdSolicitudRep())
@@ -92,7 +93,7 @@ public class SolicitudListaRepC {
 				}
 				if(bandera == false)
 					listaAgregar.add(inspeccionAdd);
-			}*/
+			}
 			
 			ObservableList<SolInspeccionRep> datos = FXCollections.observableArrayList();
 			datos.setAll(listaAgregar);

@@ -50,12 +50,12 @@
                   <Button fx:id="btnImprimirAsig" mnemonicParsing="false" onAction="#imprimirAsignacion" text="Imprimir" />
                   <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1">
                      <children>
-                        <Button fx:id="btnAsignarAsig" mnemonicParsing="false" onAction="#buscarOrdenEmitida" text="Asignar">
+                        <Button fx:id="btnAsignarAsig" alignment="BOTTOM_CENTER" contentDisplay="TOP" mnemonicParsing="false" onAction="#buscarOrdenEmitida" styleClass="botonAsignar" text="Asignar">
                            <HBox.margin>
                               <Insets right="15.0" />
                            </HBox.margin>
                         </Button>
-                        <Button fx:id="btnQuitarAsig" mnemonicParsing="false" onAction="#quitarAsignacion" text="Quitar" />
+                        <Button fx:id="btnQuitarAsig" alignment="BOTTOM_CENTER" contentDisplay="TOP" mnemonicParsing="false" onAction="#quitarAsignacion" styleClass="botonQuitarAsignacion" text="Quitar" />
                      </children>
                   </HBox>
                </children>

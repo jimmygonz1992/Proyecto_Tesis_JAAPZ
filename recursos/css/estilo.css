@@ -188,6 +188,18 @@
 .botonQuitarR {
 	-fx-graphic: url("quitar.png");
 }
+.botonBuscar {
+	-fx-graphic: url("icono_buscar.png");
+}
+.botonCargar {
+	-fx-graphic: url("preview.png");
+}
+.botonAsignacion {
+	-fx-graphic: url("icono_asignacion.png");
+}
+.botonQuitarAsignacion {
+	-fx-graphic: url("quitar_asignacion.png");
+}
 .imagenViewInicio{
 	-fx-background-image: url("sesiones.png");
 	-fx-background-size: stretch;

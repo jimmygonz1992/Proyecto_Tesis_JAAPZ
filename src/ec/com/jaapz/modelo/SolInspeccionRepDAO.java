@@ -39,4 +39,26 @@ public class SolInspeccionRepDAO extends ClaseDAO{
 		resultado = (List<SolInspeccionRep>) query.getResultList();
 		return resultado;
 	}
+	
+	//para asignar
+	@SuppressWarnings("unchecked")
+	public List<SolInspeccionRep> getListaReparaciones(String patron){
+		List<SolInspeccionRep> resultado = new ArrayList<SolInspeccionRep>();
+		Query query = getEntityManager().createNamedQuery("SolInspeccionRep.buscarListaRep");
+		query.setHint("javax.persistence.cache.storeMode", "REFRESH");
+		query.setParameter("patron", "%" + patron + "%");
+		resultado = (List<SolInspeccionRep>) query.getResultList();
+		return resultado;
+	}
+	//para asignar
+	@SuppressWarnings("unchecked")
+	public List<SolInspeccionRep> getListaReparacionesPerfilPendiente(String patron){
+		List<SolInspeccionRep> resultado = new ArrayList<SolInspeccionRep>();
+		Query query = getEntityManager().createNamedQuery("SolInspeccionRep.buscarListaRepPerfil");
+		query.setHint("javax.persistence.cache.storeMode", "REFRESH");
+		query.setParameter("patron", "%" + patron + "%");
+		query.setParameter("idPerfilUsuario", Context.getInstance().getIdUsuario());
+		resultado = (List<SolInspeccionRep>) query.getResultList();
+		return resultado;
+	}
 }

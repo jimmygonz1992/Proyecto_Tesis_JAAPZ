@@ -47,13 +47,12 @@ import java.util.List;
 	//para asignacion de trabajos de reparacion
 	@NamedQuery(name="Reparacion.buscarListaReparacion", query="SELECT r FROM Reparacion r "
 			+ "where lower(r.cuentaCliente.cliente.apellido) like :patron or lower(r.cuentaCliente.cliente.nombre) like :patron "
-			+ "and r.estadoReparacion='PENDIENTE' and r.usuarioReparacion = null and r.estado = 'A' order by r.idReparacion desc"),
+			+ "and r.estadoReparacion='PENDIENTE' and r.estado = 'A' order by r.idReparacion desc"),
 	
 	//para asignar trabajos de reparacion
 	@NamedQuery(name="Reparacion.buscarListaReparacionPerfil", query="SELECT r FROM Reparacion r "
-			+ "where (lower(r.cuentaCliente.cliente.apellido) like :patron  or lower(r.cuentaCliente.cliente.nombre) like :patron) "
-			+ " and r.usuarioReparacion = :idPerfilUsuario and r.usuarioReparacion = null "
-			+ " and r.estadoReparacion = 'PENDIENTE' and r.estado = 'A' order by r.idReparacion desc")
+			+ "where lower(r.cuentaCliente.cliente.apellido) like :patron or lower(r.cuentaCliente.cliente.nombre) like :patron "
+			+ " and r.usuarioReparacion = :idPerfilUsuario and r.estadoReparacion = 'PENDIENTE' and r.estado = 'A' order by r.idReparacion desc")
 })
 public class Reparacion implements Serializable {
 	private static final long serialVersionUID = 1L;
