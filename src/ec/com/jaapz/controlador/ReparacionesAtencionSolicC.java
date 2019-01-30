@@ -105,6 +105,7 @@ public class ReparacionesAtencionSolicC {
     		ObservableList<Estado> listaEstado = FXCollections.observableArrayList(Estado.values()); 
     		cboEstadoReparacion.setItems(listaEstado);
     		cboEstadoReparacion.setPromptText("Seleccione Estado");
+    		cboEstadoReparacion.setStyle("-fx-background-color: #1ec6ff");
     	}catch(Exception ex) {
     		
     		System.out.println(ex.getMessage());

@@ -12,9 +12,9 @@
       <GridPane alignment="CENTER" layoutX="5.0" layoutY="-1.0" prefHeight="488.0" prefWidth="937.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="644.0" minWidth="1.0" prefWidth="5.0" />
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="720.0" minWidth="10.0" prefWidth="493.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="307.0" minWidth="0.0" prefWidth="12.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="540.0" minWidth="10.0" prefWidth="423.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="720.0" minWidth="10.0" prefWidth="470.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="307.0" minWidth="0.0" prefWidth="7.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="540.0" minWidth="10.0" prefWidth="460.0" />
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="435.0" minWidth="5.0" prefWidth="5.0" />
         </columnConstraints>
         <rowConstraints>
@@ -47,9 +47,9 @@
                   <GridPane prefHeight="80.0" prefWidth="505.0">
                     <columnConstraints>
                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="670.0" minWidth="10.0" prefWidth="81.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="689.0" minWidth="10.0" prefWidth="120.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="689.0" minWidth="0.0" prefWidth="9.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="845.0" minWidth="10.0" prefWidth="61.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="689.0" minWidth="10.0" prefWidth="107.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="689.0" minWidth="0.0" prefWidth="5.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="845.0" minWidth="10.0" prefWidth="63.0" />
                       <ColumnConstraints hgrow="SOMETIMES" maxWidth="845.0" minWidth="10.0" prefWidth="221.0" />
                     </columnConstraints>
                     <rowConstraints>
@@ -72,7 +72,7 @@
                         </HBox>
                         <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="3">
                            <children>
-                              <Label text="Id Cuenta:">
+                              <Label text="Id Cta:">
                                  <font><Font name="Arial Bold" size="13.0" /></font>
                               </Label>
                            </children>
@@ -201,7 +201,7 @@
                         </HBox>
                         <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.columnSpan="5" GridPane.rowIndex="3">
                            <children>
-                              <Button fx:id="btnAceptar" alignment="CENTER" mnemonicParsing="false" onAction="#aceptar" prefHeight="28.0" prefWidth="112.0" styleClass="botonAceptar" text="Aceptar">
+                              <Button fx:id="btnAceptar" alignment="CENTER" mnemonicParsing="false" onAction="#aceptar" prefHeight="28.0" prefWidth="112.0" styleClass="botonAceptarPago" text="Aceptar">
                                  <font><Font name="Arial Bold" size="13.0" /></font>
                               </Button>
                            </children>
@@ -307,6 +307,9 @@
                            <children>
                               <CheckBox fx:id="chkImprimirComp" alignment="CENTER" mnemonicParsing="false" prefHeight="45.0" prefWidth="101.0" text="Imprimir Comprobante" textAlignment="CENTER" textOverrun="CENTER_WORD_ELLIPSIS" wrapText="true">
                                  <font><Font name="System Bold" size="12.0" /></font>
+                                 <HBox.margin>
+                                    <Insets />
+                                 </HBox.margin>
                               </CheckBox>
                            </children>
                         </HBox>
@@ -321,6 +324,9 @@
                            <children>
                               <Button fx:id="btnLimpiar" alignment="BOTTOM_CENTER" contentDisplay="TOP" mnemonicParsing="false" onAction="#limpiar" prefHeight="55.0" prefWidth="70.0" styleClass="botonNuevo" text="Nuevo">
                                  <font><Font name="Arial Bold" size="13.0" /></font>
+                                 <HBox.margin>
+                                    <Insets right="50.0" />
+                                 </HBox.margin>
                               </Button>
                            </children>
                         </HBox>

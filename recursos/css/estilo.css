@@ -205,6 +205,9 @@
 .botonEnviarEmail {
 	-fx-graphic: url("enviar_email.png");
 }
+.botonAceptarPago {
+	-fx-graphic: url("aceptar_pago.png");
+}
 .imagenViewInicio{
 	-fx-background-image: url("sesiones.png");
 	-fx-background-size: stretch;

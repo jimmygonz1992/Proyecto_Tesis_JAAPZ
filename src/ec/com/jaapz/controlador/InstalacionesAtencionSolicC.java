@@ -114,6 +114,7 @@ public class InstalacionesAtencionSolicC {
     		ObservableList<Estado> listaEstado = FXCollections.observableArrayList(Estado.values()); 
     		cboEstadoInstalacion.setItems(listaEstado);
     		cboEstadoInstalacion.setPromptText("Seleccione Estado");
+    		cboEstadoInstalacion.setStyle("-fx-background-color: #1ec6ff");
     	}catch(Exception ex) {
     		
     		System.out.println(ex.getMessage());

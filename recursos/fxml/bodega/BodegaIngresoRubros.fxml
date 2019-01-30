@@ -221,12 +221,12 @@
                               <ColumnConstraints hgrow="SOMETIMES" maxWidth="153.0" minWidth="0.0" prefWidth="8.0" />
                           </columnConstraints>
                           <rowConstraints>
-                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                            <RowConstraints maxHeight="72.0" minHeight="10.0" prefHeight="72.0" vgrow="SOMETIMES" />
-                            <RowConstraints maxHeight="64.0" minHeight="10.0" prefHeight="26.0" vgrow="SOMETIMES" />
-                              <RowConstraints maxHeight="55.0" minHeight="10.0" prefHeight="25.0" vgrow="SOMETIMES" />
-                              <RowConstraints maxHeight="45.0" minHeight="10.0" prefHeight="25.0" vgrow="SOMETIMES" />
-                              <RowConstraints maxHeight="31.0" minHeight="10.0" prefHeight="27.0" vgrow="SOMETIMES" />
+                            <RowConstraints maxHeight="59.0" minHeight="10.0" prefHeight="59.0" vgrow="SOMETIMES" />
+                            <RowConstraints maxHeight="74.0" minHeight="10.0" prefHeight="57.0" vgrow="SOMETIMES" />
+                            <RowConstraints maxHeight="64.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints maxHeight="62.0" minHeight="10.0" prefHeight="32.0" vgrow="SOMETIMES" />
+                              <RowConstraints maxHeight="65.0" minHeight="10.0" prefHeight="28.0" vgrow="SOMETIMES" />
+                              <RowConstraints maxHeight="66.0" minHeight="10.0" prefHeight="60.0" vgrow="SOMETIMES" />
                           </rowConstraints>
                            <children>
             			<HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1">
@@ -241,7 +241,7 @@
                         <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="2">
                           <children>
                             <TextField fx:id="txtCodigoMat" prefHeight="25.0" prefWidth="104.0" />
-                            <Button fx:id="btnBuscarRubro" alignment="BOTTOM_CENTER" contentDisplay="TOP" graphicTextGap="0.0" maxHeight="50.0" minHeight="24.0" minWidth="27.0" mnemonicParsing="false" onAction="#buscarRubro" prefHeight="35.0" prefWidth="65.0" styleClass="" text="Buscar" textAlignment="CENTER">
+                            <Button fx:id="btnBuscarRubro" alignment="BOTTOM_CENTER" contentDisplay="TOP" graphicTextGap="0.0" maxHeight="60.0" minHeight="24.0" minWidth="27.0" mnemonicParsing="false" onAction="#buscarRubro" prefHeight="60.0" prefWidth="64.0" styleClass="botonBuscar" text="Buscar" textAlignment="CENTER">
                             	<font>
                                           <Font name="Arial Bold" size="12.0" />
                                        </font>
@@ -304,11 +304,11 @@
                             <TextField fx:id="txtCantidadMat" prefHeight="25.0" prefWidth="144.0" />
                           </children>
                         </HBox>
-                        <HBox alignment="TOP_LEFT" prefHeight="23.0" prefWidth="122.0" GridPane.columnIndex="2" GridPane.rowIndex="5" GridPane.valignment="CENTER">
+                        <HBox alignment="TOP_CENTER" prefHeight="23.0" prefWidth="122.0" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="5" GridPane.valignment="CENTER">
                           <children>
-                            <Button fx:id="btnAñadir" alignment="CENTER" contentDisplay="TOP" graphicTextGap="0.0" maxHeight="-1.0" minHeight="16.0" mnemonicParsing="false" onAction="#anadir" prefHeight="30.0" prefWidth="57.0" styleClass="" text="Añadir">
+                            <Button fx:id="btnAñadir" alignment="BOTTOM_CENTER" contentDisplay="TOP" graphicTextGap="0.0" maxHeight="-1.0" minHeight="16.0" mnemonicParsing="false" onAction="#anadir" prefHeight="67.0" prefWidth="57.0" styleClass="botonAgregar" text="Añadir">
                               <HBox.margin>
-                                          <Insets top="2.0" />
+                                          <Insets top="3.0" />
                                        </HBox.margin>
                                 <font>
                                           <Font name="Arial Bold" size="12.0" />
@@ -334,7 +334,7 @@
             
             <VBox alignment="CENTER" prefHeight="278.0" prefWidth="79.0" style="-fx-border-color: #bbc8d0; -fx-border-width: 1px; -fx-background-radius: 6; -fx-max-height: 600; -fx-max-width: 1500; -fx-min-height: 10; -fx-min-width: 10" GridPane.columnIndex="7" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3" GridPane.rowSpan="5" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
               <children>
-                <Button fx:id="btnEliminar" alignment="TOP_CENTER" contentDisplay="CENTER" graphicTextGap="0.0" maxHeight="75.0" minHeight="50.0" mnemonicParsing="false" onAction="#eliminar" prefHeight="60.0" prefWidth="71.0" styleClass="" text="Eliminar Elemento" textAlignment="CENTER" wrapText="true">
+                <Button fx:id="btnEliminar" alignment="BOTTOM_CENTER" contentDisplay="TOP" graphicTextGap="0.0" maxHeight="75.0" minHeight="50.0" mnemonicParsing="false" onAction="#eliminar" prefHeight="60.0" prefWidth="71.0" styleClass="botonQuitarR" text="Eliminar" textAlignment="CENTER" wrapText="true">
                   <VBox.margin><Insets top="10.0" /></VBox.margin><font><Font name="Arial Bold" size="12.0" /></font>
                 </Button>
                 <Button fx:id="btnGrabar" alignment="BOTTOM_CENTER" contentDisplay="TOP" graphicTextGap="0.0" maxHeight="75.0" minHeight="50.0" mnemonicParsing="false" onAction="#grabar" prefHeight="60.0" prefWidth="71.0" styleClass="botonGrabar" text="Grabar">

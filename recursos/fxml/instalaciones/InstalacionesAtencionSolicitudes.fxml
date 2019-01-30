@@ -18,9 +18,9 @@
         </columnConstraints>
         <rowConstraints>
           <RowConstraints maxHeight="171.0" minHeight="0.0" prefHeight="34.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="171.0" minHeight="9.0" prefHeight="33.0" vgrow="SOMETIMES" />
-          <RowConstraints maxHeight="486.0" minHeight="10.0" prefHeight="93.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="486.0" minHeight="10.0" prefHeight="37.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="171.0" minHeight="9.0" prefHeight="17.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="486.0" minHeight="10.0" prefHeight="117.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="486.0" minHeight="10.0" prefHeight="29.0" vgrow="SOMETIMES" />
             <RowConstraints maxHeight="486.0" minHeight="10.0" prefHeight="75.0" vgrow="SOMETIMES" />
             <RowConstraints maxHeight="486.0" minHeight="10.0" prefHeight="46.0" vgrow="SOMETIMES" />
           <RowConstraints maxHeight="439.0" minHeight="10.0" prefHeight="210.0" vgrow="SOMETIMES" />
@@ -45,11 +45,11 @@
                         <GridPane GridPane.columnIndex="1">
                            <children>
                               <TextField fx:id="txtIdSolicitud" />
-                              <Button fx:id="btnBuscar" mnemonicParsing="false" onAction="#buscarSolicitudInst" text="?" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
+                              <Button fx:id="btnBuscar" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#buscarSolicitudInst" prefHeight="49.0" prefWidth="45.0" styleClass="botonBuscar" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
                            </children>
                            <columnConstraints>
-                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="124.0" minWidth="10.0" prefWidth="124.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="50.0" minWidth="26.0" prefWidth="26.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="124.0" minWidth="10.0" prefWidth="97.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="50.0" minWidth="26.0" prefWidth="47.0" />
                            </columnConstraints>
                            <rowConstraints>
                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -85,9 +85,9 @@
                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="255.0" minWidth="10.0" prefWidth="171.0" />
                      </columnConstraints>
                      <rowConstraints>
-                        <RowConstraints maxHeight="35.0" minHeight="10.0" prefHeight="31.0" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="36.0" minHeight="10.0" prefHeight="27.0" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="28.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="46.0" minHeight="10.0" prefHeight="46.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="43.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="27.0" vgrow="SOMETIMES" />
                      </rowConstraints>
                      <HBox.margin>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
