@@ -61,7 +61,10 @@ public class LecturasIngresoC {
 			List<PlanillaDetalle> listaDetalle = new ArrayList<PlanillaDetalle>();
 			ObservableList<PlanillaDetalle> datos = FXCollections.observableArrayList();
 			for(Planilla planilla : aperturaActual.getPlanillas()) {
-				listaDetalle.add(planilla.getPlanillaDetalles().get(0));
+				for(PlanillaDetalle detalle : planilla.getPlanillaDetalles()) {
+					if(detalle.getIdentificadorOperacion().equals(Constantes.IDENT_LECTURA))
+						listaDetalle.add(detalle);
+				}
 			}
 			datos.setAll(listaDetalle);
 			

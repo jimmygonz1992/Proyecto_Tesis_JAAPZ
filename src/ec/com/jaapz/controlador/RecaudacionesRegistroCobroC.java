@@ -362,9 +362,10 @@ public class RecaudacionesRegistroCobroC {
 				
 				ObservableList<Planilla> planillas = FXCollections.observableArrayList();
 				for(Planilla pla : datoSeleccionado.getPlanillas()) {
-					if (pla.getCancelado() != null) 
-						if (pla.getCancelado().equals(Constantes.EST_FAC_PENDIENTE)) 
-							planillas.add(pla);
+					if (pla.getCancelado() != null)
+						if(pla.getIdentificadorProceso() == null) // quiere decir que no esta pendiente de procesar
+							if (pla.getCancelado().equals(Constantes.EST_FAC_PENDIENTE)) 
+								planillas.add(pla);
 				}
 				System.out.println(planillas.size());
 				Collections.sort(planillas);

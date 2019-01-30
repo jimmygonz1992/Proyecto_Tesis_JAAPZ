@@ -21,13 +21,16 @@ import java.util.List;
 			+ "where (lower(p.cuentaCliente.cliente.apellido) like :patron or lower(p.cuentaCliente.cliente.nombre) like :patron or lower(p.cuentaCliente.cliente.cedula) like :patron) and p.cancelado = 'PENDIENTE' "
 			+ "and p.usuarioCrea = :idPerfilUsuario order by p.idPlanilla asc"),
 	@NamedQuery(name="Planilla.buscarPorCuenta", query="SELECT p FROM Planilla p "
-			+ "where p.cuentaCliente.idCuenta = :idCuenta and p.estado = 'A' "
+			+ "where p.cuentaCliente.idCuenta = :idCuenta and p.estado = 'A' and p.identificadorProceso is null "
 			+ "order by p.idPlanilla desc"),
 	@NamedQuery(name="Planilla.buscarPorCuentaPlanilla", query="SELECT p FROM Planilla p "
 			+ "where p.cuentaCliente.idCuenta = :idCuenta and p.idPlanilla < (:idPlanillaActual) and p.estado = 'A' "
 			+ "order by p.idPlanilla asc"),
 	@NamedQuery(name="Planilla.buscarUltimaPlanilla", query="SELECT p FROM Planilla p "
 			+ "where p.cuentaCliente.idCuenta = :idCuenta and p.estado = 'A' and p.aperturaLectura.estadoApertura = 'EN PROCESO' "
+			+ "order by p.idPlanilla desc"),
+	@NamedQuery(name="Planilla.buscarNoPlanillado", query="SELECT p FROM Planilla p "
+			+ "where p.cuentaCliente.idCuenta = :idCuenta and p.estado = 'A' and p.identificadorProceso = 'SIN PLANILLAR' "
 			+ "order by p.idPlanilla desc")
 })
 public class Planilla implements Serializable, Comparable<Planilla> {
@@ -75,6 +78,9 @@ public class Planilla implements Serializable, Comparable<Planilla> {
 	@Column(name="total_pagar")
 	private double totalPagar;
 
+	@Column(name="identificador_proceso")
+	private String identificadorProceso;
+	
 	@Column(name="usuario_crea")
 	private Integer usuarioCrea;
 
@@ -362,6 +368,14 @@ public class Planilla implements Serializable, Comparable<Planilla> {
 	
 	public String getOrigen() {
 		return origen;
+	}
+
+	public String getIdentificadorProceso() {
+		return identificadorProceso;
+	}
+
+	public void setIdentificadorProceso(String identificadorProceso) {
+		this.identificadorProceso = identificadorProceso;
 	}
 
 	public void setOrigen(String origen) {
