@@ -379,14 +379,12 @@ public class BodegaSalidaRubroInstC {
 		try {
 			if(validarDatos() == false)
 				return;
+			if(validarStockRubro() == false) {
+				helper.mostrarAlertaError("Stock insuficiente de rubros", Context.getInstance().getStage());
+				return;
+			}
 			Optional<ButtonType> result = helper.mostrarAlertaConfirmacion("Desea Grabar los Datos?",Context.getInstance().getStage());
 			if(result.get() == ButtonType.OK){
-				
-				if(validarStockRubro() == false) {
-					helper.mostrarAlertaError("Stock insuficiente de rubros", Context.getInstance().getStage());
-					return;
-				}
-				
 				Instalacion instalacion = new Instalacion();
 				CuentaCliente cuentaCliente = liquidacionSeleccionada.getCuentaCliente();
 				Medidor medidor = liquidacionSeleccionada.getMedidor();
@@ -408,7 +406,7 @@ public class BodegaSalidaRubroInstC {
 				for(InstalacionDetalle det : tvDatos.getItems()) {
 					det.setIdInstalacionDet(null);
 					det.setUsuarioCrea(Context.getInstance().getUsuariosC().getIdUsuario());
-					det.setEstado("A");
+					det.setEstado(Constantes.ESTADO_ACTIVO);
 					det.setInstalacion(instalacion);
 					listaAgregadaRubros.add(det);
 				}
@@ -435,9 +433,9 @@ public class BodegaSalidaRubroInstC {
 			boolean bandera = false;
 			if(tvDatos != null) {
 				List<Rubro> listaSalidaRubros = new ArrayList<Rubro>();
-				for(InstalacionDetalle detalle: tvDatos.getItems()) {
+				for(InstalacionDetalle detalle: tvDatos.getItems())
 					listaSalidaRubros.add(detalle.getRubro());
-				}
+				
 				for(Rubro rubro : listaSalidaRubros) {
 					if(rubro.getIdRubro() != Constantes.ID_MEDIDOR || rubro.getIdRubro() != Constantes.ID_TASA_CONEXION) {
 						for(InstalacionDetalle detalle : tvDatos.getItems()) {

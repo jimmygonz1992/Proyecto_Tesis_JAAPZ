@@ -183,16 +183,19 @@ public class LecturasAperturaC {
 				aperturaGrabar.setMe(cboMes.getSelectionModel().getSelectedItem());
 
 				//aperturar todos los clientes 
-				List<CuentaCliente> listaCuentasActivas = new ArrayList<CuentaCliente>();
-				listaCuentasActivas = cuentaDAO.getListaCuentasActivas();
+				List<CuentaCliente> listaCuentasActivas = cuentaDAO.getListaCuentasActivas();
+				System.out.println("Cuentas activas: " + listaCuentasActivas.size());
 				aperturaDAO.getEntityManager().getTransaction().begin();
 				//recorrer las cuentas para asignar las aperturas
 				for(CuentaCliente cuentas : listaCuentasActivas) {
+					
 					if(cuentas.getMedidor() != null) {
+						
+						
 						List<Planilla> noPlanillado = planillaDAO.getNoPlanillado(cuentas.getIdCuenta());
+						
 						System.out.println("tamaño de no planillado: " + noPlanillado.size());
 						if(noPlanillado.size() > 0) {//existe una planilla de otro proceso
-							List<Planilla> listaAdd = new ArrayList<Planilla>();
 							Planilla planilla = noPlanillado.get(0); // se llena los datos de la planilla ya generada
 							System.out.println("planilla ya generada: " + planilla.getIdPlanilla());
 							planilla.setFecha(fecha);
@@ -214,11 +217,10 @@ public class LecturasAperturaC {
 							planilla.setEstado(Constantes.ESTADO_ACTIVO);
 							//enlace entre planilla y apertura
 							planilla.setAperturaLectura(aperturaGrabar);
-							listaAdd.add(planilla);
-							aperturaGrabar.setPlanillas(listaAdd);
+							//aperturaGrabar.setPla(planilla);
 							//enlace entre cliente y planilla
 							planilla.setCuentaCliente(cuentas);
-							cuentas.setPlanillas(listaAdd);
+							//cuentas.addPlanilla(planilla);
 
 							//enlace entre detalle de planilla y planilla
 							PlanillaDetalle detallePlanilla = new PlanillaDetalle();

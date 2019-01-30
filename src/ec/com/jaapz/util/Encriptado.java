@@ -56,5 +56,5 @@ public class Encriptado {
         } catch (Exception ex) {
         }
         return base64EncryptedString;
-}
+	}
 }

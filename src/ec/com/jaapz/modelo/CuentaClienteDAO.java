@@ -12,6 +12,7 @@ public class CuentaClienteDAO extends ClaseDAO{
 	public List<CuentaCliente> getListaCuentaClientes(String patron){
 		List<CuentaCliente> resultado = new ArrayList<CuentaCliente>();
 		Query query = getEntityManager().createNamedQuery("CuentaCliente.findAll");
+		query.setHint("javax.persistence.cache.storeMode", "REFRESH");
 		query.setParameter("patron", "%" + patron + "%");
 		resultado = (List<CuentaCliente>) query.getResultList();
 		return resultado;
@@ -20,6 +21,7 @@ public class CuentaClienteDAO extends ClaseDAO{
 	public List<CuentaCliente> getListaCuentasActivas(){
 		List<CuentaCliente> resultado = new ArrayList<CuentaCliente>();
 		Query query = getEntityManager().createNamedQuery("CuentaCliente.bucarTodos");
+		query.setHint("javax.persistence.cache.storeMode", "REFRESH");
 		resultado = (List<CuentaCliente>) query.getResultList();
 		return resultado;
 	}
