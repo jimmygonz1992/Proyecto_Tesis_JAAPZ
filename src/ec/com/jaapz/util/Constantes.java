@@ -13,6 +13,8 @@ public abstract class Constantes {
 
 	public static String IDENT_INSTALACION = "INS";
 	public static String IDENT_REPARACION = "REP";
+	public static String IDENT_PROCESO = "SIN PLANILLAR";
+	public static String IDENT_LECTURA = "LEC";
 	//id de los diferentes usuarios que estan registrados en el sistema
 	public static int ID_USU_ADMINISTRADOR = 1;
 	public static int ID_USU_LECTURA = 2;
@@ -62,3 +64,4 @@ public abstract class Constantes {
 	public static Integer ACCION_INSERTAR = 2;
 	public static Integer ACCION_ELIMINAR = 3; //solo para casos especiales
 }
+

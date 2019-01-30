@@ -9,7 +9,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
-import ec.com.jaapz.modelo.AperturaLecturaDAO;
 import ec.com.jaapz.modelo.CuentaCliente;
 import ec.com.jaapz.modelo.Planilla;
 import ec.com.jaapz.modelo.PlanillaDAO;
@@ -290,12 +289,17 @@ public class SolicitudesCierreReparacionC {
 				//para grabar planilla que existe una reparacion
 				//aqui para agregar la factura del 60% del costo de instalacion
 				PlanillaDAO planillaDAO = new PlanillaDAO();
-				
 				List<Planilla> listaPlanilla = planillaDAO.getPlanillaActual(cuentaRecuperada.getIdCuenta());
 				Planilla planilla = new Planilla();
-				if(listaPlanilla.size() > 0)
+				if(listaPlanilla.size() > 0)//necesito saber si tiene una planilla en proceso.. si esta la junta en la que se encuentra en proceso
 					planilla = listaPlanilla.get(0);
-				
+				else { //caso contrario se crea una nueva planilla.. pero aqui se pone el identificador.. para saber si esta pendiente
+					planilla = new Planilla();
+					planilla.setIdPlanilla(null);
+					planilla.setIdentificadorProceso(Constantes.IDENT_PROCESO);//con esta variable se identifica si se encuentra procesada
+					planilla.setCuentaCliente(cuentaRecuperada);
+					planilla.setEstado(Constantes.ESTADO_ACTIVO);
+				}
 				//enlace entre detalle de planilla y planilla
 				PlanillaDetalle detallePlanilla = new PlanillaDetalle();
 				detallePlanilla.setIdPlanillaDet(null);
@@ -303,17 +307,25 @@ public class SolicitudesCierreReparacionC {
 				detallePlanilla.setUsuarioCrea(Context.getInstance().getIdUsuario());
 				detallePlanilla.setSubtotal(valorTotal);
 				detallePlanilla.setDescripcion("POR REPARACION EN EL SERVIO DE AGUA");
+				detallePlanilla.setIdentificadorOperacion(Constantes.IDENT_REPARACION);
 				detallePlanilla.setEstado(Constantes.ESTADO_ACTIVO);
 				detallePlanilla.setCantidad(1);
 				
-				planilla.addPlanillaDetalle(detallePlanilla);
-				
-				
-				
+				if(planilla.getIdPlanilla() != null) // si es diferente de null es porque si tuvo en proceso una apertura
+					planilla.addPlanillaDetalle(detallePlanilla);
+				else { //caso contrario se debe de hacer los dos enlaces..
+					List<PlanillaDetalle> detalles = new ArrayList<PlanillaDetalle>();
+					detallePlanilla.setPlanilla(planilla);
+					detalles.add(detallePlanilla);
+					planilla.setPlanillaDetalles(detalles);
+				}
 				
 				reparacionDao.getEntityManager().getTransaction().begin();
 				reparacionDao.getEntityManager().persist(reparacion);
-				reparacionDao.getEntityManager().merge(planilla);
+				if(planilla.getIdPlanilla() != null) //se modifica
+					reparacionDao.getEntityManager().merge(planilla);
+				else//se inserta uno nuevo
+					reparacionDao.getEntityManager().persist(planilla);
 				reparacionDao.getEntityManager().merge(inspeccionRepSeleccionado);
 				reparacionDao.getEntityManager().getTransaction().commit();
 					
@@ -354,7 +366,7 @@ public class SolicitudesCierreReparacionC {
 	
 	boolean validarDatos() {
 		try {
-			AperturaLecturaDAO aperturaDAO = new AperturaLecturaDAO();
+			
 			if(dtpFecha.getValue().equals(null)) {
 				helper.mostrarAlertaAdvertencia("Escoja una fecha", Context.getInstance().getStage());
 				dtpFecha.requestFocus();
@@ -366,11 +378,13 @@ public class SolicitudesCierreReparacionC {
 				tvDatosDetalle.requestFocus();
 				return false;
 			}
+			/*
 			//valida si esq hay un ciclo en proceso
 			if(aperturaDAO.validarApertura() == false) {
 				helper.mostrarAlertaAdvertencia("No existe un ciclo iniciado.. por lo que no se puede procesar el pago", Context.getInstance().getStage());
 				return false;
 			}
+			*/
 			return true;
 		}catch(Exception ex) {
 			System.out.println(ex.getMessage());

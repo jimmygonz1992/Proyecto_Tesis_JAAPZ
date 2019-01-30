@@ -46,6 +46,10 @@ public class PlanillaDetalle implements Serializable, Comparable<PlanillaDetalle
 	@ManyToOne
 	@JoinColumn(name="id_convenio_det")
 	private ConvenioDetalle convenioDetalle;
+	
+	
+	@Column(name="identificador_operacion")
+	private String identificadorOperacion;
 
 	//bi-directional many-to-one association to Instalacion
 	@ManyToOne
@@ -169,6 +173,16 @@ public class PlanillaDetalle implements Serializable, Comparable<PlanillaDetalle
 		registroFoto.setPlanillaDetalle(null);
 
 		return registroFoto;
+	}
+
+	
+	
+	public String getIdentificadorOperacion() {
+		return identificadorOperacion;
+	}
+
+	public void setIdentificadorOperacion(String identificadorOperacion) {
+		this.identificadorOperacion = identificadorOperacion;
 	}
 
 	@Override

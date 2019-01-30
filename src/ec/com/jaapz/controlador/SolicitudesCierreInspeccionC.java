@@ -313,6 +313,7 @@ public class SolicitudesCierreInspeccionC {
 					detallePlanilla.setUsuarioCrea(Context.getInstance().getIdUsuario());
 					detallePlanilla.setSubtotal(valorTotal);
 					detallePlanilla.setDescripcion("POR INSTALACIÓN DE NUEVO MEDIDOR");
+					detallePlanilla.setIdentificadorOperacion(Constantes.IDENT_INSTALACION);
 					detallePlanilla.setEstado(Constantes.ESTADO_ACTIVO);
 					detallePlanilla.setCantidad(1);
 					detallePlanilla.setPlanilla(planilla);
