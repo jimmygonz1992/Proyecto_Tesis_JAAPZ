@@ -38,7 +38,7 @@ public class ReparacionDAO extends ClaseDAO{
 		Query query = getEntityManager().createNamedQuery("Reparacion.buscarReparacionPerfilReparaciones");
 		query.setHint("javax.persistence.cache.storeMode", "REFRESH");
 		query.setParameter("patron", "%" + patron + "%");
-		query.setParameter("idPerfilUsuario", Context.getInstance().getIdPerfil());
+		query.setParameter("idPerfilUsuario", Context.getInstance().getIdUsuario());
 		resultado = (List<Reparacion>) query.getResultList();
 		return resultado;
 	}

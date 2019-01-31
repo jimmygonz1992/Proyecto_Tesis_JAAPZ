@@ -56,22 +56,33 @@ public class AsignacionListadoReparacionC {
 		try{
 			tvDatos.getColumns().clear();
 			boolean bandera;
-			List<Reparacion> listaReparaciones;
+			List<Reparacion> listado;
 			List<Reparacion> listaAgregar = new ArrayList<Reparacion>();
 			if(Context.getInstance().getIdPerfil() == Constantes.ID_USU_ADMINISTRADOR) {
-				listaReparaciones = reparacionDAO.getListaReparacionPendiente(patron);
+				listado = reparacionDAO.getListaReparacionPendiente(patron);
 			}else {
-				listaReparaciones = reparacionDAO.getListaReparacionPerfilPendiente(patron);
+				listado = reparacionDAO.getListaReparacionPerfilPendiente(patron);
 			}
-			for(Reparacion reparacionAdd : listaReparaciones) {
+			
+			//comentarié esto temporalmente xq no cargaba datos
+			for(Reparacion reparacionAdd : listado) {
 				bandera = false;
-				for(Reparacion reparacionLst : listaReparaciones) {
+				for(Reparacion reparacionLst : listadoReparaciones) {
 					if(reparacionAdd.getIdReparacion() == reparacionLst.getIdReparacion())
 						bandera = true;
 				}
 				if(bandera == false)
 					listaAgregar.add(reparacionAdd);
 			}
+			
+			/*for(Reparacion orden : listadoReparaciones) {
+				for(int i = 0 ; i < listado.size() ; i ++) {
+					if(orden.getIdReparacion() == listado.get(i).getIdReparacion()) {
+						listado.remove(i);
+						break;
+					}
+				}
+			}*/
 			
 			ObservableList<Reparacion> datos = FXCollections.observableArrayList();
 			datos.setAll(listaAgregar);

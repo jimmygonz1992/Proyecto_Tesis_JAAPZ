@@ -5,9 +5,11 @@ import java.util.List;
 import ec.com.jaapz.modelo.Rubro;
 import ec.com.jaapz.modelo.RubroDAO;
 import ec.com.jaapz.util.Context;
+import ec.com.jaapz.util.PrintReport;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
@@ -15,6 +17,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 
 public class BodegaListadoRubrosC {
 	private @FXML TableView<Rubro> tvDatos;
+	private @FXML Button btnVerReporte;
+	RubroDAO rubroDAO = new RubroDAO();
 	public void initialize(){
 		llenarDatos();
 		tvDatos.setRowFactory(tv -> {
@@ -29,6 +33,12 @@ public class BodegaListadoRubrosC {
             });
             return row ;
         });
+	}
+	
+	public void verReporte() {
+		PrintReport pr = new PrintReport();
+		pr.crearReporte("/recursos/informes/listado_materiales.jasper", rubroDAO, null);
+		pr.showReport("Listado");
 	}
 	
 	@SuppressWarnings("unchecked")

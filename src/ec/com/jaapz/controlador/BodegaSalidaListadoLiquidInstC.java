@@ -61,6 +61,7 @@ public class BodegaSalidaListadoLiquidInstC {
 				listado = liquidacionOrdenDao.getListaLiquidacionOrdenPerfil(patron);
 			}
 			
+			//con esto muestro las q hayan pagado al menos el 60%
 			List<LiquidacionOrden> listaLiquidaciones = new ArrayList<>();
 			for(LiquidacionOrden liq : listado) {
 				double porcentaje = 0.0;

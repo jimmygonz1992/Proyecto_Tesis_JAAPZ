@@ -1,10 +1,13 @@
 package ec.com.jaapz.controlador;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 import ec.com.jaapz.modelo.LiquidacionOrden;
 import ec.com.jaapz.modelo.LiquidacionOrdenDAO;
+import ec.com.jaapz.modelo.Pago;
+import ec.com.jaapz.modelo.Planilla;
 import ec.com.jaapz.util.Constantes;
 import ec.com.jaapz.util.Context;
 import javafx.beans.property.SimpleObjectProperty;
@@ -53,12 +56,31 @@ public class InstalacionesListadoOrdenLiquidacionesC {
 	private void llenarTablaLiquidaciones(String patron) {
 		try{
 			tvDatos.getColumns().clear();
-			List<LiquidacionOrden> listaLiquidaciones;
+			List<LiquidacionOrden> listado;
 			
 			if(Context.getInstance().getIdPerfil() == Constantes.ID_USU_ADMINISTRADOR) {
-				listaLiquidaciones = liquidacionDao.getListaLiquidacionOrdenInstalaciones(patron);
+				listado = liquidacionDao.getListaLiquidacionOrdenInstalaciones(patron);
 			}else {
-				listaLiquidaciones = liquidacionDao.getListaLiquidacionOrdenPerfilInstalaciones(patron);
+				listado = liquidacionDao.getListaLiquidacionOrdenPerfilInstalaciones(patron);
+			}
+			
+			//con esto valido q me presenten solo las q hayan pagado al menos
+			//el 60%
+			List<LiquidacionOrden> listaLiquidaciones = new ArrayList<>();
+			for(LiquidacionOrden liq : listado) {
+				double porcentaje = 0.0;
+				double valorPagado = 0.0;
+				for(Planilla pl : liq.getCuentaCliente().getPlanillas()) {
+					if(pl.getIdentInstalacion().equals(Constantes.IDENT_INSTALACION)) {
+						porcentaje = pl.getTotalPagar() * 0.6;//60 % del total a pagar
+						for(Pago pag : pl.getPagos()) {
+							if(pag.getEstado().equals(Constantes.ESTADO_ACTIVO))
+								valorPagado = valorPagado + pag.getValor();
+						}
+					}
+				}
+				if(valorPagado >= porcentaje)
+					listaLiquidaciones.add(liq);
 			}
 			
 			ObservableList<LiquidacionOrden> datos = FXCollections.observableArrayList();

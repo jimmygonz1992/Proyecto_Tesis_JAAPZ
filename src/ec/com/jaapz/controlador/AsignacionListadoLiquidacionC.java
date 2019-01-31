@@ -31,7 +31,6 @@ public class AsignacionListadoLiquidacionC {
 	SimpleDateFormat formateador = new SimpleDateFormat("dd/MM/yyyy");
 	LiquidacionOrdenDAO liquidacionOrdenDao = new LiquidacionOrdenDAO();
 	
-	
 	public void initialize() {
 		listadoLiquidaciones = Context.getInstance().getListaLiquidaciones();
 		//poner nuevamente a null

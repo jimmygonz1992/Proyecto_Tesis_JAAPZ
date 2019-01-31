@@ -181,8 +181,8 @@ public class SolicitudesCierreReparacionC {
 		txtUsuario.setEditable(false);
 		txtSubtotal.setEditable(false);
 		txtTotal.setEditable(false);
-		//txtSubtotal.setVisible(false);
-		//txtTotal.setVisible(false);
+		txtSubtotal.setVisible(false);
+		txtTotal.setVisible(false);
 	}
 	
 	//recupera datos del material
@@ -247,20 +247,17 @@ public class SolicitudesCierreReparacionC {
 			inspeccionRepSeleccionado.setIdSolicitudRep(Integer.parseInt(txtIdSolicRep.getText()));
 			cuentaRecuperada.setIdCuenta(inspeccionRepSeleccionado.getCuentaCliente().getIdCuenta());
 			Optional<ButtonType> result = helper.mostrarAlertaConfirmacion("Desea Grabar los Datos?",Context.getInstance().getStage());
-			if(result.get() == ButtonType.OK){
-			
-				
+			if(result.get() == ButtonType.OK){				
 				double valorTotal = 0.0;
 				Reparacion reparacion = new Reparacion();
 				
-				String estado = "A";
 				reparacion.setIdReparacion(null);
 				Date date = Date.from(dtpFecha.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
 				Timestamp fecha = new Timestamp(date.getTime());
 				reparacion.setFechaCierreInspeccion(fecha);
 				reparacion.setCuentaCliente(cuentaRecuperada);
 				reparacion.setSolInspeccionRep(inspeccionRepSeleccionado);
-				reparacion.setEstado(estado);
+				reparacion.setEstado(Constantes.ESTADO_ACTIVO);
 				reparacion.setEstadoValor(Constantes.EST_FAC_PENDIENTE);
 				reparacion.setEstadoReparacion(Constantes.EST_FAC_PENDIENTE);
 				reparacion.setEstadoEntrega(Constantes.EST_FAC_PENDIENTE);
@@ -275,7 +272,7 @@ public class SolicitudesCierreReparacionC {
 				
 				for(ReparacionDetalle det : tvDatosDetalle.getItems()) {
 					det.setIdReparacionDet(null);
-					det.setEstado("A");
+					det.setEstado(Constantes.ESTADO_ACTIVO);
 					det.setReparacion(reparacion);
 					det.setUsuarioCrea(Context.getInstance().getUsuariosC().getIdUsuario());
 					det.setFechaCrea(fecha);
@@ -284,7 +281,6 @@ public class SolicitudesCierreReparacionC {
 				}
 				
 				reparacion.setReparacionDetalles(listaAgregadaRubros);
-				
 				
 				//para grabar planilla que existe una reparacion
 				//aqui para agregar la factura del 60% del costo de instalacion
