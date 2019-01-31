@@ -32,9 +32,11 @@ import javax.persistence.TemporalType;
 	@NamedQuery(name="AperturaLectura.findAllRealizado", query="SELECT a FROM AperturaLectura a where a.estado = 'A' and a.estadoApertura = 'REALIZADO'"),
 	@NamedQuery(name="AperturaLectura.buscarCiclo", query="SELECT a FROM AperturaLectura a where a.estado = 'A' and a.estadoApertura = 'EN PROCESO'"),
 	@NamedQuery(name="AperturaLectura.buscarAperturaId", query="SELECT a FROM AperturaLectura a where a.estado = 'A' and a.idApertura = :idApertura"),
-	@NamedQuery(name="AperturaLectura.buscarAperturaIdAnio", query="SELECT a FROM AperturaLectura a where a.estado = 'A' and a.anio.idAnio = :idAnio")
+	@NamedQuery(name="AperturaLectura.buscarAperturaIdAnio", query="SELECT a FROM AperturaLectura a where a.estado = 'A' and a.anio.idAnio = :idAnio"),
+	@NamedQuery(name="AperturaLectura.buscarAnioMes", query="SELECT a FROM AperturaLectura a where a.estado = 'A' and "
+			+ "(lower(a.anio.descripcion) like lower(:patron) or lower(a.me.descripcion) like lower(:patron))")
 })
-public class AperturaLectura implements Serializable {
+public class AperturaLectura implements Serializable { //
 	private static final long serialVersionUID = 1L;
 
 	@Id

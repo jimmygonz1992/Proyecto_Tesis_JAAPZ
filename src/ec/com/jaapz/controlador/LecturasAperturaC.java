@@ -134,7 +134,7 @@ public class LecturasAperturaC {
 		try {
 			ObservableList<Anio> listaAnios = FXCollections.observableArrayList();
 			List<Anio> datAn = anioDAO.getListaAnios();
-			listaAnios.setAll(datAn);
+			listaAnios.add(datAn.get(0));
 			cboAnio.setItems(listaAnios);
 		}catch(Exception ex) {
 			System.out.println(ex.getMessage());
@@ -154,7 +154,7 @@ public class LecturasAperturaC {
 						datMes.remove(j);
 				}
 			}
-			listaMeses.addAll(datMes);
+			listaMeses.add(datMes.get(0));
 			cboMes.setItems(listaMeses);
 			
 		}catch(Exception ex) {
@@ -213,6 +213,7 @@ public class LecturasAperturaC {
 								planilla.setLecturaAnterior(0);//Caso contrario los dos son cero
 								planilla.setLecturaActual(0);
 							}
+							
 							planilla.setIdentificadorProceso(null);
 							planilla.setEstado(Constantes.ESTADO_ACTIVO);
 							//enlace entre planilla y apertura

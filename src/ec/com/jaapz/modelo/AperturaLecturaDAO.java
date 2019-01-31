@@ -15,6 +15,16 @@ public class AperturaLecturaDAO extends ClaseDAO{
 		return resultado;
 	}
 	@SuppressWarnings("unchecked")
+	public List<AperturaLectura> getListaAperturasByPatron(String patron){
+		List<AperturaLectura> resultado = new ArrayList<AperturaLectura>();
+		Query query = getEntityManager().createNamedQuery("AperturaLectura.buscarAnioMes");
+		query.setHint("javax.persistence.cache.storeMode", "REFRESH");
+		query.setParameter("patron","%" + patron + "%");
+		resultado = (List<AperturaLectura>) query.getResultList();
+		return resultado;
+	}
+	
+	@SuppressWarnings("unchecked")
 	public List<AperturaLectura> getListaAperturasRealizadas(){
 		List<AperturaLectura> resultado = new ArrayList<AperturaLectura>();
 		Query query = getEntityManager().createNamedQuery("AperturaLectura.findAllRealizado");
@@ -64,4 +74,5 @@ public class AperturaLecturaDAO extends ClaseDAO{
 			return false;
 		}
 	}
+	
 }
