@@ -14,10 +14,12 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.util.Callback;
 
 public class LecturasListadoAperturaC {
 	@FXML private TableView<AperturaLectura> tvDatos;
+	@FXML private TextField txtBuscar;
 	AperturaLecturaDAO aperturaDAO = new AperturaLecturaDAO();
 	public void initialize(){
 		Context.getInstance().setApertura(null);
@@ -41,10 +43,10 @@ public class LecturasListadoAperturaC {
 		try{
 			tvDatos.getItems().clear();
 			tvDatos.getColumns().clear();
-			List<AperturaLectura> listaPrecios;
+			List<AperturaLectura> listaApertura;
 			ObservableList<AperturaLectura> datos = FXCollections.observableArrayList();
-			listaPrecios = aperturaDAO.getListaAperturas();
-			datos.setAll(listaPrecios);
+			listaApertura = aperturaDAO.getListaAperturas();
+			datos.setAll(listaApertura);
 
 			TableColumn<AperturaLectura, String> mesColum = new TableColumn<>("Mes");
 			mesColum.setMinWidth(10);
@@ -87,6 +89,17 @@ public class LecturasListadoAperturaC {
 			tvDatos.getColumns().addAll(anioColum,mesColum,clienteColum,estadoColum);
 			tvDatos.setItems(datos);
 		}catch(Exception ex){
+			System.out.println(ex.getMessage());
+		}
+	}
+	public void buscarApertura() {
+		try {
+			ObservableList<AperturaLectura> datos = FXCollections.observableArrayList();
+			List<AperturaLectura> listaApertura = aperturaDAO.getListaAperturasByPatron(txtBuscar.getText().toString());
+			datos.setAll(listaApertura);
+			tvDatos.setItems(datos);
+			tvDatos.refresh();
+		}catch(Exception ex) {
 			System.out.println(ex.getMessage());
 		}
 	}

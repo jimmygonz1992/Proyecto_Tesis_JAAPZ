@@ -22,4 +22,5 @@ public class AnioDAO extends ClaseDAO{
 		resultado = (List<Anio>) query.getResultList();
 		return resultado;
 	}
+	
 }

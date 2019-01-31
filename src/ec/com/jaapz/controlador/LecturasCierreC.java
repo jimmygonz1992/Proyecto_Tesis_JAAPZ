@@ -4,6 +4,8 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Optional;
 
+import ec.com.jaapz.modelo.Anio;
+import ec.com.jaapz.modelo.AnioDAO;
 import ec.com.jaapz.modelo.AperturaLectura;
 import ec.com.jaapz.modelo.AperturaLecturaDAO;
 import ec.com.jaapz.modelo.Planilla;
@@ -193,9 +195,8 @@ public class LecturasCierreC {
 				for(int i = 0 ; i < aperturaActual.getPlanillas().size() ; i ++) {
 					total = 0.0;
 					planillaDetalle = aperturaActual.getPlanillas().get(i).getPlanillaDetalles(); 
-					for(PlanillaDetalle det : planillaDetalle) {
+					for(PlanillaDetalle det : planillaDetalle)
 						total = total + det.getSubtotal();
-					}
 					aperturaActual.getPlanillas().get(i).setTotalPagar(total);
 
 					long iPart = (long) total;
@@ -214,6 +215,7 @@ public class LecturasCierreC {
 				aperturaActual = null;
 				obtenerCicloActual();
 				cargarDatosAperturasRealizadas();
+				actualizarAnio();
 			}
 		}catch(Exception ex) {
 			System.out.println(ex.getMessage());
@@ -221,7 +223,32 @@ public class LecturasCierreC {
 		}
 	}
 
-
+	private void actualizarAnio() {
+		try {
+			AnioDAO anioDAO = new AnioDAO();
+			Integer idAnio;
+			List<Anio> listaAnio = anioDAO.getListaAnios();
+			if(listaAnio.size() > 0)
+				idAnio = listaAnio.get(0).getIdAnio();
+			else
+				idAnio = 0;
+			//necesito preguntar las aperturas en el ultimo anio
+			List<AperturaLectura> listaAperturas = aperturaDAO.getAperturaByAnio(idAnio);
+			if(listaAperturas.size() == 12) {//si es igual a 12 es porque ya estan todos los años 
+				//se inserta el nuevo anio
+				Anio anioNuevo = new Anio();
+				anioNuevo.setIdAnio(null);
+				anioNuevo.setEstado(Constantes.ESTADO_ACTIVO);
+				Integer anio = Integer.parseInt(listaAnio.get(0).getDescripcion()) + 1;
+				anioNuevo.setDescripcion(String.valueOf(anio));
+				anioDAO.getEntityManager().getTransaction().begin();
+				anioDAO.getEntityManager().persist(anioNuevo);
+				anioDAO.getEntityManager().getTransaction().commit();
+			}
+		}catch(Exception ex) {
+			System.out.println(ex.getMessage());
+		}
+	}
 	private boolean validarCierreCiclo() {
 		try {
 			boolean bandera = false;

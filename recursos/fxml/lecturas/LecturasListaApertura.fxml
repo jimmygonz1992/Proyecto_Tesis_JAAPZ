@@ -31,6 +31,16 @@
                </font>
             </Label>
             <TableView fx:id="tvDatos" prefHeight="171.0" prefWidth="432.0" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="3" />
+            <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="1">
+               <children>
+                  <Label text="Búsqueda por año o mes:" HBox.hgrow="ALWAYS" />
+                  <TextField fx:id="txtBuscar" onKeyReleased="#buscarApertura" prefHeight="25.0" prefWidth="468.0">
+                     <HBox.margin>
+                        <Insets left="12.0" />
+                     </HBox.margin>
+                  </TextField>
+               </children>
+            </HBox>
          </children>
       </GridPane>
    </children>
