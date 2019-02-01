@@ -9,27 +9,22 @@ import ec.com.jaapz.modelo.EstadoMedidorDAO;
 import ec.com.jaapz.modelo.IngresoDetalle;
 import ec.com.jaapz.modelo.Medidor;
 import ec.com.jaapz.modelo.MedidorDAO;
-import ec.com.jaapz.modelo.Planilla;
 import ec.com.jaapz.util.Constantes;
 import ec.com.jaapz.util.Context;
 import ec.com.jaapz.util.ControllerHelper;
-import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
-import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.control.cell.CheckBoxTableCell;
+import javafx.scene.control.cell.ComboBoxTableCell;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.util.Callback;
 
@@ -110,6 +105,7 @@ public class BodegaModificarMedidorC {
 					return new SimpleObjectProperty<String>(String.valueOf(param.getValue().getPrecio()));
 				}
 			});
+			
 			
 			tvDatos.getColumns().addAll(numeroColum, marcaColum, modeloColum,precioColum);
 			tvDatos.setItems(datosReq);

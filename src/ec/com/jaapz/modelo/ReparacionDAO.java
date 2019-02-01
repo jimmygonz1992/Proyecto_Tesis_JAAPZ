@@ -13,6 +13,7 @@ public class ReparacionDAO extends ClaseDAO{
 		Integer i;
 		List<Reparacion> resultado = new ArrayList<Reparacion>();
 		Query query = getEntityManager().createNamedQuery("Reparacion.buscarIDRepar");
+		query.setHint("javax.persistence.cache.storeMode", "REFRESH");
 		resultado = (List<Reparacion>) query.getResultList();
 		if(resultado.size() == 0)
 			i = 0;

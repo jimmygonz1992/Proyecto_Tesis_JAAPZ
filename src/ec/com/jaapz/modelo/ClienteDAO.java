@@ -10,6 +10,7 @@ public class ClienteDAO extends ClaseDAO{
 	public List<Cliente> getListaClientes(){
 		List<Cliente> resultado = new ArrayList<Cliente>();
 		Query query = getEntityManager().createNamedQuery("Cliente.findAll");
+		query.setHint("javax.persistence.cache.storeMode", "REFRESH");
 		resultado = (List<Cliente>) query.getResultList();
 		return resultado;
 	}

@@ -10,6 +10,7 @@ public class TipoRubroDAO extends ClaseDAO{
 	public List<TipoRubro> getListaTipoRubro(){
 		List<TipoRubro> resultado = new ArrayList<TipoRubro>();
 		Query query = getEntityManager().createNamedQuery("TipoRubro.findAll");
+		query.setHint("javax.persistence.cache.storeMode", "REFRESH");
 		resultado = (List<TipoRubro>) query.getResultList();
 		return resultado;
 	}

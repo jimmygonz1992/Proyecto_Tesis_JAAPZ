@@ -10,6 +10,7 @@ public class TipoSolicitudDAO extends ClaseDAO{
 	public List<TipoSolicitud> getListaTipoSolicitud(){
 		List<TipoSolicitud> resultado = new ArrayList<TipoSolicitud>();
 		Query query = getEntityManager().createNamedQuery("TipoSolicitud.findAll");
+		query.setHint("javax.persistence.cache.storeMode", "REFRESH");
 		resultado = (List<TipoSolicitud>) query.getResultList();
 		return resultado;
 	}

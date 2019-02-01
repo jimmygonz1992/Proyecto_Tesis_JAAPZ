@@ -10,6 +10,7 @@ public class SegPerfilDAO extends ClaseDAO{
 	public List<SegPerfil> getListaPerfil(){
 		List<SegPerfil> resultado = new ArrayList<SegPerfil>();
 		Query query = getEntityManager().createNamedQuery("SegPerfil.findAll");
+		query.setHint("javax.persistence.cache.storeMode", "REFRESH");
 		resultado = (List<SegPerfil>) query.getResultList();
 		return resultado;
 	}
@@ -17,6 +18,7 @@ public class SegPerfilDAO extends ClaseDAO{
 	public List<SegPerfil> getAllListaPerfil(){
 		List<SegPerfil> resultado = new ArrayList<SegPerfil>();
 		Query query = getEntityManager().createNamedQuery("SegPerfil.findAllPerfiles");
+		query.setHint("javax.persistence.cache.storeMode", "REFRESH");
 		resultado = (List<SegPerfil>) query.getResultList();
 		return resultado;
 	}
@@ -33,6 +35,7 @@ public class SegPerfilDAO extends ClaseDAO{
 	public List<SegPerfil> getUltimoPerfil(){
 		List<SegPerfil> resultado = new ArrayList<SegPerfil>();
 		Query query = getEntityManager().createNamedQuery("SegPerfil.BuscarUltimoPerfil");
+		query.setHint("javax.persistence.cache.storeMode", "REFRESH");
 		resultado = (List<SegPerfil>) query.getResultList();
 		return resultado;
 	}

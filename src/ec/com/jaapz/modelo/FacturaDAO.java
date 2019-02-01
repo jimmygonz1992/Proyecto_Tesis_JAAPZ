@@ -11,6 +11,7 @@ public class FacturaDAO extends ClaseDAO{
 		Integer i;
 		List<Factura> resultado = new ArrayList<Factura>();
 		Query query = getEntityManager().createNamedQuery("Factura.buscarIDFact");
+		query.setHint("javax.persistence.cache.storeMode", "REFRESH");
 		resultado = (List<Factura>) query.getResultList();
 		if(resultado.size() == 0)
 			i = 0;

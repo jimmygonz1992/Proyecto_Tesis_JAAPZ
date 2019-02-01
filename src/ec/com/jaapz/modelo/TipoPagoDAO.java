@@ -10,6 +10,7 @@ public class TipoPagoDAO extends ClaseDAO{
 	public List<TipoPago> getListaTipoPago(){
 		List<TipoPago> resultado = new ArrayList<TipoPago>();
 		Query query = getEntityManager().createNamedQuery("TipoPago.findAll");
+		query.setHint("javax.persistence.cache.storeMode", "REFRESH");
 		resultado = (List<TipoPago>) query.getResultList();
 		return resultado;
 	}

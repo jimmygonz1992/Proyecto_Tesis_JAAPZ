@@ -10,6 +10,7 @@ public class CategoriaDAO extends ClaseDAO{
 	public List<Categoria> getListaCategorias(){
 		List<Categoria> resultado = new ArrayList<Categoria>();
 		Query query = getEntityManager().createNamedQuery("Categoria.findAll");
+		query.setHint("javax.persistence.cache.storeMode", "REFRESH");
 		resultado = (List<Categoria>) query.getResultList();
 		return resultado;
 	}
@@ -17,6 +18,7 @@ public class CategoriaDAO extends ClaseDAO{
 	public List<Categoria> getListaCategorias(String patron){
 		List<Categoria> resultado = new ArrayList<Categoria>();
 		Query query = getEntityManager().createNamedQuery("Categoria.findCategorias");
+		query.setHint("javax.persistence.cache.storeMode", "REFRESH");
 		query.setParameter("patron", "%" + patron + "%");
 		resultado = (List<Categoria>) query.getResultList();
 		return resultado;
@@ -25,6 +27,7 @@ public class CategoriaDAO extends ClaseDAO{
 	public List<Categoria> getListaCatNormal(){
 		List<Categoria> resultado = new ArrayList<Categoria>();
 		Query query = getEntityManager().createNamedQuery("Categoria.findCatNormal");
+		query.setHint("javax.persistence.cache.storeMode", "REFRESH");
 		resultado = (List<Categoria>) query.getResultList();
 		return resultado;
 	}
@@ -32,6 +35,7 @@ public class CategoriaDAO extends ClaseDAO{
 	public List<Categoria> getCategoria(String patron){
 		List<Categoria> resultado = new ArrayList<Categoria>();
 		Query query = getEntityManager().createNamedQuery("Categoria.buscarCategoria");
+		query.setHint("javax.persistence.cache.storeMode", "REFRESH");
 		query.setParameter("patron", "%" + patron + "%");
 		resultado = (List<Categoria>) query.getResultList();
 		return resultado;
@@ -39,6 +43,7 @@ public class CategoriaDAO extends ClaseDAO{
 	public Categoria getCategoriaNombre(String patron){
 		Categoria resultado = new Categoria();
 		Query query = getEntityManager().createNamedQuery("Categoria.buscarCategoriaNombre");
+		query.setHint("javax.persistence.cache.storeMode", "REFRESH");
 		query.setParameter("patron", "%" + patron + "%");
 		resultado = (Categoria) query.getSingleResult();
 		return resultado;

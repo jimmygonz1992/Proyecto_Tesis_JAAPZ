@@ -10,6 +10,7 @@ public class SegMenuDAO extends ClaseDAO{
 	public List<SegMenu> getListaMenu(){
 		List<SegMenu> resultado = new ArrayList<SegMenu>();
 		Query query = getEntityManager().createNamedQuery("SegMenu.findAll");
+		query.setHint("javax.persistence.cache.storeMode", "REFRESH");
 		resultado = (List<SegMenu>) query.getResultList();
 		return resultado;
 	}
@@ -17,6 +18,7 @@ public class SegMenuDAO extends ClaseDAO{
 	public List<SegMenu> getListaMenuAccesos(){
 		List<SegMenu> resultado = new ArrayList<SegMenu>();
 		Query query = getEntityManager().createNamedQuery("SegMenu.buscarMenu");
+		query.setHint("javax.persistence.cache.storeMode", "REFRESH");
 		resultado = (List<SegMenu>) query.getResultList();
 		return resultado;
 	}
@@ -25,6 +27,7 @@ public class SegMenuDAO extends ClaseDAO{
 	public List<SegMenu> getMenuPadre(){
 		List<SegMenu> resultado = new ArrayList<SegMenu>();
 		Query query = getEntityManager().createNamedQuery("SegMenu.BuscarPadre");
+		query.setHint("javax.persistence.cache.storeMode", "REFRESH");
 		resultado = (List<SegMenu>) query.getResultList();
 		return resultado;
 	}

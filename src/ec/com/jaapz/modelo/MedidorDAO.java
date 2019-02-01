@@ -10,6 +10,7 @@ public class MedidorDAO extends ClaseDAO{
 	public List<Medidor> getListaMedidores(){
 		List<Medidor> resultado = new ArrayList<Medidor>();
 		Query query = getEntityManager().createNamedQuery("Medidor.medidoresDisponibles");
+		query.setHint("javax.persistence.cache.storeMode", "REFRESH");
 		resultado = (List<Medidor>) query.getResultList();
 		return resultado;
 	}
