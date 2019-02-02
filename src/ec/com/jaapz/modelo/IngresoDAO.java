@@ -10,6 +10,7 @@ public class IngresoDAO extends ClaseDAO{
 	public List<Ingreso> getListaIngresos(){
 		List<Ingreso> resultado = new ArrayList<Ingreso>();
 		Query query = getEntityManager().createNamedQuery("Ingreso.findAll");
+		query.setHint("javax.persistence.cache.storeMode", "REFRESH");
 		resultado = (List<Ingreso>) query.getResultList();
 		return resultado;
 	}

@@ -10,23 +10,25 @@ import javax.persistence.Persistence;
 public class ClaseDAO {
 	// Crea una sola instancia de EntityManagerFactory para toda la applicacion.
 		private static final String PERSISTENCE_UNIT_NAME = "Proyecto_Tesis_JAAPZ";
-		private static EntityManagerFactory emf = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
+		//private static EntityManagerFactory emf;
 		
 		// Objeto Entity Manager para cada instancia de un objeto que 
 		// herede de esta clase.
-		private EntityManager em;
+		//private EntityManager em;
 		
 		/**
 		 * Retorna el Entity Mananager, si no existe lo crea.
 		 * @return
 		 */
 		public EntityManager getEntityManager() {
-			if (em == null){
+			/*if (em == null){
 		        em = emf.createEntityManager();
-		    }
+		    }*/
+			EntityManagerFactory emf = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
+			EntityManager em = emf.createEntityManager();
 		    return em; 
 		}  
-		
+		l
 		public Connection abreConexion() {
 			EntityManager entityManager; 
 			entityManager = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME).createEntityManager();

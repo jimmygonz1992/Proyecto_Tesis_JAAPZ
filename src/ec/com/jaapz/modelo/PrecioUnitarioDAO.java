@@ -10,6 +10,7 @@ public class PrecioUnitarioDAO extends ClaseDAO{
 	public List<PrecioUnitario> getListaPrecios(){
 		List<PrecioUnitario> resultado = new ArrayList<PrecioUnitario>();
 		Query query = getEntityManager().createNamedQuery("PrecioUnitario.findAll");
+		query.setHint("javax.persistence.cache.storeMode", "REFRESH");
 		resultado = (List<PrecioUnitario>) query.getResultList();
 		return resultado;
 	}

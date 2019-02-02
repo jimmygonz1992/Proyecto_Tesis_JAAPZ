@@ -55,6 +55,7 @@ public class SegUsuarioDAO extends ClaseDAO{
 	public List<SegUsuario> getListaUsuarios(){
 		List<SegUsuario> resultado = new ArrayList<SegUsuario>();
 		Query query = getEntityManager().createNamedQuery("SegUsuario.findAll");
+		query.setHint("javax.persistence.cache.storeMode", "REFRESH");
 		resultado = (List<SegUsuario>) query.getResultList();
 		return resultado;
 	}

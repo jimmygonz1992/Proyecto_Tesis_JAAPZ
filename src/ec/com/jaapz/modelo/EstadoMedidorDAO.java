@@ -10,6 +10,7 @@ public class EstadoMedidorDAO extends ClaseDAO {
 	public List<EstadoMedidor> getListaEstadoMedidor(){
 		List<EstadoMedidor> resultado = new ArrayList<EstadoMedidor>();
 		Query query = getEntityManager().createNamedQuery("EstadoMedidor.findAll");
+		query.setHint("javax.persistence.cache.storeMode", "REFRESH");
 		resultado = (List<EstadoMedidor>) query.getResultList();
 		return resultado;
 	}
@@ -17,6 +18,7 @@ public class EstadoMedidorDAO extends ClaseDAO {
 		try {
 			EstadoMedidor resultado = new EstadoMedidor();
 			Query query = getEntityManager().createNamedQuery("EstadoMedidor.buscarBueno");
+			query.setHint("javax.persistence.cache.storeMode", "REFRESH");
 			resultado = (EstadoMedidor) query.getSingleResult();
 			return resultado;
 		}catch(Exception ex) {

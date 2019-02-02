@@ -31,6 +31,7 @@ public class RubroDAO extends ClaseDAO {
 	public List<Rubro> getListaRubros(){
 		List<Rubro> resultado = new ArrayList<Rubro>();
 		Query query = getEntityManager().createNamedQuery("Rubro.findAll");
+		query.setHint("javax.persistence.cache.storeMode", "REFRESH");
 		resultado = (List<Rubro>) query.getResultList();
 		return resultado;
 	}

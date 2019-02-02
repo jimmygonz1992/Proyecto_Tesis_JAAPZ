@@ -10,6 +10,7 @@ public class AnioDAO extends ClaseDAO{
 	public List<Anio> getListaAnios(){
 		List<Anio> resultado = new ArrayList<Anio>();
 		Query query = getEntityManager().createNamedQuery("Anio.findAll");
+		query.setHint("javax.persistence.cache.storeMode", "REFRESH");
 		resultado = (List<Anio>) query.getResultList();
 		return resultado;
 	}
