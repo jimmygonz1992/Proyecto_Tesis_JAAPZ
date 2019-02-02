@@ -573,10 +573,10 @@ public class RecaudacionesRegistroCobroC {
 				if (chkImprimirComp.isSelected()==true) {
 					PrintReport pr = new PrintReport();
 					Map<String, Object> param = new HashMap<String, Object>();
-					param.put("ID_CUENTA_CLIENTE", txtIdCuenta.getText());
-					param.put("CEDULA", txtCedula.getText());
-					pr.crearReporte("/recursos/informes/abc.jasper", facturaDao, param);
-					pr.showReport("Listado");
+					param.put("numComprobante", txtNumComp.getText());
+					param.put("cedula", txtCedula.getText());
+					pr.crearReporte("/recursos/informes/comprobante.jasper", facturaDao, param);
+					pr.showReport("Comprobante de Pago");
 				}
 				limpiar();
 				txtNumComp.setText("");

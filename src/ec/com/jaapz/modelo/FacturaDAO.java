@@ -1,6 +1,7 @@
 package ec.com.jaapz.modelo;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Query;
@@ -25,6 +26,17 @@ public class FacturaDAO extends ClaseDAO{
 		Query query = getEntityManager().createNamedQuery("Factura.buscarFactCuenta");
 		query.setHint("javax.persistence.cache.storeMode", "REFRESH");
 		query.setParameter("idCuenta",idCuenta);
+		resultado = (List<Factura>) query.getResultList();
+		return resultado;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Factura> getListaFacturasRecaudadas(Date fechaInicio, Date fechaFin){
+		List<Factura> resultado = new ArrayList<Factura>();
+		Query query = getEntityManager().createNamedQuery("Factura.buscarFactRecaudadas");
+		query.setHint("javax.persistence.cache.storeMode", "REFRESH");
+		query.setParameter("fechaInicio", fechaInicio);
+		query.setParameter("fechaFin", fechaFin);
 		resultado = (List<Factura>) query.getResultList();
 		return resultado;
 	}
