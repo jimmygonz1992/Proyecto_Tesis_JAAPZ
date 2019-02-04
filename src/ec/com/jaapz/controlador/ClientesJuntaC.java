@@ -5,13 +5,18 @@ import java.util.Optional;
 
 import ec.com.jaapz.modelo.Barrio;
 import ec.com.jaapz.modelo.Categoria;
+import ec.com.jaapz.modelo.Cliente;
 import ec.com.jaapz.modelo.CuentaCliente;
 import ec.com.jaapz.modelo.CuentaClienteDAO;
+import ec.com.jaapz.modelo.Genero;
 import ec.com.jaapz.util.Context;
 import ec.com.jaapz.util.ControllerHelper;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 
 public class ClientesJuntaC {
@@ -20,9 +25,10 @@ public class ClientesJuntaC {
 	@FXML TextField txtNombres;
 	@FXML TextField txtApellidos;
 	@FXML TextField txtIdCliente;
-	@FXML TextField txtGenero;
+	@FXML ComboBox<Genero> cboGenero;
 	@FXML TextField txtDireccionDomicilio;
 	@FXML TextField txtCodigoCuenta;
+	@FXML TextField txtEmail;
 	@FXML TextField txtFechaIngreso;
 	@FXML TextField txtIdCategoria;
 	@FXML TextField txtDescripcionCategoria;
@@ -45,13 +51,26 @@ public class ClientesJuntaC {
 	Barrio barrioSeleccionado = new Barrio();
 	Categoria categoriaSeleccionado = new Categoria();
 	SimpleDateFormat formateador = new SimpleDateFormat("dd/MM/yyyy");
+	Genero[] genero = Genero.values();
+	Cliente clienteSeleccionado;
 	
 	CuentaClienteDAO cuentaDAO = new CuentaClienteDAO();
 	public void initialize() {
 		cuentaSeleccionada = Context.getInstance().getCuentaCliente();
+		clienteSeleccionado = cuentaSeleccionada.getCliente();
 		Context.getInstance().setCuentaCliente(null);
+		llenarCombos();
 		recuperarDatos(cuentaSeleccionada);
 	}
+	private void llenarCombos() {
+    	try {
+			ObservableList<Genero> listaGenero = FXCollections.observableArrayList(Genero.values());
+			cboGenero.setItems(listaGenero);
+			cboGenero.setPromptText("Seleccione Genero");
+    	}catch(Exception ex) {
+    		System.out.println(ex.getMessage());
+    	}
+    }
 	private void recuperarDatos(CuentaCliente cuentaCliente) {
 		try {
 			//datos del cliente
@@ -59,8 +78,16 @@ public class ClientesJuntaC {
 			txtCedula.setText(cuentaCliente.getCliente().getCedula());
 			txtNombres.setText(cuentaCliente.getCliente().getNombre());
 			txtApellidos.setText(cuentaCliente.getCliente().getApellido());
-			txtGenero.setText(cuentaCliente.getCliente().getGenero());
 			txtTelefono.setText(cuentaCliente.getCliente().getTelefono());
+			txtEmail.setText(cuentaCliente.getEmail());
+			if(cuentaCliente.getCliente().getGenero() != null) {
+				for(Genero g : genero){
+					if(g.toString().equals(cuentaCliente.getCliente().getGenero().toString()))
+						cboGenero.getSelectionModel().select(g);
+				}
+			}
+			//clienteRecuperado = listaCliente.get(0);
+			
 			//datos de la cuenta
 			txtCodigoCuenta.setText(String.valueOf(cuentaCliente.getIdCuenta()));
 			txtFechaIngreso.setText(formateador.format(cuentaCliente.getFechaIngreso()));
@@ -114,8 +141,16 @@ public class ClientesJuntaC {
 				helper.mostrarAlertaError("Debe Seleccionar Cuenta de Cliente", Context.getInstance().getStage());
 				return;
 			}
+			
 			Optional<ButtonType> result = helper.mostrarAlertaConfirmacion("Desea Grabar los Datos?",Context.getInstance().getStage());
 			if(result.get() == ButtonType.OK){
+				//actualizar los datos personales tbn
+				clienteSeleccionado.setApellido(txtApellidos.getText());
+				clienteSeleccionado.setNombre(txtNombres.getText());
+				clienteSeleccionado.setCedula(txtCedula.getText());
+				clienteSeleccionado.setEmail(txtEmail.getText());
+				clienteSeleccionado.setTelefono(txtTelefono.getText());
+				clienteSeleccionado.setGenero(cboGenero.getSelectionModel().getSelectedItem().name());
 				//enlazar con el barrio
 				if (barrioSeleccionado != null) {
 					barrioSeleccionado.addCuentaCliente(cuentaSeleccionada);
@@ -133,9 +168,11 @@ public class ClientesJuntaC {
 				
 				cuentaDAO.getEntityManager().getTransaction().begin();
 				cuentaDAO.getEntityManager().merge(cuentaSeleccionada);
+				cuentaDAO.getEntityManager().merge(clienteSeleccionado);
 				cuentaDAO.getEntityManager().getTransaction().commit();
 				helper.mostrarAlertaInformacion("Datos Grabados con Exito", Context.getInstance().getStage());
 			}
+			
 		}catch(Exception ex) {
 			cuentaDAO.getEntityManager().getTransaction().rollback();
 			System.out.println(ex.getMessage());
