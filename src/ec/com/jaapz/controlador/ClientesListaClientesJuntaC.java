@@ -14,6 +14,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
@@ -21,6 +22,8 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.util.Callback;
 
 public class ClientesListaClientesJuntaC {
@@ -32,7 +35,7 @@ public class ClientesListaClientesJuntaC {
 	CuentaClienteDAO cuentaDAO = new CuentaClienteDAO();
 	ControllerHelper helper = new ControllerHelper();
 	SimpleDateFormat formateador = new SimpleDateFormat("dd/MM/yyyy");
-	
+
 	public void initialize() {	
 		try {
 			btnEditar.setStyle("-fx-graphic: url('/editar.png');-fx-cursor: hand;");
@@ -47,6 +50,14 @@ public class ClientesListaClientesJuntaC {
 					txtBuscar.setText(cadena);
 				}
 			});
+			txtBuscar.setOnKeyPressed(new EventHandler<KeyEvent>() { 
+				@Override 
+				public void handle(KeyEvent ke) { 
+					if (ke.getCode().equals(KeyCode.ENTER)) { 
+						buscarCliente();
+					} 
+				} 
+			}); 
 		}catch(Exception ex) {
 			System.out.println(ex.getMessage());
 		}
@@ -87,7 +98,10 @@ public class ClientesListaClientesJuntaC {
 			fechaColum.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<CuentaCliente,String>, ObservableValue<String>>() {
 				@Override
 				public ObservableValue<String> call(CellDataFeatures<CuentaCliente, String> param) {
-					return new SimpleObjectProperty<String>(formateador.format(param.getValue().getFechaIngreso()));
+					String fecha = "";
+					if(param.getValue().getFechaIngreso() != null)
+						fecha = formateador.format(param.getValue().getFechaIngreso());
+					return new SimpleObjectProperty<String>(fecha);
 				}
 			});
 
@@ -101,7 +115,8 @@ public class ClientesListaClientesJuntaC {
 					if(param.getValue().getMedidor() == null)
 						medidor = "NO ASIGNADO";
 					else
-						medidor = param.getValue().getMedidor().getMarca() + " " + param.getValue().getMedidor().getModelo();
+						if(param.getValue().getMedidor().getCodigo() != null)
+							medidor = param.getValue().getMedidor().getCodigo();
 					return new SimpleObjectProperty<String>(medidor);
 				}
 			});
@@ -155,7 +170,16 @@ public class ClientesListaClientesJuntaC {
 		}
 	}
 	public void buscarCliente() {
-		llenarDatos(txtBuscar.getText());
+		try {
+			List<CuentaCliente> listaClientes;
+			ObservableList<CuentaCliente> datos = FXCollections.observableArrayList();
+			listaClientes = cuentaDAO.getListaCuentaClientes(txtBuscar.getText().toString());
+			datos.setAll(listaClientes);
+			tvDatos.setItems(datos);
+			tvDatos.refresh();
+		}catch(Exception ex) {
+			System.out.println(ex.getMessage());
+		}
 	}
 	@FXML
 	void editarCliente(ActionEvent event) {

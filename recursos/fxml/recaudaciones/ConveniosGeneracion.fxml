@@ -7,14 +7,16 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="565.0" prefWidth="1106.0" stylesheets="/estilo.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefHeight="565.0" prefWidth="1106.0" stylesheets="/estilo.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ec.com.jaapz.controlador.RecaudacionesConvenioC">
    <children>
-      <GridPane layoutX="6.0" layoutY="6.0" prefHeight="506.0" prefWidth="662.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+      <GridPane layoutY="10.0" prefHeight="506.0" prefWidth="662.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="10.0">
         <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="20.0" minWidth="10.0" prefWidth="20.0" />
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="404.0" minWidth="10.0" prefWidth="204.0" />
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="516.0" minWidth="10.0" prefWidth="279.0" />
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="516.0" minWidth="9.0" prefWidth="9.0" />
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="569.0" minWidth="10.0" prefWidth="569.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="569.0" minWidth="10.0" prefWidth="20.0" />
         </columnConstraints>
         <rowConstraints>
           <RowConstraints maxHeight="164.0" minHeight="0.0" prefHeight="33.0" vgrow="SOMETIMES" />
@@ -28,7 +30,7 @@
           <RowConstraints maxHeight="95.0" minHeight="10.0" prefHeight="60.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnSpan="4">
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.columnSpan="4">
                <children>
                   <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="30.0" prefWidth="341.0" text="CONVENIOS DE PAGO">
                      <font>
@@ -37,7 +39,7 @@
                   </Label>
                </children>
             </HBox>
-            <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnSpan="2" GridPane.rowIndex="2">
+            <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="2">
                <children>
                   <GridPane prefHeight="88.0" prefWidth="674.0" HBox.hgrow="ALWAYS">
                      <children>
@@ -52,7 +54,8 @@
                         </HBox>
                         <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1">
                            <children>
-                              <TextField />
+                              <TextField fx:id="txtidCuenta" prefHeight="25.0" prefWidth="87.0" />
+                              <Button fx:id="btnBuscar" mnemonicParsing="false" onAction="#buscarCliente" prefHeight="25.0" prefWidth="50.0" text="..." />
                            </children>
                         </HBox>
                         <HBox alignment="CENTER_LEFT" prefHeight="27.0" prefWidth="65.0" GridPane.columnIndex="3" GridPane.rowIndex="1">
@@ -66,7 +69,7 @@
                         </HBox>
                         <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.columnSpan="4" GridPane.rowIndex="1">
                            <children>
-                              <TextField prefHeight="25.0" prefWidth="347.0" HBox.hgrow="ALWAYS" />
+                              <TextField fx:id="txtCliente" prefHeight="25.0" prefWidth="347.0" HBox.hgrow="ALWAYS" />
                            </children>
                         </HBox>
                         <HBox alignment="CENTER_LEFT" prefHeight="27.0" prefWidth="65.0" GridPane.columnIndex="3">
@@ -78,9 +81,9 @@
                               </Label>
                            </children>
                         </HBox>
-                        <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="4">
+                        <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.columnSpan="2">
                            <children>
-                              <TextField>
+                              <TextField fx:id="txtMedidor">
                                  <HBox.margin>
                                     <Insets />
                                  </HBox.margin>
@@ -98,12 +101,12 @@
                         </HBox>
                         <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                            <children>
-                              <TextField />
+                              <TextField fx:id="txtCedula" />
                            </children>
                         </HBox>
                      </children>
                      <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="330.0" minWidth="10.0" prefWidth="73.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="330.0" minWidth="10.0" prefWidth="80.0" />
                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="330.0" minWidth="10.0" prefWidth="128.0" />
                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="330.0" minWidth="2.0" prefWidth="7.0" />
                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="602.0" minWidth="10.0" prefWidth="111.0" />
@@ -119,12 +122,12 @@
                   </GridPane>
                </children>
             </HBox>
-            <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnSpan="2" GridPane.rowIndex="5">
+            <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="5">
                <children>
-                  <TableView fx:id="tvDatos" prefHeight="405.0" prefWidth="674.0" />
+                  <TableView fx:id="tvPlanillasImpagas" prefHeight="405.0" prefWidth="674.0" />
                </children>
             </HBox>
-            <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="6">
+            <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="6">
                <children>
                   <GridPane prefHeight="34.0" prefWidth="327.0" HBox.hgrow="ALWAYS">
                     <columnConstraints>
@@ -146,92 +149,18 @@
                         </HBox>
                         <HBox alignment="CENTER" prefHeight="32.0" prefWidth="162.0" GridPane.columnIndex="1">
                            <children>
-                              <TextField />
+                              <TextField fx:id="txtTotalDeuda" />
                            </children>
                         </HBox>
                      </children>
                   </GridPane>
                </children>
             </HBox>
-            <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="2" GridPane.rowSpan="2">
+            <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="2">
                <children>
                   <GridPane prefHeight="88.0" prefWidth="674.0" HBox.hgrow="ALWAYS">
                      <children>
-                        <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
-                           <children>
-                              <Label prefHeight="20.0" prefWidth="83.0" text="Id Cuenta:">
-                                 <font>
-                                    <Font name="System Bold" size="14.0" />
-                                 </font>
-                              </Label>
-                           </children>
-                        </HBox>
-                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1">
-                           <children>
-                              <TextField prefHeight="18.0" prefWidth="109.0" />
-                           </children>
-                        </HBox>
-                        <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="3">
-                           <children>
-                              <Label prefHeight="20.0" prefWidth="119.0" text="Fecha Convenio:">
-                                 <font>
-                                    <Font name="System Bold" size="14.0" />
-                                 </font>
-                              </Label>
-                           </children>
-                        </HBox>
-                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="4">
-                           <children>
-                              <DatePicker />
-                           </children>
-                        </HBox>
-                        <HBox alignment="CENTER_LEFT" prefHeight="27.0" prefWidth="65.0" GridPane.columnIndex="3" GridPane.rowIndex="1">
-                           <children>
-                              <Label prefHeight="20.0" prefWidth="83.0" text="Cliente:">
-                                 <font>
-                                    <Font name="System Bold" size="14.0" />
-                                 </font>
-                              </Label>
-                           </children>
-                        </HBox>
-                        <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.columnSpan="4" GridPane.rowIndex="1">
-                           <children>
-                              <TextField prefHeight="25.0" prefWidth="347.0" HBox.hgrow="ALWAYS" />
-                           </children>
-                        </HBox>
-                        <HBox alignment="CENTER_LEFT" prefHeight="27.0" prefWidth="65.0" GridPane.columnIndex="6">
-                           <children>
-                              <Label prefHeight="20.0" prefWidth="135.0" text="Usuario:">
-                                 <font>
-                                    <Font name="System Bold" size="14.0" />
-                                 </font>
-                              </Label>
-                           </children>
-                        </HBox>
-                        <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="7">
-                           <children>
-                              <TextField>
-                                 <HBox.margin>
-                                    <Insets />
-                                 </HBox.margin>
-                              </TextField>
-                           </children>
-                        </HBox>
-                        <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="1">
-                           <children>
-                              <Label prefHeight="20.0" prefWidth="83.0" text="Cédula:">
-                                 <font>
-                                    <Font name="System Bold" size="14.0" />
-                                 </font>
-                              </Label>
-                           </children>
-                        </HBox>
-                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                           <children>
-                              <TextField />
-                           </children>
-                        </HBox>
-                        <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnSpan="2" GridPane.rowIndex="2">
+                        <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnSpan="2">
                            <children>
                               <Label prefHeight="20.0" prefWidth="140.0" text="Ingrese # de meses:">
                                  <font>
@@ -240,11 +169,16 @@
                               </Label>
                            </children>
                         </HBox>
-                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="2">
+                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="3">
                            <children>
-                              <TextField />
+                              <TextField fx:id="txtNumMeses" />
                            </children>
                         </HBox>
+                        <Button fx:id="btnGenerar" mnemonicParsing="false" onAction="#generarDetalleConvenio" text="Generar" GridPane.columnIndex="4">
+                           <GridPane.margin>
+                              <Insets left="10.0" />
+                           </GridPane.margin>
+                        </Button>
                      </children>
                      <columnConstraints>
                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="330.0" minWidth="10.0" prefWidth="73.0" />
@@ -257,29 +191,27 @@
                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="602.0" minWidth="10.0" prefWidth="81.0" />
                      </columnConstraints>
                      <rowConstraints>
-                        <RowConstraints maxHeight="37.0" minHeight="10.0" prefHeight="28.0" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="55.0" minHeight="10.0" prefHeight="28.0" vgrow="SOMETIMES" />
                         <RowConstraints maxHeight="55.0" minHeight="10.0" prefHeight="31.0" vgrow="SOMETIMES" />
                      </rowConstraints>
                   </GridPane>
                </children>
             </HBox>
-            <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="5">
+            <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="4" GridPane.rowSpan="2">
                <children>
-                  <TableView fx:id="tvDatos1" prefHeight="405.0" prefWidth="674.0" />
+                  <TableView fx:id="tvDetalleConvenio" prefHeight="405.0" prefWidth="674.0" />
                </children>
             </HBox>
-            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="8">
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="8">
                <children>
-                  <Button alignment="BOTTOM_CENTER" contentDisplay="TOP" mnemonicParsing="false" prefHeight="58.0" prefWidth="67.0" styleClass="botonGrabar" text="Grabar" />
-                  <Button alignment="BOTTOM_CENTER" contentDisplay="TOP" mnemonicParsing="false" prefHeight="58.0" prefWidth="67.0" styleClass="botonLimpiar" text="Limpiar">
+                  <Button fx:id="btnGrabar" alignment="BOTTOM_CENTER" contentDisplay="TOP" mnemonicParsing="false" onAction="#grabarConvenio" prefHeight="58.0" prefWidth="67.0" styleClass="botonGrabar" text="Grabar" />
+                  <Button fx:id="btnLimpiar" alignment="BOTTOM_CENTER" contentDisplay="TOP" mnemonicParsing="false" onAction="#limpiarDatos" prefHeight="58.0" prefWidth="67.0" styleClass="botonLimpiar" text="Limpiar">
                      <HBox.margin>
                         <Insets left="10.0" />
                      </HBox.margin>
                   </Button>
                </children>
             </HBox>
-            <HBox alignment="BOTTOM_CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnSpan="2" GridPane.rowIndex="4">
+            <HBox alignment="BOTTOM_CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="4">
                <children>
                   <Label alignment="BOTTOM_CENTER" contentDisplay="BOTTOM" prefHeight="8.0" prefWidth="163.0" text="Planillas Impagas">
                      <font>
@@ -291,7 +223,7 @@
                   </Label>
                </children>
             </HBox>
-            <HBox alignment="BOTTOM_CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="4">
+            <HBox alignment="BOTTOM_CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="3">
                <children>
                   <Label alignment="BOTTOM_CENTER" contentDisplay="BOTTOM" prefHeight="17.0" prefWidth="249.0" text="Detalle de Convenio - Forma de Pago">
                      <font>

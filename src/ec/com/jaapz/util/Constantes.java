@@ -13,6 +13,7 @@ public abstract class Constantes {
 
 	public static String IDENT_INSTALACION = "INS";
 	public static String IDENT_REPARACION = "REP";
+	public static String IDENT_CONVENIO = "CONV";
 	public static String IDENT_PROCESO = "SIN PLANILLAR";
 	public static String IDENT_LECTURA = "LEC";
 	//id de los diferentes usuarios que estan registrados en el sistema
@@ -34,6 +35,7 @@ public abstract class Constantes {
 	public static String EST_APERTURA_PROCESO = "EN PROCESO";
 	public static String EST_APERTURA_REALIZADO = "REALIZADO";
 	public static String CONVENIO_NO = "NO";
+	public static String CONVENIO_SI = "SI";
 	
 	public static String CAT_VIVIENDA = "VIVIENDA";
 	public static String CAT_COMERCIAL = "COMERCIAL";
