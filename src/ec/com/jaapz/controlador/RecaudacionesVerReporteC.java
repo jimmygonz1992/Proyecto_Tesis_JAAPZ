@@ -4,11 +4,16 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import ec.com.jaapz.modelo.Factura;
 import ec.com.jaapz.modelo.FacturaDAO;
+import ec.com.jaapz.util.Context;
 import ec.com.jaapz.util.ControllerHelper;
+import ec.com.jaapz.util.Encriptado;
+import ec.com.jaapz.util.PrintReport;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -33,6 +38,9 @@ public class RecaudacionesVerReporteC {
 	SimpleDateFormat formateador = new SimpleDateFormat("dd/MM/yyyy");
 	
 	FacturaDAO facturaDao = new FacturaDAO();
+	Date dateInicio = new Date();
+	Date dateFin = new Date();
+	Date fechaImpresion = new Date(); 
 	
 	public void initialize(){
 		dtpFechaInicio.setValue(LocalDate.now());
@@ -41,8 +49,8 @@ public class RecaudacionesVerReporteC {
 	
 	public void cargarDatos() {
 		try {
-			Date dateInicio = Date.from(dtpFechaInicio.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
-			Date dateFin = Date.from(dtpFechaFin.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
+			dateInicio = Date.from(dtpFechaInicio.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
+			dateFin = Date.from(dtpFechaFin.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
 			llenarDatos(dateInicio, dateFin);
 		}catch(Exception ex) {
 			System.out.println(ex.getMessage());
@@ -71,6 +79,16 @@ public class RecaudacionesVerReporteC {
 				}
 			});
 			
+			TableColumn<Factura, String> numComprobColum = new TableColumn<>("Nº Comprobante");
+			numComprobColum.setMinWidth(10);
+			numComprobColum.setPrefWidth(100);
+			numComprobColum.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Factura, String>, ObservableValue<String>>() {
+				@Override
+				public ObservableValue<String> call(CellDataFeatures<Factura, String> param) {
+					return new SimpleObjectProperty<String>(param.getValue().getNumFactura());
+				}
+			});
+			
 			TableColumn<Factura, String> fechaColum = new TableColumn<>("Fecha");
 			fechaColum.setMinWidth(10);
 			fechaColum.setPrefWidth(100);
@@ -78,6 +96,36 @@ public class RecaudacionesVerReporteC {
 				@Override
 				public ObservableValue<String> call(CellDataFeatures<Factura, String> param) {
 					return new SimpleObjectProperty<String>(formateador.format(param.getValue().getFecha()));
+				}
+			});
+			
+			TableColumn<Factura, String> clienteColum = new TableColumn<>("Cliente");
+			clienteColum.setMinWidth(10);
+			clienteColum.setPrefWidth(250);
+			clienteColum.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Factura, String>, ObservableValue<String>>() {
+				@Override
+				public ObservableValue<String> call(CellDataFeatures<Factura, String> param) {
+					return new SimpleObjectProperty<String>(param.getValue().getCuentaCliente().getCliente().getNombre() + " " + param.getValue().getCuentaCliente().getCliente().getApellido());
+				}
+			});
+			
+			TableColumn<Factura, String> numMedidorColum = new TableColumn<>("Nº Medidor");
+			numMedidorColum.setMinWidth(10);
+			numMedidorColum.setPrefWidth(75);
+			numMedidorColum.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Factura, String>, ObservableValue<String>>() {
+				@Override
+				public ObservableValue<String> call(CellDataFeatures<Factura, String> param) {
+					return new SimpleObjectProperty<String>(param.getValue().getCuentaCliente().getMedidor().getCodigo());
+				}
+			});
+			
+			TableColumn<Factura, String> direccionColum = new TableColumn<>("Dirección");
+			direccionColum.setMinWidth(10);
+			direccionColum.setPrefWidth(300);
+			direccionColum.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Factura, String>, ObservableValue<String>>() {
+				@Override
+				public ObservableValue<String> call(CellDataFeatures<Factura, String> param) {
+					return new SimpleObjectProperty<String>(param.getValue().getCuentaCliente().getCliente().getDireccion());
 				}
 			});
 			
@@ -91,7 +139,7 @@ public class RecaudacionesVerReporteC {
 				}
 			});
 			
-			tvDatos.getColumns().addAll(idColum, fechaColum, totalColum);
+			tvDatos.getColumns().addAll(idColum, numComprobColum, fechaColum, clienteColum, numMedidorColum, direccionColum, totalColum);
 			tvDatos.setItems(datos);
 			sumarDatos();
 		}catch(Exception ex){
@@ -117,7 +165,17 @@ public class RecaudacionesVerReporteC {
 	}
 	
 	public void verReporte() {
-		
+	try {
+			PrintReport pr = new PrintReport();
+			Map<String, Object> param = new HashMap<String, Object>();
+			param.put("fechaInicio", dateInicio);
+			param.put("fechaFin", dateFin);
+			param.put("usuarioCrea", Encriptado.Desencriptar(Context.getInstance().getUsuariosC().getUsuario()));
+			param.put("fechaImpresion", fechaImpresion);
+			pr.crearReporte("/recursos/informes/ver_recaudaciones.jasper", facturaDao, param);
+			pr.showReport("Recaudaciones");
+		}catch(Exception ex) {
+			System.out.println(ex.getMessage());
+		}
 	}
-
 }
