@@ -208,6 +208,9 @@
 .botonAceptarPago {
 	-fx-graphic: url("aceptar_pago.png");
 }
+.botonImprimir {
+	-fx-graphic: url("imprimir.png");
+}
 .imagenViewInicio{
 	-fx-background-image: url("sesiones.png");
 	-fx-background-size: stretch;

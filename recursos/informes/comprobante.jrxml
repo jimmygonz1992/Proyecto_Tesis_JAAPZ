@@ -309,10 +309,10 @@ WHERE
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="140" splitType="Stretch">
+		<band height="21" splitType="Stretch">
 			<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.FreeLayout"/>
 			<rectangle>
-				<reportElement x="2" y="1" width="550" height="119" uuid="692aa90e-12fc-40e7-bb19-23c53036485d"/>
+				<reportElement x="2" y="1" width="550" height="20" uuid="692aa90e-12fc-40e7-bb19-23c53036485d"/>
 			</rectangle>
 			<textField>
 				<reportElement x="26" y="3" width="60" height="18" uuid="dda6d1d6-a84c-46b5-a778-7597c9357dd6">
@@ -358,70 +358,69 @@ WHERE
 				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[$F{subtfac}]]></textFieldExpression>
 			</textField>
+			<line>
+				<reportElement x="108" y="1" width="1" height="20" uuid="ccd0ce92-4b5b-475e-ba8d-7d911c8d9cc7"/>
+			</line>
+			<line>
+				<reportElement x="331" y="0" width="1" height="20" uuid="20a3577d-f6f0-4de2-894d-bb36312853db"/>
+			</line>
+			<line>
+				<reportElement x="450" y="0" width="1" height="20" uuid="b4bd4feb-f3b7-46d6-b7ea-cbacbfdd6bde"/>
+			</line>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="30">
 			<staticText>
-				<reportElement x="10" y="31" width="137" height="13" uuid="cdd3cc7f-d9e5-4d2d-8fe1-96c28ff8dd31"/>
+				<reportElement x="240" y="0" width="137" height="13" uuid="cdd3cc7f-d9e5-4d2d-8fe1-96c28ff8dd31"/>
 				<textElement textAlignment="Left">
 					<font size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Valor total de la Factura:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="9" y="44" width="137" height="17" uuid="da001ab4-1ea0-46f0-874e-965aa28edd32"/>
+				<reportElement x="240" y="13" width="137" height="17" uuid="da001ab4-1ea0-46f0-874e-965aa28edd32"/>
 				<textElement textAlignment="Left" verticalAlignment="Top">
 					<font size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Total Deuda:]]></text>
 			</staticText>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="81">
 			<staticText>
-				<reportElement x="220" y="61" width="100" height="17" uuid="81cef85e-c525-4148-a296-69f74fed21e9"/>
+				<reportElement x="220" y="3" width="100" height="17" uuid="81cef85e-c525-4148-a296-69f74fed21e9"/>
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Información General]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="8" y="82" width="540" height="17" uuid="7c485c85-edea-44b0-b6ec-7d62bea2a76c"/>
+				<reportElement x="7" y="17" width="540" height="17" uuid="7c485c85-edea-44b0-b6ec-7d62bea2a76c"/>
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Señor Usuario, los datos que aparecen a continuación, corresponden a cuentas Pendientes]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="8" y="99" width="158" height="17" uuid="6925f2a7-31a9-404e-80f4-516cb62c5c4b"/>
+				<reportElement x="6" y="33" width="158" height="17" uuid="6925f2a7-31a9-404e-80f4-516cb62c5c4b"/>
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Meses y/o Facturas Pendientes:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="290" y="99" width="85" height="17" uuid="ac156883-eb0c-4621-acef-e3d387f132c9"/>
+				<reportElement x="320" y="33" width="85" height="17" uuid="ac156883-eb0c-4621-acef-e3d387f132c9"/>
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Saldo Pendiente:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="8" y="119" width="100" height="21" uuid="8bf498ca-8d33-43b1-83f9-610c86796ee0"/>
+				<reportElement x="7" y="50" width="100" height="20" uuid="8bf498ca-8d33-43b1-83f9-610c86796ee0"/>
 				<textFieldExpression><![CDATA[$F{usuario_crea}]]></textFieldExpression>
 			</textField>
-			<line>
-				<reportElement x="3" y="60" width="550" height="1" uuid="67a04a81-38b3-4f40-892a-1f6629ee5c78"/>
-			</line>
-			<line>
-				<reportElement x="2" y="82" width="550" height="1" uuid="75a2475d-d379-47a7-8d0d-8feea8a6e4b3"/>
-			</line>
-			<line>
-				<reportElement x="2" y="27" width="550" height="1" uuid="71da91c6-82de-4aee-b68d-92f22c1725b6"/>
-			</line>
-			<line>
-				<reportElement x="108" y="1" width="1" height="26" uuid="ccd0ce92-4b5b-475e-ba8d-7d911c8d9cc7"/>
-			</line>
-			<line>
-				<reportElement x="331" y="0" width="1" height="26" uuid="20a3577d-f6f0-4de2-894d-bb36312853db"/>
-			</line>
-			<line>
-				<reportElement x="450" y="0" width="1" height="26" uuid="b4bd4feb-f3b7-46d6-b7ea-cbacbfdd6bde"/>
-			</line>
 		</band>
-	</detail>
+	</pageFooter>
 </jasperReport>
