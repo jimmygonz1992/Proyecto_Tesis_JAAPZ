@@ -204,7 +204,7 @@
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="8">
                <children>
                   <Button fx:id="btnGrabar" alignment="BOTTOM_CENTER" contentDisplay="TOP" mnemonicParsing="false" onAction="#grabarConvenio" prefHeight="58.0" prefWidth="67.0" styleClass="botonGrabar" text="Grabar" />
-                  <Button fx:id="btnLimpiar" alignment="BOTTOM_CENTER" contentDisplay="TOP" mnemonicParsing="false" prefHeight="58.0" prefWidth="67.0" styleClass="botonLimpiar" text="Limpiar">
+                  <Button fx:id="btnLimpiar" alignment="BOTTOM_CENTER" contentDisplay="TOP" mnemonicParsing="false" onAction="#limpiarDatos" prefHeight="58.0" prefWidth="67.0" styleClass="botonLimpiar" text="Limpiar">
                      <HBox.margin>
                         <Insets left="10.0" />
                      </HBox.margin>

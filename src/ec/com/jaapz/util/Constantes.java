@@ -34,6 +34,7 @@ public abstract class Constantes {
 	public static String EST_APERTURA_PROCESO = "EN PROCESO";
 	public static String EST_APERTURA_REALIZADO = "REALIZADO";
 	public static String CONVENIO_NO = "NO";
+	public static String CONVENIO_SI = "SI";
 	
 	public static String CAT_VIVIENDA = "VIVIENDA";
 	public static String CAT_COMERCIAL = "COMERCIAL";

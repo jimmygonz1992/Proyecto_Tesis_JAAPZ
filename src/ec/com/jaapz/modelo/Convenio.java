@@ -1,9 +1,21 @@
 package ec.com.jaapz.modelo;
 
 import java.io.Serializable;
-import javax.persistence.*;
-import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 
 /**
@@ -22,7 +34,9 @@ public class Convenio implements Serializable {
 
 	private String estado;
 
-	private Timestamp fecha;
+	@Temporal(TemporalType.DATE)
+	private Date fecha;
+
 
 	@Column(name="num_letras")
 	private Integer numLetras;
@@ -64,11 +78,11 @@ public class Convenio implements Serializable {
 		this.estado = estado;
 	}
 
-	public Timestamp getFecha() {
+	public Date getFecha() {
 		return this.fecha;
 	}
 
-	public void setFecha(Timestamp fecha) {
+	public void setFecha(Date fecha) {
 		this.fecha = fecha;
 	}
 
