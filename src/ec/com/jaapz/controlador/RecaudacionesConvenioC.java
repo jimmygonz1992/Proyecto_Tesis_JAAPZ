@@ -13,6 +13,7 @@ import ec.com.jaapz.modelo.ConvenioPlanilla;
 import ec.com.jaapz.modelo.CuentaCliente;
 import ec.com.jaapz.modelo.Pago;
 import ec.com.jaapz.modelo.Planilla;
+import ec.com.jaapz.modelo.PlanillaDAO;
 import ec.com.jaapz.modelo.PlanillaDetalle;
 import ec.com.jaapz.util.Constantes;
 import ec.com.jaapz.util.Context;
@@ -48,7 +49,7 @@ public class RecaudacionesConvenioC {
 	ControllerHelper helper = new ControllerHelper();
 	CuentaCliente cuentaSeleccionada;
 	ConvenioDAO convenioDAO = new ConvenioDAO();
-	
+	PlanillaDAO planillaDAO = new PlanillaDAO();
 	public void initialize() {
 		try {
 			limpiar();
@@ -307,13 +308,24 @@ public class RecaudacionesConvenioC {
 					convenioDAO.getEntityManager().merge(planilla);
 				}
 				convenioDAO.getEntityManager().getTransaction().commit();
+				
+				List<Convenio> listaGuardada = convenioDAO.getConveniosAll();
+				List<Planilla> noPlanillado = planillaDAO.getNoPlanillado(cuentaSeleccionada.getIdCuenta());
+				
+				convenioDAO.getEntityManager().getTransaction().begin();
 				//crear las planillas para realizar el cobro
 				for(int i = 0 ; i < Integer.parseInt(String.valueOf(txtNumMeses.getText())) ; i ++) {
-					Planilla planilla = new Planilla();
-					planilla.setIdPlanilla(null);
-					planilla.setIdentificadorProceso(Constantes.IDENT_PROCESO);//con esta variable se identifica si se encuentra procesada
-					planilla.setCuentaCliente(cuentaSeleccionada);
-					planilla.setEstado(Constantes.ESTADO_ACTIVO);
+					Planilla planilla;
+					if(noPlanillado.size() > i) {
+						planilla = noPlanillado.get(i);
+					}else {
+						planilla = new Planilla();
+						planilla.setIdPlanilla(null);
+						planilla.setIdentificadorProceso(Constantes.IDENT_PROCESO);//con esta variable se identifica si se encuentra procesada
+						planilla.setCuentaCliente(cuentaSeleccionada);
+						planilla.setEstado(Constantes.ESTADO_ACTIVO);
+					}
+					
 					
 					//enlace entre detalle de planilla y planilla
 					PlanillaDetalle detallePlanilla = new PlanillaDetalle();
@@ -325,12 +337,22 @@ public class RecaudacionesConvenioC {
 					detallePlanilla.setIdentificadorOperacion(Constantes.IDENT_CONVENIO);
 					detallePlanilla.setEstado(Constantes.ESTADO_ACTIVO);
 					detallePlanilla.setCantidad(1);
+					if(listaGuardada.size() > 0) 
+						detallePlanilla.setConvenioDetalle(listaGuardada.get(0).getConvenioDetalles().get(i));
 					
-					convenioDAO.getEntityManager().persist(planilla);
+					List<PlanillaDetalle> detalles = new ArrayList<PlanillaDetalle>();
+					detallePlanilla.setPlanilla(planilla);
+					detalles.add(detallePlanilla);
+					planilla.setPlanillaDetalles(detalles);
+					if(planilla.getIdPlanilla() != null)
+						convenioDAO.getEntityManager().merge(planilla);
+					else
+						convenioDAO.getEntityManager().persist(planilla);
 					
 				}
+				convenioDAO.getEntityManager().getTransaction().commit();
 				helper.mostrarAlertaInformacion("Datos grabados!!", Context.getInstance().getStage());
-				
+				limpiar();
 			}
 		}catch(Exception ex) {
 			System.out.println(ex.getMessage());

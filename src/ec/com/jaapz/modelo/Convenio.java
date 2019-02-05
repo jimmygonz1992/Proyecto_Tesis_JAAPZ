@@ -23,7 +23,7 @@ import javax.persistence.TemporalType;
  * 
  */
 @Entity
-@NamedQuery(name="Convenio.findAll", query="SELECT c FROM Convenio c")
+@NamedQuery(name="Convenio.findAll", query="SELECT c FROM Convenio c order by c.idConvenio desc")
 public class Convenio implements Serializable {
 	private static final long serialVersionUID = 1L;
 

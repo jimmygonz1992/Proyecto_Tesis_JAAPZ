@@ -188,9 +188,7 @@ public class LecturasAperturaC {
 				aperturaDAO.getEntityManager().getTransaction().begin();
 				//recorrer las cuentas para asignar las aperturas
 				for(CuentaCliente cuentas : listaCuentasActivas) {
-					
 					if(cuentas.getMedidor() != null) {
-						
 						
 						List<Planilla> noPlanillado = planillaDAO.getNoPlanillado(cuentas.getIdCuenta());
 						
@@ -220,7 +218,7 @@ public class LecturasAperturaC {
 							planilla.setAperturaLectura(aperturaGrabar);
 							//aperturaGrabar.setPla(planilla);
 							//enlace entre cliente y planilla
-							planilla.setCuentaCliente(cuentas);
+							//planilla.setCuentaCliente(cuentas);
 							//cuentas.addPlanilla(planilla);
 
 							//enlace entre detalle de planilla y planilla
@@ -281,7 +279,7 @@ public class LecturasAperturaC {
 				}
 				aperturaDAO.getEntityManager().getTransaction().commit();
 				helper.mostrarAlertaInformacion("Datos Grabados Correctamente", Context.getInstance().getStage());
-				recuperarDatos();
+				//recuperarDatos();
 			}
 		}catch(Exception ex) {
 			System.out.println(ex.getMessage());

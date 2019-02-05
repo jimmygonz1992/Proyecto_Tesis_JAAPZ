@@ -283,18 +283,22 @@ public class SolicitudesCierreReparacionC {
 				reparacion.setReparacionDetalles(listaAgregadaRubros);
 				
 				//para grabar planilla que existe una reparacion
-				//aqui para agregar la factura del 60% del costo de instalacion
 				PlanillaDAO planillaDAO = new PlanillaDAO();
 				List<Planilla> listaPlanilla = planillaDAO.getPlanillaActual(cuentaRecuperada.getIdCuenta());
 				Planilla planilla = new Planilla();
 				if(listaPlanilla.size() > 0)//necesito saber si tiene una planilla en proceso.. si esta la junta en la que se encuentra en proceso
 					planilla = listaPlanilla.get(0);
-				else { //caso contrario se crea una nueva planilla.. pero aqui se pone el identificador.. para saber si esta pendiente
-					planilla = new Planilla();
-					planilla.setIdPlanilla(null);
-					planilla.setIdentificadorProceso(Constantes.IDENT_PROCESO);//con esta variable se identifica si se encuentra procesada
-					planilla.setCuentaCliente(cuentaRecuperada);
-					planilla.setEstado(Constantes.ESTADO_ACTIVO);
+				else {//caso contrario se verifica si existe alguna planilla que no este planillado.. x si acaso
+					List<Planilla> noPlanillado = planillaDAO.getNoPlanillado(cuentaRecuperada.getIdCuenta());
+					if(noPlanillado.size() > 0) {
+						planilla = noPlanillado.get(0);
+					}else {//caso contrario se crea una nueva planilla.. pero aqui se pone el identificador.. para saber si esta pendiente
+						planilla = new Planilla();
+						planilla.setIdPlanilla(null);
+						planilla.setIdentificadorProceso(Constantes.IDENT_PROCESO);//con esta variable se identifica si se encuentra procesada
+						planilla.setCuentaCliente(cuentaRecuperada);
+						planilla.setEstado(Constantes.ESTADO_ACTIVO);
+					}
 				}
 				//enlace entre detalle de planilla y planilla
 				PlanillaDetalle detallePlanilla = new PlanillaDetalle();

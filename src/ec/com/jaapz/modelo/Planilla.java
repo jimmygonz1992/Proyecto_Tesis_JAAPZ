@@ -30,6 +30,7 @@ import java.util.List;
 			+ "where p.cuentaCliente.idCuenta = :idCuenta and p.estado = 'A' and p.aperturaLectura.estadoApertura = 'EN PROCESO' "
 			+ "order by p.idPlanilla desc"),
 	@NamedQuery(name="Planilla.buscarNoPlanillado", query="SELECT p FROM Planilla p "
+<<<<<<< HEAD
 			+ "where p.cuentaCliente.idCuenta = :idCuenta and p.estado = 'A' and p.identificadorProceso = 'SIN PLANILLAR' "
 			+ "order by p.idPlanilla desc"),
 	
@@ -37,6 +38,9 @@ import java.util.List;
 			+ "where (lower(p.cuentaCliente.cliente.apellido) like :patron or lower(p.cuentaCliente.cliente.nombre) like :patron or lower(p.cuentaCliente.cliente.cedula) like :patron) and p.cancelado = 'PENDIENTE' and p.estado = 'A' "
 			+ "order by p.idPlanilla desc"),
 	
+=======
+			+ "where p.cuentaCliente.idCuenta = :idCuenta and p.estado = 'A' and p.identificadorProceso = 'SIN PLANILLAR' ")
+>>>>>>> 4a3e64a78af2b02b84540f30112ea8727208a891
 })
 public class Planilla implements Serializable, Comparable<Planilla> {
 	private static final long serialVersionUID = 1L;
