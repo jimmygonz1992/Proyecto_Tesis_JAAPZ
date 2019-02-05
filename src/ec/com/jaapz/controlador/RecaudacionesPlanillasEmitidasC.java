@@ -61,7 +61,17 @@ public class RecaudacionesPlanillasEmitidasC {
 				listaCuentas = cuentaClienteDao.getListaCuentaClientePerfil(patron);
 			}
 			ObservableList<CuentaCliente> datosCuenta = FXCollections.observableArrayList();
-			datosCuenta.setAll(listaCuentas);
+			
+			for(CuentaCliente cuenta : listaCuentas) {
+				int cont = 0;
+				for(Planilla planilla : cuenta.getPlanillas()) {
+					if(planilla.getCancelado() != null)
+						if(planilla.getCancelado().equals(Constantes.EST_FAC_PENDIENTE))
+							cont = cont + 1;
+				}
+				if(cont > 0)
+					datosCuenta.add(cuenta);
+			}
 
 			//llenar los datos en la tabla
 			TableColumn<CuentaCliente, String> idColum = new TableColumn<>("Id");
