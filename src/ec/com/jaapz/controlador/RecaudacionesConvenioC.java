@@ -315,12 +315,17 @@ public class RecaudacionesConvenioC {
 				convenioDAO.getEntityManager().getTransaction().begin();
 				//crear las planillas para realizar el cobro
 				for(int i = 0 ; i < Integer.parseInt(String.valueOf(txtNumMeses.getText())) ; i ++) {
+					Planilla planilla;
+					if(noPlanillado.size() > i) {
+						planilla = noPlanillado.get(i);
+					}else {
+						planilla = new Planilla();
+						planilla.setIdPlanilla(null);
+						planilla.setIdentificadorProceso(Constantes.IDENT_PROCESO);//con esta variable se identifica si se encuentra procesada
+						planilla.setCuentaCliente(cuentaSeleccionada);
+						planilla.setEstado(Constantes.ESTADO_ACTIVO);
+					}
 					
-					Planilla planilla = new Planilla();
-					planilla.setIdPlanilla(null);
-					planilla.setIdentificadorProceso(Constantes.IDENT_PROCESO);//con esta variable se identifica si se encuentra procesada
-					planilla.setCuentaCliente(cuentaSeleccionada);
-					planilla.setEstado(Constantes.ESTADO_ACTIVO);
 					
 					//enlace entre detalle de planilla y planilla
 					PlanillaDetalle detallePlanilla = new PlanillaDetalle();
@@ -339,7 +344,10 @@ public class RecaudacionesConvenioC {
 					detallePlanilla.setPlanilla(planilla);
 					detalles.add(detallePlanilla);
 					planilla.setPlanillaDetalles(detalles);
-					convenioDAO.getEntityManager().persist(planilla);
+					if(planilla.getIdPlanilla() != null)
+						convenioDAO.getEntityManager().merge(planilla);
+					else
+						convenioDAO.getEntityManager().persist(planilla);
 					
 				}
 				convenioDAO.getEntityManager().getTransaction().commit();

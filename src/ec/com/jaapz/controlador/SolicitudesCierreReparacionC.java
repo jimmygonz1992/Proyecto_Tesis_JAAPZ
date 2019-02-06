@@ -290,13 +290,15 @@ public class SolicitudesCierreReparacionC {
 					planilla = listaPlanilla.get(0);
 				else {//caso contrario se verifica si existe alguna planilla que no este planillado.. x si acaso
 					List<Planilla> noPlanillado = planillaDAO.getNoPlanillado(cuentaRecuperada.getIdCuenta());
-					
-					//caso contrario se crea una nueva planilla.. pero aqui se pone el identificador.. para saber si esta pendiente
-					planilla = new Planilla();
-					planilla.setIdPlanilla(null);
-					planilla.setIdentificadorProceso(Constantes.IDENT_PROCESO);//con esta variable se identifica si se encuentra procesada
-					planilla.setCuentaCliente(cuentaRecuperada);
-					planilla.setEstado(Constantes.ESTADO_ACTIVO);
+					if(noPlanillado.size() > 0) {
+						planilla = noPlanillado.get(0);
+					}else {//caso contrario se crea una nueva planilla.. pero aqui se pone el identificador.. para saber si esta pendiente
+						planilla = new Planilla();
+						planilla.setIdPlanilla(null);
+						planilla.setIdentificadorProceso(Constantes.IDENT_PROCESO);//con esta variable se identifica si se encuentra procesada
+						planilla.setCuentaCliente(cuentaRecuperada);
+						planilla.setEstado(Constantes.ESTADO_ACTIVO);
+					}
 				}
 				//enlace entre detalle de planilla y planilla
 				PlanillaDetalle detallePlanilla = new PlanillaDetalle();

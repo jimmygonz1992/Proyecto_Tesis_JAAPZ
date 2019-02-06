@@ -16,7 +16,7 @@ import java.util.List;
 @NamedQueries({
 	@NamedQuery(name="CuentaCliente.findAll", query="SELECT c FROM CuentaCliente c where "
 			+ "(lower(c.cliente.nombre) like lower(:patron) or lower(c.cliente.apellido) like lower(:patron) or lower(c.cliente.cedula) like lower(:patron)) and c.estado='A' order by c.idCuenta asc"),
-	@NamedQuery(name="CuentaCliente.bucarTodos", query="SELECT c FROM CuentaCliente c where c.estado = 'A'"),
+	@NamedQuery(name="CuentaCliente.bucarTodos", query="SELECT c FROM CuentaCliente c where c.estado = 'A' order by c.idCuenta"),
 	@NamedQuery(name="CuentaCliente.buscarCuentaClientePerfil", query="SELECT c FROM CuentaCliente c "
 			+ "where (lower(c.cliente.apellido) like :patron or lower(c.cliente.nombre) like :patron "
 			+ "or lower(c.cliente.cedula) like :patron)"
