@@ -19,6 +19,7 @@ import ec.com.jaapz.modelo.SolInspeccionIn;
 import ec.com.jaapz.modelo.SolInspeccionInDAO;
 import ec.com.jaapz.modelo.TipoSolicitud;
 import ec.com.jaapz.modelo.TipoSolicitudDAO;
+import ec.com.jaapz.util.Auditoria;
 import ec.com.jaapz.util.Constantes;
 import ec.com.jaapz.util.Context;
 import ec.com.jaapz.util.ControllerHelper;
@@ -248,7 +249,7 @@ public class SolicitudInstalacionC {
     }
     public void grabar() {
     	try {
-    		if(txtCedula.getText().equals("")) {
+    		if(txtCedula.getText().toString().equals("")) {
 				helper.mostrarAlertaAdvertencia("Debe seleccionar un cliente", Context.getInstance().getStage());
 				return;
 			}
@@ -264,16 +265,16 @@ public class SolicitudInstalacionC {
 				helper.mostrarAlertaAdvertencia("Debe seleccionar el uso del medidor", Context.getInstance().getStage());
 				return;
 			}
-			if(txtReferenciaIns.getText().equals("")) {
+			if(txtReferenciaIns.getText().toString().equals("")) {
 				helper.mostrarAlertaAdvertencia("Es necesario registrar referencia domiciliaria", Context.getInstance().getStage());
 				return;
 			}
-			if(txtContacto.getText().equals("")) {
+			if(txtContacto.getText().toString().equals("")) {
 				helper.mostrarAlertaAdvertencia("Es recesario registrar número de contacto", Context.getInstance().getStage());
 				return;
 			}
 			
-			if(txtDireccionIns.getText().equals("")) {
+			if(txtDireccionIns.getText().toString().equals("")) {
 				helper.mostrarAlertaAdvertencia("Es recesario registrar dirección de inspección", Context.getInstance().getStage());
 				return;
 			}
@@ -282,12 +283,13 @@ public class SolicitudInstalacionC {
 				helper.mostrarAlertaAdvertencia("Debe seleccionar el barrio del cliente a inspeccionar", Context.getInstance().getStage());
 				return;
 			}
-			if(!txtCorreo.getText().equals("")) {
-				if(ControllerHelper.validarEmail(txtCorreo.getText()) == false) {
-					helper.mostrarAlertaAdvertencia("Correo electrónico no valido", Context.getInstance().getStage());
-					return;	
+			if(txtCorreo.getText() != null)
+				if(!txtCorreo.getText().toString().equals("")) {
+					if(ControllerHelper.validarEmail(txtCorreo.getText()) == false) {
+						helper.mostrarAlertaAdvertencia("Correo electrónico no valido", Context.getInstance().getStage());
+						return;	
+					}
 				}
-			}
 			if (grabarDatos() == true) {
 				helper.mostrarAlertaInformacion("Orden de Inspección Emitida con Exito", Context.getInstance().getStage());
 			}
@@ -349,6 +351,10 @@ public class SolicitudInstalacionC {
 				inspeccionDAO.getEntityManager().getTransaction().commit();
 				clienteRecuperado = null;
 				bandera = true;
+				
+				
+				Auditoria obj = new Auditoria();
+				obj.grabarAuditoria("Registro de solicitud de instalacion a cliente cuya identificación es: " + String.valueOf(txtCedula.getText()), "Sol_inspeccion_ins", "insertar", Context.getInstance().getIdUsuario());
 				nuevo();
 			}
 			return bandera;

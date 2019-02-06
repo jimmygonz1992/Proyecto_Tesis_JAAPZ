@@ -267,6 +267,15 @@ public class LecturasCierreC {
 	}
 	public void visualizarResultados() {
 		try {
+			if(tvApRealizadas.getSelectionModel().getSelectedItem() == null) {
+				helper.mostrarAlertaAdvertencia("Debe seleccionar una apertura realizada", Context.getInstance().getStage());
+				return;
+			}
+			if(tvApRealizadas.getSelectionModel().getSelectedItem().getEstadoApertura().equals(Constantes.EST_APERTURA_PROCESO)) {
+				helper.mostrarAlertaAdvertencia("Debe seleccionar una apertura con estado REALIZADO", Context.getInstance().getStage());
+				return;
+			}
+			Context.getInstance().setApertura(tvApRealizadas.getSelectionModel().getSelectedItem());
 			helper.abrirPantallaModal("/lecturas/LecturasResultados.fxml","Resultados de la Apertura", Context.getInstance().getStage());
 
 		}catch(Exception ex) {

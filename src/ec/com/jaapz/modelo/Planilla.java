@@ -31,6 +31,8 @@ import java.util.List;
 			+ "order by p.idPlanilla desc"),
 	@NamedQuery(name="Planilla.buscarNoPlanillado", query="SELECT p FROM Planilla p "
 			+ "where p.cuentaCliente.idCuenta = :idCuenta and p.estado = 'A' and p.identificadorProceso = 'SIN PLANILLAR' order by p.idPlanilla"),
+	@NamedQuery(name="Planilla.buscarPlanillaApertura", query="SELECT p FROM Planilla p "
+			+ "where p.estado = 'A' and p.aperturaLectura.idApertura = :idApertura order by p.idPlanilla"),
 	@NamedQuery(name="Planilla.ListaPlanillaPendPago", query="SELECT p FROM Planilla p "
 			+ "where (lower(p.cuentaCliente.cliente.apellido) like :patron or lower(p.cuentaCliente.cliente.nombre) like :patron or lower(p.cuentaCliente.cliente.cedula) like :patron) and p.cancelado = 'PENDIENTE' and p.estado = 'A' "
 			+ "order by p.idPlanilla desc")

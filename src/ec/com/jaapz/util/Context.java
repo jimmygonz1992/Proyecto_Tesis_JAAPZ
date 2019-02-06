@@ -32,6 +32,7 @@ public class Context {
 	private int idUsuario;
 	private int idPerfil;
 	
+	
 	private boolean mensajeEnviado;
 	
 	private Stage stage;
@@ -336,6 +337,5 @@ public class Context {
 
 	public void setListadoAsignados(List<LiquidacionOrden> listadoAsignados) {
 		this.listadoAsignados = listadoAsignados;
-	}	
-	
+	}
 }
