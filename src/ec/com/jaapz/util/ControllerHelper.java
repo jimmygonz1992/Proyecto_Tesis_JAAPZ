@@ -341,6 +341,7 @@ public class ControllerHelper {
 		}
 		return false;
 	}
+	//la respuesta es en kilometros
 	public static double distanciaCoordenadas(double lat1, double lng1, double lat2, double lng2) {  
 		//double radioTierra = 3958.75;//en millas  
 		double radioTierra = 6371;//en kilómetros  
@@ -352,8 +353,9 @@ public class ControllerHelper {
 		* Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2));  
 		double va2 = 2 * Math.atan2(Math.sqrt(va1), Math.sqrt(1 - va1));  
 		double distancia = radioTierra * va2;  
-
-		return distancia;  
+		
+		double distanciaMP3 = distancia * 1000;
+		return distanciaMP3;  
 	}  
 }
 

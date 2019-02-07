@@ -2,7 +2,9 @@ package ec.com.jaapz.controlador;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import ec.com.jaapz.modelo.SegUsuario;
@@ -12,6 +14,8 @@ import ec.com.jaapz.modelo.SolInspeccionInDAO;
 import ec.com.jaapz.util.Constantes;
 import ec.com.jaapz.util.Context;
 import ec.com.jaapz.util.ControllerHelper;
+import ec.com.jaapz.util.Encriptado;
+import ec.com.jaapz.util.PrintReport;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -191,9 +195,53 @@ public class SolicitudAsignacionInsC {
 
 	public void imprimirAsignacion() {
 		try {
-			System.out.println("listado a eliminar: " + listaInspeccionesEliminar.size());
+			if(tvAsignados.getSelectionModel().getSelectedItem() != null) {
+				SimpleDateFormat formateador = new SimpleDateFormat("dd/MM/yy");
+				SolInspeccionIn ins = tvAsignados.getSelectionModel().getSelectedItem();
+				Map<String, Object> param = new HashMap<String, Object>();
+				param.put("ID_CLIENTE", ins.getCliente().getIdCliente());
+				param.put("ID_INSPECCION", ins.getIdSolInspeccion());
+				param.put("referencia", ins.getReferencia());
+				param.put("USUARIO_RESPONSABLE", Encriptado.Desencriptar(tvPersonalAsig.getSelectionModel().getSelectedItem().getUsuario()));
+				if(ins.getUsoMedidor().equals(Constantes.CAT_VIVIENDA))
+					param.put("vivienda", "X");
+				else
+					param.put("vivienda", "");
+				if(ins.getUsoMedidor().equals(Constantes.CAT_COMERCIAL))
+					param.put("comercial", "X");
+				else
+					param.put("comercial", "");
+
+				if(ins.getUsoMedidor().equals(Constantes.CAT_ESTABLECIMIENTO))
+					param.put("publico", "X");
+				else
+					param.put("publico", "");
+
+				param.put("fecha_inspeccion", formateador.format(ins.getFechaIngreso()));
+
+				if(ins.getFechaAprobacion() != null)
+					param.put("fecha_aprobacion", formateador.format(ins.getFechaAprobacion()));
+				else
+					param.put("fecha_aprobacion", "");
+
+				if(ins.getFactibilidad() == null) {
+					param.put("reprobado", "");
+					param.put("aprobado", "");
+				}else if(ins.getFactibilidad().equals(Constantes.EST_NO_FACTIBLE)) {
+					param.put("reprobado", "X");
+					param.put("aprobado", "");
+				}
+				else if(ins.getFactibilidad().equals(Constantes.EST_FACTIBLE)) {
+					param.put("aprobado", "X");
+					param.put("reprobado", "");
+				}
+				PrintReport printReport = new PrintReport();
+				printReport.crearReporte("/recursos/informes/ficha_inspeccion.jasper", usuarioDAO, param);
+				printReport.showReport("Ficha de Inspección");
+			}else 
+				helper.mostrarAlertaError("Debe Seleccionar un Inspección a imprimir la ficha de Inspección", Context.getInstance().getStage());
 		}catch(Exception ex) {
-			ex.printStackTrace();
+			System.out.println(ex.getMessage());
 		}
 	}
 
