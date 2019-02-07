@@ -6,5 +6,10 @@
 /listado_materiales.jasper
 /comprobante.jasper
 /ver_recaudaciones.jasper
+<<<<<<< HEAD
+/deuda_por_cliente.jasper
+/deuda_general.jasper
+=======
 /ficha_inspeccion.jasper
 /lista_precios_unitarios.jasper
+>>>>>>> 786f70181a6232b81c29f63c719c3487f58efc1a

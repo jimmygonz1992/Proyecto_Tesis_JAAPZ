@@ -1,7 +1,8 @@
 package ec.com.jaapz.controlador;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -11,6 +12,7 @@ import ec.com.jaapz.modelo.Pago;
 import ec.com.jaapz.modelo.Planilla;
 import ec.com.jaapz.modelo.PlanillaDAO;
 import ec.com.jaapz.util.Context;
+import ec.com.jaapz.util.ControllerHelper;
 import ec.com.jaapz.util.Encriptado;
 import ec.com.jaapz.util.PrintReport;
 import javafx.beans.property.SimpleObjectProperty;
@@ -19,46 +21,56 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.util.Callback;
 
-public class RecaudacionesDeudaPorClienteC {
-	PlanillaDAO planillaDao = new PlanillaDAO();
-	@FXML private TextField txtCliente;
-	@FXML private TextField txtTotalAdeudado;
-	@FXML private TableView<Planilla> tvDatos;
-	@FXML private Button btnReprte;
+public class RecaudacionesDeudaGeneralC {
+	@FXML private DatePicker dtpFechaInicio;
+	@FXML private DatePicker dtpFechaFin;
+	@FXML private Button btnCargarDatos;
+	@FXML private Button btnReporte;
+	@FXML private TextField txtTotalDeuda;
+	private @FXML TableView<Planilla> tvDatos;
+	
+	ControllerHelper helper = new ControllerHelper();
 	SimpleDateFormat formateador = new SimpleDateFormat("dd/MM/yyyy");
-	List<Planilla> listadoPlanillas = new ArrayList<Planilla>();
 	
-	Date fechaImpresion = new Date();
+	PlanillaDAO planillaDao = new PlanillaDAO();
+	Date dateInicio = new Date();
+	Date dateFin = new Date();
+	Date fechaImpresion = new Date(); 
 	
-	public void initialize() {
+	public void initialize(){
+		txtTotalDeuda.setEditable(false);
+		dtpFechaInicio.setValue(LocalDate.now());
+		dtpFechaFin.setValue(LocalDate.now());
+	}
+	
+	public void cargarDatos() {
 		try {
-			llenarTablaPlanillas("");
-			txtTotalAdeudado.setEditable(false);
+			dateInicio = Date.from(dtpFechaInicio.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
+			dateFin = Date.from(dtpFechaFin.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
+			llenarDatos(dateInicio, dateFin);
 		}catch(Exception ex) {
 			System.out.println(ex.getMessage());
 		}
 	}
 	
-	public void busquedaClienteDeudor() {
-		llenarTablaPlanillas(txtCliente.getText());
-	}
-	
 	@SuppressWarnings("unchecked")
-	public void llenarTablaPlanillas(String patron) {
+	private void llenarDatos(Date fechaInicio, Date fechaFin) {
 		try{
 			tvDatos.getColumns().clear();
-			tvDatos.getItems().clear();
+			List<Planilla> listado;
+			
+			listado = planillaDao.getListaPlanillaDeudaGeneral(fechaInicio, fechaFin);
 			
 			ObservableList<Planilla> datos = FXCollections.observableArrayList();
-			listadoPlanillas = planillaDao.getListaPlanillaPendPago(patron);
-			datos.setAll(listadoPlanillas);
-
+			datos.setAll(listado);
+			
 			//llenar los datos en la tabla
 			TableColumn<Planilla, String> idColum = new TableColumn<>("Nº Planilla");
 			idColum.setMinWidth(10);
@@ -137,7 +149,6 @@ public class RecaudacionesDeudaPorClienteC {
 			});
 			tvDatos.getColumns().addAll(idColum, fechaColum, cedulaColum, clienteColum, direccionColum, telefonoColum, valorPagoColum);
 			tvDatos.setItems(datos);
-			
 			sumarDatos();
 		}catch(Exception ex){
 			System.out.println(ex.getMessage());
@@ -147,7 +158,7 @@ public class RecaudacionesDeudaPorClienteC {
 	public void sumarDatos() {
 		try {
 			if (tvDatos.getItems().isEmpty()) {
-				txtTotalAdeudado.setText("0.00");
+				txtTotalDeuda.setText("0.00");
 			}else {
 				double total = 0;
 				for(int i=0; i<tvDatos.getItems().size(); i++) {
@@ -159,7 +170,7 @@ public class RecaudacionesDeudaPorClienteC {
 							totalPagado = totalPagado + pa.getValor();
 						}
 					}
-					txtTotalAdeudado.setText(String.valueOf(Double.valueOf(total - totalPagado)));
+					txtTotalDeuda.setText(String.valueOf(Double.valueOf(total - totalPagado)));
 				}
 			}
 		}catch(Exception ex) {
@@ -168,14 +179,15 @@ public class RecaudacionesDeudaPorClienteC {
 	}
 	
 	public void verReporte() {
-		try {
+	try {
 			PrintReport pr = new PrintReport();
 			Map<String, Object> param = new HashMap<String, Object>();
+			param.put("fecha_inicio", dateInicio);
+			param.put("fecha_fin", dateFin);
 			param.put("usuario_crea", Encriptado.Desencriptar(Context.getInstance().getUsuariosC().getUsuario()));
 			param.put("fecha_impresion", fechaImpresion);
-			param.put("patron", txtCliente.getText());
-			pr.crearReporte("/recursos/informes/deuda_por_cliente.jasper", planillaDao, param);
-			pr.showReport("Deudas de Clientes");
+			pr.crearReporte("/recursos/informes/deuda_general.jasper", planillaDao, param);
+			pr.showReport("Deuda de Clientes");
 		}catch(Exception ex) {
 			System.out.println(ex.getMessage());
 		}
