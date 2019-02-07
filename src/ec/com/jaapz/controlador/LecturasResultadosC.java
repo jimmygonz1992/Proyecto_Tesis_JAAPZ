@@ -1,41 +1,132 @@
 package ec.com.jaapz.controlador;
 
+import java.util.List;
+
+import ec.com.jaapz.modelo.AperturaLectura;
+import ec.com.jaapz.modelo.Planilla;
+import ec.com.jaapz.modelo.PlanillaDAO;
+import ec.com.jaapz.util.Context;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.geometry.Insets;
 import javafx.scene.control.Button;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.ToggleGroup;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableColumn.CellDataFeatures;
+import javafx.scene.control.TableView;
+import javafx.util.Callback;
 
 public class LecturasResultadosC {
-	@FXML private AnchorPane ventana;
-	@FXML private VBox vboxGroup;
 	@FXML private Button btnVisualizarInforme;
+	@FXML private TableView<Planilla> tvResultados;
+	@FXML private Label lblApertura;
 	
-	String estilo = "-fx-font-family: 'Yu Mincho Demibold'; -fx-font-size: 14px;-fx-font-weight: bold;";
+	PlanillaDAO planillaDAO = new PlanillaDAO();
+	AperturaLectura aperturaSeleccionada = new AperturaLectura(); 
 	public void initialize() {
 		try {
-			final ToggleGroup group = new ToggleGroup();
-			RadioButton rb1 = new RadioButton("Lecturas no Ingresadas");
-			rb1.setToggleGroup(group);
-			rb1.setStyle(estilo);
-			rb1.setSelected(true);
-			RadioButton rb2 = new RadioButton("Lecturas con inconsistencia");
-			rb2.setStyle(estilo);
-			rb2.setToggleGroup(group);
-			RadioButton rb3 = new RadioButton("Problemas de lecturas");
-			rb3.setStyle(estilo);
-			rb3.setToggleGroup(group);
-			vboxGroup.getChildren().addAll(rb1,rb2,rb3);
-			vboxGroup.setSpacing(25);
-			vboxGroup.setPadding(new Insets(20, 10, 10, 20));
-			//ventana.getChildren().add(vboxGroup);
+			aperturaSeleccionada = Context.getInstance().getApertura();
+			lblApertura.setText("Apertura seleccionada: mes " + aperturaSeleccionada.getMe().getDescripcion() + " del año " + aperturaSeleccionada.getAnio().getDescripcion());
+			Context.getInstance().setApertura(null);
+			cargarClientes();
 		}catch(Exception ex) {
-			ex.printStackTrace();
+			System.out.println(ex.getMessage());
 		}
 	}
-	public void visualizarInforme(){
-		
+
+	@SuppressWarnings("unchecked")
+	private void cargarClientes() {
+		try {
+			
+			tvResultados.getItems().clear();
+			tvResultados.getColumns().clear();
+			
+			List<Planilla> listaPlanilla = planillaDAO.getListaPlanillaApertura(aperturaSeleccionada.getIdApertura());
+			ObservableList<Planilla> datos = FXCollections.observableArrayList();
+			datos.setAll(listaPlanilla);
+
+			//llenar los datos en la tabla
+			TableColumn<Planilla, String> idColum = new TableColumn<>("Id Planilla");
+			idColum.setMinWidth(10);
+			idColum.setPrefWidth(80);
+			idColum.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Planilla,String>, ObservableValue<String>>() {
+				@Override
+				public ObservableValue<String> call(CellDataFeatures<Planilla, String> param) {
+					String idPlanilla = String.valueOf(param.getValue().getIdPlanilla());
+					return new SimpleObjectProperty<String>(idPlanilla);
+				}
+			});
+
+			TableColumn<Planilla, String> clienteColum = new TableColumn<>("Cliente");
+			clienteColum.setMinWidth(10);
+			clienteColum.setPrefWidth(300);
+			clienteColum.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Planilla,String>, ObservableValue<String>>() {
+				@Override
+				public ObservableValue<String> call(CellDataFeatures<Planilla, String> param) {
+					String nombre = param.getValue().getCuentaCliente().getCliente().getNombre();
+					String apellido = param.getValue().getCuentaCliente().getCliente().getApellido();
+					return new SimpleObjectProperty<String>(nombre + " " + apellido);
+				}
+			});
+			TableColumn<Planilla, String> medidorColum = new TableColumn<>("Medidor");
+			medidorColum.setMinWidth(10);
+			medidorColum.setPrefWidth(100);
+			medidorColum.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Planilla,String>, ObservableValue<String>>() {
+				@Override
+				public ObservableValue<String> call(CellDataFeatures<Planilla, String> param) {
+					return new SimpleObjectProperty<String>(String.valueOf(param.getValue().getCuentaCliente().getMedidor().getCodigo()));
+				}
+			});
+			TableColumn<Planilla, String> antColum = new TableColumn<>("Lec.  Anterior");
+			antColum.setMinWidth(10);
+			antColum.setPrefWidth(90);
+			antColum.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Planilla,String>, ObservableValue<String>>() {
+				@Override
+				public ObservableValue<String> call(CellDataFeatures<Planilla, String> param) {
+					return new SimpleObjectProperty<String>(String.valueOf(param.getValue().getLecturaAnterior()));
+				}
+			});
+
+			TableColumn<Planilla, String> actColum = new TableColumn<>("Lec. Actual");
+			actColum.setMinWidth(10);
+			actColum.setPrefWidth(90);
+			actColum.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Planilla,String>, ObservableValue<String>>() {
+				@Override
+				public ObservableValue<String> call(CellDataFeatures<Planilla, String> param) {
+					return new SimpleObjectProperty<String>(String.valueOf(param.getValue().getLecturaActual()));
+				}
+			});
+			TableColumn<Planilla, String> coordenadaLectColum = new TableColumn<>("Coordenada Lect.");
+			coordenadaLectColum.setMinWidth(10);
+			coordenadaLectColum.setPrefWidth(130);
+			coordenadaLectColum.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Planilla,String>, ObservableValue<String>>() {
+				@Override
+				public ObservableValue<String> call(CellDataFeatures<Planilla, String> param) {
+					String coordenada = "";
+					if(param.getValue().getLatitud() != null)
+						coordenada = param.getValue().getLatitud() + "," + param.getValue().getLongitud();
+					return new SimpleObjectProperty<String>(coordenada);
+				}
+			});
+			TableColumn<Planilla, String> coordenadaMedColum = new TableColumn<>("Coordenada Med.");
+			coordenadaMedColum.setMinWidth(10);
+			coordenadaMedColum.setPrefWidth(130);
+			coordenadaMedColum.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Planilla,String>, ObservableValue<String>>() {
+				@Override
+				public ObservableValue<String> call(CellDataFeatures<Planilla, String> param) {
+					String coordenada = "";
+					if(param.getValue().getCuentaCliente().getLatitud() != null)
+						coordenada = param.getValue().getCuentaCliente().getLatitud() + "," + param.getValue().getCuentaCliente().getLongitud();
+					return new SimpleObjectProperty<String>(coordenada);
+				}
+			});
+			tvResultados.getColumns().addAll(idColum,clienteColum,medidorColum,antColum,actColum,coordenadaLectColum,coordenadaMedColum);
+			tvResultados.setItems(datos);
+
+		}catch(Exception ex) {
+			System.out.println(ex.getMessage());
+		}
 	}
 }

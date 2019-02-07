@@ -312,7 +312,7 @@ public class RecaudacionesConvenioC {
 				List<Convenio> listaGuardada = convenioDAO.getConveniosAll();
 				List<Planilla> noPlanillado = planillaDAO.getNoPlanillado(cuentaSeleccionada.getIdCuenta());
 				
-				convenioDAO.getEntityManager().getTransaction().begin();
+
 				//crear las planillas para realizar el cobro
 				for(int i = 0 ; i < Integer.parseInt(String.valueOf(txtNumMeses.getText())) ; i ++) {
 					Planilla planilla;
@@ -344,13 +344,14 @@ public class RecaudacionesConvenioC {
 					detallePlanilla.setPlanilla(planilla);
 					detalles.add(detallePlanilla);
 					planilla.setPlanillaDetalles(detalles);
+					convenioDAO.getEntityManager().getTransaction().begin();
 					if(planilla.getIdPlanilla() != null)
 						convenioDAO.getEntityManager().merge(planilla);
 					else
 						convenioDAO.getEntityManager().persist(planilla);
-					
+					convenioDAO.getEntityManager().getTransaction().commit();	
 				}
-				convenioDAO.getEntityManager().getTransaction().commit();
+				
 				helper.mostrarAlertaInformacion("Datos grabados!!", Context.getInstance().getStage());
 				limpiar();
 			}

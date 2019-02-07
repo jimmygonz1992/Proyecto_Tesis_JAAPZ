@@ -11,8 +11,12 @@ public class ClaseDAO {
 	// Crea una sola instancia de EntityManagerFactory para toda la applicacion.
 		private static final String PERSISTENCE_UNIT_NAME = "Proyecto_Tesis_JAAPZ";
 		private static EntityManagerFactory emf = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
+<<<<<<< HEAD
 		// Objeto Entity Manager para cada instancia de un objeto que 
 		// herede de esta clase.
+=======
+
+>>>>>>> 786f70181a6232b81c29f63c719c3487f58efc1a
 		private EntityManager em;
 		
 		/**
@@ -23,11 +27,18 @@ public class ClaseDAO {
 			if (em == null){
 		        em = emf.createEntityManager();
 		    }
+<<<<<<< HEAD
 			//EntityManagerFactory emf = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
 			//EntityManager em = emf.createEntityManager();
 		    return em; 
 		} 
 		 
+=======
+		    return em; 
+		} 
+		 
+		
+>>>>>>> 786f70181a6232b81c29f63c719c3487f58efc1a
 		public Connection abreConexion() {
 			EntityManager entityManager; 
 			entityManager = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME).createEntityManager();

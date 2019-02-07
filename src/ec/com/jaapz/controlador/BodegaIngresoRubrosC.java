@@ -714,6 +714,7 @@ public class BodegaIngresoRubrosC {
 
 			Optional<ButtonType> result = helper.mostrarAlertaConfirmacion("Desea Grabar los Datos?",Context.getInstance().getStage());
 			if(result.get() == ButtonType.OK){
+				
 				if (ingreso.getIdIngreso() == null) {//se registra un nuevo registro
 					List<IngresoDetalle> listaAgregadaRubros = new ArrayList<IngresoDetalle>();
 					List<Kardex> listaProductos = new ArrayList<Kardex>();

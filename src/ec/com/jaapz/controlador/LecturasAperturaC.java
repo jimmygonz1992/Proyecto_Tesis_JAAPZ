@@ -52,6 +52,7 @@ public class LecturasAperturaC {
 	SegUsuarioDAO usuarioDAO = new SegUsuarioDAO();
 	ResponsableLecturaDAO responsableDAO = new ResponsableLecturaDAO();
 
+	
 	public void initialize() {
 		try {
 			cargarCombos();
@@ -185,14 +186,13 @@ public class LecturasAperturaC {
 				//aperturar todos los clientes 
 				List<CuentaCliente> listaCuentasActivas = cuentaDAO.getListaCuentasActivas();
 				System.out.println("Cuentas activas: " + listaCuentasActivas.size());
-				aperturaDAO.getEntityManager().getTransaction().begin();
 				//recorrer las cuentas para asignar las aperturas
 				for(CuentaCliente cuentas : listaCuentasActivas) {
 					if(cuentas.getMedidor() != null) {
+						aperturaDAO.getEntityManager().getTransaction().begin();
 						
 						List<Planilla> noPlanillado = planillaDAO.getNoPlanillado(cuentas.getIdCuenta());
 						
-						System.out.println("tamaño de no planillado: " + noPlanillado.size());
 						if(noPlanillado.size() > 0) {//existe una planilla de otro proceso
 							Planilla planilla = noPlanillado.get(0); // se llena los datos de la planilla ya generada
 							System.out.println("planilla ya generada: " + planilla.getIdPlanilla());
@@ -275,9 +275,9 @@ public class LecturasAperturaC {
 
 							aperturaDAO.getEntityManager().persist(aperturaGrabar);							
 						}
+						aperturaDAO.getEntityManager().getTransaction().commit();
 					}
 				}
-				aperturaDAO.getEntityManager().getTransaction().commit();
 				helper.mostrarAlertaInformacion("Datos Grabados Correctamente", Context.getInstance().getStage());
 				//recuperarDatos();
 			}
