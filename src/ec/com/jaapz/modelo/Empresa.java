@@ -9,7 +9,10 @@ import javax.persistence.*;
  * 
  */
 @Entity
-@NamedQuery(name="Empresa.findAll", query="SELECT e FROM Empresa e")
+@Table(name="empresa")
+@NamedQueries({
+	@NamedQuery(name="Empresa.recuperaEmpresa", query="SELECT e FROM Empresa e WHERE e.estado = 'A'")
+})
 public class Empresa implements Serializable {
 	private static final long serialVersionUID = 1L;
 
