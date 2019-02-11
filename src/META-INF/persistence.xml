@@ -47,15 +47,7 @@
 		<properties>
 			<property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/bd_jaapz"/>
 			<property name="javax.persistence.jdbc.user" value="postgres"/>
-<<<<<<< HEAD
 			<property name="javax.persistence.jdbc.password" value="tricampeon2015"/>
-=======
-<<<<<<< HEAD
-			<property name="javax.persistence.jdbc.password" value="123"/>
-=======
-			<property name="javax.persistence.jdbc.password" value="upse"/>
->>>>>>> 19b1e9c9bcf6a32e8deb2f32312c97da3a22552f
->>>>>>> 3832575e0df106dc11222e054dcd14b6ce40225b
 			<property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver"/>
 		</properties>
 	</persistence-unit>
