@@ -11,6 +11,7 @@ import ec.com.jaapz.modelo.CuentaCliente;
 import ec.com.jaapz.modelo.Instalacion;
 import ec.com.jaapz.modelo.InstalacionDAO;
 import ec.com.jaapz.modelo.InstalacionDetalle;
+import ec.com.jaapz.modelo.Kardex;
 import ec.com.jaapz.modelo.LiquidacionDetalle;
 import ec.com.jaapz.modelo.LiquidacionOrden;
 import ec.com.jaapz.modelo.Medidor;
@@ -417,6 +418,7 @@ public class BodegaSalidaRubroInstC {
 				instalacionDao.getEntityManager().merge(liquidacionSeleccionada);
 				instalacionDao.getEntityManager().getTransaction().commit();
 				actualizarListaArticulos();
+				grabarKardexSalida();
 				helper.mostrarAlertaInformacion("Datos Grabados Correctamente", Context.getInstance().getStage());
 				nuevo();
 				dtpFecha.setValue(null);
@@ -425,6 +427,33 @@ public class BodegaSalidaRubroInstC {
 			}
 		}catch(Exception ex) {
 			helper.mostrarAlertaError("Error al grabar", Context.getInstance().getStage());
+			System.out.println(ex.getMessage());
+		}
+	}
+	private void grabarKardexSalida() {
+		try {
+			java.util.Date utilDate = new java.util.Date(); 
+			long lnMilisegundos = utilDate.getTime();
+			java.sql.Time sqlTime = new java.sql.Time(lnMilisegundos);
+			
+			instalacionDao.getEntityManager().getTransaction().begin();
+			for(InstalacionDetalle det : tvDatos.getItems()) {
+				Kardex kardex = new Kardex();
+				//kardex.setIdKardex(null);
+				kardex.setRubro(det.getRubro());
+				kardex.setFecha(utilDate);
+				kardex.setTipoDocumento("Factura #");
+				//kardex.setNumDocumento(txtNumero.getText());
+				kardex.setDetalleOperacion("Adquisición de " + det.getRubro().getDescripcion());
+				kardex.setCantidad(det.getCantidad());
+				kardex.setUnidadMedida("Unidad");
+				kardex.setValorUnitario(det.getPrecio());
+				kardex.setCostoTotal(det.getCantidad()*det.getPrecio());
+				kardex.setTipoMovimiento(Constantes.BODEGA_INGRESO);
+				kardex.setEstado(Constantes.ESTADO_ACTIVO);	
+			}
+			instalacionDao.getEntityManager().getTransaction().commit();
+		}catch(Exception ex) {
 			System.out.println(ex.getMessage());
 		}
 	}

@@ -62,8 +62,7 @@ public abstract class Constantes {
 	}
 	
 	//acciones para la sincronizacion
-	public static Integer ACCION_MODIFICAR = 1;
-	public static Integer ACCION_INSERTAR = 2;
-	public static Integer ACCION_ELIMINAR = 3; //solo para casos especiales
+	public static String BODEGA_INGRESO = "ING";
+	public static String BODEGA_SALIDA = "SLDA";
 }
 

@@ -51,7 +51,6 @@ public class LecturasAperturaC {
 	PlanillaDAO planillaDAO = new PlanillaDAO();
 	SegUsuarioDAO usuarioDAO = new SegUsuarioDAO();
 	ResponsableLecturaDAO responsableDAO = new ResponsableLecturaDAO();
-
 	
 	public void initialize() {
 		try {
@@ -279,7 +278,10 @@ public class LecturasAperturaC {
 					}
 				}
 				helper.mostrarAlertaInformacion("Datos Grabados Correctamente", Context.getInstance().getStage());
-				//recuperarDatos();
+				recuperarDatos();
+				cboAnio.getItems().clear();
+				cboMes.getItems().clear();
+				cargarCombos();
 			}
 		}catch(Exception ex) {
 			System.out.println(ex.getMessage());
@@ -323,5 +325,4 @@ public class LecturasAperturaC {
 			return false;
 		}
 	}
-	
 }

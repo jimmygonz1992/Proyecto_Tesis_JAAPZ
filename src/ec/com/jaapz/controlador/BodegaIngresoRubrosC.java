@@ -13,6 +13,7 @@ import ec.com.jaapz.modelo.Ingreso;
 import ec.com.jaapz.modelo.IngresoDAO;
 import ec.com.jaapz.modelo.IngresoDetalle;
 import ec.com.jaapz.modelo.Kardex;
+import ec.com.jaapz.modelo.KardexDAO;
 import ec.com.jaapz.modelo.Medidor;
 import ec.com.jaapz.modelo.MedidorDAO;
 import ec.com.jaapz.modelo.Proveedor;
@@ -83,6 +84,7 @@ public class BodegaIngresoRubrosC {
 	MedidorDAO medidorDAO = new MedidorDAO();
 	ProveedorDAO proveedorDAO = new ProveedorDAO();
 	EstadoMedidorDAO estadoMedidorDAO = new EstadoMedidorDAO();
+	KardexDAO kardexDAO = new KardexDAO();
 	Ingreso ingreso;
 
 	public void initialize(){
@@ -672,9 +674,10 @@ public class BodegaIngresoRubrosC {
 				return;
 			String estado = "A";
 			Date date = Date.from(dtpFecha.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
-			//para guardar ingreso	
-			if(ingreso == null) {
+			//para guardar ingreso
+			if(ingreso == null) {//pregunta si el objeto se encuentra en null.. para crear uno nuevo y sera un nuevo ingreso
 				ingreso = new Ingreso();
+				ingreso.setIdIngreso(null);
 				proveedorSeleccionado.setNombreComercial(txtProveedor.getText());
 				proveedorSeleccionado.setNombres(txtNombresPro.getText());
 				proveedorSeleccionado.setApellidos(txtApellidosPro.getText());
@@ -686,9 +689,8 @@ public class BodegaIngresoRubrosC {
 				proveedorSeleccionado.setUsuarioModifica(Context.getInstance().getUsuariosC().getIdUsuario());
 				proveedorSeleccionado.setFechaModificacion(date);
 				proveedorSeleccionado.setEstado("A");
-
 				ingreso.setProveedor(proveedorSeleccionado);
-			}else {
+			}else {//caso contrario es un ingreso recuperado..
 				System.out.println(ingreso.getProveedor().getIdProveedor() + " Id Proveedor");
 				ingreso.getProveedor().setNombreComercial(txtProveedor.getText());
 				ingreso.getProveedor().setNombres(txtNombresPro.getText());
@@ -714,8 +716,8 @@ public class BodegaIngresoRubrosC {
 
 			Optional<ButtonType> result = helper.mostrarAlertaConfirmacion("Desea Grabar los Datos?",Context.getInstance().getStage());
 			if(result.get() == ButtonType.OK){
-				
-				if (ingreso.getIdIngreso() == null) {//se registra un nuevo registro
+				//es un ingreso nuevoooooo **********************************************************************************************
+				if (ingreso.getIdIngreso() == null) {//se realiza un nuevo registro
 					List<IngresoDetalle> listaAgregadaRubros = new ArrayList<IngresoDetalle>();
 					List<Kardex> listaProductos = new ArrayList<Kardex>();
 
@@ -731,48 +733,33 @@ public class BodegaIngresoRubrosC {
 						kardex.setFecha(date);
 						kardex.setTipoDocumento("Factura #");
 						kardex.setNumDocumento(txtNumero.getText());
-						kardex.setDetalleOperacion(null);
+						kardex.setDetalleOperacion("Adquisición de " + det.getRubro().getDescripcion());
 						kardex.setCantidad(det.getCantidad());
 						kardex.setUnidadMedida("Unidad");
 						kardex.setValorUnitario(det.getPrecio());
 						kardex.setCostoTotal(det.getCantidad()*det.getPrecio());
-						kardex.setTipoMovimiento("ING");
-						kardex.setEstado("A");		
-
+						kardex.setTipoMovimiento(Constantes.BODEGA_INGRESO);
+						kardex.setEstado(Constantes.ESTADO_ACTIVO);		
 
 						listaProductos.add(kardex);
 						listaAgregadaRubros.add(det);
 					}
 
 					ingreso.setIngresoDetalles(listaAgregadaRubros);
-					//empieza la transaccion
+					//grabar el ingreso
 					ingresoDao.getEntityManager().getTransaction().begin();
-
-					//aqui voy a intentar guardar y tengo q preguntar si es nuevo
-					//o sino solo para editar
-					if(txtCodigo.getText().equals("0")) {//inserta nuevo ingreso
-						ingreso.setIdIngreso(null);
-						ingresoDao.getEntityManager().persist(ingreso);
-						for (Kardex kar : listaProductos) {
-							ingresoDao.getEntityManager().persist(kar);	
-						}
-					}else {//modifica
-						ingreso.setIdIngreso(Integer.parseInt(txtCodigo.getText()));
-						ingresoDao.getEntityManager().merge(ingreso);
-						for (Kardex kar : listaProductos) {
-							ingresoDao.getEntityManager().merge(kar);	
-						}
-					}
-
+					ingresoDao.getEntityManager().persist(ingreso);
+					for (Kardex kar : listaProductos) ingresoDao.getEntityManager().persist(kar);
+					ingresoDao.getEntityManager().getTransaction().commit();
+					
+					ingresoDao.getEntityManager().getTransaction().begin();
 					if (txtCodigoProv.getText().equals("0")) { //inserta nuevo proveedor
 						proveedorSeleccionado.setIdProveedor(null);
 						ingresoDao.getEntityManager().persist(proveedorSeleccionado);
 					}else {//la modifica
 						proveedorSeleccionado.setIdProveedor(Integer.parseInt(txtCodigoProv.getText()));
 						ingresoDao.getEntityManager().merge(proveedorSeleccionado);
-					}
-
-					//ingresoDao.getEntityManager().persist(ingreso);				
+					}		
 					ingresoDao.getEntityManager().getTransaction().commit();
 
 					Integer ultimaFactura = 0;
@@ -809,27 +796,55 @@ public class BodegaIngresoRubrosC {
 					txtNumero.setText("");
 					tvDatos.getColumns().clear();
 					tvDatos.getItems().clear();
-				}else {
-					List<Integer> integer = new ArrayList<Integer>();
+					
+				}else {//es una modificacion ************************************************************************************************
+					List<Integer> integer = new ArrayList<Integer>();//un arreglo para guardar los id del detalle q han sido registrado
 					for (IngresoDetalle detalle : tvDatos.getItems()) {
-						if (detalle.getIdIngresoDet() != null)
+						if (detalle.getIdIngresoDet() != null)//guardo los id de los registros ya grabados en la BD
 							integer.add(detalle.getIdIngresoDet());
 					}
+					
 					for(IngresoDetalle det : tvDatos.getItems()) {
-						if(det.getIdIngresoDet() == null) {
+						if(det.getIdIngresoDet() == null) {//cuando el id es null.. es un nuevo registro de detalle
 							det.setIdIngresoDet(null);
 							det.setEstado("A");
 							det.setIngreso(ingreso);
-							ingreso.getIngresoDetalles().add(det);
-						}else {
-							for (IngresoDetalle deta: ingreso.getIngresoDetalles()) {
-								if (!integer.contains(deta.getIdIngresoDet())) {
-									deta.setEstado("I");
-								}
+							ingreso.getIngresoDetalles().add(det);//y se añade al ingreso
+							//se registra en el kardex el ingreso
+							//para lo del kardex
+							Kardex kardex = new Kardex();
+							//kardex.setIdKardex(null);
+							kardex.setRubro(det.getRubro());
+							kardex.setFecha(date);
+							kardex.setTipoDocumento("Factura #");
+							kardex.setNumDocumento(txtNumero.getText());
+							kardex.setDetalleOperacion("Adquisición de " + det.getRubro().getDescripcion());
+							kardex.setCantidad(det.getCantidad());
+							kardex.setUnidadMedida("Unidad");
+							kardex.setValorUnitario(det.getPrecio());
+							kardex.setCostoTotal(det.getCantidad()*det.getPrecio());
+							kardex.setTipoMovimiento(Constantes.BODEGA_INGRESO);
+							kardex.setEstado(Constantes.ESTADO_ACTIVO);	
+							medidorDAO.getEntityManager().getTransaction().begin();
+							medidorDAO.getEntityManager().persist(kardex);
+							medidorDAO.getEntityManager().getTransaction().commit();	
+						}
+					}
+					//dar de baja a los q se han eliminado
+					for (IngresoDetalle deta: ingreso.getIngresoDetalles()) {
+						if (!integer.contains(deta.getIdIngresoDet())) { //si el id del detalle recuperado no aparece en la lista.. se le da de baja
+							deta.setEstado(Constantes.ESTADO_INACTIVO);
+							//tambien se le da de baja el id del kardex del registro
+							Kardex kardexEliminar = kardexDAO.getKardexByDocumento(deta.getIngreso().getNumeroIngreso(), deta.getRubro().getIdRubro());
+							if(kardexEliminar != null) {
+								kardexEliminar.setEstado(Constantes.ESTADO_INACTIVO);
+								medidorDAO.getEntityManager().getTransaction().begin();
+								medidorDAO.getEntityManager().merge(kardexEliminar);
+								medidorDAO.getEntityManager().getTransaction().commit();
 							}
 						}
 					}
-
+					
 					//elimina material resta stock
 					if(tvDatos != null) {
 						List<Integer> idActual = new ArrayList<Integer>();
@@ -855,6 +870,7 @@ public class BodegaIngresoRubrosC {
 							}
 						}
 					}
+					
 					//sumar
 					if(tvDatos != null) {
 						List<Rubro> listaAgregadaRubros = new ArrayList<Rubro>();

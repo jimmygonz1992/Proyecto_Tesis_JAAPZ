@@ -18,7 +18,8 @@ import javax.persistence.TemporalType;
 
 @Entity
 @Table(name="kardex")
-@NamedQuery(name="Kardex.findAll", query="SELECT k FROM Kardex k where k.estado = 'A'")
+@NamedQuery(name="Kardex.findKardex", query="SELECT k FROM Kardex k where  k.rubro.idRubro = :idRubro "
+		+ "and k.numDocumento = :documento")
 
 public class Kardex implements Serializable {
 	private static final long serialVersionUID = 1L;
