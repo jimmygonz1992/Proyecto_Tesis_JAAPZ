@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.6.0.final using JasperReports Library version 6.6.0  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ficha_inspeccion" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="1cdd2151-bd0a-4cd1-af8c-d881b1f543fb">
-	<property name="com.jaspersoft.studio.data.sql.tables">
-		<![CDATA[aW5zcGVjY2lvbiAsMTUsMTUsMWI2ZWJhNmItOTkyNS00ZmY1LWExOWEtOGQ5MWIwMWRiMGMxO2Ns
-aWVudGUgLDE3OCwyOSw5YTJmOWQ4Ni0wOGU0LTRmOGYtYTU0NS03OWYzODA3MzNhMTM7]]>
-	</property>
-	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="bd_jaapz connection"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Conexion PG"/>
 	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="261"/>
 	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="728"/>
 	<parameter name="ID_CLIENTE" class="java.lang.Integer"/>
+	<parameter name="ID_INSPECCION" class="java.lang.Integer"/>
 	<parameter name="fecha_inspeccion" class="java.lang.String"/>
 	<parameter name="referencia" class="java.lang.String"/>
 	<parameter name="vivienda" class="java.lang.String"/>
@@ -17,17 +15,18 @@ aWVudGUgLDE3OCwyOSw5YTJmOWQ4Ni0wOGU0LTRmOGYtYTU0NS03OWYzODA3MzNhMTM7]]>
 	<parameter name="fecha_aprobacion" class="java.lang.String"/>
 	<parameter name="aprobado" class="java.lang.String"/>
 	<parameter name="reprobado" class="java.lang.String"/>
+	<parameter name="USUARIO_RESPONSABLE" class="java.lang.String"/>
 	<queryString language="SQL">
-		<![CDATA[SELECT (c.nombres || ' ' ||c.apellidos) as nombres,
+		<![CDATA[SELECT (c.nombre || ' ' ||c.apellido) as nombres,
 	c.id_cliente,
 	i.referencia,
-	i.fecha,
-	i.id_inspeccion
-FROM inspeccion i,
+	i.fecha_ingreso,
+	i.id_sol_inspeccion
+FROM sol_inspeccion_ins i,
 	cliente c
 WHERE 
 	 i.id_cliente = c.id_cliente 
-	 AND c.id_cliente = $P{ID_CLIENTE}]]>
+	 AND c.id_cliente = $P{ID_CLIENTE}  and i.id_sol_inspeccion = $P{ID_INSPECCION}]]>
 	</queryString>
 	<field name="nombres" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.label" value="nombres"/>
@@ -39,15 +38,15 @@ WHERE
 	</field>
 	<field name="referencia" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.label" value="referencia"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="inspeccion"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="sol_inspeccion_ins"/>
 	</field>
-	<field name="fecha" class="java.sql.Timestamp">
-		<property name="com.jaspersoft.studio.field.label" value="fecha"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="inspeccion"/>
+	<field name="fecha_ingreso" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.label" value="fecha_ingreso"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="sol_inspeccion_ins"/>
 	</field>
-	<field name="id_inspeccion" class="java.lang.Integer">
-		<property name="com.jaspersoft.studio.field.label" value="id_inspeccion"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="inspeccion"/>
+	<field name="id_sol_inspeccion" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="id_sol_inspeccion"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="sol_inspeccion_ins"/>
 	</field>
 	<background>
 		<band splitType="Stretch"/>
@@ -96,10 +95,6 @@ WHERE
 				</textElement>
 				<text><![CDATA[SOLICITUD NO:]]></text>
 			</staticText>
-			<textField>
-				<reportElement x="450" y="0" width="88" height="13" uuid="805684a0-9107-41ea-9952-894f65cba094"/>
-				<textFieldExpression><![CDATA[$F{id_inspeccion}]]></textFieldExpression>
-			</textField>
 			<staticText>
 				<reportElement x="0" y="20" width="551" height="13" uuid="b0a70fa2-7635-4b2c-9f3d-e66e71546e64"/>
 				<textElement textAlignment="Center">
@@ -117,6 +112,10 @@ WHERE
 			<textField>
 				<reportElement x="150" y="0" width="100" height="13" uuid="f6a5e387-307c-4397-a67f-a811b516d149"/>
 				<textFieldExpression><![CDATA[$P{fecha_inspeccion}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="450" y="0" width="100" height="13" uuid="1e050000-9cc4-48eb-a61e-4dd1e1b253b8"/>
+				<textFieldExpression><![CDATA[$F{id_sol_inspeccion}]]></textFieldExpression>
 			</textField>
 		</band>
 	</pageHeader>
@@ -307,7 +306,7 @@ WHERE
 		</band>
 	</detail>
 	<columnFooter>
-		<band height="84" splitType="Stretch">
+		<band height="93" splitType="Stretch">
 			<staticText>
 				<reportElement x="41" y="20" width="349" height="14" uuid="37f515d5-113e-402c-a818-a91631909752"/>
 				<text><![CDATA[Para constancia firman las partes involucradas de este documento]]></text>
@@ -331,9 +330,22 @@ WHERE
 		</band>
 	</columnFooter>
 	<pageFooter>
-		<band height="14" splitType="Stretch"/>
+		<band height="21" splitType="Stretch">
+			<staticText>
+				<reportElement x="18" y="2" width="132" height="17" uuid="72022c99-00ae-4166-af38-23bb5ba80435"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[USUARIO RESPONSABLE:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="155" y="2" width="304" height="16" uuid="4961376f-dc96-4846-8cd1-2e38ea62dbd1"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{USUARIO_RESPONSABLE}]]></textFieldExpression>
+			</textField>
+		</band>
 	</pageFooter>
 	<summary>
-		<band height="10" splitType="Stretch"/>
+		<band height="6" splitType="Stretch"/>
 	</summary>
 </jasperReport>

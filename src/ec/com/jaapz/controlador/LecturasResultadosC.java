@@ -6,6 +6,7 @@ import ec.com.jaapz.modelo.AperturaLectura;
 import ec.com.jaapz.modelo.Planilla;
 import ec.com.jaapz.modelo.PlanillaDAO;
 import ec.com.jaapz.util.Context;
+import ec.com.jaapz.util.ControllerHelper;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -122,7 +123,26 @@ public class LecturasResultadosC {
 					return new SimpleObjectProperty<String>(coordenada);
 				}
 			});
-			tvResultados.getColumns().addAll(idColum,clienteColum,medidorColum,antColum,actColum,coordenadaLectColum,coordenadaMedColum);
+			TableColumn<Planilla, String> distanciaColum = new TableColumn<>("Distancia metros.");
+			distanciaColum.setMinWidth(10);
+			distanciaColum.setPrefWidth(130);
+			distanciaColum.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Planilla,String>, ObservableValue<String>>() {
+				@Override
+				public ObservableValue<String> call(CellDataFeatures<Planilla, String> param) {
+					String distancia = "Sin distancia";
+					if(param.getValue().getCuentaCliente().getLatitud() != null)
+						if(param.getValue().getLatitud() != null) {
+							Double lat1 = Double.parseDouble(param.getValue().getLatitud());
+							Double lon1 = Double.parseDouble(param.getValue().getLongitud());
+							Double lat2 = Double.parseDouble(param.getValue().getCuentaCliente().getLatitud());
+							Double lon2 = Double.parseDouble(param.getValue().getCuentaCliente().getLongitud());
+							distancia = String.valueOf(ControllerHelper.distanciaCoordenadas(lat1, lon1, lat2, lon2));
+						}
+							
+					return new SimpleObjectProperty<String>(distancia);
+				}
+			});
+			tvResultados.getColumns().addAll(idColum,clienteColum,medidorColum,antColum,actColum,coordenadaLectColum,coordenadaMedColum,distanciaColum);
 			tvResultados.setItems(datos);
 
 		}catch(Exception ex) {
