@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.5.1.final using JasperReports Library version 6.5.1  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="comprobanteP" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="952ef6ca-b6a0-4e54-afa6-3a248880cc5b">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="conectionBDJAAPZ"/>
+	<parameter name="numComprobante" class="java.lang.String"/>
+	<parameter name="cedula" class="java.lang.String"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT cliente.cedula, factura.num_factura, cliente.nombre 
+FROM cliente,
+	cuenta_cliente,
+	medidor,
+	factura,
+	factura_detalle,
+	planilla,
+	planilla_detalle,
+	pagos,
+	mes,
+	apertura_lectura,
+	anio
+WHERE 
+	cliente.id_cliente = cuenta_cliente.id_cliente and
+	cuenta_cliente.id_medidor = medidor.id_medidor and
+	cuenta_cliente.id_cuenta = factura.id_cuenta and
+	cuenta_cliente.id_cuenta = planilla.id_cuenta and
+	factura.id_factura = factura_detalle.id_factura and
+	planilla.id_planilla = planilla_detalle.id_planilla and
+	planilla.id_planilla = pagos.id_planilla and
+	apertura_lectura.id_apertura = planilla.id_apertura and
+	apertura_lectura.id_anio = anio.id_anio and
+	apertura_lectura.id_mes = mes.id_mes and
+	factura.num_factura = $P{numComprobante}  and
+	cliente.cedula = $P{cedula} ]]>
+	</queryString>
+	<field name="cedula" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="cedula"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="cliente"/>
+	</field>
+	<field name="num_factura" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="num_factura"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="factura"/>
+	</field>
+	<field name="nombre" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="nombre"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="cliente"/>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="90" splitType="Stretch">
+			<textField>
+				<reportElement x="260" y="0" width="100" height="30" uuid="7d900d99-3b4b-444c-a0d2-7dd3fd4563d6"/>
+				<textFieldExpression><![CDATA[$F{cedula}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="260" y="60" width="100" height="30" uuid="db653636-24e3-4478-b011-c94b6ce69695"/>
+				<textFieldExpression><![CDATA[$F{num_factura}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="310" y="31" width="100" height="30" uuid="e7ee48e6-42eb-4d73-b408-d0dc347e8a4a"/>
+				<textFieldExpression><![CDATA[$F{nombre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="84" y="1" width="100" height="30" uuid="4465d352-b580-4264-8cf0-76d0cc2ebea4"/>
+				<textFieldExpression><![CDATA[$P{numComprobante}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="117" y="56" width="100" height="30" uuid="f0b800ce-5bae-4dc5-b704-0b08a6dbb471"/>
+				<textFieldExpression><![CDATA[$P{cedula}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="125" splitType="Stretch"/>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

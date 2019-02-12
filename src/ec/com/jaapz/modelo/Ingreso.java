@@ -29,6 +29,8 @@ public class Ingreso implements Serializable {
 	private Integer idIngreso;
 
 	private String estado;
+	
+	private String observaciones;
 
 	@Temporal(TemporalType.DATE)
 	private Date fecha;
@@ -64,6 +66,14 @@ public class Ingreso implements Serializable {
 
 	public void setIdIngreso(Integer idIngreso) {
 		this.idIngreso = idIngreso;
+	}
+
+	public String getObservaciones() {
+		return observaciones;
+	}
+
+	public void setObservaciones(String observaciones) {
+		this.observaciones = observaciones;
 	}
 
 	public String getEstado() {

@@ -334,11 +334,11 @@ public class BodegaSalidaRubroInstC {
 				return false;
 			}
 			
-			if(txtTelefono.getText().equals("")) {
+			/*if(txtTelefono.getText().equals("")) {
 				helper.mostrarAlertaAdvertencia("Ingresar Teléfono de Cliente", Context.getInstance().getStage());
 				txtTelefono.requestFocus();
 				return false;
-			}
+			}*/
 			
 			if(txtIdLiquid.getText().equals("")) {
 				helper.mostrarAlertaAdvertencia("Ingresar ID de Liquidación", Context.getInstance().getStage());
@@ -433,8 +433,8 @@ public class BodegaSalidaRubroInstC {
 	private void grabarKardexSalida() {
 		try {
 			java.util.Date utilDate = new java.util.Date(); 
-			long lnMilisegundos = utilDate.getTime();
-			java.sql.Time sqlTime = new java.sql.Time(lnMilisegundos);
+			//long lnMilisegundos = utilDate.getTime();
+			//java.sql.Time sqlTime = new java.sql.Time(lnMilisegundos);
 			
 			instalacionDao.getEntityManager().getTransaction().begin();
 			for(InstalacionDetalle det : tvDatos.getItems()) {

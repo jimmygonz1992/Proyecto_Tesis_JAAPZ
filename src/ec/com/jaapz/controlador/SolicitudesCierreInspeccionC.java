@@ -89,6 +89,7 @@ public class SolicitudesCierreInspeccionC {
 	SimpleDateFormat formateador = new SimpleDateFormat("dd/MM/yyyy");
 	
 	public void initialize() {
+		txtObservacion.setDisable(true);
 		limpiarCliente();
 		bloquear();
 		limpiarOrden();
@@ -162,6 +163,7 @@ public class SolicitudesCierreInspeccionC {
 				tvDatosOrdenPrevia.getColumns().addAll(cantidadColum,descipcionColum,precioColum,costoColum);
 				tvDatosOrdenPrevia.setItems(datos);
 			}
+			txtObservacion.setDisable(false);
 			//tambien recupera la latitud, longitud y observaciones
 			txtObservacion.setText(inspeccion.getObservacion());
 			if(inspeccion.getLiquidacionOrdens().size() != 0) {
@@ -213,6 +215,8 @@ public class SolicitudesCierreInspeccionC {
 	}
 	public void grabar() {
 		try {
+			if(validarDatos() == false)
+				return;
 			Optional<ButtonType> result = helper.mostrarAlertaConfirmacion("Desea Grabar los Datos?",Context.getInstance().getStage());
 			if(result.get() == ButtonType.OK){
 				if(cboFactible.getSelectionModel().getSelectedItem().equals(Factible.FACTIBLE)) {//es factible la instalacion del medidor en la vivienda
@@ -393,6 +397,24 @@ public class SolicitudesCierreInspeccionC {
 			System.out.println(ex.getMessage());
 		}
 	}
+	
+	boolean validarDatos() {
+		try {	
+			if (cboFactible.getSelectionModel().getSelectedIndex() == 1) {
+				if(txtObservacion.getText().toString().equals("")) {
+					helper.mostrarAlertaAdvertencia("Registre observación", Context.getInstance().getStage());
+					txtObservacion.requestFocus();
+					return false;
+				}
+				return false;
+			}
+			return true;
+		}catch(Exception ex) {
+			System.out.println(ex.getMessage());
+			return false;
+		}
+	}
+	
 	private void enviarCorreoCliente(double totalPagar,CuentaCliente cuenta) {
 		try {
 			if(cuenta.getCliente().getEmail() != null) {
@@ -421,18 +443,44 @@ public class SolicitudesCierreInspeccionC {
 	}
 	public void eliminar() {
 		try {
-			if(inspeccionSeleccionado.getEstadoInspeccion() == Constantes.EST_INSPECCION_REALIZADO) {
-				helper.mostrarAlertaAdvertencia("No se puede eliminar una orden ya realizada", Context.getInstance().getStage());
-				return;
-			}
+			limpiar();
 		}catch(Exception ex) {
 			System.out.println(ex.getMessage());
 		}
 	}
+	
+	void limpiar() {
+		txtCodigo.setText("");
+		txtFecha.setText("");
+		txtReferencia.setText("");
+		txtHabitar.setText("");
+		txtCedula.setText("");
+		txtTelefono.setText("");
+		txtNombres.setText("");
+		txtGenero.setText("");
+		txtDireccion.setText("");
+		txtCodigoMedidor.setText("");
+		txtMarca.setText("");
+		txtModelo.setText("");
+		txtLatitud.setText("");
+		txtLongitud.setText("");
+		txtObservacion.setText("");
+		txtTipoRubro.setText("");
+		txtDescripcion.setText("");
+		txtCantidad.setText("");
+		txtPrecio.setText("");
+		txtStock.setText("");
+		tvDatosOrdenPrevia.getItems().clear();
+		tvDatosOrdenPrevia.getColumns().clear();
+		inspeccionSeleccionado = null;
+		rubroSeleccionado = null;
+	}
+	
 	public void cambiarFactibilidad() {
 		try {
 			if(cboFactible.getSelectionModel().getSelectedItem().equals(Factible.FACTIBLE)) {
 				desbloquearResultados();
+				txtObservacion.setDisable(false);
 				cargarPreciosUnitarios();
 			}
 			else {
@@ -442,6 +490,8 @@ public class SolicitudesCierreInspeccionC {
 				txtCodigoMedidor.setText("");
 				txtModelo.setText("");
 				txtMarca.setText("");
+				txtObservacion.setText("");
+				txtObservacion.setDisable(false);
 				medidorSeleccionado = null;
 			}
 		}catch(Exception ex) {
@@ -605,6 +655,12 @@ public class SolicitudesCierreInspeccionC {
 		txtCantidad.setDisable(true);
 		txtPrecio.setDisable(true);
 		btnBuscarRubro.setDisable(true);
+		//
+		txtCodigoMedidor.setDisable(true);
+		txtMarca.setDisable(true);
+		txtModelo.setDisable(true);
+		txtLongitud.setDisable(true);
+		txtLatitud.setDisable(true);
 	}
 	void desbloquearResultados() {
 		tvDatosOrdenPrevia.setDisable(false);
@@ -620,6 +676,12 @@ public class SolicitudesCierreInspeccionC {
 		txtCantidad.setDisable(false);
 		txtPrecio.setDisable(false);
 		btnBuscarRubro.setDisable(false);
+		//
+		txtCodigoMedidor.setDisable(false);
+		txtMarca.setDisable(false);
+		txtModelo.setDisable(false);
+		txtLatitud.setDisable(false);
+		txtLongitud.setDisable(false);
 	}
 	
 	Medidor medidorSeleccionado;
