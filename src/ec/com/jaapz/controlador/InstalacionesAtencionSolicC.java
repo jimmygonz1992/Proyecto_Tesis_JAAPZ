@@ -31,6 +31,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.util.Callback;
@@ -54,6 +55,7 @@ public class InstalacionesAtencionSolicC {
 	@FXML private TextField txtMarca;
 	@FXML private TextField txtModelo;
 	@FXML private TextField txtPrecioMed;
+	@FXML private TextArea txtObservaciones;
 	
 	private @FXML TableView<InstalacionDetalle> tvDatos;
 	
@@ -166,6 +168,7 @@ public class InstalacionesAtencionSolicC {
 				instalacion.setEstadoInstalacion(Constantes.EST_INSPECCION_REALIZADO);
 				instalacion.setUsuarioCrea(liquidacionSeleccionada.getUsuarioCrea());
 				instalacion.setEstado(Constantes.ESTADO_ACTIVO);
+				instalacion.setObservaciones(txtObservaciones.getText());
 				instalacion.setUsuarioInstalacion(Context.getInstance().getUsuariosC().getIdUsuario());
 				
 				List<InstalacionDetalle> listaAgregadaRubros = new ArrayList<InstalacionDetalle>();
@@ -246,6 +249,12 @@ public class InstalacionesAtencionSolicC {
 			}
 			
 			if(txtCodigoMedidor.getText().equals("")) {
+				helper.mostrarAlertaAdvertencia("No medidor asignado", Context.getInstance().getStage());
+				txtCodigoMedidor.requestFocus();
+				return false;
+			}
+			
+			if(txtObservaciones.getText().equals("")) {
 				helper.mostrarAlertaAdvertencia("No medidor asignado", Context.getInstance().getStage());
 				txtCodigoMedidor.requestFocus();
 				return false;

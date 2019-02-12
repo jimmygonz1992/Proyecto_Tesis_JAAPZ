@@ -37,6 +37,8 @@ public class Instalacion implements Serializable {
 	private double descuento;
 
 	private String estado;
+	
+	private String observaciones;
 
 	@Column(name="estado_instalacion")
 	private String estadoInstalacion;
@@ -95,6 +97,14 @@ public class Instalacion implements Serializable {
 
 	public void setIdInstalacion(Integer idInstalacion) {
 		this.idInstalacion = idInstalacion;
+	}
+	
+	public String getObservaciones() {
+		return observaciones;
+	}
+
+	public void setObservaciones(String observaciones) {
+		this.observaciones = observaciones;
 	}
 
 	public double getDescuento() {

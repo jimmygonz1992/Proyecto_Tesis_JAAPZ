@@ -98,8 +98,8 @@ public class BodegaIngresoRubrosC {
 			txtStockMat.setEditable(false);
 			dtpFecha.setValue(LocalDate.now());
 			txtRuc.requestFocus();
-			txtCodigo.setVisible(false);
-			txtCodigoProv.setVisible(false);
+			//txtCodigo.setVisible(false);
+			//txtCodigoProv.setVisible(false);
 
 			//validar solo numeros
 			txtRuc.textProperty().addListener(new ChangeListener<String>() {
@@ -236,6 +236,16 @@ public class BodegaIngresoRubrosC {
 					// TODO Auto-generated method stub
 					String cadena = txtProveedor.getText().toUpperCase();
 					txtProveedor.setText(cadena);
+				}
+			});
+			
+			//solo letras mayusculas
+			txtObservaciones.textProperty().addListener(new ChangeListener<String>() {
+				@Override
+				public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+					// TODO Auto-generated method stub
+					String cadena = txtObservaciones.getText().toUpperCase();
+					txtObservaciones.setText(cadena);
 				}
 			});
 
@@ -672,7 +682,6 @@ public class BodegaIngresoRubrosC {
 			java.sql.Time sqlTime = new java.sql.Time(lnMilisegundos);
 			if(validarDatos() == false)
 				return;
-			String estado = "A";
 			Date date = Date.from(dtpFecha.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
 			//para guardar ingreso
 			if(ingreso == null) {//pregunta si el objeto se encuentra en null.. para crear uno nuevo y sera un nuevo ingreso
@@ -688,7 +697,7 @@ public class BodegaIngresoRubrosC {
 				proveedorSeleccionado.setFechaCrea(date);
 				proveedorSeleccionado.setUsuarioModifica(Context.getInstance().getUsuariosC().getIdUsuario());
 				proveedorSeleccionado.setFechaModificacion(date);
-				proveedorSeleccionado.setEstado("A");
+				proveedorSeleccionado.setEstado(Constantes.ESTADO_ACTIVO);
 				ingreso.setProveedor(proveedorSeleccionado);
 			}else {//caso contrario es un ingreso recuperado..
 				System.out.println(ingreso.getProveedor().getIdProveedor() + " Id Proveedor");
@@ -703,7 +712,7 @@ public class BodegaIngresoRubrosC {
 				ingreso.setHora(sqlTime);
 				ingreso.getProveedor().setUsuarioModifica(Context.getInstance().getUsuariosC().getIdUsuario());
 				ingreso.getProveedor().setFechaModificacion(date);
-				ingreso.getProveedor().setEstado("A");
+				ingreso.getProveedor().setEstado(Constantes.ESTADO_ACTIVO);
 			}
 
 			//ingreso.setIdIngreso(null);
@@ -712,7 +721,8 @@ public class BodegaIngresoRubrosC {
 			ingreso.setUsuarioCrea(Context.getInstance().getUsuariosC().getIdUsuario());
 			ingreso.setSubtotal(Double.parseDouble(txtSubtotal.getText()));
 			ingreso.setTotal(Double.parseDouble(txtTotal.getText()));
-			ingreso.setEstado(estado);
+			ingreso.setObservaciones(txtObservaciones.getText());
+			ingreso.setEstado(Constantes.ESTADO_ACTIVO);
 
 			Optional<ButtonType> result = helper.mostrarAlertaConfirmacion("Desea Grabar los Datos?",Context.getInstance().getStage());
 			if(result.get() == ButtonType.OK){
@@ -723,7 +733,7 @@ public class BodegaIngresoRubrosC {
 
 					for(IngresoDetalle det : tvDatos.getItems()) {
 						det.setIdIngresoDet(null);
-						det.setEstado("A");
+						det.setEstado(Constantes.ESTADO_ACTIVO);
 						det.setIngreso(ingreso);
 
 						//para lo del kardex
@@ -794,6 +804,7 @@ public class BodegaIngresoRubrosC {
 					limpiar();
 					limpiarProveedor();
 					txtNumero.setText("");
+					txtObservaciones.setText("");
 					tvDatos.getColumns().clear();
 					tvDatos.getItems().clear();
 					
@@ -807,7 +818,7 @@ public class BodegaIngresoRubrosC {
 					for(IngresoDetalle det : tvDatos.getItems()) {
 						if(det.getIdIngresoDet() == null) {//cuando el id es null.. es un nuevo registro de detalle
 							det.setIdIngresoDet(null);
-							det.setEstado("A");
+							det.setEstado(Constantes.ESTADO_ACTIVO);
 							det.setIngreso(ingreso);
 							ingreso.getIngresoDetalles().add(det);//y se añade al ingreso
 							//se registra en el kardex el ingreso
@@ -897,6 +908,7 @@ public class BodegaIngresoRubrosC {
 					limpiar();
 					limpiarProveedor();
 					txtNumero.setText("");
+					txtObservaciones.setText("");
 					tvDatos.getColumns().clear();
 					tvDatos.getItems().clear();
 				}
