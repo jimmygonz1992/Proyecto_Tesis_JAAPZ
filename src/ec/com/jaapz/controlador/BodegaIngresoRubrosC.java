@@ -166,7 +166,6 @@ public class BodegaIngresoRubrosC {
 						}else {
 							if (validarProveedorExiste() == false) {
 								helper.mostrarAlertaAdvertencia("RUC no existente.. Debe llenar todos los datos!", Context.getInstance().getStage());
-								proveedorSeleccionado = new Proveedor();
 							}else {
 								recuperarDatos(txtRuc.getText());
 								txtNumero.requestFocus();
@@ -687,6 +686,10 @@ public class BodegaIngresoRubrosC {
 			if(ingreso == null) {//pregunta si el objeto se encuentra en null.. para crear uno nuevo y sera un nuevo ingreso
 				ingreso = new Ingreso();
 				ingreso.setIdIngreso(null);
+				if(proveedorSeleccionado == null) {
+					proveedorSeleccionado = new Proveedor();
+					proveedorSeleccionado.setIdProveedor(null);
+				}
 				proveedorSeleccionado.setNombreComercial(txtProveedor.getText());
 				proveedorSeleccionado.setNombres(txtNombresPro.getText());
 				proveedorSeleccionado.setApellidos(txtApellidosPro.getText());
@@ -698,7 +701,6 @@ public class BodegaIngresoRubrosC {
 				proveedorSeleccionado.setUsuarioModifica(Context.getInstance().getUsuariosC().getIdUsuario());
 				proveedorSeleccionado.setFechaModificacion(date);
 				proveedorSeleccionado.setEstado(Constantes.ESTADO_ACTIVO);
-				ingreso.setProveedor(proveedorSeleccionado);
 			}else {//caso contrario es un ingreso recuperado..
 				System.out.println(ingreso.getProveedor().getIdProveedor() + " Id Proveedor");
 				ingreso.getProveedor().setNombreComercial(txtProveedor.getText());
@@ -756,12 +758,26 @@ public class BodegaIngresoRubrosC {
 					}
 
 					ingreso.setIngresoDetalles(listaAgregadaRubros);
+					if(proveedorSeleccionado.getIdProveedor() == null) {
+						ingreso.setProveedor(proveedorSeleccionado);
+						List<Ingreso> listaIngreso = new ArrayList<Ingreso>();
+						listaIngreso.add(ingreso);
+						proveedorSeleccionado.setIngresos(listaIngreso);
+					}else
+						ingreso.setProveedor(proveedorSeleccionado);
+					
 					//grabar el ingreso
 					ingresoDao.getEntityManager().getTransaction().begin();
-					ingresoDao.getEntityManager().persist(ingreso);
+					
+					if(proveedorSeleccionado.getIdProveedor() == null) 
+						ingresoDao.getEntityManager().persist(proveedorSeleccionado);
+					else
+						ingresoDao.getEntityManager().merge(proveedorSeleccionado);
+					
+					//ingresoDao.getEntityManager().persist(ingreso);
 					for (Kardex kar : listaProductos) ingresoDao.getEntityManager().persist(kar);
 					ingresoDao.getEntityManager().getTransaction().commit();
-					
+					/*
 					ingresoDao.getEntityManager().getTransaction().begin();
 					if (txtCodigoProv.getText().equals("0")) { //inserta nuevo proveedor
 						proveedorSeleccionado.setIdProveedor(null);
@@ -771,7 +787,7 @@ public class BodegaIngresoRubrosC {
 						ingresoDao.getEntityManager().merge(proveedorSeleccionado);
 					}		
 					ingresoDao.getEntityManager().getTransaction().commit();
-
+					*/
 					Integer ultimaFactura = 0;
 					Ingreso ing = ingresoDao.getUltimoRegistro();
 					EstadoMedidor estadoM = estadoMedidorDAO.getEstadoBueno();
