@@ -90,7 +90,8 @@ public class ClientesJuntaC {
 			
 			//datos de la cuenta
 			txtCodigoCuenta.setText(String.valueOf(cuentaCliente.getIdCuenta()));
-			txtFechaIngreso.setText(formateador.format(cuentaCliente.getFechaIngreso()));
+			if(cuentaCliente.getFechaIngreso() != null)
+				txtFechaIngreso.setText(formateador.format(cuentaCliente.getFechaIngreso()));
 			//Datos de categoria
 			if(cuentaCliente.getCategoria() != null) {
 				categoriaSeleccionado = cuentaCliente.getCategoria();
