@@ -677,7 +677,7 @@ public class BodegaIngresoRubrosC {
 	public void grabar() {
 		try {
 			//para obtener la hora
-			java.util.Date utilDate = new java.util.Date(); 
+			java.util.Date utilDate = new java.util.Date();
 			long lnMilisegundos = utilDate.getTime();
 			java.sql.Time sqlTime = new java.sql.Time(lnMilisegundos);
 			if(validarDatos() == false)
@@ -719,6 +719,7 @@ public class BodegaIngresoRubrosC {
 			ingreso.setFecha(date);
 			ingreso.setNumeroIngreso(txtNumero.getText());
 			ingreso.setUsuarioCrea(Context.getInstance().getUsuariosC().getIdUsuario());
+			ingreso.setHora(sqlTime);
 			ingreso.setSubtotal(Double.parseDouble(txtSubtotal.getText()));
 			ingreso.setTotal(Double.parseDouble(txtTotal.getText()));
 			ingreso.setObservaciones(txtObservaciones.getText());
