@@ -10,16 +10,22 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-
 @Entity
 @Table(name="kardex")
-@NamedQuery(name="Kardex.findKardex", query="SELECT k FROM Kardex k where  k.rubro.idRubro = :idRubro "
-		+ "and k.numDocumento = :documento")
+@NamedQueries({
+	@NamedQuery(name="Kardex.findKardex", query="SELECT k FROM Kardex k where  k.rubro.idRubro = :idRubro "
+			+ "and k.numDocumento = :documento"),
+	
+	@NamedQuery(name="Kardex.ListaKardex", query="SELECT k FROM Kardex k "
+		+ "where (lower(k.rubro.descripcion) like :patron  or lower(k.rubro.codigo) like :patron) "
+		+ "and k.estado = 'A' and k.rubro.estado = 'A' order by k.idKardex asc"),
+})
 
 public class Kardex implements Serializable {
 	private static final long serialVersionUID = 1L;
