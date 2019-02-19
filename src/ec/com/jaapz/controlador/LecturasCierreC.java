@@ -198,12 +198,10 @@ public class LecturasCierreC {
 					for(PlanillaDetalle det : planillaDetalle)
 						total = total + det.getSubtotal();
 					aperturaActual.getPlanillas().get(i).setTotalPagar(total);
-
 					long iPart = (long) total;
 					double fPart = total - iPart;
 					String numLetras = "";
 					numLetras = "(" + helper.cantidadConLetra(String.valueOf(iPart)).toUpperCase() + " DÓLARES " + (long) (fPart * 100) + "/100)"; 
-					System.out.println(numLetras);
 					aperturaActual.getPlanillas().get(i).setTotalLetras(numLetras);
 					aperturaActual.getPlanillas().get(i).setCancelado(Constantes.EST_FAC_PENDIENTE);
 				}

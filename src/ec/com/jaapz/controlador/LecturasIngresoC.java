@@ -71,7 +71,7 @@ public class LecturasIngresoC {
 			//llenar los datos en la tabla
 			TableColumn<PlanillaDetalle, String> medidorColum = new TableColumn<>("Cód. Medidor");
 			medidorColum.setMinWidth(10);
-			medidorColum.setPrefWidth(90);
+			medidorColum.setPrefWidth(110);
 			medidorColum.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<PlanillaDetalle,String>, ObservableValue<String>>() {
 				@Override
 				public ObservableValue<String> call(CellDataFeatures<PlanillaDetalle, String> param) {
@@ -105,42 +105,7 @@ public class LecturasIngresoC {
 					return new SimpleObjectProperty<String>(String.valueOf(param.getValue().getPlanilla().getLecturaAnterior()));
 				}
 			});
-			/*
-			TableColumn<PlanillaDetalle, String> actColum = new TableColumn<PlanillaDetalle, String>("imprime");
-			actColum.setCellValueFactory(new Callback<CellDataFeatures<PlanillaDetalle, String>, ObservableValue<String>>() {
-				@Override
-				public ObservableValue<String> call(CellDataFeatures<PlanillaDetalle, String> param) {
-					PlanillaDetalle val = param.getValue();
-					SimpleStringProperty booleanProp;
-					if(val.getImprime() != null)
-						booleanProp = new SimpleBooleanProperty(val.getImprime());
-					else
-						booleanProp = new SimpleBooleanProperty(false);
-					
-					booleanProp.addListener(new ChangeListener<Boolean>() {
-						@Override
-						public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue,
-								Boolean newValue) {
-							val.setImprime(newValue);
-							int contador = 0;
-							for(Planilla pl : tvDatos.getItems()) {
-								if(pl.getImprime() != null)
-									if(pl.getImprime() == true)
-										contador = contador + 1;
-							}
-							if(contador == tvDatos.getItems().size())
-								chkImpTodo.setSelected(true);
-							else
-								chkImpTodo.setSelected(false);
-						}
-					});
-					return booleanProp;
-				}
-			});
-			*/
-			
-			
-			
+		
 			TableColumn<PlanillaDetalle, String> actColum = new TableColumn<>("Lec. Actual");
 			actColum.setMinWidth(10);
 			actColum.setPrefWidth(90);

@@ -79,7 +79,7 @@ public class ClientesJuntaC {
 			txtNombres.setText(cuentaCliente.getCliente().getNombre());
 			txtApellidos.setText(cuentaCliente.getCliente().getApellido());
 			txtTelefono.setText(cuentaCliente.getCliente().getTelefono());
-			txtEmail.setText(cuentaCliente.getEmail());
+			txtEmail.setText(cuentaCliente.getCliente().getEmail());
 			if(cuentaCliente.getCliente().getGenero() != null) {
 				for(Genero g : genero){
 					if(g.toString().equals(cuentaCliente.getCliente().getGenero().toString()))

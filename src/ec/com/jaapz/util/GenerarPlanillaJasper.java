@@ -20,8 +20,16 @@ public class GenerarPlanillaJasper {
 			
 			Map<String, Object> param = new HashMap<String, Object>();
 			param.put("ID_CUENTA", planilla.getCuentaCliente().getIdCuenta());
-			param.put("BARRIO", planilla.getCuentaCliente().getBarrio().getNombre());
-			param.put("FECHA", formateador.format(planilla.getFecha()));
+			if(planilla.getCuentaCliente().getBarrio() != null)
+				param.put("BARRIO", planilla.getCuentaCliente().getBarrio().getNombre());
+			else
+				param.put("BARRIO", "");
+			
+			if(planilla.getFecha() != null)
+				param.put("FECHA", formateador.format(planilla.getFecha()));
+			else
+				param.put("FECHA", "");
+			
 			param.put("LECTURA_ACTUAL", String.valueOf(planilla.getLecturaActual()));
 			param.put("LECTURA_ANTERIOR", String.valueOf(planilla.getLecturaAnterior()));
 			param.put("CONSUMO_MENSUAL", String.valueOf(planilla.getConsumo()));
@@ -47,8 +55,11 @@ public class GenerarPlanillaJasper {
 	        	deudaCero = planilla.getTotalPagar();
 	        else
 	        	deudaCero = deudaAnterior;
-	        
-			param.put("DEUDA_ANTERIOR", String.valueOf("$ " + df.format(deudaCero - planilla.getTotalPagar())));
+	        double deudaAnteriorA = deudaCero - planilla.getTotalPagar();
+	        if(deudaAnteriorA < 0)
+	        	param.put("DEUDA_ANTERIOR", String.valueOf("$ " + 0.0));
+	        else
+	        	param.put("DEUDA_ANTERIOR", String.valueOf("$ " + df.format(deudaCero - planilla.getTotalPagar())));
 			
 			double otros = 0;
 	        for(int i = 1 ; i < planilla.getPlanillaDetalles().size() ; i ++)

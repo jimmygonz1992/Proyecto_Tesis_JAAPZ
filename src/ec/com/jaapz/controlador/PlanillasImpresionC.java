@@ -8,7 +8,10 @@ import java.util.Optional;
 import ec.com.jaapz.correo.EnviarCorreo;
 import ec.com.jaapz.correo.Hilo2;
 import ec.com.jaapz.modelo.AperturaLectura;
+import ec.com.jaapz.modelo.Pago;
 import ec.com.jaapz.modelo.Planilla;
+import ec.com.jaapz.modelo.PlanillaDAO;
+import ec.com.jaapz.util.Constantes;
 import ec.com.jaapz.util.Context;
 import ec.com.jaapz.util.ControllerHelper;
 import ec.com.jaapz.util.GenerarPlanillaJasper;
@@ -50,6 +53,7 @@ public class PlanillasImpresionC {
 	AperturaLectura aperturaActual = new AperturaLectura();
 	ControllerHelper helper = new ControllerHelper();
 	private AperturaLectura aperturaSeleccionada = new AperturaLectura();
+	PlanillaDAO planillaDAO = new PlanillaDAO();
 
 	public void initialize() {
 		try {
@@ -160,7 +164,27 @@ public class PlanillasImpresionC {
 					return new SimpleObjectProperty<String>(String.valueOf(param.getValue().getLecturaActual()));
 				}
 			});
-
+			TableColumn<Planilla, String> totalColum = new TableColumn<>("Total Deuda");
+			totalColum.setMinWidth(10);
+			totalColum.setPrefWidth(110);
+			totalColum.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Planilla,String>, ObservableValue<String>>() {
+				@Override
+				public ObservableValue<String> call(CellDataFeatures<Planilla, String> param) {
+					List<Planilla> planillas = planillaDAO.getPlanillaCuenta(param.getValue().getCuentaCliente().getIdCuenta());
+					double totalDeuda = 0;
+					double abonos = 0;
+					for(Planilla pl : planillas) {
+						abonos = 0;
+						if(pl.getCancelado().equals(Constantes.EST_FAC_PENDIENTE)) {
+							for(Pago pago : pl.getPagos()) 
+								if(pago.getEstado().equals(Constantes.ESTADO_ACTIVO)) 
+									abonos = abonos + pago.getValor();
+							totalDeuda = totalDeuda + (pl.getTotalPagar() - abonos);
+						}
+					}
+					return new SimpleObjectProperty<String>(String.valueOf(totalDeuda));
+				}
+			});
 			TableColumn<Planilla, Boolean> activeColumn = new TableColumn<Planilla, Boolean>("imprime");
 			activeColumn.setCellValueFactory(new Callback<CellDataFeatures<Planilla, Boolean>, ObservableValue<Boolean>>() {
 				@Override
@@ -240,7 +264,7 @@ public class PlanillasImpresionC {
 					return cell;
 				}
 			});
-			tvDatos.getColumns().addAll(medidorColum,clienteColum,antColum,actColum,activeColumn,correoColumn);
+			tvDatos.getColumns().addAll(medidorColum,clienteColum,antColum,actColum,totalColum,activeColumn,correoColumn);
 			tvDatos.setItems(datos);
 
 		}catch(Exception ex) {

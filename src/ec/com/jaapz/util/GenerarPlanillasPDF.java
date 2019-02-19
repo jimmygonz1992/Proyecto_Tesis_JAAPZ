@@ -95,7 +95,10 @@ public class GenerarPlanillasPDF {
 	        datosCliente.add("APELLIDOS Y NOMBRES:");datosCliente.add(tabCliente);
 	        datosCliente.add(planilla.getCuentaCliente().getCliente().getApellido() + " " + planilla.getCuentaCliente().getCliente().getNombre() +  "\n");
 	        datosCliente.add("BARRIO:");datosCliente.add(tabCliente);
-	        datosCliente.add(planilla.getCuentaCliente().getBarrio().getNombre() +  "\n");
+	        if(planilla.getCuentaCliente().getBarrio() != null)
+	        	datosCliente.add(planilla.getCuentaCliente().getBarrio().getNombre() +  "\n");
+	        else
+	        	datosCliente.add("" +  "\n");
 	        datosCliente.add("DIRECCIÓN:");datosCliente.add(tabCliente);
 	        datosCliente.add(planilla.getCuentaCliente().getDireccion() +  "\n");
 	        datosCliente.add("COD. MEDIDOR:");datosCliente.add(tabCliente);
