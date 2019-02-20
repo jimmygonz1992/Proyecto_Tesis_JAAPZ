@@ -59,7 +59,7 @@ public class RecaudacionesConvenioC {
 	}
 	public void buscarCliente() {
 		try{
-			helper.abrirPantallaModal("/recaudaciones/RecaudacionesListadoPlanillasEmitidas.fxml","Facturas Sin Cobrar", Context.getInstance().getStage());
+			helper.abrirPantallaModal("/recaudaciones/ConvenioListadoPlanillas.fxml","Facturas Sin Cobrar", Context.getInstance().getStage());
 			if (Context.getInstance().getCuentaCliente() != null) {
 				cuentaSeleccionada = Context.getInstance().getCuentaCliente();
 				llenarDatos(cuentaSeleccionada);

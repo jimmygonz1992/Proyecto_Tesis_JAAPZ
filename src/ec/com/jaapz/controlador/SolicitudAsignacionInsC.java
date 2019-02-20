@@ -211,7 +211,8 @@ public class SolicitudAsignacionInsC {
 					param.put("comercial", "X");
 				else
 					param.put("comercial", "");
-
+				param.put("LATITUD", "");
+				param.put("LONGITUD", "");
 				if(ins.getUsoMedidor().equals(Constantes.CAT_ESTABLECIMIENTO))
 					param.put("publico", "X");
 				else

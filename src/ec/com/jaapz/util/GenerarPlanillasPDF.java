@@ -84,14 +84,25 @@ public class GenerarPlanillasPDF {
 	        
 	        //a continuacion son el contenido que son los datos del cliente
 	        SimpleDateFormat formateador = new SimpleDateFormat("dd-MM-yyyy");
+	        Chunk tabCliente = new Chunk(new VerticalPositionMark(), 150f, false);
+	        
 	        Date fecha = new Date();
 	        String numeroCuenta = "0000000000" + String.valueOf(planilla.getCuentaCliente().getIdCuenta());
+	        Paragraph medidorCliente = new Paragraph();
+	        medidorCliente.add("COD. MEDIDOR:");medidorCliente.add(tabCliente);
+	        medidorCliente.add(planilla.getCuentaCliente().getMedidor().getCodigo() +  "\n");
+	        Font fuenteCodigoMedidor = new Font();
+	        fuenteCodigoMedidor.setSize(10);
+	        fuenteCodigoMedidor.setStyle(Font.BOLD);
+	        medidorCliente.setFont(fuenteCodigoMedidor);
+	        document.add(medidorCliente);
+	        
 	        
 	        Paragraph datosCliente = new Paragraph();
 	        datosCliente.setFont(fuenteContenido);
-	        Chunk tabCliente = new Chunk(new VerticalPositionMark(), 150f, false);
+	        
 	        datosCliente.add("NO. DE CUENTA:");datosCliente.add(tabCliente);
-	        datosCliente.add(numeroCuenta.substring(numeroCuenta.length() - 5, numeroCuenta.length()) + "\n");
+	        datosCliente.add(numeroCuenta.substring(numeroCuenta.length() - 5, numeroCuenta.length()) + "\n");	        
 	        datosCliente.add("APELLIDOS Y NOMBRES:");datosCliente.add(tabCliente);
 	        datosCliente.add(planilla.getCuentaCliente().getCliente().getApellido() + " " + planilla.getCuentaCliente().getCliente().getNombre() +  "\n");
 	        datosCliente.add("BARRIO:");datosCliente.add(tabCliente);
@@ -101,8 +112,6 @@ public class GenerarPlanillasPDF {
 	        	datosCliente.add("" +  "\n");
 	        datosCliente.add("DIRECCIÓN:");datosCliente.add(tabCliente);
 	        datosCliente.add(planilla.getCuentaCliente().getDireccion() +  "\n");
-	        datosCliente.add("COD. MEDIDOR:");datosCliente.add(tabCliente);
-	        datosCliente.add(planilla.getCuentaCliente().getMedidor().getCodigo() +  "\n");
 	        datosCliente.add("FECHA:");datosCliente.add(tabCliente);
 	        datosCliente.add(formateador.format(fecha) +  "\n");
 	        

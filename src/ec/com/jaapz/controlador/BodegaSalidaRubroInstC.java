@@ -433,8 +433,6 @@ public class BodegaSalidaRubroInstC {
 	private void grabarKardexSalida() {
 		try {
 			java.util.Date utilDate = new java.util.Date(); 
-			//long lnMilisegundos = utilDate.getTime();
-			//java.sql.Time sqlTime = new java.sql.Time(lnMilisegundos);
 			
 			instalacionDao.getEntityManager().getTransaction().begin();
 			for(InstalacionDetalle det : tvDatos.getItems()) {
@@ -442,14 +440,14 @@ public class BodegaSalidaRubroInstC {
 				//kardex.setIdKardex(null);
 				kardex.setRubro(det.getRubro());
 				kardex.setFecha(utilDate);
-				kardex.setTipoDocumento("Factura #");
-				//kardex.setNumDocumento(txtNumero.getText());
-				kardex.setDetalleOperacion("Adquisición de " + det.getRubro().getDescripcion());
+				kardex.setTipoDocumento("Documento Liquidación #");
+				kardex.setNumDocumento(String.valueOf(liquidacionSeleccionada.getIdLiquidacion()));
+				kardex.setDetalleOperacion("Salida de " + det.getRubro().getDescripcion());
 				kardex.setCantidad(det.getCantidad());
 				kardex.setUnidadMedida("Unidad");
 				kardex.setValorUnitario(det.getPrecio());
 				kardex.setCostoTotal(det.getCantidad()*det.getPrecio());
-				kardex.setTipoMovimiento(Constantes.BODEGA_INGRESO);
+				kardex.setTipoMovimiento(Constantes.BODEGA_SALIDA);
 				kardex.setEstado(Constantes.ESTADO_ACTIVO);	
 			}
 			instalacionDao.getEntityManager().getTransaction().commit();

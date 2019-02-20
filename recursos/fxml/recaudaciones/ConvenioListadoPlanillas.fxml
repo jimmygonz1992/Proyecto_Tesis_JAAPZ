@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="637.0" prefWidth="819.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ec.com.jaapz.controlador.RecaudacionesPlanillasEmitidasC">
+<AnchorPane prefHeight="637.0" prefWidth="819.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ec.com.jaapz.controlador.ConvenioListadoPlanillasC">
    <children>
       <GridPane alignment="CENTER" layoutX="3.0" layoutY="14.0" prefHeight="618.0" prefWidth="807.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="3.0" AnchorPane.rightAnchor="9.0" AnchorPane.topAnchor="14.0">
         <columnConstraints>

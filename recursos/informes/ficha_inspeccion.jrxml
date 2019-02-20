@@ -16,6 +16,8 @@
 	<parameter name="aprobado" class="java.lang.String"/>
 	<parameter name="reprobado" class="java.lang.String"/>
 	<parameter name="USUARIO_RESPONSABLE" class="java.lang.String"/>
+	<parameter name="LATITUD" class="java.lang.String"/>
+	<parameter name="LONGITUD" class="java.lang.String"/>
 	<queryString language="SQL">
 		<![CDATA[SELECT (c.nombre || ' ' ||c.apellido) as nombres,
 	c.id_cliente,
@@ -296,6 +298,28 @@ WHERE
 				</textElement>
 				<text><![CDATA[D) REQUERIMIENTOS]]></text>
 			</staticText>
+			<staticText>
+				<reportElement x="280" y="200" width="40" height="14" uuid="11cc09af-7b26-4f6a-b44f-8a0cf2b16112"/>
+				<text><![CDATA[Latitud:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="280" y="220" width="40" height="14" uuid="0fe5e1b0-11cb-45b1-aae4-f5f883e38bf9"/>
+				<text><![CDATA[Longitud]]></text>
+			</staticText>
+			<line>
+				<reportElement x="322" y="211" width="139" height="1" uuid="b00b2bf3-a244-4077-9275-f969c7199318"/>
+			</line>
+			<line>
+				<reportElement x="322" y="231" width="139" height="1" uuid="b5a5b24f-98ca-4de3-96bd-c5b6e941d7c4"/>
+			</line>
+			<textField>
+				<reportElement x="323" y="196" width="150" height="14" uuid="1c448f34-5435-4204-bce4-1bf5d19ad174"/>
+				<textFieldExpression><![CDATA[$P{LATITUD}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="324" y="216" width="150" height="14" uuid="aeeb5e0c-12d7-41b3-8616-a35c3d425bbe"/>
+				<textFieldExpression><![CDATA[$P{LONGITUD}]]></textFieldExpression>
+			</textField>
 		</band>
 		<band height="13">
 			<subreport>

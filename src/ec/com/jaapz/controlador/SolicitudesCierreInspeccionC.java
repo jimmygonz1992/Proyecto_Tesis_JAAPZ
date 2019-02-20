@@ -366,8 +366,9 @@ public class SolicitudesCierreInspeccionC {
 					txtModelo.setText("");
 					txtMarca.setText("");
 					medidorSeleccionado = null;
-				}else {
+				}else {//no es factible la instalacion
 					inspeccionSeleccionado.setEstadoInspeccion(Constantes.EST_INSPECCION_REALIZADO);
+					inspeccionSeleccionado.setObservacion(txtObservacion.getText().toString());
 					inspeccionSeleccionado.setFactibilidad(cboFactible.getSelectionModel().getSelectedItem().toString());
 					//se procede a grabar los daotos
 					inspeccionDAO.getEntityManager().getTransaction().begin();
