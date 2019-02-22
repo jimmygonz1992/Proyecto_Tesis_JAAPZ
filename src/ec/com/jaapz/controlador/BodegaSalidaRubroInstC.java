@@ -448,7 +448,8 @@ public class BodegaSalidaRubroInstC {
 				kardex.setValorUnitario(det.getPrecio());
 				kardex.setCostoTotal(det.getCantidad()*det.getPrecio());
 				kardex.setTipoMovimiento(Constantes.BODEGA_SALIDA);
-				kardex.setEstado(Constantes.ESTADO_ACTIVO);	
+				kardex.setEstado(Constantes.ESTADO_ACTIVO);
+				instalacionDao.getEntityManager().persist(kardex);
 			}
 			instalacionDao.getEntityManager().getTransaction().commit();
 		}catch(Exception ex) {
