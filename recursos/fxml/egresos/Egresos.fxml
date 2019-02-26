@@ -19,9 +19,9 @@
         <rowConstraints>
           <RowConstraints maxHeight="176.0" minHeight="0.0" prefHeight="45.0" vgrow="SOMETIMES" />
             <RowConstraints maxHeight="176.0" minHeight="2.0" prefHeight="19.0" vgrow="SOMETIMES" />
-          <RowConstraints maxHeight="474.0" minHeight="10.0" prefHeight="301.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="474.0" minHeight="3.0" prefHeight="8.0" vgrow="SOMETIMES" />
-          <RowConstraints maxHeight="76.0" minHeight="10.0" prefHeight="70.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="474.0" minHeight="10.0" prefHeight="284.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="474.0" minHeight="0.0" prefHeight="21.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="91.0" minHeight="10.0" prefHeight="61.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
             <Label text="EGRESOS" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.halignment="CENTER">
@@ -38,75 +38,46 @@
                     </columnConstraints>
                     <rowConstraints>
                         <RowConstraints maxHeight="134.0" minHeight="10.0" prefHeight="47.0" vgrow="SOMETIMES" />
-                      <RowConstraints maxHeight="126.0" minHeight="10.0" prefHeight="85.0" vgrow="SOMETIMES" />
-                      <RowConstraints maxHeight="197.0" minHeight="10.0" prefHeight="32.0" vgrow="SOMETIMES" />
+                      <RowConstraints maxHeight="126.0" minHeight="10.0" prefHeight="76.0" vgrow="SOMETIMES" />
+                      <RowConstraints maxHeight="197.0" minHeight="10.0" prefHeight="53.0" vgrow="SOMETIMES" />
                         <RowConstraints maxHeight="197.0" minHeight="10.0" prefHeight="87.0" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="197.0" minHeight="10.0" prefHeight="48.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
                         <Label text="Fecha:" GridPane.halignment="CENTER">
-                           <font>
-                              <Font name="System Bold" size="14.0" />
-                           </font>
+                           <font><Font name="System Bold" size="14.0" /></font>
                         </Label>
                         <Label text="Descripción:" GridPane.halignment="CENTER" GridPane.rowIndex="1">
-                           <font>
-                              <Font name="System Bold" size="14.0" />
-                           </font>
-                           <GridPane.margin>
-                              <Insets left="40.0" />
-                           </GridPane.margin>
+                           <font><Font name="System Bold" size="14.0" /></font>
+                           <GridPane.margin><Insets left="40.0" /></GridPane.margin>
                         </Label>
                         <Label text="Valor/Monto:" GridPane.halignment="CENTER" GridPane.rowIndex="2">
-                           <font>
-                              <Font name="System Bold" size="14.0" />
-                           </font>
-                           <GridPane.margin>
-                              <Insets left="50.0" />
-                           </GridPane.margin>
+                           <font><Font name="System Bold" size="14.0" /></font>
+                           <GridPane.margin><Insets left="50.0" /></GridPane.margin>
                         </Label>
                         <Label text="Observaciones:" GridPane.halignment="CENTER" GridPane.rowIndex="3">
-                           <font>
-                              <Font name="System Bold" size="14.0" />
-                           </font>
-                           <GridPane.margin>
-                              <Insets left="55.0" />
-                           </GridPane.margin>
+                           <font><Font name="System Bold" size="14.0" /></font>
+                           <GridPane.margin><Insets left="55.0" /></GridPane.margin>
                         </Label>
-                        <Label text="Usuario:" GridPane.halignment="CENTER" GridPane.rowIndex="4">
-                           <font>
-                              <Font name="System Bold" size="14.0" />
-                           </font>
-                           <GridPane.margin>
-                              <Insets left="15.0" />
-                           </GridPane.margin>
-                        </Label>
-                        <TextField fx:id="txtValorMonto" maxWidth="300.0" prefHeight="25.0" prefWidth="300.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                        <TextField fx:id="txtUsuario" maxWidth="300.0" prefHeight="25.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                         <DatePicker fx:id="dtpFecha" GridPane.columnIndex="1" />
-                        <TextArea fx:id="txtDescripcion" maxHeight="75.0" maxWidth="300.0" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                        <TextArea fx:id="txtObservaciones" maxHeight="75.0" maxWidth="300.0" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                        <TextField fx:id="txtDescripcion" prefHeight="67.0" prefWidth="325.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <TextField fx:id="txtValorMonto" maxWidth="300.0" prefHeight="25.0" prefWidth="300.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />                        
+                        <TextField fx:id="txtObservaciones" prefHeight="79.0" prefWidth="325.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                      </children>
                   </GridPane>
                </children>
             </HBox>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="4">
                <children>
-                  <Button fx:id="btnGrabar" alignment="BOTTOM_CENTER" contentDisplay="TOP" graphicTextGap="0.0" maxHeight="75.0" minHeight="50.0" mnemonicParsing="false" onAction="#grabar" prefHeight="60.0" prefWidth="71.0" styleClass="botonGrabar" text="Grabar">
-                     <font>
-                        <Font name="Arial Bold" size="12.0" />
-                     </font>
+                  <Button fx:id="btnGrabar" alignment="BOTTOM_CENTER" contentDisplay="TOP" graphicTextGap="0.0" maxHeight="75.0" minHeight="48.0" mnemonicParsing="false" onAction="#grabar" prefHeight="48.0" prefWidth="71.0" styleClass="botonGrabar" text="Grabar">
+                     <font><Font name="Arial Bold" size="12.0" /></font>
                   </Button>
                   <Button fx:id="btnNuevo" alignment="BOTTOM_CENTER" contentDisplay="TOP" graphicTextGap="0.0" maxHeight="75.0" minHeight="50.0" mnemonicParsing="false" onAction="#nuevo" prefHeight="60.0" prefWidth="71.0" styleClass="botonNuevo" text="Nuevo">
-                     <font>
-                        <Font name="Arial Bold" size="12.0" />
-                     </font>
-                     <HBox.margin>
-                        <Insets left="10.0" />
-                     </HBox.margin>
+                     <font><Font name="Arial Bold" size="12.0" /></font>
+                     <HBox.margin><Insets left="10.0" /></HBox.margin>
                   </Button>
                </children>
             </HBox>
+            <TextField fx:id="txtCodigo" GridPane.columnIndex="1" GridPane.rowIndex="1" />
          </children>
       </GridPane>
    </children>
