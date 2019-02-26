@@ -226,10 +226,14 @@ public class BodegaIngresoRubrosC {
 				@Override
 				public void handle(KeyEvent ke){
 					if (ke.getCode().equals(KeyCode.ENTER)){
-						if (validarIngresoExiste() == true) {
+						if (validarIngresoExiste() == true) 
 							recuperarIngreso(txtNumero.getText());
-							//proveedorSeleccionado = new Proveedor();
+						else {
+							limpiar();
+							limpiarProveedor();
+							limpiarIngreso();
 						}
+							
 					}
 				}
 			});
