@@ -64,6 +64,13 @@ public class ReparacionesAtencionSolicC {
 	@SuppressWarnings("static-access")
 	public void initialize() {
 		try {
+			btnBuscar.setStyle("-fx-cursor: hand;");
+			btnGrabar.setStyle("-fx-cursor: hand;");
+			btnImprimir.setStyle("-fx-cursor: hand;");
+			btnNuevo.setStyle("-fx-cursor: hand;");
+			cboEstadoReparacion.setStyle("-fx-cursor: hand;");
+			
+			
 			dtpFecha.setValue(LocalDate.now());
 			bloquear();
 			llenarCombo();

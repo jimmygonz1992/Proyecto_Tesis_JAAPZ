@@ -33,6 +33,10 @@ public class CienteEditarC {
 	ControllerHelper helper = new ControllerHelper();
 	public void initialize() {
 		try {
+			btnGrabar.setStyle("-fx-cursor: hand;");
+			btnSalir.setStyle("-fx-cursor: hand;");
+			cboGenero.setStyle("-fx-cursor: hand;");
+			
 			cargarComboGenero();
 			if(Context.getInstance().getCliente() != null) {
 				recuperarDatos(Context.getInstance().getCliente());

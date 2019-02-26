@@ -89,6 +89,16 @@ public class SolicitudesCierreInspeccionC {
 	SimpleDateFormat formateador = new SimpleDateFormat("dd/MM/yyyy");
 	
 	public void initialize() {
+		btnAgregar.setStyle("-fx-cursor: hand;");
+		btnBuscar.setStyle("-fx-cursor: hand;");
+		btnBuscarMedidor.setStyle("-fx-cursor: hand;");
+		btnBuscarRubro.setStyle("-fx-cursor: hand;");
+		btnEliminar.setStyle("-fx-cursor: hand;");
+		btnQuitar.setStyle("-fx-cursor: hand;");
+		btnGrabar.setStyle("-fx-cursor: hand;");
+		cboFactible.setStyle("-fx-cursor: hand;");
+		
+		
 		txtObservacion.setDisable(true);
 		limpiarCliente();
 		bloquear();

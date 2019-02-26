@@ -19,6 +19,8 @@ public class AsignacionesInstRepC {
 	
 	public void initialize() {
 		try {
+			btnCargar.setStyle("-fx-cursor: hand;");
+			cboTipoTrabajo.setStyle("-fx-cursor: hand;");
 			llenarCombosIns();
 		}catch(Exception ex) {
 			System.out.println(ex.getMessage());

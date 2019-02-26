@@ -49,6 +49,10 @@ public class BodegaRegistroCodMedC {
 	ControllerHelper helper = new ControllerHelper();
 	public void initialize() {
 		try {
+			btnBuscar.setStyle("-fx-cursor: hand;");
+			btnGrabar.setStyle("-fx-cursor: hand;");
+			btnNuevo.setStyle("-fx-cursor: hand;");
+			
 			txtNumFactura.setOnKeyPressed(new EventHandler<KeyEvent>(){
 				@Override
 				public void handle(KeyEvent ke){

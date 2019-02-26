@@ -69,6 +69,13 @@ public class SolicitudInstalacionC {
     
     public void initialize() {
     	try {
+    		btnBuscarIns.setStyle("-fx-cursor: hand;");
+    		btnGrabarIns.setStyle("-fx-cursor: hand;");
+    		btnNuevoIns.setStyle("-fx-cursor: hand;");
+    		cboBarrio.setStyle("-fx-cursor: hand;");
+    		cboGenero.setStyle("-fx-cursor: hand;");
+    		cboUsoMedidor.setStyle("-fx-cursor: hand;");
+    		
     		dtpFechaIns.setValue(LocalDate.now());
     		llenarCombos();
     		txtCedula.setOnKeyPressed(new EventHandler<KeyEvent>(){

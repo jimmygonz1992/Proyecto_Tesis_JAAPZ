@@ -80,6 +80,11 @@ public class RecaudacionesRegistroCobroC {
 
 	public void initialize(){
 		try {
+			btnAceptar.setStyle("-fx-cursor: hand;");
+			btnBuscaCuentas.setStyle("-fx-cursor: hand;");
+			btnCobrar.setStyle("-fx-cursor: hand;");
+			btnLimpiar.setStyle("-fx-cursor: hand;");
+			
 			Context.getInstance().setCuentaCliente(null);
 			noEditable();
 			dtpFecha.setValue(LocalDate.now());

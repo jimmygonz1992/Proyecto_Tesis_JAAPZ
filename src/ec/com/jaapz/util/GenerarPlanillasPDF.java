@@ -2,6 +2,7 @@ package ec.com.jaapz.util;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -29,6 +30,7 @@ import ec.com.jaapz.modelo.PlanillaDetalle;
 public class GenerarPlanillasPDF {
 	PlanillaDAO planillaDAO = new PlanillaDAO();
 	FacturaDAO facturaDAO = new FacturaDAO();
+	DecimalFormat df = new DecimalFormat("#0.00");
 	
 	public String crearEstadoCuenta(Planilla planilla) {
 		try {
@@ -129,7 +131,7 @@ public class GenerarPlanillasPDF {
 	        datosFactura.add("LECTURA ANTERIOR: " + planilla.getLecturaAnterior()); datosFactura.add(new Chunk(new VerticalPositionMark(), 400f, false));
 	        datosFactura.add("CONSUMO: " + planilla.getConsumo() + "\n");
 	        datosFactura.add("MES FACTURADO: " + planilla.getAperturaLectura().getMe().getDescripcion()); datosFactura.add(new Chunk(new VerticalPositionMark(), 200f, false));
-	        datosFactura.add("TOTAL MENSUAL: $" + planilla.getPlanillaDetalles().get(0).getSubtotal() + "\n");
+	        datosFactura.add("TOTAL MENSUAL: $" + df.format(planilla.getPlanillaDetalles().get(0).getSubtotal()) + "\n");
 	        //calcular la deuda anterior
 	        double deudaAnterior = 0,deudaCero = 0;
 	        List<Planilla> planillasGeneradas = planillaDAO.getPlanillaCuenta(planilla.getCuentaCliente().getIdCuenta());
@@ -151,12 +153,12 @@ public class GenerarPlanillasPDF {
 	        	deudaCero = planilla.getTotalPagar();
 	        else
 	        	deudaCero = deudaAnterior;
-	        datosFactura.add("DEUDA ANTERIOR: " + (deudaCero - planilla.getTotalPagar())); datosFactura.add(new Chunk(new VerticalPositionMark(), 200f, false));
+	        datosFactura.add("DEUDA ANTERIOR: " + df.format((deudaCero - planilla.getTotalPagar()))); datosFactura.add(new Chunk(new VerticalPositionMark(), 200f, false));
 	        double otros = 0;
 	        for(int i = 1 ; i < planilla.getPlanillaDetalles().size() ; i ++)
 	        	otros = otros + planilla.getPlanillaDetalles().get(i).getSubtotal();
-	        datosFactura.add("OTROS: " + otros); datosFactura.add(new Chunk(new VerticalPositionMark(), 400f, false));
-	        datosFactura.add("TOTAL PAGAR: " + (deudaAnterior)); //el deuda anterior es el total a pagar.. xq esta acumulando todas las deudas. incluso el actual
+	        datosFactura.add("OTROS: " + df.format(otros)); datosFactura.add(new Chunk(new VerticalPositionMark(), 400f, false));
+	        datosFactura.add("TOTAL PAGAR: " + df.format(deudaAnterior)); //el deuda anterior es el total a pagar.. xq esta acumulando todas las deudas. incluso el actual
 	        document.add(datosFactura);
 	        
 	        //seguiente es el cuadro con el detalle de la factura del mes
@@ -183,7 +185,7 @@ public class GenerarPlanillasPDF {
 	        	if(pla.getEstado().equals(Constantes.ESTADO_ACTIVO)) {
 	        		tablaDetalleMes.addCell(pla.getDescripcion());
 	        		tablaDetalleMes.addCell(String.valueOf(pla.getCantidad()));
-	    	        tablaDetalleMes.addCell(String.valueOf(pla.getSubtotal()));
+	    	        tablaDetalleMes.addCell(String.valueOf(df.format(pla.getSubtotal())));
 	        	}
 	        }
 	        
@@ -223,7 +225,7 @@ public class GenerarPlanillasPDF {
 	        					+ " MEDIANTE LA PLANILLA No. " + fac.getNumFactura();
 	        		PdfPCell descripcionCelda = new PdfPCell(new Paragraph(descripcion,fuenteContenido));
 	    	        tablaMovimiento.addCell(descripcionCelda);
-	    	        PdfPCell totalCelda = new PdfPCell(new Paragraph(String.valueOf(facDet.getSubtotal()),fuenteContenido));
+	    	        PdfPCell totalCelda = new PdfPCell(new Paragraph(String.valueOf(df.format(facDet.getSubtotal())),fuenteContenido));
 	    	        tablaMovimiento.addCell(totalCelda);
 	        	}
 	        }

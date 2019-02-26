@@ -42,6 +42,11 @@ public class SeguridadAccesosC {
 	List<SegPermiso> permisosSeleccionados = new ArrayList<SegPermiso>();
 
 	public void initialize(){
+		btnAnadir.setStyle("-fx-cursor: hand;");
+		btnGuardar.setStyle("-fx-cursor: hand;");
+		btnQuitar.setStyle("-fx-cursor: hand;");
+		cboPerfil.setStyle("-fx-cursor: hand;");
+		
 		llenarComboPerfil();
 		llenar_Datos();
 	}

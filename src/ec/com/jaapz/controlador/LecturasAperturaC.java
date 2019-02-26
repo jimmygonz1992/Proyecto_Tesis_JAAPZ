@@ -54,6 +54,10 @@ public class LecturasAperturaC {
 	
 	public void initialize() {
 		try {
+			btnGrabarApertura.setStyle("-fx-cursor: hand;");
+			cboAnio.setStyle("-fx-cursor: hand;");
+			cboMes.setStyle("-fx-cursor: hand;");
+			
 			cargarCombos();
 			recuperarDatos();
 		}catch(Exception ex) {

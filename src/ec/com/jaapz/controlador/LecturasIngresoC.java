@@ -46,6 +46,8 @@ public class LecturasIngresoC {
     
     public void initialize() {
     	try {
+    		btnBuscarApertura.setStyle("-fx-cursor: hand;");
+    		btnGrabar.setStyle("-fx-cursor: hand;");
     		cargarCiclo();
     		cargarClientes();
     		tvDatosLecturas.setEditable(true);

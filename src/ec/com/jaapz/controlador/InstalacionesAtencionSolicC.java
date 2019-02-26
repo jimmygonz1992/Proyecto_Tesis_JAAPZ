@@ -73,6 +73,13 @@ public class InstalacionesAtencionSolicC {
 	@SuppressWarnings("static-access")
 	public void initialize() {
 		try {
+			btnBuscar.setStyle("-fx-cursor: hand;");
+			btnGrabar.setStyle("-fx-cursor: hand;");
+			btnImprimir.setStyle("-fx-cursor: hand;");
+			btnNuevo.setStyle("-fx-cursor: hand;");
+			cboEstadoInstalacion.setStyle("-fx-cursor: hand;");
+			
+			
 			dtpFecha.setValue(LocalDate.now());
 			bloquear();
 			llenarCombo();

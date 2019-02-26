@@ -39,6 +39,10 @@ public class SeguridadEmpresaC {
 	ControllerHelper helper = new ControllerHelper();
 	SeguridadEmpresaDAO empresaDao = new SeguridadEmpresaDAO();
 	public void initialize() {
+		btnExaminar.setStyle("-fx-cursor: hand;");
+		btnGrabar.setStyle("-fx-cursor: hand;");
+		btnQuitar.setStyle("-fx-cursor: hand;");
+		
 		int maxLength = 13;
 		int maxLengthTelf = 10;
 		recuperarDatos();

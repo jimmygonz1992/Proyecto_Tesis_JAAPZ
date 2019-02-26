@@ -41,6 +41,11 @@ public class BodegaRubroContPrueba {
 	private @FXML TableView<Rubro> tvDatos;
 
 	public void initialize(){
+		btnBuscar.setStyle("-fx-cursor: hand;");
+		btnGrabar.setStyle("-fx-cursor: hand;");
+		btnNuevo.setStyle("-fx-cursor: hand;");
+		cboTipoRubro.setStyle("-fx-cursor: hand;");
+		
 		limpiar();
 		llenarDatos();
 		

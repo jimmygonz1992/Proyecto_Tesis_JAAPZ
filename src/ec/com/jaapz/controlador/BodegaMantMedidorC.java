@@ -41,6 +41,10 @@ public class BodegaMantMedidorC {
 	EstadoMedidorDAO estadoMedidorDao = new EstadoMedidorDAO();
 
 	public void initialize() {
+		btnBuscar.setStyle("-fx-cursor: hand;");
+		btnGrabar.setStyle("-fx-cursor: hand;");
+		btnNuevo.setStyle("-fx-cursor: hand;");
+		cboEstadoMed.setStyle("-fx-cursor: hand;");
 		nuevo();
 		txtIdMedidor.setEditable(false);
 		txtIdMedidor.setVisible(false);

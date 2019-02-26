@@ -42,6 +42,9 @@ public class SeguridadPerfilesC {
 	SegMenuDAO menuDAO = new SegMenuDAO();
 	
 	public void initialize(){
+		btnAceptar.setStyle("-fx-cursor: hand;");
+		btnNuevo.setStyle("-fx-cursor: hand;");
+		
 		limpiar();
 		llenarDatos();
 		//solo letras mayusculas

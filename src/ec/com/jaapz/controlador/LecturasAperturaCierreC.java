@@ -86,6 +86,17 @@ public class LecturasAperturaCierreC {
 
 	public void initialize() {
 		try {
+			btnAsignar.setStyle("-fx-cursor: hand;");
+			btnBuscarApertura.setStyle("-fx-cursor: hand;");
+			btnCerrarCiclo.setStyle("-fx-cursor: hand;");
+			btnGrabarApertura.setStyle("-fx-cursor: hand;");
+			btnGrabarAsig.setStyle("-fx-cursor: hand;");
+			btnImprimirAsig.setStyle("-fx-cursor: hand;");
+			btnQuitarAsig.setStyle("-fx-cursor: hand;");
+			btnResultados.setStyle("-fx-cursor: hand;");
+			cboAnio.setStyle("-fx-cursor: hand;");
+			cboMes.setStyle("-fx-cursor: hand;");
+			
 			Context.getInstance().setBarrio(null);
 			cargarCombos();
 			recuperarDatos();

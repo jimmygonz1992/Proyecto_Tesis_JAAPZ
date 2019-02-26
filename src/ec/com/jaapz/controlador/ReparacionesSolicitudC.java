@@ -46,6 +46,10 @@ public class ReparacionesSolicitudC {
 	
 	public void initialize(){
 		try {
+			btnBuscar.setStyle("-fx-cursor: hand;");
+			btnNuevo.setStyle("-fx-cursor: hand;");
+			btnGuardar.setStyle("-fx-cursor: hand;");
+			
 			dtpFecha.setValue(LocalDate.now());
 			usuarioLogueado = Context.getInstance().getUsuariosC();
 			txtUsuario.setText(Encriptado.Desencriptar(String.valueOf(Context.getInstance().getUsuariosC().getUsuario())));

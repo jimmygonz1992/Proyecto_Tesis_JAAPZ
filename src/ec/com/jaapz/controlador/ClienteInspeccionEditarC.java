@@ -43,6 +43,12 @@ public class ClienteInspeccionEditarC {
 	SolInspeccionInDAO inspeccionDAO = new SolInspeccionInDAO();
 	public void initialize() {
 		try {
+			btnGrabarIns.setStyle("-fx-cursor: hand;");
+			btnSalir.setStyle("-fx-cursor: hand;");
+			cboBarrio.setStyle("-fx-cursor: hand;");
+			cboUsoMedidor.setStyle("-fx-cursor: hand;");
+			
+			
 			txtApellidosIns.setEditable(false);
 			txtTelefonoIns.setEditable(false);
 			txtGeneroIns.setEditable(false);

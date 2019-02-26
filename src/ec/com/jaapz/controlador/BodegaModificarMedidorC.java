@@ -42,6 +42,9 @@ public class BodegaModificarMedidorC {
 	ControllerHelper helper = new ControllerHelper();
 	public void initialize() {
 		try {
+			btnAgregar.setStyle("-fx-cursor: hand;");
+			btnQuitar.setStyle("-fx-cursor: hand;");
+			
 			SimpleDateFormat formateador = new SimpleDateFormat("dd/MM/yyyy");
 			detalleSeleccionado = Context.getInstance().getDetalleMedidor();
 			txtNumFactura.setText(detalleSeleccionado.getIngreso().getNumeroIngreso());

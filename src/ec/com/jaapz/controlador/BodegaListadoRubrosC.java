@@ -20,6 +20,7 @@ public class BodegaListadoRubrosC {
 	private @FXML Button btnVerReporte;
 	RubroDAO rubroDAO = new RubroDAO();
 	public void initialize(){
+		btnVerReporte.setStyle("-fx-cursor: hand;");
 		llenarDatos();
 		tvDatos.setRowFactory(tv -> {
             TableRow<Rubro> row = new TableRow<>();

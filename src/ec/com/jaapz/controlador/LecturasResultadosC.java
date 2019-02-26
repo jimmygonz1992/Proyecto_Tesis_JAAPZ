@@ -28,6 +28,7 @@ public class LecturasResultadosC {
 	AperturaLectura aperturaSeleccionada = new AperturaLectura(); 
 	public void initialize() {
 		try {
+			btnVisualizarInforme.setStyle("-fx-cursor: hand;");
 			aperturaSeleccionada = Context.getInstance().getApertura();
 			lblApertura.setText("Apertura seleccionada: mes " + aperturaSeleccionada.getMe().getDescripcion() + " del año " + aperturaSeleccionada.getAnio().getDescripcion());
 			Context.getInstance().setApertura(null);

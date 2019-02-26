@@ -43,6 +43,11 @@ public class ParametrosPreciosUnitariosC {
 
 	public void initialize() {
 		try {
+			btnAgregar.setStyle("-fx-cursor: hand;");
+			btnBuscarRubro.setStyle("-fx-cursor: hand;");
+			btnGrabar.setStyle("-fx-cursor: hand;");
+			btnQuitar.setStyle("-fx-cursor: hand;");
+			
 			recuperarDatos();
 			tvDatos.setEditable(true);
 		}catch(Exception ex) {

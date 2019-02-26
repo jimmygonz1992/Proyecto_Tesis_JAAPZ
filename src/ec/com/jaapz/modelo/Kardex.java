@@ -21,10 +21,8 @@ import javax.persistence.TemporalType;
 @NamedQueries({
 	@NamedQuery(name="Kardex.findKardex", query="SELECT k FROM Kardex k where  k.rubro.idRubro = :idRubro "
 			+ "and k.numDocumento = :documento"),
-	
-	@NamedQuery(name="Kardex.ListaKardex", query="SELECT k FROM Kardex k "
-		+ "where (lower(k.rubro.descripcion) like :patron  or lower(k.rubro.codigo) like :patron) "
-		+ "and k.estado = 'A' and k.rubro.estado = 'A' order by k.idKardex asc"),
+	@NamedQuery(name="Kardex.findKardexPorRubro", query="SELECT k FROM Kardex k where k.rubro.idRubro = :idRubro"
+			+ " order by k.idKardex asc")
 })
 
 public class Kardex implements Serializable {
@@ -47,7 +45,7 @@ public class Kardex implements Serializable {
 	@Column(name="detalle_operacion")
 	private String detalleOperacion;
 
-	private double cantidad;
+	private int cantidad;
 
 	@Column(name="unidad_medida")
 	private String unidadMedida;
@@ -108,11 +106,11 @@ public class Kardex implements Serializable {
 		this.detalleOperacion = detalleOperacion;
 	}
 
-	public double getCantidad() {
+	public int getCantidad() {
 		return cantidad;
 	}
 
-	public void setCantidad(double cantidad) {
+	public void setCantidad(int cantidad) {
 		this.cantidad = cantidad;
 	}
 

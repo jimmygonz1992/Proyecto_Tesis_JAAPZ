@@ -35,6 +35,8 @@ public class SeguridadCambioContraseñaC {
 	
 	public void initialize(){
 		try {
+			btnGrabar.setStyle("-fx-cursor: hand;");
+			
 			bloquear();
 			usuarioLogueado = Context.getInstance().getUsuariosC();
 			//txtContraseñaActual.setText(Encriptado.Desencriptar(Context.getInstance().getUsuariosC().getClave()));

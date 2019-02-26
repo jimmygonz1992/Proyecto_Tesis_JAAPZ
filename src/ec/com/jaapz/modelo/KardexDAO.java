@@ -17,11 +17,11 @@ public class KardexDAO extends ClaseDAO{
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<Kardex> getListaKardex(String patron){
+	public List<Kardex> getListaKardex(Integer patron){
 		List<Kardex> resultado = new ArrayList<Kardex>();
-		Query query = getEntityManager().createNamedQuery("Kardex.ListaKardex");
+		Query query = getEntityManager().createNamedQuery("Kardex.findKardexPorRubro");
 		query.setHint("javax.persistence.cache.storeMode", "REFRESH");
-		query.setParameter("patron", "%" + patron + "%");
+		query.setParameter("idRubro", patron );
 		resultado = (List<Kardex>) query.getResultList();
 		return resultado;
 	}

@@ -48,6 +48,11 @@ public class SolicitudAsignacionRepC {
 	
 	public void initialize() {
 		try {
+			btnAsignarAsig.setStyle("-fx-cursor: hand;");
+			btnGrabarAsig.setStyle("-fx-cursor: hand;");
+			btnImprimirAsig.setStyle("-fx-cursor: hand;");
+			btnQuitarAsig.setStyle("-fx-cursor: hand;");
+			
 			llenarListaResponsables();
 			if(tpRealizadas.isSelected())
 				bloquearBotonesAsignacion();

@@ -67,7 +67,13 @@ public class BodegaSalidaRubrosC {
 	RubroDAO rubroDAO = new RubroDAO();
 	
 	public void initialize(){
-		try {		
+		try {	
+			btnAñadir.setStyle("-fx-cursor: hand;");
+			btnBuscar.setStyle("-fx-cursor: hand;");
+			btnEliminar.setStyle("-fx-cursor: hand;");
+			btnGrabar.setStyle("-fx-cursor: hand;");
+			btnNuevo.setStyle("-fx-cursor: hand;");
+			
 			//LiquidacionOrden liquid = new LiquidacionOrden();
 			usuarioLogueado = Context.getInstance().getUsuariosC();
 			txtUsuario.setText(Encriptado.Desencriptar(String.valueOf(Context.getInstance().getUsuariosC().getUsuario())));

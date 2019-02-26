@@ -56,6 +56,13 @@ public class ClientesJuntaC {
 	
 	CuentaClienteDAO cuentaDAO = new CuentaClienteDAO();
 	public void initialize() {
+		btnBuscarBarrio.setStyle("-fx-cursor: hand;");
+		btnBuscarCategoria.setStyle("-fx-cursor: hand;");
+		btnGrabar.setStyle("-fx-cursor: hand;");
+		btnSalir.setStyle("-fx-cursor: hand;");
+		cboGenero.setStyle("-fx-cursor: hand;");
+		
+		
 		cuentaSeleccionada = Context.getInstance().getCuentaCliente();
 		clienteSeleccionado = cuentaSeleccionada.getCliente();
 		Context.getInstance().setCuentaCliente(null);

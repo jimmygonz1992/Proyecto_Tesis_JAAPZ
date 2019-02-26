@@ -38,6 +38,7 @@ public class RecaudacionesDeudaPorClienteC {
 	
 	public void initialize() {
 		try {
+			btnReprte.setStyle("-fx-cursor: hand;");
 			llenarTablaPlanillas("");
 			txtTotalAdeudado.setEditable(false);
 		}catch(Exception ex) {

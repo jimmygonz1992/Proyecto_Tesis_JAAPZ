@@ -88,6 +88,11 @@ public class InicioSesionC {
 			System.exit(0);
 	}
 	public void initialize(){
+		btnAceptar.setStyle("-fx-cursor: hand;");
+		btnCancelar.setStyle("-fx-cursor: hand;");
+		cboPerfil.setStyle("-fx-cursor: hand;");
+		
+		
 		toolTip = new Tooltip("Ingrese Nombre de usuario");
 		txtUsuario.setTooltip(toolTip);
 		toolTip = new Tooltip("Ingrese Clave del usuario");

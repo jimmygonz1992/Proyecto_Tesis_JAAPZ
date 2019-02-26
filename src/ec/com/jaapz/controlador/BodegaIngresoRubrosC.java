@@ -89,6 +89,12 @@ public class BodegaIngresoRubrosC {
 
 	public void initialize(){
 		try {
+			btnAñadir.setStyle("-fx-cursor: hand;");
+			btnBuscarRubro.setStyle("-fx-cursor: hand;");
+			btnEliminar.setStyle("-fx-cursor: hand;");
+			btnGrabar.setStyle("-fx-cursor: hand;");
+			btnNuevo.setStyle("-fx-cursor: hand;");
+			
 			int maxLength = 10;
 			nuevo();
 			usuarioLogueado = Context.getInstance().getUsuariosC();

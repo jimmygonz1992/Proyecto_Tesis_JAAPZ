@@ -17,6 +17,8 @@ public class EgresosC {
 	@FXML private Button btnNuevo;
 	
 	public void initialize(){
+		btnGrabar.setStyle("-fx-cursor: hand;");
+		btnNuevo.setStyle("-fx-cursor: hand;");
 		
 	}
 	

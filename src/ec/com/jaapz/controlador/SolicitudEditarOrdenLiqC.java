@@ -68,6 +68,14 @@ public class SolicitudEditarOrdenLiqC {
 	LiquidacionOrdenDAO liquidacionDao =  new LiquidacionOrdenDAO();
 	
 	public void initialize() {
+		btnAniadir.setStyle("-fx-cursor: hand;");
+		btnBuscarOrdenLiqEmitida.setStyle("-fx-cursor: hand;");
+		btnBuscarRubro.setStyle("-fx-cursor: hand;");
+		btnEliminar.setStyle("-fx-cursor: hand;");
+		btnGrabar.setStyle("-fx-cursor: hand;");
+		btnNuevo.setStyle("-fx-cursor: hand;");
+		
+		
 		bloquear();
 		//recuperar Material
 		txtCodigoMat.setOnKeyPressed(new EventHandler<KeyEvent>(){

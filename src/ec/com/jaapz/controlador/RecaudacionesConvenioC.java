@@ -52,6 +52,11 @@ public class RecaudacionesConvenioC {
 	PlanillaDAO planillaDAO = new PlanillaDAO();
 	public void initialize() {
 		try {
+			btnBuscar.setStyle("-fx-cursor: hand;");
+			btnGenerar.setStyle("-fx-cursor: hand;");
+			btnGrabar.setStyle("-fx-cursor: hand;");
+			btnLimpiar.setStyle("-fx-cursor: hand;");
+			
 			limpiar();
 		}catch(Exception ex) {
 			

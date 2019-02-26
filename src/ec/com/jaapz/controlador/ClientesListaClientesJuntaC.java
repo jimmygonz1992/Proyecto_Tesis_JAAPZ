@@ -38,6 +38,10 @@ public class ClientesListaClientesJuntaC {
 
 	public void initialize() {	
 		try {
+			btnEditar.setStyle("-fx-cursor: hand;");
+			btnEliminar.setStyle("-fx-cursor: hand;");
+			btnImprimir.setStyle("-fx-cursor: hand;");
+			
 			btnEditar.setStyle("-fx-graphic: url('/editar.png');-fx-cursor: hand;");
 			btnImprimir.setStyle("-fx-graphic: url('/imprimir.png');-fx-cursor: hand;");
 			btnEliminar.setStyle("-fx-graphic: url('/eliminar.png');-fx-cursor: hand;");

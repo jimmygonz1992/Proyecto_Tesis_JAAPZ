@@ -46,6 +46,8 @@ public class LecturasCierreC {
 	
 	public void initialize() {
 		try {
+			btnCerrarCiclo.setStyle("-fx-cursor: hand;");
+			btnResultados.setStyle("-fx-cursor: hand;");
 			Context.getInstance().setBarrio(null);
 			obtenerCicloActual();
 			cargarDatosAperturasRealizadas();

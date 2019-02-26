@@ -36,6 +36,9 @@ public class ParametrosCategoriaC {
 	CategoriaDAO junCategoriaDAO = new CategoriaDAO();
 	ControllerHelper helper = new ControllerHelper();
 	public void initialize() {
+		btnAceptar.setStyle("-fx-cursor: hand;");
+		btnNuevo.setStyle("-fx-cursor: hand;");
+		
 		limpiar();
 		llenarDatos();
 		tvDatos.setOnMouseClicked(new EventHandler<Event>() {

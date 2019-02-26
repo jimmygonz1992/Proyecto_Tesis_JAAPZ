@@ -23,6 +23,8 @@ public class SolicitudesRegistroC {
 	
 	public void initialize() {
 		try {
+			btnCargar.setStyle("-fx-cursor: hand;");
+			cboTipoSolicitud.setStyle("-fx-cursor: hand;");
 			llenarCombosIns();
 		}catch(Exception ex) {
 			System.out.println(ex.getMessage());

@@ -45,6 +45,9 @@ public class RecaudacionesDeudaGeneralC {
 	Date fechaImpresion = new Date(); 
 	
 	public void initialize(){
+		btnCargarDatos.setStyle("-fx-cursor: hand;");
+		btnReporte.setStyle("-fx-cursor: hand;");
+		
 		txtTotalDeuda.setEditable(false);
 		dtpFechaInicio.setValue(LocalDate.now());
 		dtpFechaFin.setValue(LocalDate.now());

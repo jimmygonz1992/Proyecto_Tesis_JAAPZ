@@ -108,7 +108,8 @@ public class ClientesInspeccionC {
 		btnImprimir.setStyle("-fx-graphic: url('/imprimir.png');-fx-cursor: hand;");
 		btnEliminar.setStyle("-fx-graphic: url('/eliminar.png');-fx-cursor: hand;");
 		btnNuevo.setStyle("-fx-graphic: url('/nuevo.png');-fx-cursor: hand;");
-
+		cboBarrio.setStyle("-fx-cursor: hand;");
+		cboUsoMedidor.setStyle("-fx-cursor: hand;");
 
 		btnEditarInspeccion.setStyle("-fx-graphic: url('/editar.png');-fx-cursor: hand;");
 		btnImprimirInspeccion.setStyle("-fx-graphic: url('/imprimir.png');-fx-cursor: hand;");

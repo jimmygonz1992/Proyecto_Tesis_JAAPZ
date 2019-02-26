@@ -75,6 +75,13 @@ public class BodegaSalidaRubroInstC {
 	
 	public void initialize() {
 		try {
+			btnBuscarLiquidacion.setStyle("-fx-cursor: hand;");
+			btnBuscarLiquidCuenta.setStyle("-fx-cursor: hand;");
+			btnEliminar.setStyle("-fx-cursor: hand;");
+			btnGrabar.setStyle("-fx-cursor: hand;");
+			btnNuevo.setStyle("-fx-cursor: hand;");
+			
+			
 			dtpFecha.setValue(LocalDate.now());
 			//validar solo numeros
 			txtIdCuenta.textProperty().addListener(new ChangeListener<String>() {

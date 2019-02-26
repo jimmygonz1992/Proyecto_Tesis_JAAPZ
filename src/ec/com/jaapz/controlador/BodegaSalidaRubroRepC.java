@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+import ec.com.jaapz.modelo.Kardex;
 import ec.com.jaapz.modelo.Reparacion;
 import ec.com.jaapz.modelo.ReparacionDAO;
 import ec.com.jaapz.modelo.ReparacionDetalle;
@@ -26,10 +27,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.util.Callback;
 
 public class BodegaSalidaRubroRepC {
@@ -66,6 +67,12 @@ public class BodegaSalidaRubroRepC {
 	
 	public void initialize() {
 		try {
+			btnBuscarInspCuenta.setStyle("-fx-cursor: hand;");
+			btnBuscarInspeccion.setStyle("-fx-cursor: hand;");
+			btnEliminar.setStyle("-fx-cursor: hand;");
+			btnGrabar.setStyle("-fx-cursor: hand;");
+			btnNuevo.setStyle("-fx-cursor: hand;");
+			
 			dtpFecha.setValue(LocalDate.now());
 			
 			//validar solo numeros
@@ -430,7 +437,7 @@ public class BodegaSalidaRubroRepC {
 					reparacionDao.getEntityManager().getTransaction().begin();
 					reparacionDao.getEntityManager().merge(salidaRepSeleccionada);
 					reparacionDao.getEntityManager().getTransaction().commit();
-						
+					grabarKardexSalida();
 					helper.mostrarAlertaInformacion("Datos grabados Correctamente", Context.getInstance().getStage());
 					nuevo();
 					tvDatos.getColumns().clear();
@@ -444,7 +451,32 @@ public class BodegaSalidaRubroRepC {
 			System.out.println(ex.getMessage());
 		}
 	}
-	
+	private void grabarKardexSalida() {
+		try {
+			java.util.Date utilDate = new java.util.Date(); 
+			
+			reparacionDao.getEntityManager().getTransaction().begin();
+			for(ReparacionDetalle det : tvDatos.getItems()) {
+				Kardex kardex = new Kardex();
+				//kardex.setIdKardex(null);
+				kardex.setRubro(det.getRubro());
+				kardex.setFecha(utilDate);
+				kardex.setTipoDocumento("Documento Liquidación #");
+				kardex.setNumDocumento(String.valueOf(salidaRepSeleccionada.getIdReparacion()));
+				kardex.setDetalleOperacion("Salida de " + det.getRubro().getDescripcion());
+				kardex.setCantidad(det.getCantidad());
+				kardex.setUnidadMedida("Unidad");
+				kardex.setValorUnitario(det.getPrecio());
+				kardex.setCostoTotal(det.getCantidad()*det.getPrecio());
+				kardex.setTipoMovimiento(Constantes.BODEGA_SALIDA);
+				kardex.setEstado(Constantes.ESTADO_ACTIVO);
+				reparacionDao.getEntityManager().persist(kardex);
+			}
+			reparacionDao.getEntityManager().getTransaction().commit();
+		}catch(Exception ex) {
+			System.out.println(ex.getMessage());
+		}
+	}
 	public void nuevo() {
 		try {
 			txtCedula.setText("");

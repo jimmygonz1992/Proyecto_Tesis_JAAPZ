@@ -19,6 +19,7 @@ ControllerHelper helper = new ControllerHelper();
 	
 	public void initialize() {
 		try {
+			btnCargar.setStyle("-fx-cursor: hand;");
 			llenarCombosIns();
 		}catch(Exception ex) {
 			System.out.println(ex.getMessage());

@@ -95,6 +95,13 @@ public class SolicitudesCierreReparacionC {
 	
 	public void initialize() {
 		try {
+			btnAgregar.setStyle("-fx-cursor: hand;");
+			btnBuscar.setStyle("-fx-cursor: hand;");
+			btnBuscarRubro.setStyle("-fx-cursor: hand;");
+			btnGrabar.setStyle("-fx-cursor: hand;");
+			btnNuevo.setStyle("-fx-cursor: hand;");
+			btnQuitar.setStyle("-fx-cursor: hand;");
+			
 			dtpFecha.setValue(LocalDate.now());
 			bloquear();			
 			txtUsuario.setText(Encriptado.Desencriptar(String.valueOf(Context.getInstance().getUsuariosC().getUsuario())));

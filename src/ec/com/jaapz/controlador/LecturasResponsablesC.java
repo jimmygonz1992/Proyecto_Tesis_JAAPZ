@@ -59,6 +59,12 @@ public class LecturasResponsablesC {
     
     public void initialize() {
     	try {
+    		btnAsignar.setStyle("-fx-cursor: hand;");
+    		btnBuscarApertura.setStyle("-fx-cursor: hand;");
+    		btnGrabarAsig.setStyle("-fx-cursor: hand;");
+    		btnImprimirAsig.setStyle("-fx-cursor: hand;");
+    		btnQuitarAsig.setStyle("-fx-cursor: hand;");
+    		
 			Context.getInstance().setBarrio(null);
 			llenarListaResponsablesLectura();
 			tvPersonalLectura.setOnMouseClicked(new EventHandler<Event>() {

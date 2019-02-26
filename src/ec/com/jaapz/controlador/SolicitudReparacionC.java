@@ -57,6 +57,10 @@ public class SolicitudReparacionC {
 
 	public void initialize() {
 		try {
+			btnBuscarIns.setStyle("-fx-cursor: hand;");
+			btnGrabarIns.setStyle("-fx-cursor: hand;");
+			btnNuevoIns.setStyle("-fx-cursor: hand;");
+			
 			dtpFechaRep.setValue(LocalDate.now());
 			nuevo();
 			Context.getInstance().setCuentaCliente(null);

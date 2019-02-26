@@ -69,6 +69,14 @@ public class SeguridadUsuarioC {
 	SegUsuario usuarioSeleccionado;
 	
 	public void initialize(){
+		btnAgregarPerfil.setStyle("-fx-cursor: hand;");
+		btnBuscar.setStyle("-fx-cursor: hand;");
+		btnExaminar.setStyle("-fx-cursor: hand;");
+		btnGrabar.setStyle("-fx-cursor: hand;");
+		btnNuevo.setStyle("-fx-cursor: hand;");
+		btnQuitar.setStyle("-fx-cursor: hand;");
+		btnQuitarPerfil.setStyle("-fx-cursor: hand;");
+		
 		int maxLength = 10;
 		limpiar();
 		Context.getInstance().setUsuarios(null);

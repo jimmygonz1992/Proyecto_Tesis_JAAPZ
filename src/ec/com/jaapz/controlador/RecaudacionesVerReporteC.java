@@ -43,6 +43,9 @@ public class RecaudacionesVerReporteC {
 	Date fechaImpresion = new Date(); 
 	
 	public void initialize(){
+		btnCargarDatos.setStyle("-fx-cursor: hand;");
+		btnReporte.setStyle("-fx-cursor: hand;");
+		
 		dtpFechaInicio.setValue(LocalDate.now());
 		dtpFechaFin.setValue(LocalDate.now());
 	}
