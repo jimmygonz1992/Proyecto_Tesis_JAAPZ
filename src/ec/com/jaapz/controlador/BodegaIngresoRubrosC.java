@@ -454,7 +454,7 @@ public class BodegaIngresoRubrosC {
 				txtApellidosPro.setText(listaIngreso.get(i).getProveedor().getApellidos());
 				txtDireccionPro.setText(listaIngreso.get(i).getProveedor().getDireccion());
 				txtTelefonoPro.setText(listaIngreso.get(i).getProveedor().getTelefono());
-				txtNumero.setText(listaIngreso.get(i).getNumeroIngreso());
+				//txtNumero.setText(listaIngreso.get(i).getNumeroIngreso());
 				dtpFecha.setValue(date);	
 				txtSubtotal.setText(Double.toString(listaIngreso.get(i).getSubtotal()));
 				//txtDescuento.setText(Double.toString(listaIngreso.get(i).getTotal()));
@@ -751,7 +751,7 @@ public class BodegaIngresoRubrosC {
 
 						//para lo del kardex
 						Kardex kardex = new Kardex();
-						//kardex.setIdKardex(null);
+						kardex.setIdKardex(null);
 						kardex.setRubro(det.getRubro());
 						kardex.setFecha(date);
 						kardex.setTipoDocumento("Factura #");
@@ -774,8 +774,11 @@ public class BodegaIngresoRubrosC {
 						List<Ingreso> listaIngreso = new ArrayList<Ingreso>();
 						listaIngreso.add(ingreso);
 						proveedorSeleccionado.setIngresos(listaIngreso);
-					}else
-						ingreso.setProveedor(proveedorSeleccionado);
+					}else {
+						proveedorSeleccionado.addIngresos(ingreso);
+						//ingreso.setProveedor(proveedorSeleccionado);
+					}
+						
 					
 					//grabar el ingreso
 					ingresoDao.getEntityManager().getTransaction().begin();
@@ -829,6 +832,8 @@ public class BodegaIngresoRubrosC {
 
 					helper.mostrarAlertaInformacion("Datos Grabados Correctamente", Context.getInstance().getStage());
 					limpiar();
+					txtCodigo.setText("0");
+					txtNumero.setText("");
 					limpiarProveedor();
 					txtNumero.setText("");
 					txtObservaciones.setText("");
@@ -933,6 +938,8 @@ public class BodegaIngresoRubrosC {
 
 					helper.mostrarAlertaInformacion("Datos grabados Correctamente", Context.getInstance().getStage());
 					limpiar();
+					txtCodigo.setText("0");
+					txtNumero.setText("");
 					limpiarProveedor();
 					txtNumero.setText("");
 					txtObservaciones.setText("");
@@ -1109,7 +1116,7 @@ public class BodegaIngresoRubrosC {
 	void limpiarIngreso() {
 		txtCodigo.setText("0");
 		dtpFecha.setAccessibleText(null);
-		txtNumero.setText("");
+		//txtNumero.setText("");
 		txtSubtotal.setText("");
 		txtDescuento.setText("");
 		txtTotal.setText("");
