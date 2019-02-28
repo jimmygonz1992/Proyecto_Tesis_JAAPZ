@@ -262,6 +262,8 @@ public class SolicitudesCierreInspeccionC {
 					Timestamp fecha = new Timestamp(date.getTime());
 					ordenLiquidacion.setFecha(fecha);
 					inspeccionSeleccionado.setEstadoInspeccion(Constantes.EST_INSPECCION_REALIZADO);
+					inspeccionSeleccionado.setFactibilidad(Constantes.EST_FACTIBLE);
+					inspeccionSeleccionado.setObservacion(txtObservacion.getText().toString());
 					//lista de detalle de la orden previa de inspeccion a insertar
 					
 					for(LiquidacionDetalle det : tvDatosOrdenPrevia.getItems()) {
@@ -379,7 +381,7 @@ public class SolicitudesCierreInspeccionC {
 				}else {//no es factible la instalacion
 					inspeccionSeleccionado.setEstadoInspeccion(Constantes.EST_INSPECCION_REALIZADO);
 					inspeccionSeleccionado.setObservacion(txtObservacion.getText().toString());
-					inspeccionSeleccionado.setFactibilidad(cboFactible.getSelectionModel().getSelectedItem().toString());
+					inspeccionSeleccionado.setFactibilidad(Constantes.EST_NO_FACTIBLE);
 					//se procede a grabar los daotos
 					inspeccionDAO.getEntityManager().getTransaction().begin();
 					inspeccionDAO.getEntityManager().merge(inspeccionSeleccionado);
@@ -417,7 +419,6 @@ public class SolicitudesCierreInspeccionC {
 					txtObservacion.requestFocus();
 					return false;
 				}
-				return false;
 			}
 			return true;
 		}catch(Exception ex) {

@@ -31,7 +31,7 @@ public abstract class Constantes {
 	public static String EST_INSPECCION_REALIZADO = "REALIZADO";
 	public static String EST_INSPECCION_PENDIENTE = "PENDIENTE";
 	public static String EST_FACTIBLE = "FACTIBLE";
-	public static String EST_NO_FACTIBLE = "NO_FACTIBLE";
+	public static String EST_NO_FACTIBLE = "NO FACTIBLE";
 	public static String EST_APERTURA_PROCESO = "EN PROCESO";
 	public static String EST_APERTURA_REALIZADO = "REALIZADO";
 	public static String CONVENIO_NO = "NO";

@@ -66,4 +66,13 @@ public class SolInspeccionInDAO extends ClaseDAO{
 		resultado = (List<SolInspeccionIn>) query.getResultList();
 		return resultado;
 	}
+	@SuppressWarnings("unchecked")
+	public List<SolInspeccionIn> getInspeccionCliente(Integer idCliente){
+		List<SolInspeccionIn> resultado = new ArrayList<SolInspeccionIn>();
+		Query query = getEntityManager().createNamedQuery("SolInspeccionIn.buscarInspeccionCliente");
+		query.setHint("javax.persistence.cache.storeMode", "REFRESH");
+		query.setParameter("idCliente", idCliente );
+		resultado = (List<SolInspeccionIn>) query.getResultList();
+		return resultado;
+	}
 }

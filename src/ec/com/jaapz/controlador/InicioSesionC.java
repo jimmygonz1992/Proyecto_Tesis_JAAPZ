@@ -56,7 +56,7 @@ public class InicioSesionC {
 			Context.getInstance().setUsuario(Encriptado.Desencriptar(usuario.get(0).getUsuario()));
 			Context.getInstance().setIdUsuario(usuario.get(0).getIdUsuario());
 			Context.getInstance().setIdPerfil(cboPerfil.getSelectionModel().getSelectedItem().getIdPerfil());
-			helper.abrirPantallaPrincipal("Principal","/principal/Contenido.fxml",stage);
+			helper.abrirPantallaPrincipal("Sistema JAAPZ","/principal/Contenido.fxml",stage);
 		}
 		else{
 			helper.mostrarAlertaError("Clave o Usuario Incorrecto!!!",stage);

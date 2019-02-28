@@ -36,7 +36,10 @@ import java.util.List;
 			+ " and i.estadoInspeccion = 'PENDIENTE' and i.estado = 'A' order by i.idSolInspeccion desc"),
 	
 	@NamedQuery(name="SolInspeccionIn.buscarInspeccionAsignada", query="SELECT i FROM SolInspeccionIn i "
-			+ "where i.idUsuEncargado = :idPerfilUsuario and i.estado = 'A' order by i.idSolInspeccion desc")
+			+ "where i.idUsuEncargado = :idPerfilUsuario and i.estado = 'A' order by i.idSolInspeccion desc"),
+	
+	@NamedQuery(name="SolInspeccionIn.buscarInspeccionCliente", query="SELECT i FROM SolInspeccionIn i "
+			+ "where i.cliente.idCliente = :idCliente and i.estado = 'A' order by i.idSolInspeccion desc")
 })
 public class SolInspeccionIn implements Serializable {
 	private static final long serialVersionUID = 1L;
