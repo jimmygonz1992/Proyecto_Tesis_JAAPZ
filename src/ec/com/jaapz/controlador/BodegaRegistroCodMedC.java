@@ -49,6 +49,7 @@ public class BodegaRegistroCodMedC {
 	ControllerHelper helper = new ControllerHelper();
 	public void initialize() {
 		try {
+			tvDatos.setEditable(true);
 			btnBuscar.setStyle("-fx-cursor: hand;");
 			btnGrabar.setStyle("-fx-cursor: hand;");
 			btnNuevo.setStyle("-fx-cursor: hand;");
@@ -61,7 +62,6 @@ public class BodegaRegistroCodMedC {
 					}
 				}
 			});
-			tvDatos.setEditable(true);
 		}catch(Exception ex) {
 			System.out.println(ex.getMessage());
 		}

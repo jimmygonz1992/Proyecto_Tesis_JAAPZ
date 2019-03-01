@@ -38,4 +38,13 @@ public class InstalacionDAO extends ClaseDAO{
 		resultado = (List<Instalacion>) query.getResultList();
 		return resultado;
 	}
+	@SuppressWarnings("unchecked")
+	public List<Instalacion> getBuscarPorSolicitud(Integer idSolicitud){
+		List<Instalacion> resultado = new ArrayList<Instalacion>();
+		Query query = getEntityManager().createNamedQuery("Instalacion.buscarPorSolicitud");
+		query.setHint("javax.persistence.cache.storeMode", "REFRESH");
+		query.setParameter("idSolicitud",idSolicitud);
+		resultado = (List<Instalacion>) query.getResultList();
+		return resultado;
+	}
 }

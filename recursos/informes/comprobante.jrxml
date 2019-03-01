@@ -1,43 +1,65 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.5.1.final using JasperReports Library version 6.5.1  -->
+<!-- Created with Jaspersoft Studio version 6.6.0.final using JasperReports Library version 6.6.0  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="comprobante" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="194f3564-7374-41bf-83b4-a19ea1d52c70">
-	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="conectionBDJAAPZ"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Conexion PG"/>
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="244"/>
 	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="744"/>
 	<parameter name="numComprobante" class="java.lang.String"/>
 	<parameter name="cedula" class="java.lang.String"/>
 	<queryString>
-		<![CDATA[SELECT cliente.cedula, cliente.nombre, cliente.apellido,
-	factura.fecha, factura.num_factura, factura.total_factura, factura.usuario_crea,
-	factura_detalle.id_detalle_fac, planilla_detalle.cantidad, planilla_detalle.descripcion,
-	planilla_detalle.subtotal, planilla.id_planilla, factura_detalle.id_factura, factura_detalle.subtotal as subtFac,
-	anio.descripcion as anio, mes.descripcion as mes, planilla.total_pagar, medidor.codigo
-	FROM cliente,
-	cuenta_cliente,
-	medidor,
-	factura,
-	factura_detalle,
-	planilla,
-	planilla_detalle,
-	pagos,
-	mes,
-	apertura_lectura,
-	anio
+		<![CDATA[SELECT c.cedula, c.nombre, c.apellido,
+	f.fecha, f.num_factura, f.total_factura, f.usuario_crea,
+	fd.id_detalle_fac, pd.cantidad, pd.descripcion,
+	pd.subtotal, p.id_planilla, fd.id_factura, fd.subtotal as subtFac,
+    'iiii' as anio, 'jjjj' as mes, p.total_pagar, 'codigo' as codigo 
+FROM cliente c,
+	cuenta_cliente cc,
+	factura f,
+	factura_detalle fd,
+	planilla p,
+	planilla_detalle pd,
+	pagos pa
 WHERE 
-	 cliente.id_cliente = cuenta_cliente.id_cliente 
-	 AND cuenta_cliente.id_medidor = medidor.id_medidor 
-	 AND cuenta_cliente.id_cuenta = factura.id_cuenta
-	 AND cuenta_cliente.id_cuenta = planilla.id_cuenta
-	 AND factura.id_factura = factura_detalle.id_factura 
-	 AND factura_detalle.id_planilla = planilla.id_planilla 
-	 AND planilla.id_planilla = planilla_detalle.id_planilla 
-	 AND planilla.id_planilla = pagos.id_planilla 
-	 AND planilla.id_apertura = apertura_lectura.id_apertura 
-	 AND apertura_lectura.id_mes = mes.id_mes 
-	 AND anio.id_anio = apertura_lectura.id_anio 
-	 AND factura.num_factura =  $P{numComprobante}
-	 AND cliente.cedula =  $P{cedula}]]>
+	c.id_cliente = cc.id_cliente and
+	cc.id_cuenta = f.id_cuenta and
+	cc.id_cuenta = p.id_cuenta and
+	f.id_factura = fd.id_factura and
+	p.id_planilla = pd.id_planilla and
+	p.id_planilla = pa.id_planilla and
+	f.num_factura = $P{numComprobante} and 
+	pd.identificador_operacion = 'INS' and
+	c.cedula = $P{cedula} 
+Union
+SELECT c.cedula, c.nombre, c.apellido,
+	f.fecha, f.num_factura, f.total_factura, f.usuario_crea,
+	fd.id_detalle_fac, pd.cantidad, pd.descripcion,
+	pd.subtotal, p.id_planilla, fd.id_factura, fd.subtotal as subtFac,
+	a.descripcion as anio, me.descripcion as mes, p.total_pagar, m.codigo
+FROM cliente c,
+	cuenta_cliente cc,
+	medidor m,
+	factura f,
+	factura_detalle fd,
+	planilla p,
+	planilla_detalle pd,
+	pagos pa,
+	mes me,
+	apertura_lectura al,
+	anio a
+WHERE 
+	c.id_cliente = cc.id_cliente and
+	cc.id_medidor = m.id_medidor and
+	cc.id_cuenta = f.id_cuenta and
+	cc.id_cuenta = p.id_cuenta and
+	f.id_factura = fd.id_factura and
+	p.id_planilla = pd.id_planilla and
+	p.id_planilla = pa.id_planilla and
+	al.id_apertura = p.id_apertura and
+	al.id_anio = a.id_anio and
+	al.id_mes = me.id_mes and
+	f.num_factura = $P{numComprobante} and
+	c.cedula = $P{cedula} ]]>
 	</queryString>
 	<field name="cedula" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.label" value="cedula"/>
@@ -309,7 +331,7 @@ WHERE
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="21" splitType="Stretch">
+		<band height="40" splitType="Stretch">
 			<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.FreeLayout"/>
 			<rectangle>
 				<reportElement x="2" y="1" width="550" height="20" uuid="692aa90e-12fc-40e7-bb19-23c53036485d"/>
@@ -326,23 +348,6 @@ WHERE
 			<staticText>
 				<reportElement x="111" y="3" width="63" height="18" uuid="19efced4-46c9-45e0-b598-bc48ade7583d"/>
 				<text><![CDATA[Planilla mes:]]></text>
-			</staticText>
-			<textField>
-				<reportElement x="175" y="3" width="53" height="18" uuid="c419a64e-2a11-4059-95f2-da2e6f80aef8">
-					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="0f0903b6-44e3-4a35-b564-242a5683a4e9"/>
-				</reportElement>
-				<textFieldExpression><![CDATA[$F{mes}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="244" y="3" width="57" height="18" uuid="2a39a2b7-6356-4975-8937-9567d42364dc">
-					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="7ced634a-8dd0-4ba3-ab8b-8c221062b014"/>
-				</reportElement>
-				<textFieldExpression><![CDATA[$F{anio}]]></textFieldExpression>
-			</textField>
-			<staticText>
-				<reportElement x="228" y="3" width="16" height="18" uuid="c0fe170c-ebf8-441b-86e5-50880c484aec"/>
-				<textElement textAlignment="Center"/>
-				<text><![CDATA[/]]></text>
 			</staticText>
 			<textField>
 				<reportElement x="340" y="3" width="100" height="18" uuid="8bd1d526-d8cb-4250-9024-6562faacbc5b">
@@ -367,6 +372,12 @@ WHERE
 			<line>
 				<reportElement x="450" y="0" width="1" height="20" uuid="b4bd4feb-f3b7-46d6-b7ea-cbacbfdd6bde"/>
 			</line>
+			<textField>
+				<reportElement x="173" y="3" width="154" height="16" uuid="7c37ca0e-54d0-4b64-aec3-0af825fd4e06">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="5d184558-79aa-49df-a75f-dba1d656eaf2"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{descripcion}]]></textFieldExpression>
+			</textField>
 		</band>
 	</detail>
 	<columnFooter>
