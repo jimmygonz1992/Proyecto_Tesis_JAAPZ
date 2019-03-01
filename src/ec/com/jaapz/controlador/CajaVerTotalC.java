@@ -38,12 +38,25 @@ public class CajaVerTotalC {
 	private @FXML TableView<Factura> tvDatosIngresos;
 	private @FXML TableView<Egreso> tvDatosEgresos;
 	SimpleDateFormat formateador = new SimpleDateFormat("dd/MM/yyyy");
-	
+
 	Date dateInicio = new Date();
 	Date dateFin = new Date();
 	Date fechaImpresion = new Date();
 	FacturaDAO facturaDao = new FacturaDAO();
 	EgresoDAO egresoDao = new EgresoDAO();
+
+	public void initialize() {
+		verTotal();
+	}
+	
+	public void verTotal() {
+		try {
+			double total = Double.valueOf(txtTotalRec.getText()) - Double.valueOf(txtTotalGastos.getText());
+			txtTotalCaja.setText(String.valueOf(Double.valueOf(total)));
+		}catch(Exception ex) {
+			System.out.println(ex.getMessage());
+		}
+	}
 	
 	public void cargarDatos() {
 		try {
@@ -55,18 +68,18 @@ public class CajaVerTotalC {
 			System.out.println(ex.getMessage());
 		}
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	private void llenarDatosIngreso(Date fechaInicio, Date fechaFin) {
 		try{
 			tvDatosIngresos.getColumns().clear();
 			List<Factura> listado;
-			
+
 			listado = facturaDao.getListaFacturasRecaudadas(fechaInicio, fechaFin);
-			
+
 			ObservableList<Factura> datos = FXCollections.observableArrayList();
 			datos.setAll(listado);
-			
+
 			//llenar los datos en la tabla
 			TableColumn<Factura, String> idColum = new TableColumn<>("Nº");
 			idColum.setMinWidth(10);
@@ -77,7 +90,7 @@ public class CajaVerTotalC {
 					return new SimpleObjectProperty<String>(String.valueOf(param.getValue().getIdFactura()));
 				}
 			});
-			
+
 			TableColumn<Factura, String> numComprobColum = new TableColumn<>("Nº Comprobante");
 			numComprobColum.setMinWidth(10);
 			numComprobColum.setPrefWidth(100);
@@ -87,7 +100,7 @@ public class CajaVerTotalC {
 					return new SimpleObjectProperty<String>(param.getValue().getNumFactura());
 				}
 			});
-			
+
 			TableColumn<Factura, String> fechaColum = new TableColumn<>("Fecha");
 			fechaColum.setMinWidth(10);
 			fechaColum.setPrefWidth(100);
@@ -97,7 +110,7 @@ public class CajaVerTotalC {
 					return new SimpleObjectProperty<String>(formateador.format(param.getValue().getFecha()));
 				}
 			});
-			
+
 			TableColumn<Factura, String> clienteColum = new TableColumn<>("Cliente");
 			clienteColum.setMinWidth(10);
 			clienteColum.setPrefWidth(250);
@@ -107,7 +120,7 @@ public class CajaVerTotalC {
 					return new SimpleObjectProperty<String>(param.getValue().getCuentaCliente().getCliente().getNombre() + " " + param.getValue().getCuentaCliente().getCliente().getApellido());
 				}
 			});
-			
+
 			TableColumn<Factura, String> numMedidorColum = new TableColumn<>("Nº Medidor");
 			numMedidorColum.setMinWidth(10);
 			numMedidorColum.setPrefWidth(75);
@@ -117,7 +130,7 @@ public class CajaVerTotalC {
 					return new SimpleObjectProperty<String>(param.getValue().getCuentaCliente().getMedidor().getCodigo());
 				}
 			});
-			
+
 			TableColumn<Factura, String> direccionColum = new TableColumn<>("Dirección");
 			direccionColum.setMinWidth(10);
 			direccionColum.setPrefWidth(300);
@@ -127,7 +140,7 @@ public class CajaVerTotalC {
 					return new SimpleObjectProperty<String>(param.getValue().getCuentaCliente().getCliente().getDireccion());
 				}
 			});
-			
+
 			TableColumn<Factura, String> totalColum = new TableColumn<>("Total");
 			totalColum.setMinWidth(10);
 			totalColum.setPrefWidth(100);
@@ -137,7 +150,7 @@ public class CajaVerTotalC {
 					return new SimpleObjectProperty<String>(String.valueOf(param.getValue().getTotalFactura()));
 				}
 			});
-			
+
 			tvDatosIngresos.getColumns().addAll(idColum, numComprobColum, fechaColum, clienteColum, numMedidorColum, direccionColum, totalColum);
 			tvDatosIngresos.setItems(datos);
 			sumarDatosIngreso();
@@ -145,7 +158,7 @@ public class CajaVerTotalC {
 			System.out.println(ex.getMessage());
 		}
 	}	
-	
+
 	public void sumarDatosIngreso() {
 		try {
 			if (tvDatosIngresos.getItems().isEmpty()) {
@@ -162,18 +175,18 @@ public class CajaVerTotalC {
 			System.out.println(ex.getMessage());
 		}
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	private void llenarDatosEgreso(Date fechaInicio, Date fechaFin) {
 		try{
 			tvDatosEgresos.getColumns().clear();
 			List<Egreso> listadoEgreso;
-			
+
 			listadoEgreso = egresoDao.getListaEgresos(fechaInicio, fechaFin);
-			
+
 			ObservableList<Egreso> datosEgreso = FXCollections.observableArrayList();
 			datosEgreso.setAll(listadoEgreso);
-			
+
 			//llenar los datos en la tabla
 			TableColumn<Egreso, String> idColum = new TableColumn<>("Nº");
 			idColum.setMinWidth(10);
@@ -184,7 +197,7 @@ public class CajaVerTotalC {
 					return new SimpleObjectProperty<String>(String.valueOf(param.getValue().getIdEgreso()));
 				}
 			});
-			
+
 			TableColumn<Egreso, String> fechaColum = new TableColumn<>("Fecha");
 			fechaColum.setMinWidth(10);
 			fechaColum.setPrefWidth(100);
@@ -194,8 +207,8 @@ public class CajaVerTotalC {
 					return new SimpleObjectProperty<String>(formateador.format(param.getValue().getFecha()));
 				}
 			});
-			
-			
+
+
 			TableColumn<Egreso, String> descripcionColum = new TableColumn<>("Descripción");
 			descripcionColum.setMinWidth(10);
 			descripcionColum.setPrefWidth(75);
@@ -205,7 +218,7 @@ public class CajaVerTotalC {
 					return new SimpleObjectProperty<String>(param.getValue().getDescripcion());
 				}
 			});
-			
+
 			TableColumn<Egreso, String> observacionesColum = new TableColumn<>("Observaciones");
 			observacionesColum.setMinWidth(10);
 			observacionesColum.setPrefWidth(300);
@@ -215,7 +228,7 @@ public class CajaVerTotalC {
 					return new SimpleObjectProperty<String>(param.getValue().getObservaciones());
 				}
 			});
-			
+
 			TableColumn<Egreso, String> totalColum = new TableColumn<>("Total");
 			totalColum.setMinWidth(10);
 			totalColum.setPrefWidth(100);
@@ -225,7 +238,7 @@ public class CajaVerTotalC {
 					return new SimpleObjectProperty<String>(String.valueOf(param.getValue().getMonto()));
 				}
 			});
-			
+
 			tvDatosEgresos.getColumns().addAll(idColum, fechaColum, descripcionColum, observacionesColum, totalColum);
 			tvDatosEgresos.setItems(datosEgreso);
 			sumarDatosEgreso();
@@ -233,7 +246,7 @@ public class CajaVerTotalC {
 			System.out.println(ex.getMessage());
 		}
 	}
-	
+
 	public void sumarDatosEgreso() {
 		try {
 			if (tvDatosEgresos.getItems().isEmpty()) {
@@ -250,20 +263,20 @@ public class CajaVerTotalC {
 			System.out.println(ex.getMessage());
 		}
 	}
-	
+
 	public void verReporte() {
 		try {
-				PrintReport pr = new PrintReport();
-				Map<String, Object> param = new HashMap<String, Object>();
-				param.put("fechaInicio", dateInicio);
-				param.put("fechaFin", dateFin);
-				param.put("usuarioCrea", Encriptado.Desencriptar(Context.getInstance().getUsuariosC().getUsuario()));
-				param.put("fechaImpresion", fechaImpresion);
-				pr.crearReporte("/recursos/informes/ver_recaudaciones.jasper", facturaDao, param);
-				pr.showReport("Recaudaciones");
-			}catch(Exception ex) {
-				System.out.println(ex.getMessage());
-			}
+			PrintReport pr = new PrintReport();
+			Map<String, Object> param = new HashMap<String, Object>();
+			param.put("fechaInicio", dateInicio);
+			param.put("fechaFin", dateFin);
+			param.put("usuarioCrea", Encriptado.Desencriptar(Context.getInstance().getUsuariosC().getUsuario()));
+			param.put("fechaImpresion", fechaImpresion);
+			pr.crearReporte("/recursos/informes/ver_recaudaciones.jasper", facturaDao, param);
+			pr.showReport("Recaudaciones");
+		}catch(Exception ex) {
+			System.out.println(ex.getMessage());
 		}
+	}
 
 }
