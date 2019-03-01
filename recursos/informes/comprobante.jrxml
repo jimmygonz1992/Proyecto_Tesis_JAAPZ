@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.6.0.final using JasperReports Library version 6.6.0  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="comprobante" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="194f3564-7374-41bf-83b4-a19ea1d52c70">
-	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Conexion PG"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="PostgresJAAPZ"/>
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="244"/>
 	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="744"/>
@@ -59,7 +59,7 @@ WHERE
 	al.id_anio = a.id_anio and
 	al.id_mes = me.id_mes and
 	f.num_factura = $P{numComprobante} and
-	c.cedula = $P{cedula} ]]>
+	c.cedula = $P{cedula}]]>
 	</queryString>
 	<field name="cedula" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.label" value="cedula"/>
@@ -143,7 +143,7 @@ WHERE
 			</rectangle>
 			<image>
 				<reportElement x="44" y="5" width="76" height="47" uuid="7f8cede0-ed74-4474-95dd-115c24c9393e"/>
-				<imageExpression><![CDATA["D:/JMGM/UPSE/10º Semestre/Soluciones Tecnológicas/Nuevo_Rep_JAAPZ/Proyecto_Tesis_JAAPZ/recursos/img/logo_jaapz.png"]]></imageExpression>
+				<imageExpression><![CDATA["recursos/img/logo_jaapz.png"]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement x="0" y="53" width="171" height="17" uuid="618b8870-5a61-4243-be35-efe40a33bbfc"/>
