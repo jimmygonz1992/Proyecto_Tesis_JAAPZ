@@ -5,6 +5,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ec.com.jaapz.modelo.Cliente;
+import ec.com.jaapz.modelo.LiquidacionOrden;
+import ec.com.jaapz.modelo.LiquidacionOrdenDAO;
+import ec.com.jaapz.modelo.Pago;
+import ec.com.jaapz.modelo.Planilla;
+import ec.com.jaapz.modelo.PlanillaDAO;
 import ec.com.jaapz.modelo.SolInspeccionIn;
 import ec.com.jaapz.modelo.SolInspeccionInDAO;
 import ec.com.jaapz.util.Constantes;
@@ -133,7 +138,7 @@ public class SolicitudVerProcesoInsC {
 			lista.add(objeto);
 			objeto = new Datos();
 			objeto.setId(4);
-			objeto.setDescripcion("Cierre de solicitud de inspección");
+			objeto.setDescripcion("Orden de Liquidación");
 			lista.add(objeto);
 			objeto = new Datos();
 			objeto.setId(5);
@@ -145,7 +150,7 @@ public class SolicitudVerProcesoInsC {
 			lista.add(objeto);
 			objeto = new Datos();
 			objeto.setId(7);
-			objeto.setDescripcion("Orden de liquidación");
+			objeto.setDescripcion("Orden de retiro de materiales de bodega");
 			lista.add(objeto);
 			objeto = new Datos();
 			objeto.setId(8);
@@ -188,25 +193,58 @@ public class SolicitudVerProcesoInsC {
 	}
 	private void cargarResultadosInstalacion(Cliente cliente) {
 		try {
+			LiquidacionOrdenDAO ordenDAO = new LiquidacionOrdenDAO();
+			PlanillaDAO planillaDAO = new PlanillaDAO();
+			
 			for(Datos dato : tvDatosInstalacion.getItems()) {
 				if(dato.getId() == 8) {
+					
 				}else if(dato.getId() == 7) {
 					
 				}else if(dato.getId() == 6) {
-					
+					List<LiquidacionOrden> lista = ordenDAO.getBuscarPorSolicitud(tvDatosSolicitud.getSelectionModel().getSelectedItem().getIdSolInspeccion());
+					if(lista.size() > 0) {
+						
+						dato.setAnalisis("ORDEN DE LIQUIDACIÓN GENERADA");
+					}
+					else
+						dato.setAnalisis("AUN NO PROCESADO");
 				}else if(dato.getId() == 5) {
-					
+					List<Planilla> listaPlanilla = planillaDAO.getPlanillaSolicitud(tvDatosSolicitud.getSelectionModel().getSelectedItem().getIdSolInspeccion());
+					double porcentaje = 0.0;
+					double valorPagado = 0.0;
+					for(Planilla pl : listaPlanilla) {
+						if(pl.getIdentInstalacion().equals(Constantes.IDENT_INSTALACION)) {
+							porcentaje = pl.getTotalPagar() * 0.6;//60 % del total a pagar
+							for(Pago pag : pl.getPagos()) {
+								if(pag.getEstado().equals(Constantes.ESTADO_ACTIVO))
+									valorPagado = valorPagado + pag.getValor();
+							}
+						}
+						if(valorPagado >= porcentaje)
+							dato.setAnalisis("SE HA REALIZADO EL PAGO");
+						else
+							dato.setAnalisis("AUN NO PROCESADO");
+						
+					}
 				}else if(dato.getId() == 4) {
+					List<LiquidacionOrden> lista = ordenDAO.getBuscarPorSolicitud(tvDatosSolicitud.getSelectionModel().getSelectedItem().getIdSolInspeccion());
+					if(lista.size() > 0)
+						dato.setAnalisis("ORDEN DE LIQUIDACIÓN GENERADA");
+					else
+						dato.setAnalisis("AUN NO PROCESADO");
 					
 				}else if(dato.getId() == 3) {
 					if(tvDatosSolicitud.getSelectionModel().getSelectedItem().getEstadoInspeccion().equals(Constantes.EST_INSPECCION_PENDIENTE))
 						dato.setAnalisis("AUN NO PROCESADO");
 					else {
 						String resultado = "REALIZADO";
-						if(tvDatosSolicitud.getSelectionModel().getSelectedItem().getFactibilidad().equals(Constantes.EST_FACTIBLE))
-							resultado = resultado + " - FACTIBLE";
-						else
-							resultado = resultado + " - NO FACTIBLE";
+						if(tvDatosSolicitud.getSelectionModel().getSelectedItem().getFactibilidad() != null) {
+							if(tvDatosSolicitud.getSelectionModel().getSelectedItem().getFactibilidad().equals(Constantes.EST_FACTIBLE))
+								resultado = resultado + " - FACTIBLE";
+							else
+								resultado = resultado + " - NO FACTIBLE";	
+						}
 						dato.setAnalisis(resultado);
 					}
 				}else if(dato.getId() == 2) {

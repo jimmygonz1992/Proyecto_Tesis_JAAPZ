@@ -82,6 +82,9 @@ import java.util.List;
 			+ "where lower(l.solInspeccionIn.cliente.apellido) like :patron  or lower(l.solInspeccionIn.cliente.nombre) like :patron "
 			+ " and l.usuarioInstalacion = :idPerfilUsuario and l.usuarioInstalacion = null "
 			+ " and l.estadoInstalacion = 'PENDIENTE' and l.estado = 'A' order by l.idLiquidacion desc"),
+	
+	//para asignar trabajos de instalacion
+	@NamedQuery(name="LiquidacionOrden.buscarPorSolicitud", query="SELECT l FROM LiquidacionOrden l where l.solInspeccionIn.idSolInspeccion = :idSolicitud and l.estado = 'A'"),
 })
 public class LiquidacionOrden implements Serializable {
 	private static final long serialVersionUID = 1L;

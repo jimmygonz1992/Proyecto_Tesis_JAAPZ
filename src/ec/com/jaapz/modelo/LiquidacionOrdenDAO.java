@@ -163,4 +163,15 @@ public class LiquidacionOrdenDAO extends ClaseDAO{
 		resultado = (List<LiquidacionOrden>) query.getResultList();
 		return resultado;
 	}
+	
+	//para asignaciones de trabajo
+	@SuppressWarnings("unchecked")
+	public List<LiquidacionOrden> getBuscarPorSolicitud(Integer idSolicitud){
+		List<LiquidacionOrden> resultado = new ArrayList<LiquidacionOrden>();
+		Query query = getEntityManager().createNamedQuery("LiquidacionOrden.buscarPorSolicitud");
+		query.setHint("javax.persistence.cache.storeMode", "REFRESH");
+		query.setParameter("idSolicitud", idSolicitud);
+		resultado = (List<LiquidacionOrden>) query.getResultList();
+		return resultado;
+	}
 }

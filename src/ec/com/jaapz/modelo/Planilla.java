@@ -41,6 +41,9 @@ import java.util.List;
 			+ "where p.estado = 'A' and p.aperturaLectura.idApertura = :idApertura order by p.idPlanilla"),
 	@NamedQuery(name="Planilla.ListaPlanillaPendPago", query="SELECT p FROM Planilla p "
 			+ "where (lower(p.cuentaCliente.cliente.apellido) like :patron or lower(p.cuentaCliente.cliente.nombre) like :patron or lower(p.cuentaCliente.cliente.cedula) like :patron) and p.cancelado = 'PENDIENTE' and p.estado = 'A' "
+			+ "order by p.idPlanilla desc"),
+	@NamedQuery(name="Planilla.buscarPorSolicitud", query="SELECT p FROM Planilla p "
+			+ "where p.idSolicitud = :idSolicitud and p.estado = 'A' "
 			+ "order by p.idPlanilla desc")
 })
 public class Planilla implements Serializable, Comparable<Planilla> {
@@ -78,6 +81,9 @@ public class Planilla implements Serializable, Comparable<Planilla> {
 	@Column(name="lectura_anterior")
 	private Integer lecturaAnterior;
 
+	@Column(name="id_solicitud")
+	private Integer idSolicitud;
+	
 	private String longitud;
 	
 	private String origen;
@@ -390,6 +396,15 @@ public class Planilla implements Serializable, Comparable<Planilla> {
 
 	public void setOrigen(String origen) {
 		this.origen = origen;
+	}
+
+	
+	public Integer getIdSolicitud() {
+		return idSolicitud;
+	}
+
+	public void setIdSolicitud(Integer idSolicitud) {
+		this.idSolicitud = idSolicitud;
 	}
 
 	@Override

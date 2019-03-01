@@ -309,6 +309,7 @@ public class SolicitudesCierreInspeccionC {
 					planilla.setConsumoMinimo(0);
 					
 					planilla.setIdentInstalacion(Constantes.IDENT_INSTALACION); //verdadero cuando es una nueva instalacion.. caso contrario es una planilla normal
+					planilla.setIdSolicitud(inspeccionSeleccionado.getIdSolInspeccion());
 					planilla.setLecturaAnterior(0);//son cero en primera instancia
 					planilla.setLecturaActual(0);
 

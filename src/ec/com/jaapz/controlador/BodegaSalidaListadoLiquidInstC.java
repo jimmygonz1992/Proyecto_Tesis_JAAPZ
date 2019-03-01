@@ -79,8 +79,6 @@ public class BodegaSalidaListadoLiquidInstC {
 					listaLiquidaciones.add(liq);
 			}
 			
-			
-			
 			ObservableList<LiquidacionOrden> datosReq = FXCollections.observableArrayList();
 			datosReq.setAll(listaLiquidaciones);
 

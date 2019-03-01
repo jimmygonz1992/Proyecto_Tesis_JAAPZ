@@ -99,4 +99,13 @@ public class PlanillaDAO extends ClaseDAO{
 		resultado = (List<Planilla>) query.getResultList();
 		return resultado;
 	}
+	@SuppressWarnings("unchecked")
+	public List<Planilla> getPlanillaSolicitud(Integer idSolicitud){
+		List<Planilla> resultado = new  ArrayList<Planilla>();
+		Query query = getEntityManager().createNamedQuery("Planilla.buscarPorSolicitud");
+		query.setHint("javax.persistence.cache.storeMode", "REFRESH");
+		query.setParameter("idSolicitud", idSolicitud);
+		resultado = (List<Planilla>) query.getResultList();
+		return resultado;
+	}
 }
