@@ -6,7 +6,7 @@
 	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="244"/>
 	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="744"/>
 	<parameter name="numComprobante" class="java.lang.String"/>
-	<parameter name="cedula" class="java.lang.String"/>
+	<parameter name="cedula" class="java.lang.Integer"/>
 	<queryString>
 		<![CDATA[SELECT c.cedula, c.nombre, c.apellido,
 	f.fecha, f.num_factura, f.total_factura, f.usuario_crea,
@@ -27,9 +27,10 @@ WHERE
 	f.id_factura = fd.id_factura and
 	p.id_planilla = pd.id_planilla and
 	p.id_planilla = pa.id_planilla and
+	fd.id_planilla = p.id_planilla and
 	f.num_factura = $P{numComprobante} and 
 	pd.identificador_operacion = 'INS' and
-	c.cedula = $P{cedula} 
+	cc.id_cuenta = $P{cedula} 
 Union
 SELECT c.cedula, c.nombre, c.apellido,
 	f.fecha, f.num_factura, f.total_factura, f.usuario_crea,
@@ -58,8 +59,10 @@ WHERE
 	al.id_apertura = p.id_apertura and
 	al.id_anio = a.id_anio and
 	al.id_mes = me.id_mes and
+	pd.identificador_operacion <> 'INS' and
+	fd.id_planilla = p.id_planilla and
 	f.num_factura = $P{numComprobante} and
-	c.cedula = $P{cedula}]]>
+	cc.id_cuenta = $P{cedula}]]>
 	</queryString>
 	<field name="cedula" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.label" value="cedula"/>

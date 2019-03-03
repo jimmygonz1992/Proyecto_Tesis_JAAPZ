@@ -579,7 +579,7 @@ public class RecaudacionesRegistroCobroC {
 					PrintReport pr = new PrintReport();
 					Map<String, Object> param = new HashMap<String, Object>();
 					param.put("numComprobante", txtNumComp.getText());
-					param.put("cedula", txtCedula.getText());
+					param.put("cedula", cuentaSeleccionada.getIdCuenta());
 					pr.crearReporte("/recursos/informes/comprobante.jasper", facturaDao, param);
 					pr.showReport("Comprobante de Pago");
 				}
