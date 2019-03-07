@@ -2,7 +2,7 @@
 <!-- Created with Jaspersoft Studio version 6.6.0.final using JasperReports Library version 6.6.0  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="consolidadoConsumo" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="5894c8fd-2d1b-4e16-88e4-af6f4dd19f8c">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
-	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Conexion PG"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="ConexionPG"/>
 	<parameter name="MES" class="java.lang.String"/>
 	<parameter name="ANIO" class="java.lang.String"/>
 	<parameter name="ID_ANIO" class="java.lang.Integer"/>
@@ -198,7 +198,7 @@ order by c.apellido asc]]>
 				<reportElement x="0" y="0" width="60" height="20" uuid="13ab5a9e-5fb1-4540-8c1f-65e0c97e18b6">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="7ee9bb6f-0360-4c2f-8d1b-ca83413e41c7"/>
 				</reportElement>
-				<textElement>
+				<textElement verticalAlignment="Middle">
 					<font fontName="Calibri"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{cedula}]]></textFieldExpression>
@@ -207,7 +207,7 @@ order by c.apellido asc]]>
 				<reportElement x="63" y="0" width="67" height="20" uuid="ae1ba8b3-a128-4f9e-ad59-a7dc46e812ba">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="61db4429-8769-49c0-8907-610684dadd47"/>
 				</reportElement>
-				<textElement>
+				<textElement verticalAlignment="Middle">
 					<font fontName="Calibri"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{codigo}]]></textFieldExpression>
@@ -216,7 +216,7 @@ order by c.apellido asc]]>
 				<reportElement x="136" y="0" width="230" height="20" uuid="854c8547-6e30-4b6a-90b3-111ae7e8e1b2">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="08cf1e03-f190-4028-a429-466c4f33678d"/>
 				</reportElement>
-				<textElement>
+				<textElement verticalAlignment="Middle">
 					<font fontName="Calibri"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{nombres}]]></textFieldExpression>
