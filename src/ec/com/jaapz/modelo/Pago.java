@@ -1,6 +1,8 @@
 package ec.com.jaapz.modelo;
 
 import java.io.Serializable;
+import java.util.Date;
+
 import javax.persistence.*;
 
 
@@ -18,6 +20,9 @@ public class Pago implements Serializable {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="id_pago")
 	private Integer idPago;
+	
+	@Temporal(TemporalType.DATE)
+	private Date fecha;
 
 	private String estado;
 
@@ -45,6 +50,14 @@ public class Pago implements Serializable {
 
 	public void setIdPago(Integer idPago) {
 		this.idPago = idPago;
+	}
+
+	public Date getFecha() {
+		return fecha;
+	}
+
+	public void setFecha(Date fecha) {
+		this.fecha = fecha;
 	}
 
 	public String getEstado() {

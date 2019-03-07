@@ -562,6 +562,7 @@ public class RecaudacionesRegistroCobroC {
 							//falta setear tipo de pago
 							pagoGrabar.setUsuarioCrea(Context.getInstance().getUsuariosC().getIdUsuario());
 							pagoGrabar.setValor(det.getSubtotal());
+							pagoGrabar.setFecha(fecha);
 							pagoGrabar.setEstado(Constantes.ESTADO_ACTIVO);
 						}
 					}

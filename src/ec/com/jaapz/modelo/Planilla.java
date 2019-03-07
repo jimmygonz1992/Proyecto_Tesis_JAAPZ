@@ -45,6 +45,7 @@ import java.util.List;
 	@NamedQuery(name="Planilla.buscarPorSolicitud", query="SELECT p FROM Planilla p "
 			+ "where p.idSolicitud = :idSolicitud and p.estado = 'A' "
 			+ "order by p.idPlanilla desc")
+	
 })
 public class Planilla implements Serializable, Comparable<Planilla> {
 	private static final long serialVersionUID = 1L;
