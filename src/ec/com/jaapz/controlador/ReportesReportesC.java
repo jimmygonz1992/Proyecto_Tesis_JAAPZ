@@ -21,13 +21,13 @@ public class ReportesReportesC {
 	public void initialize() {
 		try {
 			helper.mostrarVentanaContenedor("/reportes/ReporteConsolidado.fxml", apConsolidado);
-			helper.mostrarVentanaContenedor("/reportes/ReporteUsuarioDia.fxml", apUsuariosDia);
-			helper.mostrarVentanaContenedor("/reportes/ReportesUsuariosOrdenCorte.fxml", apUsuariosOrden);
+			helper.mostrarVentanaContenedor("/reportes/UsuariosAlDia.fxml", apUsuariosDia);
+			helper.mostrarVentanaContenedor("/reportes/UsuariosOrdenCorte.fxml", apUsuariosOrden);
 			helper.mostrarVentanaContenedor("/reportes/ReporteHistorialUsuario.fxml", apHistorial);
-			helper.mostrarVentanaContenedor("/reportes/ReporteDeudas.fxml", apDeudas);
+			helper.mostrarVentanaContenedor("/recaudaciones/RecaudacionesDeudaGeneral.fxml", apDeudas);
 			helper.mostrarVentanaContenedor("/reportes/ReporteNominas.fxml", apNomina);
 			helper.mostrarVentanaContenedor("/reportes/ReporteTomasLectura.fxml", apTomas);
-			helper.mostrarVentanaContenedor("/reportes/ReportesRecaudacionesDiarias.fxml", apRecaudaciones);
+			helper.mostrarVentanaContenedor("/recaudaciones/RecaudacionesVerReporte.fxml", apRecaudaciones);
 		}catch(Exception ex) {
 			System.out.println(ex.getMessage());
 		}

@@ -188,7 +188,6 @@ public class RecaudacionesDeudaGeneralC {
 			param.put("fecha_inicio", dateInicio);
 			param.put("fecha_fin", dateFin);
 			param.put("usuario_crea", Encriptado.Desencriptar(Context.getInstance().getUsuariosC().getUsuario()));
-			param.put("fecha_impresion", fechaImpresion);
 			pr.crearReporte("/recursos/informes/deuda_general.jasper", planillaDao, param);
 			pr.showReport("Deuda de Clientes");
 		}catch(Exception ex) {

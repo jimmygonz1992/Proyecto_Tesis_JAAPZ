@@ -15,31 +15,26 @@
 	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
 	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
 	<parameter name="usuario_crea" class="java.lang.String"/>
-	<parameter name="fecha_impresion" class="java.util.Date"/>
 	<parameter name="fecha_inicio" class="java.util.Date"/>
 	<parameter name="fecha_fin" class="java.util.Date"/>
 	<queryString language="SQL">
-		<![CDATA[SELECT cliente.cedula,
-	cliente.nombre || ' ' || cliente.apellido as cliente,
-	cuenta_cliente.direccion,
-	cliente.telefono,
-	(planilla.total_pagar - pagos.valor) as deuda,
-	planilla.id_planilla,
-	planilla.fecha, medidor.codigo,
-	$P{usuario_crea} as usuarioCrea,
-	$P{fecha_impresion} as fechaImpresion
-FROM cliente,
-	cuenta_cliente,
-	medidor,
-	planilla,
-	pagos
+		<![CDATA[SELECT c.cedula,
+	c.nombre || ' ' || c.apellido as cliente,
+	cc.direccion,
+	c.telefono,
+	(p.total_pagar - sum(coalesce(pa.valor,0))) as deuda,
+	p.id_planilla,
+	p.fecha, m.codigo,
+	$P{usuario_crea} as usuarioCrea
+FROM cliente c inner join cuenta_cliente cc on c.id_cliente=cc.id_cliente
+	inner join medidor m on m.id_medidor=cc.id_medidor
+	right join planilla p on cc.id_cuenta=p.id_cuenta
+	left join pagos pa on p.id_planilla=pa.id_planilla
 WHERE 
-	cliente.id_cliente = cuenta_cliente.id_cliente and
-	cuenta_cliente.id_cuenta = planilla.id_cuenta and
-	planilla.id_planilla = pagos.id_planilla and
-	medidor.id_medidor = cuenta_cliente.id_medidor and
-	planilla.cancelado = 'PENDIENTE' and
-	planilla.fecha between $P{fecha_inicio} and $P{fecha_fin} order by planilla.id_planilla]]>
+	p.cancelado = 'PENDIENTE' and
+	p.fecha between $P{fecha_inicio} and $P{fecha_fin}
+group by c.cedula, cliente, cc.direccion, c.telefono, p.id_planilla,m.codigo
+order by p.id_planilla]]>
 	</queryString>
 	<field name="cedula" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.label" value="cedula"/>
@@ -73,9 +68,6 @@ WHERE
 	</field>
 	<field name="usuariocrea" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.label" value="usuariocrea"/>
-	</field>
-	<field name="fechaimpresion" class="java.sql.Date">
-		<property name="com.jaspersoft.studio.field.label" value="fechaimpresion"/>
 	</field>
 	<variable name="deuda1" class="java.lang.Double" calculation="Sum">
 		<variableExpression><![CDATA[$F{deuda}]]></variableExpression>
@@ -121,7 +113,7 @@ WHERE
 	<pageHeader>
 		<band height="13" splitType="Stretch">
 			<staticText>
-				<reportElement x="620" y="0" width="87" height="13" uuid="e31ca185-6e42-4405-8327-829fdb0eab63"/>
+				<reportElement x="604" y="0" width="87" height="13" uuid="e31ca185-6e42-4405-8327-829fdb0eab63"/>
 				<textElement textAlignment="Left">
 					<font isBold="true"/>
 				</textElement>
@@ -149,9 +141,9 @@ WHERE
 				<reportElement x="300" y="0" width="100" height="13" uuid="b4d92c63-a007-4c1c-bfa9-16d1c7fdd65e"/>
 				<textFieldExpression><![CDATA[$P{fecha_fin}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="709" y="0" width="100" height="13" uuid="b61b5c86-500e-4e34-926d-e7b64595afa6"/>
-				<textFieldExpression><![CDATA[$P{fecha_impresion}]]></textFieldExpression>
+			<textField pattern="dd/MM/yyyy h:mm a">
+				<reportElement x="694" y="0" width="107" height="13" uuid="977522df-72a9-4a92-bcc4-a40f6cda34e6"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
 		</band>
 	</pageHeader>
@@ -276,15 +268,6 @@ WHERE
 				<textFieldExpression><![CDATA[$F{direccion}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="737" y="0" width="55" height="13" uuid="c7d05c04-a152-4051-94ee-9e87a2ffbd1f">
-					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="f8ead314-e1da-45ef-9805-e2c578128488"/>
-				</reportElement>
-				<textElement>
-					<font size="9"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{deuda}]]></textFieldExpression>
-			</textField>
-			<textField>
 				<reportElement x="670" y="0" width="60" height="13" uuid="b0e0c3d0-9ba5-4c46-8bab-47c5e38d94e1">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="69b45af1-2df5-4de2-acb1-57614eadd98e"/>
 				</reportElement>
@@ -350,6 +333,12 @@ WHERE
 			<line>
 				<reportElement x="734" y="-30" width="1" height="29" uuid="1484a8c6-50e0-40cb-bffd-02ac4e907b78"/>
 			</line>
+			<textField>
+				<reportElement x="737" y="0" width="63" height="13" uuid="fee9a006-4361-40d7-9e4e-c24c6c783328">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="a43d4656-9ff0-44d2-a39e-a830d97283ac"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{deuda}]]></textFieldExpression>
+			</textField>
 		</band>
 	</detail>
 	<columnFooter>
