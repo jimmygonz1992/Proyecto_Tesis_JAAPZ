@@ -84,6 +84,7 @@ public class RecaudacionesRegistroCobroC {
 			btnBuscaCuentas.setStyle("-fx-cursor: hand;");
 			btnCobrar.setStyle("-fx-cursor: hand;");
 			btnLimpiar.setStyle("-fx-cursor: hand;");
+			chkImprimirComp.setSelected(true);
 			
 			Context.getInstance().setCuentaCliente(null);
 			noEditable();
@@ -719,6 +720,30 @@ public class RecaudacionesRegistroCobroC {
 
 			tvDetallePago.getColumns().addAll(idColum, descripcionColum, subtotalColum, totalColum);
 			tvDetallePago.setItems(datos);
+			sumarDatosTotalPagar();
+		}catch(Exception ex) {
+			System.out.println(ex.getMessage());
+		}
+	}
+	
+	public void sumarDatosTotalPagar() {
+		try {
+			if (tvDetallePago.getItems().isEmpty()) {
+				//	txtTotal.setText("0.00");
+				//	txtSaldo.setText("0.00");
+			}else {
+				double total = 0;
+				for(int i=0; i<tvDetallePago.getItems().size(); i++) {
+					Double valorTotal = new Double(tvDetallePago.getItems().get(i).getSubtotal());
+					total += valorTotal;
+					/*for(Planilla pla : tvDetallePago.getItems()) {
+						for(Pago pa : pla.getPagos()){
+							totalPagado = totalPagado + pa.getValor();
+						}
+					}*/
+					txtTotalPago.setText(String.valueOf(Double.valueOf(total)));
+				}
+			}
 		}catch(Exception ex) {
 			System.out.println(ex.getMessage());
 		}

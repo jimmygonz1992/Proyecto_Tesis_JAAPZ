@@ -375,6 +375,11 @@ public class SeguridadUsuarioC {
 				txtNombres.requestFocus();
 				return false;
 			}
+			if(txtApellidos.getText().equals("")) {
+				helper.mostrarAlertaAdvertencia("Debe ingresar el apellidos del Usuario", Context.getInstance().getStage());
+				txtApellidos.requestFocus();
+				return false;
+			}
 			if(txtUsuario.getText().equals("")) {
 				helper.mostrarAlertaAdvertencia("Debe ingresar un Usuario", Context.getInstance().getStage());
 				txtUsuario.requestFocus();
