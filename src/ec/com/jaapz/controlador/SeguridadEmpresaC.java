@@ -23,6 +23,8 @@ import javafx.stage.FileChooser;
 
 public class SeguridadEmpresaC {
 	@FXML TextField txtCodigo;
+	
+	@FXML TextField txtNoPlanillas;
 	@FXML TextField txtRuc;
 	@FXML TextField txtRazonSocial;
 	@FXML TextField txtRepresentante;
@@ -43,6 +45,8 @@ public class SeguridadEmpresaC {
 		btnGrabar.setStyle("-fx-cursor: hand;");
 		btnQuitar.setStyle("-fx-cursor: hand;");
 		
+		txtCodigo.setText("0");
+		txtCodigo.setEditable(false);
 		int maxLength = 13;
 		int maxLengthTelf = 10;
 		recuperarDatos();
@@ -58,7 +62,16 @@ public class SeguridadEmpresaC {
 				}
 			}
 		});
-
+		txtNoPlanillas.textProperty().addListener(new ChangeListener<String>() {
+			@Override
+			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+				if (newValue.matches("\\d*")) {
+					//int value = Integer.parseInt(newValue);
+				} else {
+					txtRuc.setText(oldValue);
+				}
+			}
+		});
 		//validar solo numeros
 		txtTelefono.textProperty().addListener(new ChangeListener<String>() {
 			@Override
@@ -128,7 +141,6 @@ public class SeguridadEmpresaC {
 		try{
 			List<Empresa> listaEmpresa = new ArrayList<Empresa>();
 			listaEmpresa = empresaDao.getRecuperaDatosEmpresa();
-	
 			for(int i = 0 ; i < listaEmpresa.size() ; i ++) {
 				txtCodigo.setText(Integer.toString(listaEmpresa.get(i).getIdEmpresa()));
 				txtRuc.setText(listaEmpresa.get(i).getRuc());
@@ -137,6 +149,7 @@ public class SeguridadEmpresaC {
 				txtTelefono.setText(listaEmpresa.get(i).getTelefono());
 				txtEmail.setText(listaEmpresa.get(i).getEmail());
 				txtDireccion.setText(listaEmpresa.get(i).getDireccion());
+				txtNoPlanillas.setText(String.valueOf(listaEmpresa.get(i).getCorte()));
 				if (listaEmpresa.get(i).getEstado().equals(Constantes.ESTADO_ACTIVO)) {
 					chkEstado.setSelected(true);
 				}else {
@@ -192,6 +205,7 @@ public class SeguridadEmpresaC {
 				estado = Constantes.ESTADO_ACTIVO;
 			else
 				estado = Constantes.ESTADO_INACTIVO;
+			
 			Empresa empresa = new Empresa();
 			empresa.setRuc(txtRuc.getText());
 			empresa.setRazonSocial(txtRazonSocial.getText());
@@ -199,6 +213,7 @@ public class SeguridadEmpresaC {
 			empresa.setTelefono(txtTelefono.getText());
 			empresa.setEmail(txtEmail.getText());
 			empresa.setDireccion(txtDireccion.getText());
+			empresa.setCorte(Integer.parseInt(txtNoPlanillas.getText()));
 			empresa.setEstado(estado);
 			empresa.setLogo(helper.encodeFileToBase64Binary(ivLogo.getImage()).getBytes());
 
@@ -274,6 +289,11 @@ public class SeguridadEmpresaC {
 
 			if(txtDireccion.getText().equals("")) {
 				helper.mostrarAlertaAdvertencia("Ingresar dirección de la empresa", Context.getInstance().getStage());
+				txtDireccion.requestFocus();
+				return false;	
+			}
+			if(txtNoPlanillas.getText().equals("")) {
+				helper.mostrarAlertaAdvertencia("Ingresar número de corte", Context.getInstance().getStage());
 				txtDireccion.requestFocus();
 				return false;	
 			}

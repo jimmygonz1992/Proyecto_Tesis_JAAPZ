@@ -35,6 +35,8 @@ public class Empresa implements Serializable {
 	private String representante;
 
 	private String ruc;
+	
+	private Integer corte;
 
 	private String telefono;
 
@@ -113,4 +115,12 @@ public class Empresa implements Serializable {
 		this.telefono = telefono;
 	}
 
+	public Integer getCorte() {
+		return corte;
+	}
+
+	public void setCorte(Integer corte) {
+		this.corte = corte;
+	}
+	
 }
