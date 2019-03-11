@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.6.0.final using JasperReports Library version 6.6.0  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="historialUsuario" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="a0fa4ab9-38ef-4440-96bc-9f172f065a4f">
-	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Conexion PG"/>
 	<property name="com.jaspersoft.studio.unit." value="pixel"/>
 	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
 	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
@@ -11,14 +11,54 @@
 	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
 	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
 	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<parameter name="CLIENTE" class="java.lang.String"/>
+	<parameter name="FECHA" class="java.lang.String"/>
+	<parameter name="ANIO" class="java.lang.String"/>
+	<parameter name="ID_CUENTA" class="java.lang.Integer"/>
+	<parameter name="ID_ANIO" class="java.lang.Integer"/>
 	<queryString>
-		<![CDATA[]]>
+		<![CDATA[select pl.id_planilla,pl.lectura_anterior,pl.lectura_actual,pl.total_pagar,(pl.total_pagar - 
+(Case when (select sum(pa.valor)
+from pagos pa where pa.estado = 'A' and pa.id_planilla = pl.id_planilla) is null then 0 else (select sum(pa.valor)
+from pagos pa where pa.estado = 'A' and pa.id_planilla = pl.id_planilla) end)) AS deuda
+from cliente c,cuenta_cliente cu,planilla pl,apertura_lectura ap
+where c.id_cliente = cu.id_cliente and cu.id_cuenta = pl.id_cuenta
+and pl.id_apertura = ap.id_apertura and pl.convenio = 'NO'
+and c.estado = 'A' and cu.estado = 'A' and pl.estado = 'A' and ap.estado = 'A'
+and pl.id_cuenta = $P{ID_CUENTA} and ap.id_anio = $P{ID_ANIO}
+order by pl.id_planilla]]>
 	</queryString>
+	<field name="id_planilla" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="id_planilla"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="planilla"/>
+	</field>
+	<field name="lectura_anterior" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="lectura_anterior"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="planilla"/>
+	</field>
+	<field name="lectura_actual" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="lectura_actual"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="planilla"/>
+	</field>
+	<field name="total_pagar" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.label" value="total_pagar"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="planilla"/>
+	</field>
+	<field name="deuda" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.label" value="deuda"/>
+	</field>
+	<variable name="deuda1" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{deuda}]]></variableExpression>
+	</variable>
+	<variable name="total_pagar1" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{total_pagar}]]></variableExpression>
+	</variable>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="115" splitType="Stretch">
+		<band height="89" splitType="Stretch">
 			<rectangle>
 				<reportElement x="-2" y="0" width="802" height="80" uuid="8f207132-5ece-4e9c-9d53-8e85cac7ac5f"/>
 			</rectangle>
@@ -44,40 +84,275 @@
 				<text><![CDATA[RUC.: 2490016034001]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="200" y="20" width="60" height="14" uuid="f7e9d763-7f0f-460c-b168-a3c7c76c5850"/>
+				<reportElement x="200" y="8" width="60" height="14" uuid="f7e9d763-7f0f-460c-b168-a3c7c76c5850"/>
 				<textElement>
 					<font fontName="Arial" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Reporte:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="200" y="47" width="60" height="14" uuid="bf214458-4b94-421d-8c26-2fa1bdb3f69a"/>
+				<reportElement x="200" y="24" width="60" height="14" uuid="bf214458-4b94-421d-8c26-2fa1bdb3f69a"/>
+				<textElement>
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Cliente:]]></text>
+			</staticText>
+			<line>
+				<reportElement x="180" y="0" width="1" height="81" uuid="f8dbf1ae-ab75-4ee3-bdf8-54e2a6d67555"/>
+			</line>
+			<staticText>
+				<reportElement x="200" y="41" width="60" height="14" uuid="a6ee0d9f-ddf3-4c03-be94-593d26d35052"/>
 				<textElement>
 					<font fontName="Arial" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Fecha:]]></text>
 			</staticText>
-			<line>
-				<reportElement x="180" y="0" width="1" height="81" uuid="f8dbf1ae-ab75-4ee3-bdf8-54e2a6d67555"/>
-			</line>
+			<staticText>
+				<reportElement x="200" y="59" width="60" height="14" uuid="cab76dc7-59b1-438a-99a3-b70bc312f490"/>
+				<textElement>
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Año:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="264" y="8" width="516" height="14" uuid="9b1fc6d4-49b7-4d1c-a6ab-eff064cae3b4"/>
+				<text><![CDATA[Historia de clientes]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="264" y="24" width="516" height="14" uuid="d052afde-221e-4b93-9482-275af5bb25cd"/>
+				<textFieldExpression><![CDATA[$P{CLIENTE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="264" y="41" width="516" height="14" uuid="6b7f56db-5b65-44cd-a051-daf90d53b8af"/>
+				<textFieldExpression><![CDATA[$P{FECHA}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="264" y="59" width="516" height="14" uuid="c6631aec-f241-4c3c-bf77-c6d8cac116b8"/>
+				<textFieldExpression><![CDATA[$P{ANIO}]]></textFieldExpression>
+			</textField>
 		</band>
 	</title>
 	<pageHeader>
-		<band height="35" splitType="Stretch"/>
+		<band splitType="Stretch"/>
 	</pageHeader>
 	<columnHeader>
-		<band height="61" splitType="Stretch"/>
+		<band height="27" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="12" width="60" height="14" uuid="7556f26e-0874-41cc-8637-b579340f607f">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="0dc97ec5-b517-4fc6-9b87-d7b5df41e0f9"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Calibri" isBold="true"/>
+				</textElement>
+				<text><![CDATA[No. Planilla]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="62" y="12" width="78" height="14" uuid="7d0b99ca-f11c-43ed-a64e-134a5f9d5809">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="d7e80108-9745-4a39-b580-0d027d19eecf"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font fontName="Calibri" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Lectura anterior]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="142" y="12" width="68" height="14" uuid="4fa09f48-1be4-45b0-b0b8-b6087a0d25cd">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="28119f69-105b-4a59-9bec-1f25febc2715"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font fontName="Calibri" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Lectura actual]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="213" y="12" width="281" height="14" uuid="6f05a78a-eeb6-4a1e-bcc5-be67a11c73e5">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="28119f69-105b-4a59-9bec-1f25febc2715"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font fontName="Calibri" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Detalle de factura]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="497" y="12" width="69" height="14" uuid="ab40ea67-1e19-46fb-9480-df75c5c65cd5">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="53d2f98b-f131-49e2-a002-bbe2838613c5"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font fontName="Calibri" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Valor planilla]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="750" y="12" width="50" height="14" uuid="228c9204-44df-44f4-b6df-9dc04d0b61ad">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="ad378407-0375-4b53-a15d-300bedb2e5d6"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font fontName="Calibri" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Deuda]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="570" y="12" width="178" height="14" uuid="a6d685e2-3f8e-4ddf-9ecb-1855b86d7e42">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="53d2f98b-f131-49e2-a002-bbe2838613c5"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font fontName="Calibri" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Detalle de pagos]]></text>
+			</staticText>
+			<line>
+				<reportElement x="-1" y="10" width="800" height="1" uuid="1b2b2953-4037-436f-b392-b547ff019055"/>
+			</line>
+		</band>
 	</columnHeader>
 	<detail>
-		<band height="125" splitType="Stretch"/>
+		<band height="16" splitType="Stretch">
+			<textField>
+				<reportElement x="4" y="1" width="55" height="14" uuid="2b4ebfc4-07b0-4dfc-81d3-e770d9ddd9c5">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="0dc97ec5-b517-4fc6-9b87-d7b5df41e0f9"/>
+				</reportElement>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{id_planilla}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="67" y="1" width="70" height="14" uuid="486486ef-73fe-4bc6-b024-835a7c8fbf8c">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="d7e80108-9745-4a39-b580-0d027d19eecf"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{lectura_anterior}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="146" y="1" width="60" height="14" uuid="e3ccf471-0e87-46ed-9b0a-88ec483c6b30">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="28119f69-105b-4a59-9bec-1f25febc2715"/>
+				</reportElement>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{lectura_actual}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="497" y="1" width="69" height="14" uuid="be82b8e1-edc9-450e-a561-96697158f051">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="53d2f98b-f131-49e2-a002-bbe2838613c5"/>
+				</reportElement>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{total_pagar}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="751" y="1" width="46" height="14" uuid="4b196cd8-f4a2-47ab-90fc-fbb08093726c">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="ad378407-0375-4b53-a15d-300bedb2e5d6"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font fontName="Calibri"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{deuda}]]></textFieldExpression>
+			</textField>
+			<subreport>
+				<reportElement x="570" y="1" width="178" height="14" uuid="9477a9c4-409b-4827-8b3d-8cd979194c48"/>
+				<subreportParameter name="ID_PLANILLA">
+					<subreportParameterExpression><![CDATA[$F{id_planilla}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA["recursos/informes/historialUsuarioPagos.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement x="213" y="1" width="281" height="14" uuid="fff670ff-077e-4c4f-bfa4-b42c58420f89"/>
+				<subreportParameter name="ID_PLANILLA">
+					<subreportParameterExpression><![CDATA[$F{id_planilla}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA["recursos/informes/historialUsuarioDetalle.jasper"]]></subreportExpression>
+			</subreport>
+			<line>
+				<reportElement x="-1" y="0" width="800" height="1" uuid="3ee4ee4e-56c2-4fe0-a367-d885e63a2f46"/>
+			</line>
+			<line>
+				<reportElement x="210" y="-16" width="1" height="32" uuid="be30a9e4-7535-439c-adf4-0b0257e05069"/>
+			</line>
+			<line>
+				<reportElement x="140" y="-16" width="1" height="32" uuid="87bd9293-e4c0-4a02-b7fa-f3e27be3a376"/>
+			</line>
+			<line>
+				<reportElement x="-1" y="-16" width="1" height="32" uuid="33c22eec-fc49-4ee1-b72b-fc21509c1db3"/>
+			</line>
+			<line>
+				<reportElement x="494" y="-16" width="1" height="32" uuid="bfaae0d2-e26b-414f-a235-c205701110dc"/>
+			</line>
+			<line>
+				<reportElement x="568" y="-16" width="1" height="32" uuid="ec2f26c6-d538-4521-869a-9a93794bb1d7"/>
+			</line>
+			<line>
+				<reportElement x="748" y="-16" width="1" height="32" uuid="7e38a4b6-73b6-49f1-817d-6ef5eb8d6755"/>
+			</line>
+			<line>
+				<reportElement x="799" y="-16" width="1" height="32" uuid="3c7e0701-f5f7-45a3-8889-872364a24a69"/>
+			</line>
+			<line>
+				<reportElement x="61" y="-16" width="1" height="32" uuid="b43b6d69-ff97-43ea-ad05-e7f39c6e19be"/>
+			</line>
+		</band>
 	</detail>
 	<columnFooter>
-		<band height="45" splitType="Stretch"/>
+		<band splitType="Prevent">
+			<property name="com.jaspersoft.studio.layout"/>
+		</band>
 	</columnFooter>
 	<pageFooter>
-		<band height="54" splitType="Stretch"/>
+		<band splitType="Stretch"/>
 	</pageFooter>
 	<summary>
-		<band height="42" splitType="Stretch"/>
+		<band height="47" splitType="Stretch">
+			<line>
+				<reportElement x="-1" y="0" width="800" height="1" uuid="7ad4002e-fa69-4076-8453-f16f2281b2d5"/>
+			</line>
+			<textField>
+				<reportElement x="750" y="1" width="46" height="14" uuid="34051592-38dd-4932-809b-d8aa469663c8"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Calibri"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{deuda1}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="498" y="1" width="68" height="14" uuid="8782646a-bef2-41a0-a44c-a008d0d4b526"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{total_pagar1}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="391" y="1" width="100" height="14" uuid="8ca01043-6ef5-45ed-b8bd-d03aa1cd2180"/>
+				<textElement>
+					<font fontName="Calibri" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Consumo en el año:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="645" y="1" width="100" height="14" uuid="cb078141-a2b1-4175-bb45-9c3bd92ffd1d"/>
+				<textElement>
+					<font fontName="Calibri" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total deuda:]]></text>
+			</staticText>
+			<line>
+				<reportElement x="210" y="14" width="589" height="1" uuid="7b27131a-a728-48c5-8c44-a47697e596ec"/>
+			</line>
+			<line>
+				<reportElement x="210" y="0" width="1" height="14" uuid="d7bd402a-fb58-4847-9f0b-9636ace0396d"/>
+			</line>
+			<line>
+				<reportElement x="494" y="0" width="1" height="14" uuid="7348aba7-1d26-482c-aaa1-185ee9bdffaa"/>
+			</line>
+			<line>
+				<reportElement x="799" y="0" width="1" height="14" uuid="54f87abd-24c7-4b85-b783-31c4a531c147"/>
+			</line>
+			<line>
+				<reportElement x="748" y="0" width="1" height="14" uuid="abd32fb8-3502-4cb5-bb80-1fc2ba439ae6"/>
+			</line>
+			<line>
+				<reportElement x="568" y="0" width="1" height="14" uuid="bc895fa1-1269-466e-ace7-12d76a5268ee"/>
+			</line>
+		</band>
 	</summary>
 </jasperReport>
