@@ -1,6 +1,9 @@
 package ec.com.jaapz.controlador;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 import ec.com.jaapz.modelo.AnioDAO;
@@ -22,7 +25,11 @@ public class ReporteNominasC {
 			@Override
 			public void handle(Event event) {
 				Map<String, Object> param = new HashMap<String, Object>();
-				param.put("FECHA", "SDSDFSDF");
+				SimpleDateFormat formateador = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss", new Locale("MX"));
+				Date fechaDate = new Date();
+				String fechaSistema = formateador.format(fechaDate);
+				String fecha = dateFormatter("yyyy-MM-dd hh:mm:ss","d 'de' MMMM 'del' yyyy", fechaSistema);
+				param.put("FECHA", fecha);
 				PrintReport reporte = new PrintReport();
 				reporte.crearReporte("/recursos/informes/nominaFirma.jasper", anioDAO, param);
 				reporte.showReport("Nómina de clientes");
@@ -33,12 +40,29 @@ public class ReporteNominasC {
 			@Override
 			public void handle(Event event) {
 				Map<String, Object> param = new HashMap<String, Object>();
-				
-				param.put("FECHA", "SDSDFSDF");
+				SimpleDateFormat formateador = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss", new Locale("MX"));
+				Date fechaDate = new Date();
+				String fechaSistema = formateador.format(fechaDate);
+				String fecha = dateFormatter("yyyy-MM-dd hh:mm:ss","d 'de' MMMM 'del' yyyy", fechaSistema);
+				param.put("FECHA", fecha);
 				PrintReport reporte = new PrintReport();
 				reporte.crearReporte("/recursos/informes/nominaSimple.jasper", anioDAO, param);
 				reporte.showReport("Nómina de clientes");
 			}
 		});
+	}
+	public static final Locale LOCALE_MX = new Locale("es", "MX");
+	public static String dateFormatter(String inputFormat, String outputFormat, String inputDate){
+	      //Define formato default de entrada.   
+	      String input = inputFormat.isEmpty()? "yyyy-MM-dd hh:mm:ss" : inputFormat; 
+	      //Define formato default de salida.
+	      String output = outputFormat.isEmpty()? "d 'de' MMMM 'del' yyyy" : outputFormat;
+	    String outputDate = inputDate;
+	    try {
+	        outputDate = new SimpleDateFormat(output, LOCALE_MX).format(new SimpleDateFormat(input, LOCALE_MX).parse(inputDate));
+	    } catch (Exception e) {
+	        System.out.println("dateFormatter(): " + e.getMessage());           
+	    }
+	    return outputDate;
 	}
 }

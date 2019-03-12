@@ -73,6 +73,21 @@
                         <AnchorPane fx:id="apUsuariosOrden" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
                      </content>
                   </TitledPane>
+                  <TitledPane animated="false" text="Listado de solicitudes no atendidas">
+                     <content>
+                        <AnchorPane fx:id="apSolicitudesNoAtendidas" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                     </content>
+                  </TitledPane>
+                  <TitledPane animated="false" text="Resultados de lecturas">
+                     <content>
+                        <AnchorPane fx:id="apResultadosLectura" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                     </content>
+                  </TitledPane>
+                  <TitledPane animated="false" text="Imprimir mapa con posiciones de medidores">
+                     <content>
+                        <AnchorPane fx:id="apMapa" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                     </content>
+                  </TitledPane>
               </panes>
             </Accordion>
          </children>

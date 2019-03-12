@@ -13,6 +13,10 @@ public class ReportesReportesC {
 	@FXML private AnchorPane apDeudas;
 	@FXML private AnchorPane apNomina;
 	@FXML private AnchorPane apTomas;
+	
+	@FXML private AnchorPane apSolicitudesNoAtendidas;
+	@FXML private AnchorPane apResultadosLectura;
+	@FXML private AnchorPane apMapa;
 	ControllerHelper helper = new ControllerHelper();
 	public void initialize() {
 		try {
