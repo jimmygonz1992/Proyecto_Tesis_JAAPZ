@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.6.0.final using JasperReports Library version 6.6.0  -->
+<!-- Created with Jaspersoft Studio version 6.5.1.final using JasperReports Library version 6.5.1  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="comprobante" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="194f3564-7374-41bf-83b4-a19ea1d52c70">
-	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="PostgresJAAPZ"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="conectionBDJAAPZ"/>
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
-	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="244"/>
-	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="744"/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="176"/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="816"/>
+	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w1" value="825"/>
+	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w2" value="161"/>
 	<parameter name="numComprobante" class="java.lang.String"/>
 	<parameter name="cedula" class="java.lang.Integer"/>
 	<queryString>
@@ -12,7 +14,7 @@
 	f.fecha, f.num_factura, f.total_factura, f.usuario_crea,
 	fd.id_detalle_fac, pd.cantidad, pd.descripcion,
 	pd.subtotal, p.id_planilla, fd.id_factura, fd.subtotal as subtFac,
-    'iiii' as anio, 'jjjj' as mes, p.total_pagar, 'codigo' as codigo 
+    'iiii' as anio, 'jjjj' as mes, p.total_pagar, 'codigo' as codigo , (p.total_pagar - sum(coalesce(pa.valor,0))) as deuda
 FROM cliente c,
 	cuenta_cliente cc,
 	factura f,
@@ -31,12 +33,13 @@ WHERE
 	f.num_factura = $P{numComprobante} and 
 	pd.identificador_operacion = 'INS' and
 	cc.id_cuenta = $P{cedula} 
+group by c.cedula, c.nombre, c.apellido, f.fecha, f.num_factura, f.total_factura, f.usuario_crea, fd.id_detalle_fac, pd.cantidad, pd.descripcion, pd.subtotal, p.id_planilla
 Union
 SELECT c.cedula, c.nombre, c.apellido,
 	f.fecha, f.num_factura, f.total_factura, f.usuario_crea,
 	fd.id_detalle_fac, pd.cantidad, pd.descripcion,
 	pd.subtotal, p.id_planilla, fd.id_factura, fd.subtotal as subtFac,
-	a.descripcion as anio, me.descripcion as mes, p.total_pagar, m.codigo
+	a.descripcion as anio, me.descripcion as mes, p.total_pagar, m.codigo, (p.total_pagar - sum(coalesce(pa.valor,0))) as deuda
 FROM cliente c,
 	cuenta_cliente cc,
 	medidor m,
@@ -62,7 +65,8 @@ WHERE
 	pd.identificador_operacion <> 'INS' and
 	fd.id_planilla = p.id_planilla and
 	f.num_factura = $P{numComprobante} and
-	cc.id_cuenta = $P{cedula}]]>
+	cc.id_cuenta = $P{cedula}
+group by c.cedula, c.nombre, c.apellido, f.fecha, f.num_factura, f.total_factura, f.usuario_crea, fd.id_detalle_fac, pd.cantidad, pd.descripcion, pd.subtotal, p.id_planilla, a.descripcion, me.descripcion, m.codigo]]>
 	</queryString>
 	<field name="cedula" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.label" value="cedula"/>
@@ -136,6 +140,15 @@ WHERE
 		<property name="com.jaspersoft.studio.field.label" value="codigo"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="medidor"/>
 	</field>
+	<field name="deuda" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.label" value="deuda"/>
+	</field>
+	<variable name="subtfac1" class="java.lang.Double" resetType="Column" calculation="Sum">
+		<variableExpression><![CDATA[$F{subtfac}]]></variableExpression>
+	</variable>
+	<variable name="subtfac2" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{subtfac}]]></variableExpression>
+	</variable>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -334,7 +347,7 @@ WHERE
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="40" splitType="Stretch">
+		<band height="21" splitType="Stretch">
 			<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.FreeLayout"/>
 			<rectangle>
 				<reportElement x="2" y="1" width="550" height="20" uuid="692aa90e-12fc-40e7-bb19-23c53036485d"/>
@@ -384,57 +397,75 @@ WHERE
 		</band>
 	</detail>
 	<columnFooter>
-		<band height="30">
+		<band height="69">
+			<rectangle>
+				<reportElement x="2" y="0" width="550" height="68" uuid="60260834-3c34-4a60-bfeb-ca49bcef464f"/>
+			</rectangle>
 			<staticText>
-				<reportElement x="240" y="0" width="137" height="13" uuid="cdd3cc7f-d9e5-4d2d-8fe1-96c28ff8dd31"/>
-				<textElement textAlignment="Left">
-					<font size="9" isBold="true"/>
-				</textElement>
-				<text><![CDATA[Valor total de la Factura:]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="240" y="13" width="137" height="17" uuid="da001ab4-1ea0-46f0-874e-965aa28edd32"/>
-				<textElement textAlignment="Left" verticalAlignment="Top">
-					<font size="9" isBold="true"/>
-				</textElement>
-				<text><![CDATA[Total Deuda:]]></text>
-			</staticText>
-		</band>
-	</columnFooter>
-	<pageFooter>
-		<band height="81">
-			<staticText>
-				<reportElement x="220" y="3" width="100" height="17" uuid="81cef85e-c525-4148-a296-69f74fed21e9"/>
+				<reportElement x="220" y="3" width="100" height="13" uuid="81cef85e-c525-4148-a296-69f74fed21e9"/>
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Información General]]></text>
 			</staticText>
+			<line>
+				<reportElement x="1" y="18" width="551" height="1" uuid="8fff7f0c-13e7-4a0c-bc89-93525768ece4"/>
+			</line>
 			<staticText>
-				<reportElement x="7" y="17" width="540" height="17" uuid="7c485c85-edea-44b0-b6ec-7d62bea2a76c"/>
+				<reportElement x="7" y="20" width="540" height="13" uuid="7c485c85-edea-44b0-b6ec-7d62bea2a76c"/>
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Señor Usuario, los datos que aparecen a continuación, corresponden a cuentas Pendientes]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="6" y="33" width="158" height="17" uuid="6925f2a7-31a9-404e-80f4-516cb62c5c4b"/>
+				<reportElement x="6" y="36" width="158" height="13" uuid="6925f2a7-31a9-404e-80f4-516cb62c5c4b"/>
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Meses y/o Facturas Pendientes:]]></text>
 			</staticText>
+			<textField>
+				<reportElement x="7" y="53" width="100" height="13" uuid="8bf498ca-8d33-43b1-83f9-610c86796ee0"/>
+				<textFieldExpression><![CDATA[$F{usuario_crea}]]></textFieldExpression>
+			</textField>
 			<staticText>
-				<reportElement x="320" y="33" width="85" height="17" uuid="ac156883-eb0c-4621-acef-e3d387f132c9"/>
+				<reportElement x="320" y="36" width="85" height="13" uuid="ac156883-eb0c-4621-acef-e3d387f132c9"/>
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Saldo Pendiente:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="7" y="50" width="100" height="20" uuid="8bf498ca-8d33-43b1-83f9-610c86796ee0"/>
-				<textFieldExpression><![CDATA[$F{usuario_crea}]]></textFieldExpression>
+				<reportElement x="430" y="37" width="100" height="13" uuid="b9d8ff18-d7db-40f7-898f-ced36f62dfa7"/>
+				<textFieldExpression><![CDATA[$F{deuda}]]></textFieldExpression>
 			</textField>
 		</band>
-	</pageFooter>
+	</columnFooter>
+	<summary>
+		<band height="33">
+			<staticText>
+				<reportElement x="303" y="3" width="137" height="13" uuid="cdd3cc7f-d9e5-4d2d-8fe1-96c28ff8dd31"/>
+				<textElement textAlignment="Left">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Valor total de la Factura:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="451" y="3" width="100" height="13" uuid="300c2279-ee60-4cfc-96e7-c9df5b2f62e8"/>
+				<textFieldExpression><![CDATA[$V{subtfac2}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="303" y="17" width="100" height="13" uuid="da001ab4-1ea0-46f0-874e-965aa28edd32"/>
+				<textElement textAlignment="Left" verticalAlignment="Top">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total Deuda:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="451" y="20" width="100" height="13" uuid="4625c6ff-542d-48b9-bfa4-7b356328378b"/>
+				<textFieldExpression><![CDATA[$F{deuda}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
 </jasperReport>

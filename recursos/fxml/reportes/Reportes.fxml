@@ -53,7 +53,7 @@
                         <AnchorPane fx:id="apNomina" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
                      </content>
                   </TitledPane>
-                  <TitledPane animated="false" text="Recaudaciones diarias">
+                  <TitledPane animated="false" text="Recaudaciones">
                      <content>
                         <AnchorPane fx:id="apRecaudaciones" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
                      </content>
@@ -86,6 +86,11 @@
                   <TitledPane animated="false" text="Imprimir mapa con posiciones de medidores">
                      <content>
                         <AnchorPane fx:id="apMapa" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                     </content>
+                  </TitledPane>
+                   <TitledPane animated="false" text="Materiales">
+                     <content>
+                        <AnchorPane fx:id="apMateriales" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
                      </content>
                   </TitledPane>
               </panes>

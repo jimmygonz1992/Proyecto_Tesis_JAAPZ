@@ -736,11 +736,6 @@ public class RecaudacionesRegistroCobroC {
 				for(int i=0; i<tvDetallePago.getItems().size(); i++) {
 					Double valorTotal = new Double(tvDetallePago.getItems().get(i).getSubtotal());
 					total += valorTotal;
-					/*for(Planilla pla : tvDetallePago.getItems()) {
-						for(Pago pa : pla.getPagos()){
-							totalPagado = totalPagado + pa.getValor();
-						}
-					}*/
 					txtTotalPago.setText(String.valueOf(Double.valueOf(total)));
 				}
 			}
@@ -768,6 +763,7 @@ public class RecaudacionesRegistroCobroC {
 			txtPagaCon.setText("");
 			txtSaldo.setText("");
 			txtTotal.setText("");
+			txtTotalPago.setText("");
 		}catch(Exception ex) {
 			System.out.println(ex.getMessage());
 		}

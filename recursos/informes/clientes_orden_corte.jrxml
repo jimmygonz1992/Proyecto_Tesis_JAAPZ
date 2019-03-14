@@ -15,7 +15,8 @@ left join planilla p
 on cc.id_cuenta = p.id_cuenta
 and p.cancelado = 'PENDIENTE'
 group by cc.id_cuenta, cliente, cc.direccion, c.telefono
-having count(p.id_planilla) >= 3]]>
+having count(p.id_planilla) >= 3
+order by cliente asc]]>
 	</queryString>
 	<field name="id_cuenta" class="java.lang.Integer">
 		<property name="com.jaspersoft.studio.field.label" value="id_cuenta"/>

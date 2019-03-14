@@ -34,7 +34,7 @@ WHERE
 	p.cancelado = 'PENDIENTE' and
 	p.fecha between $P{fecha_inicio} and $P{fecha_fin}
 group by c.cedula, cliente, cc.direccion, c.telefono, p.id_planilla,m.codigo
-order by p.id_planilla]]>
+order by cliente asc]]>
 	</queryString>
 	<field name="cedula" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.label" value="cedula"/>
@@ -341,9 +341,6 @@ order by p.id_planilla]]>
 			</textField>
 		</band>
 	</detail>
-	<columnFooter>
-		<band height="32" splitType="Stretch"/>
-	</columnFooter>
 	<pageFooter>
 		<band height="19" splitType="Stretch">
 			<staticText>

@@ -20,7 +20,8 @@ WHERE
 	cuenta_cliente.id_cliente = cliente.id_cliente AND
 	cuenta_cliente.id_medidor = medidor.id_medidor AND
 	cuenta_cliente.id_cuenta = factura.id_cuenta AND
-	factura.fecha between $P{fechaInicio} and  $P{fechaFin}]]>
+	factura.fecha between $P{fechaInicio} and  $P{fechaFin}
+ORDER BY cliente asc]]>
 	</queryString>
 	<field name="id_factura" class="java.lang.Integer">
 		<property name="com.jaspersoft.studio.field.label" value="id_factura"/>
@@ -56,7 +57,7 @@ WHERE
 	<field name="usuario_crea" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.label" value="usuario_crea"/>
 	</field>
-	<field name="fecha_impresion" class="java.lang.String">
+	<field name="fecha_impresion" class="java.sql.Date">
 		<property name="com.jaspersoft.studio.field.label" value="fecha_impresion"/>
 	</field>
 	<variable name="total_factura1" class="java.lang.Double" resetType="Column" calculation="Sum">

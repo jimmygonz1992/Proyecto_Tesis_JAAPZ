@@ -237,10 +237,21 @@ public class BodegaRegistroCodMedC {
 				}
 				medidorDAO.getEntityManager().getTransaction().commit();
 				helper.mostrarAlertaInformacion("Datos grabados correctamente", Context.getInstance().getStage());
+				limpiar();
 			}
 		}catch(Exception ex) {
 			System.out.println(ex.getMessage());
 		}
 	}
-
+	
+	void limpiar() {
+		txtNumFactura.setText("");
+		txtFechaIngreso.setText("");
+		txtRUC.setText("");
+		txtProveedor.setText("");
+		txtCantidadMedidores.setText("");
+		txtTotal.setText("");
+		tvDatos.getItems().clear();
+		tvDatos.getColumns().clear();
+	}
 }

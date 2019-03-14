@@ -104,8 +104,8 @@ public class BodegaIngresoRubrosC {
 			txtStockMat.setEditable(false);
 			dtpFecha.setValue(LocalDate.now());
 			txtRuc.requestFocus();
-			//txtCodigo.setVisible(false);
-			//txtCodigoProv.setVisible(false);
+			txtCodigo.setVisible(false);
+			txtCodigoProv.setVisible(false);
 
 			//validar solo numeros
 			txtRuc.textProperty().addListener(new ChangeListener<String>() {
@@ -232,8 +232,7 @@ public class BodegaIngresoRubrosC {
 							limpiar();
 							limpiarProveedor();
 							limpiarIngreso();
-						}
-							
+						}				
 					}
 				}
 			});
@@ -616,7 +615,7 @@ public class BodegaIngresoRubrosC {
 			});
 			tvDatos.getColumns().addAll(descipcionColum, cantidadColum, precioColum, totalColum);
 			tvDatos.setItems(datos);
-			//sumarDatos();
+			sumarDatos();
 			rubroSeleccionado = null;
 			limpiar();
 		}catch(Exception ex) {
@@ -652,7 +651,7 @@ public class BodegaIngresoRubrosC {
 					tvDatos.getItems().remove(detalleSeleccionado);	
 				}
 			}
-			//sumarDatos();
+			sumarDatos();
 		}catch(Exception ex) {
 			System.out.println(ex.getMessage());
 		}
@@ -837,6 +836,9 @@ public class BodegaIngresoRubrosC {
 					limpiarProveedor();
 					txtNumero.setText("");
 					txtObservaciones.setText("");
+					txtSubtotal.setText("");
+					txtDescuento.setText("");
+					txtTotal.setText("");
 					tvDatos.getColumns().clear();
 					tvDatos.getItems().clear();
 					
@@ -943,6 +945,9 @@ public class BodegaIngresoRubrosC {
 					limpiarProveedor();
 					txtNumero.setText("");
 					txtObservaciones.setText("");
+					txtSubtotal.setText("");
+					txtDescuento.setText("");
+					txtTotal.setText("");
 					tvDatos.getColumns().clear();
 					tvDatos.getItems().clear();
 				}
