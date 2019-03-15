@@ -132,7 +132,16 @@ public class RecaudacionesConvenioC {
 				descripcionColum.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Planilla, String>, ObservableValue<String>>() {
 					@Override
 					public ObservableValue<String> call(CellDataFeatures<Planilla, String> param) {
-						return new SimpleObjectProperty<String>("Planilla mes de: " + String.valueOf(param.getValue().getAperturaLectura().getMe().getDescripcion()) + " Año: " + param.getValue().getAperturaLectura().getAnio().getDescripcion());
+						String variable = ""; 
+						if (param.getValue().getAperturaLectura() != null) {
+							variable = "Planilla mes de: " + String.valueOf(param.getValue().getAperturaLectura().getMe().getDescripcion()) + " Año: " + param.getValue().getAperturaLectura().getAnio().getDescripcion();
+						}else {
+							if(param.getValue().getIdentInstalacion() != null) {
+								if(param.getValue().getIdentInstalacion().equals(Constantes.IDENT_INSTALACION))
+									variable = "Instalación de Medidor";
+							}
+						}
+						return new SimpleObjectProperty<String>(variable);
 					}
 				});
 
