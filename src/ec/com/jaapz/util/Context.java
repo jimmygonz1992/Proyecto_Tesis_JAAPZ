@@ -8,6 +8,7 @@ import ec.com.jaapz.modelo.Barrio;
 import ec.com.jaapz.modelo.Categoria;
 import ec.com.jaapz.modelo.Cliente;
 import ec.com.jaapz.modelo.CuentaCliente;
+import ec.com.jaapz.modelo.Empresa;
 import ec.com.jaapz.modelo.Ingreso;
 import ec.com.jaapz.modelo.IngresoDetalle;
 import ec.com.jaapz.modelo.Instalacion;
@@ -39,6 +40,7 @@ public class Context {
 	private Stage stageModal;
 	private SegUsuario usuarios;
 	private SegUsuario usuariosC;
+	private Empresa empresaC;
 	
 	private Rubro rubro;
 	private Rubro rubros;
@@ -237,6 +239,14 @@ public class Context {
 
 	public void setUsuariosC(SegUsuario usuariosC) {
 		this.usuariosC = usuariosC;
+	}
+	
+	public Empresa getEmpresaC() {
+		return empresaC;
+	}
+
+	public void setEmpresaC(Empresa empresaC) {
+		this.empresaC = empresaC;
 	}
 	
 	public Rubro getRubros() {

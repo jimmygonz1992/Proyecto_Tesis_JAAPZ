@@ -3,7 +3,9 @@ package ec.com.jaapz.controlador;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import ec.com.jaapz.modelo.Convenio;
@@ -11,6 +13,8 @@ import ec.com.jaapz.modelo.ConvenioDAO;
 import ec.com.jaapz.modelo.ConvenioDetalle;
 import ec.com.jaapz.modelo.ConvenioPlanilla;
 import ec.com.jaapz.modelo.CuentaCliente;
+import ec.com.jaapz.modelo.Empresa;
+import ec.com.jaapz.modelo.EmpresaDAO;
 import ec.com.jaapz.modelo.Pago;
 import ec.com.jaapz.modelo.Planilla;
 import ec.com.jaapz.modelo.PlanillaDAO;
@@ -18,6 +22,7 @@ import ec.com.jaapz.modelo.PlanillaDetalle;
 import ec.com.jaapz.util.Constantes;
 import ec.com.jaapz.util.Context;
 import ec.com.jaapz.util.ControllerHelper;
+import ec.com.jaapz.util.PrintReport;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -50,6 +55,7 @@ public class RecaudacionesConvenioC {
 	CuentaCliente cuentaSeleccionada;
 	ConvenioDAO convenioDAO = new ConvenioDAO();
 	PlanillaDAO planillaDAO = new PlanillaDAO();
+	EmpresaDAO empresaDao = new EmpresaDAO();
 	public void initialize() {
 		try {
 			btnBuscar.setStyle("-fx-cursor: hand;");
@@ -363,9 +369,20 @@ public class RecaudacionesConvenioC {
 						convenioDAO.getEntityManager().merge(planilla);
 					else
 						convenioDAO.getEntityManager().persist(planilla);
-					convenioDAO.getEntityManager().getTransaction().commit();	
+					convenioDAO.getEntityManager().getTransaction().commit();
 				}
-				
+				List<Empresa> empresa;
+				empresa = empresaDao.getEmpresa();
+				if(empresa.size() == 1){
+					Context.getInstance().setEmpresaC(empresa.get(0));
+				}
+					
+				PrintReport pr = new PrintReport();
+				Map<String, Object> param = new HashMap<String, Object>();
+				param.put("id_convenio", convenio.getIdConvenio());
+				param.put("presidente", empresa.get(0).getRepresentante());
+				pr.crearReporte("/recursos/informes/convenio.jasper", convenioDAO, param);
+				pr.showReport("Convenios de Pago");
 				helper.mostrarAlertaInformacion("Datos grabados!!", Context.getInstance().getStage());
 				limpiar();
 			}
@@ -373,6 +390,20 @@ public class RecaudacionesConvenioC {
 			System.out.println(ex.getMessage());
 		}
 	}
+	
+	/*public void imprimirConvenio() {
+		try {
+			PrintReport pr = new PrintReport();
+			Map<String, Object> param = new HashMap<String, Object>();
+			param.put("id_cuenta", cuentaSeleccionada.getIdCuenta());
+			param.put("presidente", Context.getInstance().getEmpresaC().getRepresentante());
+			pr.crearReporte("/recursos/informes/convenio.jasper", convenioDAO, param);
+			pr.showReport("Convenios de Pago");
+		}catch(Exception ex) {
+			System.out.println(ex.getMessage());
+		}
+	}*/
+	
 	public void limpiarDatos() {
 		try {
 			limpiar();

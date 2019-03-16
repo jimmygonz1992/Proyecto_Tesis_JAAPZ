@@ -1,73 +1,85 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.6.0.final using JasperReports Library version 6.6.0  -->
+<!-- Created with Jaspersoft Studio version 6.5.1.final using JasperReports Library version 6.5.1  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="convenio" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="989571e0-4d73-4506-ad7f-0689c38a1762">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
-	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Conexion PG"/>
-	<parameter name="id_cuenta" class="java.lang.Integer"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="conectionBDJAAPZ"/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="209"/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="783"/>
+	<parameter name="id_convenio" class="java.lang.Integer"/>
+	<parameter name="presidente" class="java.lang.String"/>
 	<queryString language="SQL">
 		<![CDATA[select c.id_convenio, (cl.apellido|| ' ' ||cl.nombre) as cliente, c.fecha, c.total, cd.num_letra, cd.descripcion, cd.valor, cc.id_cuenta, c.num_letras as total_letras
 from convenio c, convenio_detalle cd, cuenta_cliente cc, cliente cl
 where c.id_convenio = cd.id_convenio and
 	c.id_cuenta = cc.id_cuenta and
 	cc.id_cliente = cl.id_cliente and
-	cc.id_cuenta = $P{id_cuenta} ]]>
+	c.id_convenio = $P{id_convenio} 
+order by cd.num_letra asc]]>
 	</queryString>
 	<field name="id_convenio" class="java.lang.Integer">
 		<property name="com.jaspersoft.studio.field.label" value="id_convenio"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="convenio"/>
 	</field>
 	<field name="cliente" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.label" value="cliente"/>
 	</field>
 	<field name="fecha" class="java.sql.Timestamp">
 		<property name="com.jaspersoft.studio.field.label" value="fecha"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="convenio"/>
 	</field>
 	<field name="total" class="java.lang.Double">
 		<property name="com.jaspersoft.studio.field.label" value="total"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="convenio"/>
 	</field>
 	<field name="num_letra" class="java.lang.Integer">
 		<property name="com.jaspersoft.studio.field.label" value="num_letra"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="convenio_detalle"/>
 	</field>
 	<field name="descripcion" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.label" value="descripcion"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="convenio_detalle"/>
 	</field>
 	<field name="valor" class="java.lang.Double">
 		<property name="com.jaspersoft.studio.field.label" value="valor"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="convenio_detalle"/>
 	</field>
 	<field name="id_cuenta" class="java.lang.Integer">
 		<property name="com.jaspersoft.studio.field.label" value="id_cuenta"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="cuenta_cliente"/>
 	</field>
 	<field name="total_letras" class="java.lang.Integer">
 		<property name="com.jaspersoft.studio.field.label" value="total_letras"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="convenio"/>
 	</field>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="324" splitType="Stretch">
+		<band height="335" splitType="Stretch">
 			<staticText>
-				<reportElement x="100" y="4" width="400" height="13" uuid="a3563799-8f4c-4912-9693-1f72e15f48a1"/>
+				<reportElement x="100" y="0" width="400" height="17" uuid="a3563799-8f4c-4912-9693-1f72e15f48a1"/>
 				<textElement textAlignment="Center">
-					<font isBold="true"/>
+					<font size="11" isBold="true"/>
 				</textElement>
 				<text><![CDATA[JUNTA ADMINISTRADORA DE AGUA POTABLE - ZAPOTAL]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="100" y="19" width="400" height="13" uuid="0311dc93-edcc-40b7-977e-c1fb9edc2161"/>
+				<reportElement x="100" y="17" width="400" height="18" uuid="0311dc93-edcc-40b7-977e-c1fb9edc2161"/>
 				<textElement textAlignment="Center">
-					<font isBold="true"/>
+					<font size="11" isBold="true"/>
 				</textElement>
 				<text><![CDATA[FUNDADO EL 2 DE OCTUBRE DEL 2001]]></text>
 			</staticText>
 			<line>
-				<reportElement x="31" y="40" width="490" height="1" uuid="8715f08b-69f5-442f-8435-f6b39598e35a"/>
+				<reportElement x="31" y="43" width="490" height="1" uuid="8715f08b-69f5-442f-8435-f6b39598e35a"/>
 				<graphicElement>
 					<pen lineWidth="2.0"/>
 				</graphicElement>
 			</line>
 			<staticText>
-				<reportElement x="174" y="46" width="140" height="13" uuid="905084f1-15e1-462e-b45d-c967469563a2"/>
+				<reportElement x="174" y="47" width="140" height="19" uuid="905084f1-15e1-462e-b45d-c967469563a2"/>
 				<textElement textAlignment="Center">
-					<font isBold="true"/>
+					<font size="11" isBold="true"/>
 				</textElement>
 				<text><![CDATA[CONVENIO DE PAGO N°]]></text>
 			</staticText>
@@ -78,67 +90,190 @@ where c.id_convenio = cd.id_convenio and
 			<staticText>
 				<reportElement x="1" y="70" width="550" height="28" uuid="69982097-cae9-4e21-b850-143d41ef1a5e"/>
 				<textElement textAlignment="Justified">
-					<font isBold="true"/>
+					<font size="11" isBold="true"/>
 				</textElement>
 				<text><![CDATA[CONVENIO DE FACILIDADES DE PAGO CELEBRADO ENTRE LA JUNTA ADMINISTRADORA DE AGUA POTABLE - ZAPOTAL (JAAPZ) Y]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="2" y="104" width="550" height="56" uuid="bb3aaad6-d55d-48a0-855e-b5f2f89ed868"/>
+				<reportElement x="2" y="108" width="550" height="56" uuid="bb3aaad6-d55d-48a0-855e-b5f2f89ed868"/>
 				<textElement textAlignment="Justified">
-					<font isBold="true"/>
+					<font size="11" isBold="true"/>
 				</textElement>
-				<text><![CDATA[En la Comuna Zapotal, a los____ días del mes de ________ del año _____, comparecen por una parte _____________________________, en su calidad de Presidente de la JAAPZ, y por otra parte ______________________________ a quienes se los denominará TESORERO Y CONTRIBUYENTE(S), respectivamente proceden a celebrar un convenio de pago al tenor de las siguientes cláusulas:]]></text>
+				<text><![CDATA[En la Comuna Zapotal, a los         días del mes de                           del año                            , comparecen por una parte                                                                                          , en su calidad de Presidente de la JAAPZ, y por otra parte                                                                                     a quienes se los denominará TESORERO Y CONTRIBUYENTE(S), respectivamente proceden a celebrar un convenio de pago al tenor de las siguientes cláusulas:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="2" y="164" width="550" height="56" uuid="2e959752-434f-4fca-a542-db6baa0354b5"/>
+				<reportElement x="2" y="178" width="550" height="71" uuid="2e959752-434f-4fca-a542-db6baa0354b5"/>
 				<textElement textAlignment="Justified">
-					<font isBold="true"/>
+					<font size="11" isBold="true"/>
 				</textElement>
 				<text><![CDATA[PRIMERO: EL (LOS) CONTRIBUYENTE (S), adeuda (n) a esta institución por concepto de varias planillas impagas.
 
 SEGUNDO: El PRESIDENTE en uso de las atribuciones y habiendo comparecido dicho(s) CONTIBUYENTE(S) con una solicitud de facilidades de pago, procede a tramitarlo.]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="2" y="224" width="550" height="26" uuid="2553ee9d-1e29-49db-ab0f-9eb1b959df2f"/>
+				<reportElement x="2" y="256" width="550" height="56" uuid="2553ee9d-1e29-49db-ab0f-9eb1b959df2f"/>
 				<textElement textAlignment="Justified">
-					<font isBold="true"/>
+					<font size="11" isBold="true"/>
 				</textElement>
 				<text><![CDATA[TERCERO: El valor de la deuda a la presente fecha asciende a $                                   , cantidad que será consignada a                         MESES PLAZO, y que se detallará en la planilla del siguiente mes, siendo de la siguiente manera:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="318" y="46" width="100" height="13" uuid="2912f6e0-32e2-494b-82e5-a8e27cb8df74"/>
+				<reportElement x="318" y="46" width="100" height="19" uuid="2912f6e0-32e2-494b-82e5-a8e27cb8df74"/>
+				<textElement>
+					<font size="11"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{id_convenio}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="103" y="82" width="287" height="13" uuid="2d6d8279-43ab-4182-9845-9669e0fdcd7b"/>
+				<reportElement x="177" y="83" width="287" height="15" uuid="2d6d8279-43ab-4182-9845-9669e0fdcd7b"/>
+				<textElement>
+					<font size="11"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{cliente}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="325" y="224" width="100" height="13" uuid="4fc1b2d6-c738-4594-8a11-f22dc5d3c23f"/>
+				<reportElement x="343" y="255" width="100" height="13" uuid="4fc1b2d6-c738-4594-8a11-f22dc5d3c23f"/>
 				<textFieldExpression><![CDATA[$F{total}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="70" y="237" width="63" height="13" uuid="c9e19435-0530-4aa7-ba01-ccae726adf51"/>
+				<reportElement x="80" y="268" width="63" height="13" uuid="c9e19435-0530-4aa7-ba01-ccae726adf51"/>
 				<textFieldExpression><![CDATA[$F{total_letras}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd">
+				<reportElement x="159" y="107" width="17" height="15" uuid="c143b10b-0702-411f-a4dd-89b883e04260"/>
+				<textElement>
+					<font size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField pattern="MMMM">
+				<reportElement x="275" y="108" width="74" height="15" uuid="b4e518f6-58c3-4524-8b2a-d6739985c63f"/>
+				<textElement>
+					<font size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField pattern="yyyy">
+				<reportElement x="394" y="108" width="86" height="15" uuid="85900c08-7243-4369-b2d0-21d02ba258bd"/>
+				<textElement>
+					<font size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="131" y="137" width="263" height="13" uuid="a46e205e-f0c5-4e59-acbe-0da6d708463a"/>
+				<textElement>
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cliente}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="78" y="121" width="293" height="13" uuid="cdb9eb2d-fe86-476f-960b-4e11d3e904e9"/>
+				<textFieldExpression><![CDATA[$P{presidente}]]></textFieldExpression>
 			</textField>
 		</band>
 	</title>
-	<pageHeader>
-		<band height="35" splitType="Stretch"/>
-	</pageHeader>
 	<columnHeader>
-		<band height="61" splitType="Stretch"/>
+		<band height="15" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="0" width="381" height="15" uuid="08c5b15f-4f6c-4e05-9fa4-954652eaf888"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="1" y="1" width="100" height="13" uuid="826ad109-2c86-4c30-8fa8-7b149ff8c5a6">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="6486b2aa-51c2-41e1-ac59-05bbb0472852"/>
+				</reportElement>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Cuota Nº]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="109" y="1" width="100" height="13" uuid="1e2d1ae7-7f46-4d51-aa24-7e14440446ee">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="33c4695e-8ca3-4201-b866-ed4af5472f90"/>
+				</reportElement>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Descripción]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="271" y="1" width="100" height="13" uuid="d56a140b-d984-4f7f-aa40-963076479d9c">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="d7290741-34df-4dd9-8571-16cd591a490c"/>
+				</reportElement>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Valor]]></text>
+			</staticText>
+			<line>
+				<reportElement x="100" y="0" width="1" height="15" uuid="6e0a508e-2e2e-4a97-8bb2-440a3d64b4ec"/>
+			</line>
+			<line>
+				<reportElement x="266" y="0" width="1" height="15" uuid="ddbe4f24-b650-4871-94af-845b1bd993e2"/>
+			</line>
+		</band>
 	</columnHeader>
 	<detail>
-		<band height="125" splitType="Stretch"/>
+		<band height="15" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="0" width="381" height="15" uuid="6a53c50a-0a50-4ce4-9448-0e73e25869da"/>
+			</rectangle>
+			<textField>
+				<reportElement x="1" y="1" width="80" height="13" uuid="4b15aa54-1706-4a67-94ca-28d2477b46dc">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="6486b2aa-51c2-41e1-ac59-05bbb0472852"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{num_letra}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="110" y="1" width="150" height="13" uuid="06e8a0be-303f-4d4a-a37d-ead9f8b19ba9">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="33c4695e-8ca3-4201-b866-ed4af5472f90"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{descripcion}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="273" y="1" width="74" height="13" uuid="ae62e654-cc3e-4a06-97bc-1ad065b6958b">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="d7290741-34df-4dd9-8571-16cd591a490c"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{valor}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="100" y="0" width="1" height="15" uuid="38baf4c2-e804-43f1-b3d3-6bd0d40e40c8"/>
+			</line>
+			<line>
+				<reportElement x="266" y="0" width="1" height="15" uuid="9b3ee244-e59b-4d49-a81b-c77ad88d16a8"/>
+			</line>
+		</band>
 	</detail>
 	<columnFooter>
 		<band height="45" splitType="Stretch"/>
 	</columnFooter>
 	<pageFooter>
-		<band height="54" splitType="Stretch"/>
+		<band height="27" splitType="Stretch">
+			<line>
+				<reportElement x="9" y="5" width="221" height="1" uuid="a06ca766-8bcf-495c-8162-b0914892fb09"/>
+			</line>
+			<line>
+				<reportElement x="299" y="4" width="221" height="1" uuid="ef4c823b-4c6e-4415-99c5-d06633413930"/>
+			</line>
+			<staticText>
+				<reportElement x="-5" y="7" width="550" height="13" uuid="0b8197e8-2c11-4aec-acfb-83cce7b8c4ad"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[PRESIDENTE						CONTRIBUYENTE]]></text>
+			</staticText>
+		</band>
 	</pageFooter>
 	<summary>
-		<band height="42" splitType="Stretch"/>
+		<band height="96" splitType="Stretch">
+			<staticText>
+				<reportElement x="1" y="8" width="550" height="28" uuid="2868fb87-3672-4fee-bc54-af861ccbd40b"/>
+				<textElement textAlignment="Justified">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[CUARTO: El pago que se refiere a la cláusula tercera deberá consignarse en la oficina de la JAAPZ.
+QUINTO: Para constancia y fe de lo expuesto las partes firman el presente convenio.]]></text>
+			</staticText>
+		</band>
 	</summary>
 </jasperReport>
