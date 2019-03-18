@@ -92,6 +92,11 @@
                      <content>
                         <AnchorPane fx:id="apMateriales" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
                      </content>
+                  </TitledPane>             
+                  <TitledPane animated="false" text="Dinero en Caja">
+                     <content>
+                        <AnchorPane fx:id="apDineroCaja" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                     </content>
                   </TitledPane>
               </panes>
             </Accordion>

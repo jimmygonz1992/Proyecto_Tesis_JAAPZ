@@ -14,6 +14,7 @@ public class ReportesReportesC {
 	@FXML private AnchorPane apNomina;
 	@FXML private AnchorPane apTomas;
 	@FXML private AnchorPane apMateriales;
+	@FXML private AnchorPane apDineroCaja;
 	
 	@FXML private AnchorPane apSolicitudesNoAtendidas;
 	@FXML private AnchorPane apResultadosLectura;
@@ -30,6 +31,7 @@ public class ReportesReportesC {
 			helper.mostrarVentanaContenedor("/reportes/ReporteTomasLectura.fxml", apTomas);
 			helper.mostrarVentanaContenedor("/recaudaciones/RecaudacionesVerReporte.fxml", apRecaudaciones);
 			helper.mostrarVentanaContenedor("/reportes/ReporteMateriales.fxml", apMateriales);
+			helper.mostrarVentanaContenedor("/reportes/DineroCaja.fxml", apDineroCaja);
 		}catch(Exception ex) {
 			System.out.println(ex.getMessage());
 		}
