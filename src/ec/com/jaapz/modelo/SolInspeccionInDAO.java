@@ -75,4 +75,13 @@ public class SolInspeccionInDAO extends ClaseDAO{
 		resultado = (List<SolInspeccionIn>) query.getResultList();
 		return resultado;
 	}
+	
+	@SuppressWarnings("unchecked")
+	public List<SolInspeccionIn> getSolicitudesNoAtendidas(){
+		List<SolInspeccionIn> resultado = new ArrayList<SolInspeccionIn>();
+		Query query = getEntityManager().createNamedQuery("SolInspeccionIn.buscarSolicitudesNoAtendidas");
+		query.setHint("javax.persistence.cache.storeMode", "REFRESH");
+		resultado = (List<SolInspeccionIn>) query.getResultList();
+		return resultado;
+	}
 }

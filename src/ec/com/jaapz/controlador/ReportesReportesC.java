@@ -17,7 +17,7 @@ public class ReportesReportesC {
 	
 	@FXML private AnchorPane apSolicitudesNoAtendidas;
 	@FXML private AnchorPane apInconsistenciaMarcaciones;
-	@FXML private AnchorPane apMapa;
+	
 	ControllerHelper helper = new ControllerHelper();
 	public void initialize() {
 		try {
@@ -31,6 +31,7 @@ public class ReportesReportesC {
 			helper.mostrarVentanaContenedor("/recaudaciones/RecaudacionesVerReporte.fxml", apRecaudaciones);
 			helper.mostrarVentanaContenedor("/reportes/ReporteMateriales.fxml", apMateriales);
 			helper.mostrarVentanaContenedor("/reportes/ReporteInconsistencia.fxml", apInconsistenciaMarcaciones);
+			helper.mostrarVentanaContenedor("/reportes/ReporteSolicitudNoAtendida.fxml", apSolicitudesNoAtendidas);
 		}catch(Exception ex) {
 			System.out.println(ex.getMessage());
 		}

@@ -332,6 +332,7 @@ public class SolicitudInstalacionC {
 				
 				inspeccion.setUsoMedidor(String.valueOf(cboUsoMedidor.getValue()));
 				inspeccion.setIdSolInspeccion(null);
+				inspeccion.setEstadoSolicitud(Constantes.EST_INSPECCION_PENDIENTE);
 				inspeccion.setUsuarioCrea(Context.getInstance().getIdUsuario());
 				inspeccion.setReferencia(txtReferenciaIns.getText());
 				inspeccion.setDireccion(txtDireccionIns.getText());

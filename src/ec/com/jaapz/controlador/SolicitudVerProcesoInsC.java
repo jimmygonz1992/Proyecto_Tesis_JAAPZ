@@ -21,8 +21,6 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.Event;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
@@ -33,7 +31,6 @@ import javafx.util.Callback;
 
 public class SolicitudVerProcesoInsC {
 	@FXML TableView<Datos> tvDatosInstalacion;
-	@FXML TableView<SolInspeccionIn> tvDatosSolicitud;
 	SimpleDateFormat formateador = new SimpleDateFormat("dd/MM/yyyy");
 	
 	@FXML Button btnBuscar;
@@ -49,20 +46,13 @@ public class SolicitudVerProcesoInsC {
 		btnBuscar.setStyle("-fx-cursor: hand;");
 		List<Datos> datos = new ArrayList<Datos>();
 		cargarDatosInstalacion(datos);
-		List<SolInspeccionIn> datosIns = new ArrayList<SolInspeccionIn>();
-		cargarDatosSolicitudes(datosIns); 
 		
 		ObservableList<Datos> datoIns = FXCollections.observableArrayList();
 		List<Datos> mostrar = llenarDatosInstalacion();
 		datoIns.setAll(mostrar);
 		tvDatosInstalacion.setItems(datoIns);
-		tvDatosSolicitud.setOnMouseClicked(new EventHandler<Event>() {
-			@Override
-			public void handle(Event arg0) {
-				System.out.println(tvDatosSolicitud.getSelectionModel().getSelectedItem().getFechaIngreso());
-				cargarResultadosInstalacion(tvDatosSolicitud.getSelectionModel().getSelectedItem().getCliente());
-			}
-		});
+
+	
 	}
 	@SuppressWarnings("unchecked")
 	private void cargarDatosInstalacion(List<Datos> datosMostrar) {
@@ -93,35 +83,7 @@ public class SolicitudVerProcesoInsC {
 			System.out.println(ex.getMessage());
 		}
 	}
-	@SuppressWarnings("unchecked")
-	private void cargarDatosSolicitudes(List<SolInspeccionIn> datosMostrar) {
-		try {
-			ObservableList<SolInspeccionIn> datos = FXCollections.observableArrayList();
-			datos.setAll(datosMostrar);
-			TableColumn<SolInspeccionIn, String> descripcionColum = new TableColumn<>("No. Solicitud");
-			descripcionColum.setMinWidth(10);
-			descripcionColum.setPrefWidth(100);
-			descripcionColum.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<SolInspeccionIn,String>, ObservableValue<String>>() {
-				@Override
-				public ObservableValue<String> call(CellDataFeatures<SolInspeccionIn, String> param) {
-					return new SimpleObjectProperty<String>(String.valueOf(param.getValue().getIdSolInspeccion()));
-				}
-			});
-			TableColumn<SolInspeccionIn, String> resultadoColum = new TableColumn<>("Fecha");
-			resultadoColum.setMinWidth(10);
-			resultadoColum.setPrefWidth(200);
-			resultadoColum.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<SolInspeccionIn,String>, ObservableValue<String>>() {
-				@Override
-				public ObservableValue<String> call(CellDataFeatures<SolInspeccionIn, String> param) {
-					return new SimpleObjectProperty<String>(formateador.format(param.getValue().getFechaIngreso()));
-				}
-			});
-			tvDatosSolicitud.getColumns().addAll(descripcionColum,resultadoColum);
-			tvDatosSolicitud.setItems(datos);
-		}catch(Exception ex) {
-			System.out.println(ex.getMessage());
-		}
-	}
+	
 	private List<Datos> llenarDatosInstalacion() {
 		try {
 			List<Datos> lista = new ArrayList<Datos>();
@@ -167,40 +129,30 @@ public class SolicitudVerProcesoInsC {
 
 	public void buscarCliente(){
 		try{
-			helper.abrirPantallaModal("/clientes/ClientesListaClientes.fxml","Listado de Clientes", Context.getInstance().getStage());
-			if (Context.getInstance().getCliente() != null) {
+			helper.abrirPantallaModal("/reportes/SolicitudesNoAtendidas.fxml","Listado de solicitudes no atendidas", Context.getInstance().getStage());
+			if (Context.getInstance().getInspeccion() != null) {
 				limpiarDatos();
-				Cliente datoSeleccionado = Context.getInstance().getCliente();
+				Cliente datoSeleccionado = Context.getInstance().getInspeccion().getCliente();
 				txtNombres.setText(datoSeleccionado.getNombre());
 				txtApellidos.setText(datoSeleccionado.getApellido());
 				txtDireccion.setText(datoSeleccionado.getDireccion());
 				txtCedula.setText(datoSeleccionado.getCedula());
-				cargarSolicitudes(datoSeleccionado);
-				Context.getInstance().setCliente(null);
+				cargarResultadosInstalacion(Context.getInstance().getInspeccion());
+				Context.getInstance().setInspeccion(null);
 			}
 		}catch(Exception ex){
 			System.out.println(ex.getMessage());
 		}
 	}
-	private void cargarSolicitudes(Cliente cliente) {
-		try{
-			ObservableList<SolInspeccionIn> datos = FXCollections.observableArrayList();
-			List<SolInspeccionIn> lista = inspeccionDAO.getInspeccionCliente(cliente.getIdCliente());
-			datos.setAll(lista);
-			tvDatosSolicitud.setItems(datos);
-			tvDatosSolicitud.refresh();
-		}catch(Exception ex){
-			System.out.println(ex.getMessage());
-		}
-	}
-	private void cargarResultadosInstalacion(Cliente cliente) {
+
+	private void cargarResultadosInstalacion(SolInspeccionIn inspeccion) {
 		try {
 			LiquidacionOrdenDAO ordenDAO = new LiquidacionOrdenDAO();
 			PlanillaDAO planillaDAO = new PlanillaDAO();
 			InstalacionDAO instalacionDAO = new InstalacionDAO();
 			for(Datos dato : tvDatosInstalacion.getItems()) {
 				if(dato.getId() == 8) {
-					List<Instalacion> lista = instalacionDAO.getBuscarPorSolicitud(tvDatosSolicitud.getSelectionModel().getSelectedItem().getIdSolInspeccion());
+					List<Instalacion> lista = instalacionDAO.getBuscarPorSolicitud(inspeccion.getIdSolInspeccion());
 					if(lista.size() > 0) {
 						if(lista.get(0).getEstadoInstalacion() != null) {
 							if(lista.get(0).getEstadoInstalacion().equals(Constantes.EST_INSPECCION_PENDIENTE)) 
@@ -213,13 +165,13 @@ public class SolicitudVerProcesoInsC {
 					else
 						dato.setAnalisis("AÚN NO PROCESADO");
 				}else if(dato.getId() == 7) {
-					List<Instalacion> lista = instalacionDAO.getBuscarPorSolicitud(tvDatosSolicitud.getSelectionModel().getSelectedItem().getIdSolInspeccion());
+					List<Instalacion> lista = instalacionDAO.getBuscarPorSolicitud(inspeccion.getIdSolInspeccion());
 					if(lista.size() > 0) 
 						dato.setAnalisis("SE HA REALIZADO EL RETIRO DE MATERIALES");
 					else
 						dato.setAnalisis("AÚN NO PROCESADO");
 				}else if(dato.getId() == 6) {
-					List<LiquidacionOrden> lista = ordenDAO.getBuscarPorSolicitud(tvDatosSolicitud.getSelectionModel().getSelectedItem().getIdSolInspeccion());
+					List<LiquidacionOrden> lista = ordenDAO.getBuscarPorSolicitud(inspeccion.getIdSolInspeccion());
 					if(lista.size() > 0) {
 						if(lista.get(0).getUsuarioInstalacion() != null)
 							dato.setAnalisis("SE HA REALIZADO LA ASIGNACIÓN");
@@ -229,7 +181,7 @@ public class SolicitudVerProcesoInsC {
 					else
 						dato.setAnalisis("AÚN NO PROCESADO");
 				}else if(dato.getId() == 5) {
-					List<Planilla> listaPlanilla = planillaDAO.getPlanillaSolicitud(tvDatosSolicitud.getSelectionModel().getSelectedItem().getIdSolInspeccion());
+					List<Planilla> listaPlanilla = planillaDAO.getPlanillaSolicitud(inspeccion.getIdSolInspeccion());
 					double porcentaje = 0.0;
 					double valorPagado = 0.0;
 					for(Planilla pl : listaPlanilla) {
@@ -249,19 +201,19 @@ public class SolicitudVerProcesoInsC {
 					if(listaPlanilla.size() == 0)
 						dato.setAnalisis("AÚN NO PROCESADO");
 				}else if(dato.getId() == 4) {
-					List<LiquidacionOrden> lista = ordenDAO.getBuscarPorSolicitud(tvDatosSolicitud.getSelectionModel().getSelectedItem().getIdSolInspeccion());
+					List<LiquidacionOrden> lista = ordenDAO.getBuscarPorSolicitud(inspeccion.getIdSolInspeccion());
 					if(lista.size() > 0)
 						dato.setAnalisis("ORDEN DE LIQUIDACIÓN GENERADA");
 					else
 						dato.setAnalisis("AÚN NO PROCESADO");
 					
 				}else if(dato.getId() == 3) {
-					if(tvDatosSolicitud.getSelectionModel().getSelectedItem().getEstadoInspeccion().equals(Constantes.EST_INSPECCION_PENDIENTE))
+					if(inspeccion.getEstadoInspeccion().equals(Constantes.EST_INSPECCION_PENDIENTE))
 						dato.setAnalisis("AÚN NO PROCESADO");
 					else {
 						String resultado = "REALIZADO";
-						if(tvDatosSolicitud.getSelectionModel().getSelectedItem().getFactibilidad() != null) {
-							if(tvDatosSolicitud.getSelectionModel().getSelectedItem().getFactibilidad().equals(Constantes.EST_FACTIBLE))
+						if(inspeccion.getFactibilidad() != null) {
+							if(inspeccion.getFactibilidad().equals(Constantes.EST_FACTIBLE))
 								resultado = resultado + " - FACTIBLE";
 							else
 								resultado = resultado + " - NO FACTIBLE";	
@@ -269,7 +221,7 @@ public class SolicitudVerProcesoInsC {
 						dato.setAnalisis(resultado);
 					}
 				}else if(dato.getId() == 2) {
-					if(tvDatosSolicitud.getSelectionModel().getSelectedItem().getIdUsuEncargado() != null)
+					if(inspeccion.getIdUsuEncargado() != null)
 						dato.setAnalisis("REALIZADO");
 					else
 						dato.setAnalisis("AÚN NO PROCESADO");

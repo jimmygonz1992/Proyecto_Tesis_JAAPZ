@@ -39,7 +39,10 @@ import java.util.List;
 			+ "where i.idUsuEncargado = :idPerfilUsuario and i.estado = 'A' order by i.idSolInspeccion desc"),
 	
 	@NamedQuery(name="SolInspeccionIn.buscarInspeccionCliente", query="SELECT i FROM SolInspeccionIn i "
-			+ "where i.cliente.idCliente = :idCliente and i.estado = 'A' order by i.idSolInspeccion desc")
+			+ "where i.cliente.idCliente = :idCliente and i.estado = 'A' order by i.idSolInspeccion desc"),
+	
+	@NamedQuery(name="SolInspeccionIn.buscarSolicitudesNoAtendidas", query="SELECT i FROM SolInspeccionIn i "
+			+ "where i.estado = 'A' and i.estadoSolicitud = 'PENDIENTE' order by i.idSolInspeccion desc")
 })
 public class SolInspeccionIn implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -73,6 +76,9 @@ public class SolInspeccionIn implements Serializable {
 	@Column(name="id_usu_encargado")
 	private Integer idUsuEncargado;
 
+	@Column(name="estado_solicitud")
+	private String estadoSolicitud;
+	
 	private String observacion;
 
 	private String referencia;
@@ -302,4 +308,12 @@ public class SolInspeccionIn implements Serializable {
 		this.telefonoContacto = telefonoContacto;
 	}
 
+	public String getEstadoSolicitud() {
+		return estadoSolicitud;
+	}
+
+	public void setEstadoSolicitud(String estadoSolicitud) {
+		this.estadoSolicitud = estadoSolicitud;
+	}
+	
 }

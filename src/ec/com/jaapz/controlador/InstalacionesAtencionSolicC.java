@@ -13,6 +13,7 @@ import ec.com.jaapz.modelo.Instalacion;
 import ec.com.jaapz.modelo.InstalacionDAO;
 import ec.com.jaapz.modelo.InstalacionDetalle;
 import ec.com.jaapz.modelo.LiquidacionOrdenDAO;
+import ec.com.jaapz.modelo.SolInspeccionIn;
 import ec.com.jaapz.util.Constantes;
 import ec.com.jaapz.util.Context;
 import ec.com.jaapz.util.ControllerHelper;
@@ -154,11 +155,10 @@ public class InstalacionesAtencionSolicC {
 				return;
 			Optional<ButtonType> result = helper.mostrarAlertaConfirmacion("Desea Grabar los Datos?",Context.getInstance().getStage());
 			if(result.get() == ButtonType.OK){
-								
+				SolInspeccionIn solicitud = instalacionSeleccionada.getSolInspeccionIn();
+				solicitud.setEstadoSolicitud(Constantes.EST_INSPECCION_PENDIENTE);
 				instalacionSeleccionada.setEstadoInstalacion(Constantes.EST_APERTURA_REALIZADO);
-
 				Date date = Date.from(dtpFecha.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
-
 				instalacionSeleccionada.setFechaInst(date);
 				instalacionSeleccionada.setHoraInst(sqlTime);
 				instalacionSeleccionada.setEstadoInstalacion(Constantes.EST_INSPECCION_REALIZADO);
@@ -166,6 +166,7 @@ public class InstalacionesAtencionSolicC {
 				instalacionSeleccionada.setUsuarioInstalacion(Context.getInstance().getUsuariosC().getIdUsuario());
 				instalacionDao.getEntityManager().getTransaction().begin();
 				instalacionDao.getEntityManager().merge(instalacionSeleccionada);
+				instalacionDao.getEntityManager().merge(solicitud);
 				instalacionDao.getEntityManager().getTransaction().commit();
 				helper.mostrarAlertaInformacion("Datos Grabados Correctamente", Context.getInstance().getStage());
 				nuevo();

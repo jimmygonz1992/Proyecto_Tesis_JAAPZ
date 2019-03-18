@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.6.0.final using JasperReports Library version 6.6.0  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reporteSolicitudInstalacion" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="0" bottomMargin="0" uuid="face2589-b2de-465d-9f9a-18b1d85897ed">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Conexion bd_jaapz postgresql"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<queryString>
+		<![CDATA[select s.id_sol_inspeccion,s.fecha_ingreso,s.uso_medidor,
+s.referencia,c.cedula,concat(c.nombre,' ' ,c.apellido) as cliente
+from sol_inspeccion_ins s,cliente c
+where s.id_cliente = c.id_cliente
+and s.estado_solicitud = 'PENDIENTE'
+and c.estado = 'A' and s.estado = 'A' order by s.id_sol_inspeccion]]>
+	</queryString>
+	<field name="id_sol_inspeccion" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="id_sol_inspeccion"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="sol_inspeccion_ins"/>
+	</field>
+	<field name="fecha_ingreso" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.label" value="fecha_ingreso"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="sol_inspeccion_ins"/>
+	</field>
+	<field name="uso_medidor" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="uso_medidor"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="sol_inspeccion_ins"/>
+	</field>
+	<field name="referencia" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="referencia"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="sol_inspeccion_ins"/>
+	</field>
+	<field name="cedula" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="cedula"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="cliente"/>
+	</field>
+	<field name="cliente" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="cliente"/>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="21" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="312" height="21" uuid="a172c68d-ca4f-44ee-b8b0-897232aa8e6d"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Solicitudes de Instalación sin atender]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="17" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="80" height="14" uuid="951a4f4c-539e-48b9-93f6-3a89559b71de">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="f539bd62-3285-4dc7-8fbf-36994b6db38e"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[No. Solicitud]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="86" y="0" width="84" height="14" uuid="d10baf14-349d-4a6e-a7d3-757f4163b10b">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="45799906-f56c-4fe0-8f9e-4be6934a352f"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Cédula]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="176" y="0" width="204" height="14" uuid="ffe20621-e4bd-4078-93fb-b8748d4fbd48">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="5f272cc3-2cc0-4efc-aaf3-a8cf4f7a5aeb"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Cliente]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="460" y="0" width="100" height="14" uuid="4ea8a8f0-4df6-4827-98ce-d7dcb2b258b3">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="12610533-a5e4-4910-9d8a-f9a3aed9e036"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha de solicitud]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="15" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="80" height="14" uuid="a779a256-7b78-41fb-b7fe-a3c573227fd4">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="f539bd62-3285-4dc7-8fbf-36994b6db38e"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{id_sol_inspeccion}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="86" y="0" width="84" height="14" uuid="0e725efe-768b-412f-a44b-bb7303c0e5c9">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="45799906-f56c-4fe0-8f9e-4be6934a352f"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cedula}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="176" y="0" width="204" height="14" uuid="ff4a9f83-c38e-4dd4-83df-64c0e0af02a6">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="5f272cc3-2cc0-4efc-aaf3-a8cf4f7a5aeb"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cliente}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="460" y="0" width="100" height="14" uuid="a387ee00-f83a-41ba-9e94-6787dd24d668">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="12610533-a5e4-4910-9d8a-f9a3aed9e036"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{fecha_ingreso}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>
