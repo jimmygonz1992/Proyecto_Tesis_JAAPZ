@@ -310,6 +310,7 @@ public class SeguridadUsuarioC {
 			usuarioSeleccionado.setTelefono(txtTelefono.getText());
 			usuarioSeleccionado.setCargo(txtCargo.getText());
 			usuarioSeleccionado.setUsuario(Encriptado.Encriptar(txtUsuario.getText()));
+			usuarioSeleccionado.setUsuarioDesencriptado(txtUsuario.getText());
 			usuarioSeleccionado.setClave(Encriptado.Encriptar(txtClave.getText()));
 			usuarioSeleccionado.setFoto(helper.encodeFileToBase64Binary(ivFoto.getImage()).getBytes());
 			//quitar los eliminados

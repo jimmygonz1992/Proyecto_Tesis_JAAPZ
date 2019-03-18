@@ -1,9 +1,126 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.6.0.final using JasperReports Library version 6.6.0  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="inconsistenciaMarcaciones" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="6bc206df-5284-4540-b1f7-e7e95503a4a3">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Conexion bd_jaapz postgresql"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<parameter name="FECHA" class="java.lang.String"/>
+	<parameter name="CANTIDAD" class="java.lang.Integer"/>
+	<parameter name="ID_APERTURA" class="java.lang.Integer"/>
 	<queryString>
-		<![CDATA[]]>
+		<![CDATA[select u.id_usuario,b.id_barrio,r.id_apertura,u.cedula,concat(u.nombre,' ',u.apellido) as nombre_usuario,u.usuario_desencriptado,b.nombre as barrio
+from responsable_lectura r,seg_usuario u,barrio b
+where r.id_usuario = u.id_usuario 
+and b.id_barrio = r.id_barrio
+and r.estado = 'A' and u.estado = 'A'
+and b.estado = 'A'
+and r.id_apertura = $P{ID_APERTURA} 
+union all
+select null,null,null,null,null,null,null
+where (select count(*) from responsable_lectura r,seg_usuario u,barrio b
+where r.id_usuario = u.id_usuario 
+and b.id_barrio = r.id_barrio
+and r.estado = 'A' and u.estado = 'A'
+and b.estado = 'A'
+and r.id_apertura = $P{ID_APERTURA} ) = 0]]>
 	</queryString>
+	<field name="id_usuario" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="id_usuario"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="seg_usuario"/>
+	</field>
+	<field name="id_barrio" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="id_barrio"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="barrio"/>
+	</field>
+	<field name="id_apertura" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="id_apertura"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="responsable_lectura"/>
+	</field>
+	<field name="cedula" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="cedula"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="seg_usuario"/>
+	</field>
+	<field name="nombre_usuario" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="nombre_usuario"/>
+	</field>
+	<field name="usuario_desencriptado" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="usuario_desencriptado"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="seg_usuario"/>
+	</field>
+	<field name="barrio" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="barrio"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="barrio"/>
+	</field>
+	<group name="Group1">
+		<groupExpression><![CDATA[$F{id_usuario}]]></groupExpression>
+		<groupHeader>
+			<band height="33">
+				<staticText>
+					<reportElement x="0" y="0" width="45" height="14" uuid="e97cdda4-d417-404d-99d6-42da2b83e312"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Operario:]]></text>
+				</staticText>
+				<textField isBlankWhenNull="true">
+					<reportElement x="45" y="0" width="290" height="14" uuid="3a14f339-3f73-472d-b695-b7843a4e6244"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{nombre_usuario}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="335" y="0" width="102" height="14" uuid="d881d928-59bd-425e-b9b4-21c0c710df26"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Nombre de usuario:]]></text>
+				</staticText>
+				<textField isBlankWhenNull="true">
+					<reportElement x="437" y="0" width="121" height="14" uuid="afc732d4-789d-492e-b08d-c6dd3017e3f6"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{usuario_desencriptado}]]></textFieldExpression>
+				</textField>
+				<line>
+					<reportElement x="0" y="16" width="555" height="1" uuid="c1eaf9ea-0ffa-49b1-a3d9-27c073cd562b"/>
+				</line>
+				<line>
+					<reportElement x="0" y="0" width="555" height="1" uuid="a1a092a8-50e6-4751-9de7-ef8e55da16df"/>
+				</line>
+				<staticText>
+					<reportElement x="413" y="18" width="107" height="14" uuid="7e4f3d51-77bd-4495-b580-d4337e068253">
+						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="8cfe36fc-d06a-485e-8f63-728380d8c41b"/>
+					</reportElement>
+					<textElement textAlignment="Center">
+						<font fontName="Arial" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Inconsistencia (m)]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="100" y="18" width="248" height="14" uuid="62c521e2-efe6-4a70-a606-96c8c540073b">
+						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="484e377d-b2ba-4848-8aa3-df16f678ea31"/>
+					</reportElement>
+					<textElement textAlignment="Center">
+						<font fontName="Arial" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Cliente]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="-2" y="18" width="100" height="14" uuid="d35d8d42-07df-47ed-872a-fdc9cc50e457">
+						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="e8bf0813-e634-4ca9-be8d-3c9f3ce3b749"/>
+					</reportElement>
+					<textElement textAlignment="Center">
+						<font fontName="Arial" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Cod. Medidor]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band/>
+		</groupFooter>
+	</group>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -50,16 +167,69 @@
 				</textElement>
 				<text><![CDATA[RUC.: 2490016034001]]></text>
 			</staticText>
+			<staticText>
+				<reportElement x="268" y="20" width="252" height="14" uuid="e738a95d-a02c-4d00-8c10-0efdd5f3b111"/>
+				<textElement>
+					<font fontName="Arial" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Inconsistencia de marcaciones]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="268" y="47" width="252" height="14" uuid="2ab74c9e-2810-4d36-869e-b87c74790440"/>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{FECHA}]]></textFieldExpression>
+			</textField>
 		</band>
 	</title>
 	<pageHeader>
-		<band height="35" splitType="Stretch"/>
+		<band height="38" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="12" width="558" height="14" uuid="1efeb237-fc99-40ef-8219-3d3c3059dc1d"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[LISTADO DE INCONSISTENCIA DE MARCACIONES]]></text>
+			</staticText>
+		</band>
 	</pageHeader>
 	<columnHeader>
-		<band height="61" splitType="Stretch"/>
+		<band height="35" splitType="Stretch"/>
 	</columnHeader>
 	<detail>
-		<band height="125" splitType="Stretch"/>
+		<band height="29" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="1" width="40" height="14" uuid="41c2717a-a02f-44d0-8c59-cee05367ded5"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Barrio:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="40" y="1" width="330" height="14" uuid="34b4aab6-a998-497f-a0f5-bf0b550d7985">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="0b4b20f4-2958-467a-92d0-f224cc312aaf"/>
+				</reportElement>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{barrio}]]></textFieldExpression>
+			</textField>
+			<subreport>
+				<reportElement x="0" y="15" width="552" height="14" uuid="3220d6d8-9e35-4bde-88e3-d59a3c68414f"/>
+				<subreportParameter name="CANTIDAD">
+					<subreportParameterExpression><![CDATA[$P{CANTIDAD}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="ID_APERTURA">
+					<subreportParameterExpression><![CDATA[$F{id_apertura}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="ID_BARRIO">
+					<subreportParameterExpression><![CDATA[$F{id_barrio}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA["recursos/informes/inconsistenciaDetalle.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
 	</detail>
 	<columnFooter>
 		<band height="45" splitType="Stretch"/>

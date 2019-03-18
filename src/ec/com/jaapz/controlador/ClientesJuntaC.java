@@ -135,8 +135,8 @@ public class ClientesJuntaC {
 			}
 			
 			//otros datos
-			txtLatitud.setText(cuentaCliente.getLatitud());
-			txtLongitud.setText(cuentaCliente.getLongitud());
+			txtLatitud.setText(String.valueOf(cuentaCliente.getLatitud()));
+			txtLongitud.setText(String.valueOf(cuentaCliente.getLongitud()));
 			//otrosss
 			txtDireccionDomicilio.setText(cuentaCliente.getDireccion());
 		}catch(Exception ex) {
@@ -171,8 +171,8 @@ public class ClientesJuntaC {
 				}
 				cuentaSeleccionada.setDireccion(txtDireccionDomicilio.getText());
 				cuentaSeleccionada.setEstado("A");
-				cuentaSeleccionada.setLatitud(txtLatitud.getText());
-				cuentaSeleccionada.setLongitud(txtLongitud.getText());
+				cuentaSeleccionada.setLatitud(Double.parseDouble(txtLatitud.getText()));
+				cuentaSeleccionada.setLongitud(Double.parseDouble(txtLongitud.getText()));
 				
 				cuentaDAO.getEntityManager().getTransaction().begin();
 				cuentaDAO.getEntityManager().merge(cuentaSeleccionada);

@@ -177,8 +177,8 @@ public class SolicitudesCierreInspeccionC {
 			//tambien recupera la latitud, longitud y observaciones
 			txtObservacion.setText(inspeccion.getObservacion());
 			if(inspeccion.getLiquidacionOrdens().size() != 0) {
-				txtLatitud.setText(inspeccion.getLiquidacionOrdens().get(0).getCuentaCliente().getLatitud());
-				txtLongitud.setText(inspeccion.getLiquidacionOrdens().get(0).getCuentaCliente().getLongitud());
+				txtLatitud.setText(String.valueOf(inspeccion.getLiquidacionOrdens().get(0).getCuentaCliente().getLatitud()));
+				txtLongitud.setText(String.valueOf(inspeccion.getLiquidacionOrdens().get(0).getCuentaCliente().getLongitud()));
 			}else {
 				txtLatitud.setText("");
 				txtLongitud.setText("");
@@ -286,8 +286,8 @@ public class SolicitudesCierreInspeccionC {
 					cliente = inspeccionSeleccionado.getCliente();
 					cuentaCliente.setIdCuenta(null);
 					cuentaCliente.setUsuarioCrea(Context.getInstance().getIdUsuario());
-					cuentaCliente.setLatitud(txtLatitud.getText());
-					cuentaCliente.setLongitud(txtLongitud.getText());
+					cuentaCliente.setLatitud(Double.parseDouble(txtLatitud.getText()));
+					cuentaCliente.setLongitud(Double.parseDouble(txtLongitud.getText()));
 					cuentaCliente.setCliente(cliente);
 					cuentaCliente.setDireccion(inspeccionSeleccionado.getDireccion());
 					cuentaCliente.setBarrio(inspeccionSeleccionado.getBarrio());

@@ -38,6 +38,8 @@ public class Empresa implements Serializable {
 	
 	private Integer corte;
 
+	private Integer inconsistencia;
+	
 	private String telefono;
 
 	public Empresa() {
@@ -121,6 +123,14 @@ public class Empresa implements Serializable {
 
 	public void setCorte(Integer corte) {
 		this.corte = corte;
+	}
+
+	public Integer getInconsistencia() {
+		return inconsistencia;
+	}
+
+	public void setInconsistencia(Integer inconsistencia) {
+		this.inconsistencia = inconsistencia;
 	}
 	
 }
