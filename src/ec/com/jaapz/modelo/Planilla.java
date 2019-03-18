@@ -74,7 +74,7 @@ public class Planilla implements Serializable, Comparable<Planilla> {
 	@Column(name="ident_instalacion")
 	private String identInstalacion;
 
-	private String latitud;
+	private Double latitud;
 
 	@Column(name="lectura_actual")
 	private Integer lecturaActual;
@@ -85,7 +85,7 @@ public class Planilla implements Serializable, Comparable<Planilla> {
 	@Column(name="id_solicitud")
 	private Integer idSolicitud;
 	
-	private String longitud;
+	private Double longitud;
 	
 	private String origen;
 
@@ -208,11 +208,11 @@ public class Planilla implements Serializable, Comparable<Planilla> {
 		this.identInstalacion = identInstalacion;
 	}
 
-	public String getLatitud() {
+	public Double getLatitud() {
 		return this.latitud;
 	}
 
-	public void setLatitud(String latitud) {
+	public void setLatitud(Double latitud) {
 		this.latitud = latitud;
 	}
 
@@ -232,11 +232,11 @@ public class Planilla implements Serializable, Comparable<Planilla> {
 		this.lecturaAnterior = lecturaAnterior;
 	}
 
-	public String getLongitud() {
+	public Double getLongitud() {
 		return this.longitud;
 	}
 
-	public void setLongitud(String longitud) {
+	public void setLongitud(Double longitud) {
 		this.longitud = longitud;
 	}
 

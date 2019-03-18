@@ -24,7 +24,6 @@ import java.util.List;
 			+ "where lower(i.cuentaCliente.cliente.apellido) like :patron  or lower(i.cuentaCliente.cliente.nombre) like :patron "
 			+ " and i.usuarioInstalacion = :idPerfilUsuario and i.usuarioInstalacion = null "
 			+ " and i.estadoInstalacion = 'PENDIENTE' and i.estado = 'A' order by i.idInstalacion desc"),
-	
 	@NamedQuery(name="Instalacion.buscarPorSolicitud", query="SELECT i FROM Instalacion i "
 			+ "where i.estado = 'A' and i.solInspeccionIn.idSolInspeccion = :idSolicitud")
 })

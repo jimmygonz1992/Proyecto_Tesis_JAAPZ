@@ -45,9 +45,9 @@ public class CuentaCliente implements Serializable {
 	@Column(name="hora_ingreso")
 	private Time horaIngreso;
 
-	private String latitud;
+	private Double latitud;
 
-	private String longitud;
+	private Double longitud;
 
 	private String observacion;
 
@@ -153,19 +153,19 @@ public class CuentaCliente implements Serializable {
 		this.horaIngreso = horaIngreso;
 	}
 
-	public String getLatitud() {
+	public Double getLatitud() {
 		return this.latitud;
 	}
 
-	public void setLatitud(String latitud) {
+	public void setLatitud(Double latitud) {
 		this.latitud = latitud;
 	}
 
-	public String getLongitud() {
+	public Double getLongitud() {
 		return this.longitud;
 	}
 
-	public void setLongitud(String longitud) {
+	public void setLongitud(Double longitud) {
 		this.longitud = longitud;
 	}
 

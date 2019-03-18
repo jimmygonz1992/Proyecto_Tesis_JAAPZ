@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.6.0.final using JasperReports Library version 6.6.0  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="inconsistenciaDetalle" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="0" bottomMargin="0" uuid="3eb44830-f1dc-477a-831b-6c3230547535">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Conexion bd_jaapz postgresql"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<parameter name="ID_APERTURA" class="java.lang.Integer"/>
+	<parameter name="ID_BARRIO" class="java.lang.Integer"/>
+	<parameter name="CANTIDAD" class="java.lang.Integer"/>
+	<queryString>
+		<![CDATA[select cu.id_cuenta,m.codigo,concat(c.nombre,' ',c.apellido) as cliente, 
+case when p.latitud is null then CAST(9.5 AS decimal(8,2)) else
+CAST(((acos(sin(radians(cu.latitud)) * sin(radians(p.latitud)) + 
+cos(radians(cu.latitud)) * cos(radians(p.latitud)) * 
+cos(radians(cu.longitud) - radians(p.longitud))) * 6378) * 1000) AS decimal(8,2)) end as distancia
+from cuenta_cliente cu, cliente c,planilla p,medidor m
+where cu.id_cliente = c.id_cliente
+and cu.id_cuenta = p.id_cuenta
+and m.id_medidor = cu.id_medidor
+and cu.estado = 'A' and c.estado = 'A' and p.estado = 'A'
+and m.estado = 'A'
+and p.origen = 'MOVIL'
+and p.id_apertura =  $P{ID_APERTURA}  and cu.id_barrio =  $P{ID_BARRIO} 
+and case when p.latitud is null then CAST(9.5 AS decimal(8,2)) else
+CAST(((acos(sin(radians(cu.latitud)) * sin(radians(p.latitud)) + 
+cos(radians(cu.latitud)) * cos(radians(p.latitud)) * 
+cos(radians(cu.longitud) - radians(p.longitud))) * 6378) * 1000) AS decimal(8,2)) end >=  $P{CANTIDAD} 
+
+union all
+select null,null,null,null
+where (select(count(*)) from planilla pl,cuenta_cliente cue where pl.id_cuenta = cue.id_cuenta 
+	   and pl.id_apertura =  $P{ID_APERTURA}   and pl.estado = 'A'
+	   and cue.id_barrio =  $P{ID_BARRIO}   and cue.estado = 'A'
+	   and pl.origen = 'MOVIL'
+	   and case when pl.latitud is null then CAST(9.5 AS decimal(8,2)) else
+CAST(((acos(sin(radians(cue.latitud)) * sin(radians(pl.latitud)) + 
+cos(radians(cue.latitud)) * cos(radians(pl.latitud)) * 
+cos(radians(cue.longitud) - radians(pl.longitud))) * 6378) * 1000) AS decimal(8,2)) end >  $P{CANTIDAD}  ) = 0]]>
+	</queryString>
+	<field name="id_cuenta" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="id_cuenta"/>
+	</field>
+	<field name="codigo" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="codigo"/>
+	</field>
+	<field name="cliente" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="cliente"/>
+	</field>
+	<field name="distancia" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="distancia"/>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="14" splitType="Stretch">
+			<textField isBlankWhenNull="true">
+				<reportElement x="0" y="0" width="100" height="14" uuid="3ab1f56b-bf6c-4548-afc9-2412bcad5c6b">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="e8bf0813-e634-4ca9-be8d-3c9f3ce3b749"/>
+				</reportElement>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{codigo}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="102" y="0" width="248" height="14" uuid="373b2991-fc33-4569-a8aa-c8370947dd4d">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="484e377d-b2ba-4848-8aa3-df16f678ea31"/>
+				</reportElement>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cliente}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="413" y="0" width="97" height="14" uuid="5bc92e08-1c07-423f-9182-8081836ed856">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="8cfe36fc-d06a-485e-8f63-728380d8c41b"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{distancia}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

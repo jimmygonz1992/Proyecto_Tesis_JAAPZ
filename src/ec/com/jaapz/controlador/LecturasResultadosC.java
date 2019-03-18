@@ -133,10 +133,10 @@ public class LecturasResultadosC {
 					String distancia = "Sin distancia";
 					if(param.getValue().getCuentaCliente().getLatitud() != null)
 						if(param.getValue().getLatitud() != null) {
-							Double lat1 = Double.parseDouble(param.getValue().getLatitud());
-							Double lon1 = Double.parseDouble(param.getValue().getLongitud());
-							Double lat2 = Double.parseDouble(param.getValue().getCuentaCliente().getLatitud());
-							Double lon2 = Double.parseDouble(param.getValue().getCuentaCliente().getLongitud());
+							Double lat1 = param.getValue().getLatitud();
+							Double lon1 = param.getValue().getLongitud();
+							Double lat2 = param.getValue().getCuentaCliente().getLatitud();
+							Double lon2 = param.getValue().getCuentaCliente().getLongitud();
 							distancia = String.valueOf(ControllerHelper.distanciaCoordenadas(lat1, lon1, lat2, lon2));
 						}
 							

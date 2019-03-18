@@ -420,8 +420,8 @@ public class SolicitudesCierreReparacionC {
 			txtIdCuenta.setText(String.valueOf(inspRep.getCuentaCliente().getIdCuenta()));
 			txtIdSolicRep.setText(String.valueOf(inspRep.getIdSolicitudRep()));
 			txtReferencia.setText(inspRep.getReferencia());
-			txtLatitud.setText(inspRep.getCuentaCliente().getLatitud());
-			txtLongitud.setText(inspRep.getCuentaCliente().getLongitud());
+			txtLatitud.setText(String.valueOf(inspRep.getCuentaCliente().getLatitud()));
+			txtLongitud.setText(String.valueOf(inspRep.getCuentaCliente().getLongitud()));
 			txtCedula.setText(inspRep.getCuentaCliente().getCliente().getCedula());
 			txtContacto.setText(inspRep.getTelfContacto());
 			txtDireccion.setText(inspRep.getCuentaCliente().getDireccion());

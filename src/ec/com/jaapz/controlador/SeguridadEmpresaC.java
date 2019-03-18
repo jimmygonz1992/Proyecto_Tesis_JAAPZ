@@ -28,6 +28,7 @@ public class SeguridadEmpresaC {
 	@FXML TextField txtRuc;
 	@FXML TextField txtRazonSocial;
 	@FXML TextField txtRepresentante;
+	@FXML TextField txtInconsistencia;
 	@FXML TextField txtTelefono;
 	@FXML TextField txtEmail;
 	@FXML TextField txtDireccion;
@@ -68,7 +69,17 @@ public class SeguridadEmpresaC {
 				if (newValue.matches("\\d*")) {
 					//int value = Integer.parseInt(newValue);
 				} else {
-					txtRuc.setText(oldValue);
+					txtNoPlanillas.setText(oldValue);
+				}
+			}
+		});
+		txtInconsistencia.textProperty().addListener(new ChangeListener<String>() {
+			@Override
+			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+				if (newValue.matches("\\d*")) {
+					//int value = Integer.parseInt(newValue);
+				} else {
+					txtInconsistencia.setText(oldValue);
 				}
 			}
 		});
@@ -149,6 +160,7 @@ public class SeguridadEmpresaC {
 				txtTelefono.setText(listaEmpresa.get(i).getTelefono());
 				txtEmail.setText(listaEmpresa.get(i).getEmail());
 				txtDireccion.setText(listaEmpresa.get(i).getDireccion());
+				txtInconsistencia.setText(String.valueOf(listaEmpresa.get(i).getInconsistencia()));
 				txtNoPlanillas.setText(String.valueOf(listaEmpresa.get(i).getCorte()));
 				if (listaEmpresa.get(i).getEstado().equals(Constantes.ESTADO_ACTIVO)) {
 					chkEstado.setSelected(true);
@@ -213,6 +225,7 @@ public class SeguridadEmpresaC {
 			empresa.setTelefono(txtTelefono.getText());
 			empresa.setEmail(txtEmail.getText());
 			empresa.setDireccion(txtDireccion.getText());
+			empresa.setInconsistencia(Integer.parseInt(txtInconsistencia.getText()));
 			empresa.setCorte(Integer.parseInt(txtNoPlanillas.getText()));
 			empresa.setEstado(estado);
 			empresa.setLogo(helper.encodeFileToBase64Binary(ivLogo.getImage()).getBytes());

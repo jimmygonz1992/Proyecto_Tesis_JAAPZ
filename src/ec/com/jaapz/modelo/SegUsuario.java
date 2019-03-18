@@ -56,6 +56,9 @@ public class SegUsuario implements Serializable {
 	@Column(name="usuario_crea")
 	private Integer usuarioCrea;
 
+	@Column(name="usuario_desencriptado")
+	private String usuarioDesencriptado;
+	
 	//bi-directional many-to-one association to ResponsableLectura
 	@OneToMany(mappedBy="segUsuario", cascade = CascadeType.ALL)
 	private List<ResponsableLectura> responsableLecturas;
@@ -217,6 +220,14 @@ public class SegUsuario implements Serializable {
 		responsableLectura.setSegUsuario(null);
 
 		return responsableLectura;
+	}
+
+	public String getUsuarioDesencriptado() {
+		return usuarioDesencriptado;
+	}
+
+	public void setUsuarioDesencriptado(String usuarioDesencriptado) {
+		this.usuarioDesencriptado = usuarioDesencriptado;
 	}
 
 }
