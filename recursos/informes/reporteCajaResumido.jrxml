@@ -24,7 +24,7 @@ and f.fecha between  $P{FECHA_INICIO} and  $P{FECHA_FIN}
 
 union all 
 
-select 'Egreso' as tipo,case when sum(e.monto) is null then 0 else 1 end as total,
+select 'Egreso' as tipo,case when sum(e.monto) is null then 0 else sum(e.monto) end as total,
 
 ((select case when sum (fa.total_factura) is null 
 then 0 else  sum (fa.total_factura) end from factura fa
@@ -35,7 +35,7 @@ egreso eg where eg.estado = 'A' and eg.fecha
 between  $P{FECHA_INICIO} and  $P{FECHA_FIN} )) as diferencia
 from egreso e
 where e.estado = 'A'
-and e.fecha between  $P{FECHA_INICIO} and  $P{FECHA_FIN} ]]>
+and e.fecha between  $P{FECHA_INICIO} and  $P{FECHA_FIN}]]>
 	</queryString>
 	<field name="tipo" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.label" value="tipo"/>

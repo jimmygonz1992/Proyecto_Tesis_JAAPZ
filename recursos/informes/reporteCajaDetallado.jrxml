@@ -48,7 +48,12 @@ where estado ='A'
 and fecha between  $P{FECHA_INICIO}  and  $P{FECHA_FIN}
 
 union all
-select  'Egresos' as tipo,null,null,'No hay egresos',0,0,0
+select  'Egresos' as tipo,null,null,'No hay egresos',0,0,((select case when sum(fa.total_factura) is null then 0 else
+sum(fa.total_factura) end from factura fa 
+where fa.estado = 'A'and fa.fecha between  $P{FECHA_INICIO}  
+and  $P{FECHA_FIN}) - (select case when sum(e.monto) is null then 0
+else sum(e.monto) end from egreso e where e.estado ='A'
+and e.fecha between  $P{FECHA_INICIO}  and  $P{FECHA_FIN})) as diferencia
 where (select count(*)  from egreso
 where estado ='A'
 and fecha between  $P{FECHA_INICIO}  and  $P{FECHA_FIN}) = 0]]>

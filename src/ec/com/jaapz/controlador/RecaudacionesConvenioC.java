@@ -284,7 +284,7 @@ public class RecaudacionesConvenioC {
 	}
 	public void grabarConvenio() {
 		try {
-			Optional<ButtonType> result = helper.mostrarAlertaConfirmacion("Grabar el convenio.. revice bien los parametros antes de continuar\nDesea continuar?",Context.getInstance().getStage());
+			Optional<ButtonType> result = helper.mostrarAlertaConfirmacion("Grabar el convenio.. revise los parámetros antes de continuar\nDesea continuar?",Context.getInstance().getStage());
 			if(result.get() == ButtonType.OK){	
 				Double cuota = 0.0;
 				Convenio convenio = new Convenio();

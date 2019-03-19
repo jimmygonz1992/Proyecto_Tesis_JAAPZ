@@ -38,7 +38,6 @@ public class LaunchSystem extends Application {
 						System.exit(0);
 					else
 						event.consume();
-					//System.exit(0);
 				}
 			});
 		} catch(Exception e) {
