@@ -2,17 +2,12 @@ package ec.com.jaapz.controlador;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
-import ec.com.jaapz.modelo.Factura;
 import ec.com.jaapz.modelo.FacturaDAO;
-import ec.com.jaapz.util.Context;
 import ec.com.jaapz.util.ControllerHelper;
-import ec.com.jaapz.util.Encriptado;
 import ec.com.jaapz.util.PrintReport;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -60,13 +55,14 @@ public class DineroCajaC {
     public void imprimirReporte() {
     	dateInicio = Date.from(dtpFechaInicio.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
 		dateFin = Date.from(dtpFechaFin.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
+		
 		if(rbResumido.isSelected()) {
 			PrintReport pr = new PrintReport();
 			Map<String, Object> param = new HashMap<String, Object>();
 			param.put("FECHA_INICIO", dateInicio);
 			param.put("FECHA_FIN", dateFin);
 			pr.crearReporte("/recursos/informes/reporteCajaResumido.jasper", facturaDao, param);
-			pr.showReport("Clientes al Día");
+			pr.showReport("Reporte de caja resumido");
     	}
     	else {
     		PrintReport pr = new PrintReport();
@@ -74,7 +70,7 @@ public class DineroCajaC {
 			param.put("FECHA_INICIO", dateInicio);
 			param.put("FECHA_FIN", dateFin);
 			pr.crearReporte("/recursos/informes/reporteCajaDetallado.jasper", facturaDao, param);
-			pr.showReport("Clientes al Día");
+			pr.showReport("Reporte de caja detallado");
     	}
     }
 }
