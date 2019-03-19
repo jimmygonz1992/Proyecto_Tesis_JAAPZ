@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.6.0.final using JasperReports Library version 6.6.0  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reporteCajaResumido" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="6baf4be4-b0be-4baa-bdf2-b0ee4773dfe7">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Conexion bd_jaapz postgresql"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="389"/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="600"/>
+	<parameter name="FECHA_INICIO" class="java.sql.Date"/>
+	<parameter name="FECHA_FIN" class="java.sql.Date"/>
+	<queryString>
+		<![CDATA[select 'Ingresos' as tipo,f.id_factura as codigo,f.fecha,concat('Pago Realizado mediante factura ',f.num_factura) as descripcion,
+f.total_factura as total,
+(select case when sum(fa.total_factura) is null then 0 
+else sum(fa.total_factura) end from factura fa 
+where fa.estado = 'A'and fa.fecha between  $P{FECHA_INICIO}  
+and  $P{FECHA_FIN}) as suma,
+((select case when sum(fa.total_factura) is null then 0
+else sum(fa.total_factura) end from factura fa 
+where fa.estado = 'A'and fa.fecha between  $P{FECHA_INICIO}  
+and  $P{FECHA_FIN}) - (select case when sum(e.monto) is null then 0
+else sum(e.monto) end from egreso e where e.estado ='A'
+and e.fecha between  $P{FECHA_INICIO}  and  $P{FECHA_FIN})) as diferencia
+from factura f
+where f.estado = 'A'
+and f.fecha between  $P{FECHA_INICIO}  and  $P{FECHA_FIN}
+
+union all
+select  'Ingresos' as tipo,null,null,'No hay ingresos',0,0,0
+where (select count(*)  from factura f
+where f.estado = 'A'
+and f.fecha between  $P{FECHA_INICIO}  and  $P{FECHA_FIN}) = 0
+
+union all
+
+select 'Egresos' as tipo,id_egreso as codigo,fecha,descripcion as descripcion,
+monto as total,
+(select case when sum(e.monto) is null then 0 else 
+sum(e.monto) end from egreso e where e.estado ='A'
+and e.fecha between  $P{FECHA_INICIO}  and  $P{FECHA_FIN} )  as suma,
+((select case when sum(fa.total_factura) is null then 0 else
+sum(fa.total_factura) end from factura fa 
+where fa.estado = 'A'and fa.fecha between  $P{FECHA_INICIO}  
+and  $P{FECHA_FIN}) - (select case when sum(e.monto) is null then 0
+else sum(e.monto) end from egreso e where e.estado ='A'
+and e.fecha between  $P{FECHA_INICIO}  and  $P{FECHA_FIN})) as diferencia
+from egreso
+where estado ='A'
+and fecha between  $P{FECHA_INICIO}  and  $P{FECHA_FIN}
+
+union all
+select  'Egresos' as tipo,null,null,'No hay egresos',0,0,0
+where (select count(*)  from egreso
+where estado ='A'
+and fecha between  $P{FECHA_INICIO}  and  $P{FECHA_FIN}) = 0]]>
+	</queryString>
+	<field name="tipo" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="tipo"/>
+	</field>
+	<field name="codigo" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="codigo"/>
+	</field>
+	<field name="fecha" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.label" value="fecha"/>
+	</field>
+	<field name="descripcion" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="descripcion"/>
+	</field>
+	<field name="total" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.label" value="total"/>
+	</field>
+	<field name="suma" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.label" value="suma"/>
+	</field>
+	<field name="diferencia" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.label" value="diferencia"/>
+	</field>
+	<group name="Group1">
+		<groupExpression><![CDATA[$F{tipo}]]></groupExpression>
+		<groupHeader>
+			<band height="61">
+				<textField>
+					<reportElement x="44" y="28" width="100" height="30" uuid="1b9ebf9b-b2e5-4f13-8bc3-9a32131c72d2"/>
+					<textFieldExpression><![CDATA[$F{tipo}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="408" y="31" width="100" height="30" uuid="ed8d3a4b-3306-4db9-9257-faff82f0ca89"/>
+					<textFieldExpression><![CDATA[$F{suma}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="4"/>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="87" splitType="Stretch">
+			<rectangle>
+				<reportElement x="-2" y="0" width="560" height="80" uuid="f39a5074-7672-4d16-94a5-c49c33e96edb"/>
+			</rectangle>
+			<line>
+				<reportElement x="180" y="0" width="1" height="81" uuid="cf68ad76-12ff-4b8d-bbd1-54aa4db0dfb9"/>
+			</line>
+			<staticText>
+				<reportElement x="13" y="50" width="150" height="10" uuid="d3faa0a5-3876-43f7-b5a0-14b638ed2f8e"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="7"/>
+				</textElement>
+				<text><![CDATA[Junta Administradora de Agua Potable]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="13" y="60" width="150" height="10" uuid="51372ced-1e97-40e2-b68d-c7816ed06eb1"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="7"/>
+				</textElement>
+				<text><![CDATA[Zapotal - Santa Elena]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="13" y="70" width="150" height="10" uuid="44f4d449-801d-415b-ab53-744e04e44956"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="7"/>
+				</textElement>
+				<text><![CDATA[RUC.: 2490016034001]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="200" y="20" width="60" height="14" uuid="54f73c03-8b3b-45aa-a675-6521df6c6cac"/>
+				<textElement>
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Reporte:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="270" y="20" width="240" height="14" uuid="db784b57-cf34-4efa-8be3-08441e33ad60"/>
+				<textElement>
+					<font fontName="Bookman Old Style" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Reporte de caja]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="200" y="47" width="60" height="14" uuid="d1adb1bf-cadd-4a82-9d47-3c553bf0aac2"/>
+				<textElement>
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha:]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="16" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="8" splitType="Stretch">
+			<staticText>
+				<reportElement x="27" y="0" width="100" height="8" uuid="ec23de11-95f8-4727-b1d8-06a5c343cd90">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="b2641964-a72b-4cfa-a702-33657ddd3340"/>
+				</reportElement>
+				<text><![CDATA[fecha]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="50" splitType="Stretch">
+			<textField>
+				<reportElement x="110" y="10" width="220" height="30" uuid="93268fea-5497-43ce-a431-a32d136899d8">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="0e8eb88b-e6f3-40c0-b30b-e243341c8f13"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{descripcion}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="340" y="10" width="100" height="30" uuid="370071d4-d145-4409-9e8f-25f0f4b439d1">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="944b1ec2-5866-4c1f-8ff1-16c7da18a03e"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{total}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="10" width="100" height="30" uuid="243c1952-6474-4ca9-b510-dea9db489a1a">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="b2641964-a72b-4cfa-a702-33657ddd3340"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{fecha}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="55" splitType="Stretch">
+			<textField>
+				<reportElement x="390" y="23" width="100" height="30" uuid="4c662205-2351-4171-bf7f-438a0144327d"/>
+				<textFieldExpression><![CDATA[$F{diferencia}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="251" y="25" width="100" height="30" uuid="249b6ed9-26d8-42b4-9864-b00c1b38f39d"/>
+				<text><![CDATA[Total:]]></text>
+			</staticText>
+		</band>
+	</summary>
+</jasperReport>

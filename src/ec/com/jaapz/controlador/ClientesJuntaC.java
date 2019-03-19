@@ -171,8 +171,10 @@ public class ClientesJuntaC {
 				}
 				cuentaSeleccionada.setDireccion(txtDireccionDomicilio.getText());
 				cuentaSeleccionada.setEstado("A");
-				cuentaSeleccionada.setLatitud(Double.parseDouble(txtLatitud.getText()));
-				cuentaSeleccionada.setLongitud(Double.parseDouble(txtLongitud.getText()));
+				if(!txtLatitud.getText().isEmpty())
+					cuentaSeleccionada.setLatitud(Double.parseDouble(txtLatitud.getText()));
+				if(!txtLongitud.getText().isEmpty())
+					cuentaSeleccionada.setLongitud(Double.parseDouble(txtLongitud.getText()));
 				
 				cuentaDAO.getEntityManager().getTransaction().begin();
 				cuentaDAO.getEntityManager().merge(cuentaSeleccionada);

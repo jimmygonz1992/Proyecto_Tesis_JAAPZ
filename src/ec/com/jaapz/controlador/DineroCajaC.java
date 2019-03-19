@@ -60,36 +60,21 @@ public class DineroCajaC {
     public void imprimirReporte() {
     	dateInicio = Date.from(dtpFechaInicio.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
 		dateFin = Date.from(dtpFechaFin.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
-		
-		List<Factura> listaFactura = new ArrayList<>();
-		for(int i=0; i<listaFactura.size(); i++) {
-			Double totalIngreso = 0.0;
-			//if(listaFactura.get(i).getFecha().equals(dateInicio)&&listaFactura.get(i).getFecha().equals(dateFin)) {
-				Double valorTotal = new Double(listaFactura.get(i).getTotalFactura());
-				totalIngreso += valorTotal;
-			//}
-			System.out.println(totalIngreso);
-		}
-		
-    /*	if(rbResumido.isSelected()) {
-    		PrintReport pr = new PrintReport();
+		if(rbResumido.isSelected()) {
+			PrintReport pr = new PrintReport();
 			Map<String, Object> param = new HashMap<String, Object>();
-			param.put("fechaInicio", dateInicio);
-			param.put("fechaFin", dateFin);
-			param.put("usuarioCrea", Encriptado.Desencriptar(Context.getInstance().getUsuariosC().getUsuario()));
-			param.put("fechaImpresion", fechaImpresion);
-			pr.crearReporte("/recursos/informes/dinero_caja_resumido.jasper", facturaDao, param);
+			param.put("FECHA_INICIO", dateInicio);
+			param.put("FECHA_FIN", dateFin);
+			pr.crearReporte("/recursos/informes/reporteCajaResumido.jasper", facturaDao, param);
 			pr.showReport("Clientes al Día");
     	}
     	else {
     		PrintReport pr = new PrintReport();
 			Map<String, Object> param = new HashMap<String, Object>();
-			param.put("fechaInicio", dateInicio);
-			param.put("fechaFin", dateFin);
-			param.put("usuarioCrea", Encriptado.Desencriptar(Context.getInstance().getUsuariosC().getUsuario()));
-			param.put("fechaImpresion", fechaImpresion);
-			pr.crearReporte("/recursos/informes/dinero_caja_detallado.jasper", facturaDao, param);
+			param.put("FECHA_INICIO", dateInicio);
+			param.put("FECHA_FIN", dateFin);
+			pr.crearReporte("/recursos/informes/reporteCajaDetallado.jasper", facturaDao, param);
 			pr.showReport("Clientes al Día");
-    	}*/
+    	}
     }
 }

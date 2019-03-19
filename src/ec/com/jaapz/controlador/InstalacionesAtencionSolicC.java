@@ -8,11 +8,13 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+import ec.com.jaapz.modelo.CuentaCliente;
 import ec.com.jaapz.modelo.Estado;
 import ec.com.jaapz.modelo.Instalacion;
 import ec.com.jaapz.modelo.InstalacionDAO;
 import ec.com.jaapz.modelo.InstalacionDetalle;
 import ec.com.jaapz.modelo.LiquidacionOrdenDAO;
+import ec.com.jaapz.modelo.Medidor;
 import ec.com.jaapz.modelo.SolInspeccionIn;
 import ec.com.jaapz.util.Constantes;
 import ec.com.jaapz.util.Context;
@@ -155,8 +157,18 @@ public class InstalacionesAtencionSolicC {
 				return;
 			Optional<ButtonType> result = helper.mostrarAlertaConfirmacion("Desea Grabar los Datos?",Context.getInstance().getStage());
 			if(result.get() == ButtonType.OK){
-				SolInspeccionIn solicitud = instalacionSeleccionada.getSolInspeccionIn();
-				solicitud.setEstadoSolicitud(Constantes.EST_INSPECCION_PENDIENTE);
+				Medidor medidor = new Medidor();
+				SolInspeccionIn solicitud = new SolInspeccionIn();
+				
+				solicitud = instalacionSeleccionada.getSolInspeccionIn();
+				System.out.println("orden de liquidacion: " + instalacionSeleccionada.getSolInspeccionIn().getLiquidacionOrdens().size());
+				//se toma en la posicion 0 xq siempre va a haber una liquidacion por cada solicitud
+				medidor = instalacionSeleccionada.getSolInspeccionIn().getLiquidacionOrdens().get(0).getMedidor();
+				CuentaCliente cuentaCliente = instalacionSeleccionada.getCuentaCliente();
+				cuentaCliente.setMedidor(medidor);
+				System.out.println(solicitud.getIdSolInspeccion());
+				solicitud.setEstadoSolicitud(Constantes.EST_INSPECCION_REALIZADO);
+				
 				instalacionSeleccionada.setEstadoInstalacion(Constantes.EST_APERTURA_REALIZADO);
 				Date date = Date.from(dtpFecha.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
 				instalacionSeleccionada.setFechaInst(date);
@@ -164,9 +176,11 @@ public class InstalacionesAtencionSolicC {
 				instalacionSeleccionada.setEstadoInstalacion(Constantes.EST_INSPECCION_REALIZADO);
 				instalacionSeleccionada.setObservaciones(txtObservaciones.getText());
 				instalacionSeleccionada.setUsuarioInstalacion(Context.getInstance().getUsuariosC().getIdUsuario());
+				
 				instalacionDao.getEntityManager().getTransaction().begin();
 				instalacionDao.getEntityManager().merge(instalacionSeleccionada);
 				instalacionDao.getEntityManager().merge(solicitud);
+				instalacionDao.getEntityManager().merge(cuentaCliente);
 				instalacionDao.getEntityManager().getTransaction().commit();
 				helper.mostrarAlertaInformacion("Datos Grabados Correctamente", Context.getInstance().getStage());
 				nuevo();
@@ -270,10 +284,11 @@ public class InstalacionesAtencionSolicC {
 			txtCedula.setText(instalacionSel.getCuentaCliente().getCliente().getCedula());
 			txtCliente.setText(instalacionSel.getCuentaCliente().getCliente().getNombre() + " " + instalacionSel.getCuentaCliente().getCliente().getApellido());
 			txtUsuarioSolic.setText(String.valueOf(instalacionSel.getUsuarioCrea()));
-			txtCodigoMedidor.setText(instalacionSel.getCuentaCliente().getMedidor().getCodigo());
-			txtMarca.setText(instalacionSel.getCuentaCliente().getMedidor().getMarca());
-			txtModelo.setText(instalacionSel.getCuentaCliente().getMedidor().getModelo());
-			txtPrecioMed.setText(String.valueOf(instalacionSel.getCuentaCliente().getMedidor().getPrecio()));
+			
+			txtCodigoMedidor.setText(instalacionSel.getSolInspeccionIn().getLiquidacionOrdens().get(0).getMedidor().getCodigo());
+			txtMarca.setText(instalacionSel.getSolInspeccionIn().getLiquidacionOrdens().get(0).getMedidor().getMarca());
+			txtModelo.setText(instalacionSel.getSolInspeccionIn().getLiquidacionOrdens().get(0).getMedidor().getModelo());
+			txtPrecioMed.setText(String.valueOf(instalacionSel.getSolInspeccionIn().getLiquidacionOrdens().get(0).getMedidor().getPrecio()));
 			recuperarDetalleLiquidacion(instalacionSel);
 		}catch(Exception e) {
 			e.printStackTrace();

@@ -394,11 +394,8 @@ public class BodegaSalidaRubroInstC {
 			Optional<ButtonType> result = helper.mostrarAlertaConfirmacion("Desea Grabar los Datos?",Context.getInstance().getStage());
 			if(result.get() == ButtonType.OK){
 				Instalacion instalacion = new Instalacion();
-				CuentaCliente cuentaCliente = liquidacionSeleccionada.getCuentaCliente();
-				Medidor medidor = liquidacionSeleccionada.getMedidor();
 								
 				liquidacionSeleccionada.setEstadoOrden(Constantes.EST_APERTURA_REALIZADO);
-				cuentaCliente.setMedidor(medidor);
 				instalacion.setIdInstalacion(null);
 				Date date = Date.from(dtpFecha.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
 				//Timestamp fecha = new Timestamp(date.getTime());
@@ -421,7 +418,6 @@ public class BodegaSalidaRubroInstC {
 				instalacion.setInstalacionDetalles(listaAgregadaRubros);
 				instalacionDao.getEntityManager().getTransaction().begin();
 				instalacionDao.getEntityManager().persist(instalacion);
-				instalacionDao.getEntityManager().merge(cuentaCliente);
 				instalacionDao.getEntityManager().merge(liquidacionSeleccionada);
 				instalacionDao.getEntityManager().getTransaction().commit();
 				actualizarListaArticulos();

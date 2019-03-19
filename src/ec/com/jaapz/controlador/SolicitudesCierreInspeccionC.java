@@ -104,6 +104,7 @@ public class SolicitudesCierreInspeccionC {
 		bloquear();
 		limpiarOrden();
 		llenarCombo();	
+		limpiarObservaciones();
 		bloquearResultados();
 		cboFactible.getSelectionModel().select(Factible.NO_FACTIBLE);
 		cboFactible.setDisable(true);
@@ -263,7 +264,10 @@ public class SolicitudesCierreInspeccionC {
 					ordenLiquidacion.setFecha(fecha);
 					inspeccionSeleccionado.setEstadoInspeccion(Constantes.EST_INSPECCION_REALIZADO);
 					inspeccionSeleccionado.setFactibilidad(Constantes.EST_FACTIBLE);
-					inspeccionSeleccionado.setObservacion(txtObservacion.getText().toString());
+						
+					if(txtObservacion.getText() != null)
+						if(txtObservacion.getText() != "")
+							inspeccionSeleccionado.setObservacion(txtObservacion.getText());
 					//lista de detalle de la orden previa de inspeccion a insertar
 					
 					for(LiquidacionDetalle det : tvDatosOrdenPrevia.getItems()) {
@@ -286,8 +290,17 @@ public class SolicitudesCierreInspeccionC {
 					cliente = inspeccionSeleccionado.getCliente();
 					cuentaCliente.setIdCuenta(null);
 					cuentaCliente.setUsuarioCrea(Context.getInstance().getIdUsuario());
-					cuentaCliente.setLatitud(Double.parseDouble(txtLatitud.getText()));
-					cuentaCliente.setLongitud(Double.parseDouble(txtLongitud.getText()));
+					System.out.println("latitud:" + txtLatitud.getText() + "d");
+					System.out.println("longitud: " + txtLongitud.getText());
+					System.out.println(txtLatitud.getLength());
+					if(txtLatitud.getText() != null)
+						if(txtLatitud.getLength() > 0)
+							cuentaCliente.setLatitud(Double.parseDouble(txtLatitud.getText()));
+					
+					if(txtLongitud.getText() != null)
+						if(txtLongitud.getLength() > 0)
+							cuentaCliente.setLongitud(Double.parseDouble(txtLongitud.getText()));
+					
 					cuentaCliente.setCliente(cliente);
 					cuentaCliente.setDireccion(inspeccionSeleccionado.getDireccion());
 					cuentaCliente.setBarrio(inspeccionSeleccionado.getBarrio());
