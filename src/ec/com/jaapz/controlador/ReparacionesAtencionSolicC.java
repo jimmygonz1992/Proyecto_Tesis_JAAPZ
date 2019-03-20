@@ -12,6 +12,7 @@ import ec.com.jaapz.modelo.Estado;
 import ec.com.jaapz.modelo.Reparacion;
 import ec.com.jaapz.modelo.ReparacionDAO;
 import ec.com.jaapz.modelo.ReparacionDetalle;
+import ec.com.jaapz.modelo.SolInspeccionRep;
 import ec.com.jaapz.util.Constantes;
 import ec.com.jaapz.util.Context;
 import ec.com.jaapz.util.ControllerHelper;
@@ -282,6 +283,10 @@ public class ReparacionesAtencionSolicC {
 					java.util.Date utilDate = new java.util.Date(); 
 					long lnMilisegundos = utilDate.getTime();
 					java.sql.Time sqlTime = new java.sql.Time(lnMilisegundos);
+					
+					SolInspeccionRep reparacionSol = new SolInspeccionRep();
+					reparacionSol = reparacionSeleccionada.getSolInspeccionRep();
+					reparacionSol.setEstadoSolicitud(Constantes.EST_INSPECCION_REALIZADO);
 					//empieza la transaccion
 					reparacionDao.getEntityManager().getTransaction().begin();
 					//reparacionSeleccionada.setReparacionDetalles(listaAgregadaRubros);
@@ -309,7 +314,7 @@ public class ReparacionesAtencionSolicC {
 						reparacionSeleccionada.setIdReparacion(Integer.parseInt(txtIdReparacion.getText()));
 						reparacionDao.getEntityManager().merge(reparacionSeleccionada);
 					}
-						
+					reparacionDao.getEntityManager().merge(reparacionSol);
 					reparacionDao.getEntityManager().getTransaction().commit();
 					helper.mostrarAlertaInformacion("Datos Grabados Correctamente", Context.getInstance().getStage());
 					nuevo();

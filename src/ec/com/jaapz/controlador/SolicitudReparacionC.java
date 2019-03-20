@@ -415,6 +415,7 @@ public class SolicitudReparacionC {
 				reparacion.setUsuarioCrea(Context.getInstance().getUsuariosC().getIdUsuario());
 				reparacion.setFecha(date);
 				reparacion.setEstadoInspecRep(Constantes.EST_INSPECCION_PENDIENTE);
+				reparacion.setEstadoSolicitud(Constantes.EST_INSPECCION_PENDIENTE);
 				reparacion.setObservacion(txtObservaciones.getText());
 				reparacion.setHora(sqlTime);
 				reparacion.setEstado(Constantes.ESTADO_ACTIVO);
