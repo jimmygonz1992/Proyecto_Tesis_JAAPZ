@@ -34,6 +34,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.util.Callback;
 
 public class LecturasAperturaC {
@@ -41,6 +42,8 @@ public class LecturasAperturaC {
     @FXML private TableView<AperturaLectura> tvAperturas;
     @FXML private ComboBox<Anio> cboAnio;
     @FXML private Button btnGrabarApertura;
+    @FXML private TextField txtCantidad;
+    @FXML private TextField txtValor;
 
     MeDAO mesDAO = new MeDAO();
 	AnioDAO anioDAO = new AnioDAO();
@@ -183,6 +186,7 @@ public class LecturasAperturaC {
 				aperturaGrabar.setFecha(fecha);
 				aperturaGrabar.setUsuarioCrea(Context.getInstance().getIdUsuario());
 				aperturaGrabar.setAnio(cboAnio.getSelectionModel().getSelectedItem());
+				
 				aperturaGrabar.setIdApertura(null);
 				aperturaGrabar.setMe(cboMes.getSelectionModel().getSelectedItem());
 				aperturaDAO.getEntityManager().getTransaction().begin();
