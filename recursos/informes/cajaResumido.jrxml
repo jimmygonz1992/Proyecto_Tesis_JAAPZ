@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.5.1.final using JasperReports Library version 6.5.1  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="cajaResumido" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="7fdcb360-c86d-40d3-9f91-ca69c2037b59">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="conectionBDJAAPZ"/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="151"/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="840"/>
+	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w1" value="688"/>
+	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w2" value="298"/>
+	<parameter name="FECHA_INICIO" class="java.sql.Date"/>
+	<parameter name="FECHA_FIN" class="java.sql.Date"/>
+	<queryString language="SQL">
+		<![CDATA[select sum(f.total_factura) as total_uni,
+case when pd.identificador_operacion = 'INS' then 'Instalaciones' when pd.identificador_operacion = 'LEC' then 'Consumo de agua' when pd.identificador_operacion = 'REP'
+then 'Reparaciones' end as detalle,
+
+((select sum (fa.total_factura) from factura fa
+where fa.estado = 'A' and fa.fecha between  $P{FECHA_INICIO} 
+and  $P{FECHA_FIN} ) - (select sum(eg.monto) from
+egreso eg where eg.estado = 'A' and eg.fecha 
+between  $P{FECHA_INICIO} and  $P{FECHA_FIN} )) as diferencia
+
+from factura f, factura_detalle fd, planilla p, planilla_detalle pd
+where f.id_factura = fd.id_factura and
+fd.id_planilla = p.id_planilla and
+p.id_planilla = pd.id_planilla and
+f.fecha between $P{FECHA_INICIO} and $P{FECHA_FIN}
+group by pd.identificador_operacion
+
+union all
+
+select case when sum(e.monto) is null then 0 else sum(e.monto) end as total,
+e.descripcion, 
+((select sum (fa.total_factura) from factura fa
+where fa.estado = 'A' and fa.fecha between  $P{FECHA_INICIO} 
+and  $P{FECHA_FIN} ) - (select sum(eg.monto) from
+egreso eg where eg.estado = 'A' and eg.fecha 
+between  $P{FECHA_INICIO} and  $P{FECHA_FIN} )) as diferencia
+
+from egreso e
+where e.estado = 'A'
+and e.fecha between $P{FECHA_INICIO} and $P{FECHA_FIN} 
+group by e.descripcion, e.monto, e.observaciones]]>
+	</queryString>
+	<field name="total_uni" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.label" value="total_uni"/>
+	</field>
+	<field name="detalle" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="detalle"/>
+	</field>
+	<field name="diferencia" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.label" value="diferencia"/>
+	</field>
+	<variable name="total_uni1" class="java.lang.Double" resetType="Column" calculation="Sum">
+		<variableExpression><![CDATA[$F{total_uni}]]></variableExpression>
+	</variable>
+	<variable name="total_uni2" class="java.lang.Double" resetType="Column" calculation="Sum">
+		<variableExpression><![CDATA[$F{total_uni}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="83" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="100" height="30" uuid="ba40189c-f735-4bc5-b2ac-1835827c3658">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="3bb4e997-7df3-42c2-9b1b-1e0dd32e053c"/>
+				</reportElement>
+				<text><![CDATA[tipo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="170" y="0" width="100" height="30" uuid="100e1cac-57d3-493e-aad2-fbd09f17c7f8">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="e7cbe913-c823-4821-9fe5-23178529bc02"/>
+				</reportElement>
+				<text><![CDATA[total_uni]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="30" splitType="Stretch">
+			<textField>
+				<reportElement x="160" y="0" width="100" height="30" uuid="bea2a9bb-acec-4d98-be7f-acd8ed2f5dea">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="5738cbd4-f112-46d7-a01a-038e6a945d73"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{total_uni}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="10" y="0" width="100" height="30" uuid="fb5c3829-43fb-430c-9a8a-f862f3a8ef1b">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="316eec83-ae38-4863-9569-8ade1c48b28c"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{detalle}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch">
+			<textField>
+				<reportElement x="210" y="6" width="100" height="30" uuid="e93ee6ed-8757-4aba-a47a-3b277ced78f4"/>
+				<textFieldExpression><![CDATA[$F{diferencia}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

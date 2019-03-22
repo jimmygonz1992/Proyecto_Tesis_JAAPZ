@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.6.0.final using JasperReports Library version 6.6.0  -->
+<!-- Created with Jaspersoft Studio version 6.5.1.final using JasperReports Library version 6.5.1  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reporteCajaResumido" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="6baf4be4-b0be-4baa-bdf2-b0ee4773dfe7">
-	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Conexion bd_jaapz postgresql"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="conectionBDJAAPZ"/>
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="385"/>
 	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="604"/>
@@ -20,12 +20,11 @@ egreso eg where eg.estado = 'A' and eg.fecha
 between  $P{FECHA_INICIO} and  $P{FECHA_FIN} )) as diferencia
 from factura f
 where f.estado = 'A'
-and f.fecha between  $P{FECHA_INICIO} and  $P{FECHA_FIN} 
+and f.fecha between  $P{FECHA_INICIO} and  $P{FECHA_FIN}
 
 union all 
 
 select 'Egreso' as tipo,case when sum(e.monto) is null then 0 else sum(e.monto) end as total,
-
 ((select case when sum (fa.total_factura) is null 
 then 0 else  sum (fa.total_factura) end from factura fa
 where fa.estado = 'A' and fa.fecha between  $P{FECHA_INICIO} 
@@ -115,15 +114,15 @@ and e.fecha between  $P{FECHA_INICIO} and  $P{FECHA_FIN}]]>
 		<band height="35" splitType="Stretch"/>
 	</pageHeader>
 	<columnHeader>
-		<band height="33" splitType="Stretch"/>
+		<band height="40" splitType="Stretch"/>
 	</columnHeader>
 	<detail>
 		<band height="21" splitType="Stretch">
 			<rectangle>
-				<reportElement x="0" y="0" width="371" height="21" uuid="6c968502-ba25-4ae7-b090-4c51e12c6be3"/>
+				<reportElement x="16" y="0" width="371" height="21" uuid="6c968502-ba25-4ae7-b090-4c51e12c6be3"/>
 			</rectangle>
 			<textField>
-				<reportElement x="20" y="3" width="100" height="13" uuid="bf0557e1-25f3-42c0-af11-76c64d55fe5c">
+				<reportElement x="36" y="3" width="100" height="13" uuid="bf0557e1-25f3-42c0-af11-76c64d55fe5c">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="87cd018a-a928-4266-a5d1-69a9871a9f71"/>
 				</reportElement>
 				<textElement>
@@ -132,7 +131,7 @@ and e.fecha between  $P{FECHA_INICIO} and  $P{FECHA_FIN}]]>
 				<textFieldExpression><![CDATA[$F{tipo}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="260" y="3" width="100" height="13" uuid="c194fe77-f6d8-4a9b-bda3-6285518b1572">
+				<reportElement x="276" y="3" width="100" height="13" uuid="c194fe77-f6d8-4a9b-bda3-6285518b1572">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="684fce39-9bd2-451b-b00a-4a0a261a0fa8"/>
 				</reportElement>
 				<textFieldExpression><![CDATA[$F{total}]]></textFieldExpression>
@@ -146,21 +145,21 @@ and e.fecha between  $P{FECHA_INICIO} and  $P{FECHA_FIN}]]>
 		<band splitType="Stretch"/>
 	</pageFooter>
 	<summary>
-		<band height="22" splitType="Stretch">
+		<band height="32" splitType="Stretch">
 			<rectangle>
-				<reportElement x="0" y="0" width="371" height="22" backcolor="#C9D1C2" uuid="39741def-ad44-46d3-8973-133bed48dbe0"/>
+				<reportElement x="16" y="10" width="371" height="22" backcolor="#C9D1C2" uuid="39741def-ad44-46d3-8973-133bed48dbe0"/>
 			</rectangle>
-			<textField>
-				<reportElement x="260" y="6" width="100" height="13" uuid="15cc7dd8-41e4-4143-84f0-dfd5eacda08e"/>
-				<textFieldExpression><![CDATA[$F{diferencia}]]></textFieldExpression>
-			</textField>
 			<staticText>
-				<reportElement x="21" y="6" width="80" height="13" uuid="bf13b140-dd8d-4f53-b1c2-9b001dc04f2e"/>
+				<reportElement x="37" y="16" width="80" height="13" uuid="bf13b140-dd8d-4f53-b1c2-9b001dc04f2e"/>
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Total en caja:]]></text>
 			</staticText>
+			<textField>
+				<reportElement x="276" y="16" width="100" height="13" uuid="15cc7dd8-41e4-4143-84f0-dfd5eacda08e"/>
+				<textFieldExpression><![CDATA[$F{diferencia}]]></textFieldExpression>
+			</textField>
 		</band>
 	</summary>
 </jasperReport>
