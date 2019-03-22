@@ -78,7 +78,7 @@ public class AperturaLecturaDAO extends ClaseDAO{
 	@SuppressWarnings("unchecked")
 	public List<AperturaLectura> getAperturaAnioMes(Integer idAnio,Integer idMes) {
 		List<AperturaLectura> resultado = new ArrayList<AperturaLectura>();
-		Query query = getEntityManager().createNamedQuery("AperturaLectura.buscarAperturaId");
+		Query query = getEntityManager().createNamedQuery("AperturaLectura.buscarAperturaIdAnioIdMes");
 		query.setHint("javax.persistence.cache.storeMode", "REFRESH");
 		query.setParameter("idAnio",idAnio);
 		query.setParameter("idMes",idMes);

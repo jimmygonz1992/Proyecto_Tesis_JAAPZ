@@ -34,7 +34,7 @@ import javax.persistence.TemporalType;
 	@NamedQuery(name="AperturaLectura.buscarAperturaId", query="SELECT a FROM AperturaLectura a where a.estado = 'A' and a.idApertura = :idApertura"),
 	@NamedQuery(name="AperturaLectura.buscarAperturaIdAnio", query="SELECT a FROM AperturaLectura a where a.estado = 'A' and a.anio.idAnio = :idAnio"),
 	@NamedQuery(name="AperturaLectura.buscarAperturaIdAnioIdMes", query="SELECT a "
-			+ "FROM AperturaLectura a where a.estado = 'A' and a.anio.idAnio = :idAnio and and a.me.idMes = :idMes"),
+			+ "FROM AperturaLectura a where a.estado = 'A' and a.anio.idAnio = :idAnio and a.me.idMes = :idMes"),
 	@NamedQuery(name="AperturaLectura.buscarAnioMes", query="SELECT a FROM AperturaLectura a where a.estado = 'A' and "
 			+ "(lower(a.anio.descripcion) like lower(:patron) or lower(a.me.descripcion) like lower(:patron))")
 })
