@@ -26,18 +26,19 @@ public class DineroCajaC {
     Date dateInicio = new Date();
 	Date dateFin = new Date();
 	Date fechaImpresion = new Date();
+	String operacion;
 	    
     public void initialize() {
     	try {
     		btnImprimir.setStyle("-fx-cursor: hand;");
     		rbResumido.selectedProperty().set(true);
     		dtpFechaInicio.setValue(LocalDate.now());
-    		dtpFechaFin.setValue(LocalDate.now());
+    		dtpFechaFin.setValue(LocalDate.now());		
     	}catch(Exception ex) {
     		System.out.println(ex.getMessage());
     	}
     }
-    
+        
     public void cambiarResumido() {
     	if(rbResumido.isSelected() == true)
     		rbDetallado.selectedProperty().set(false);
@@ -56,12 +57,21 @@ public class DineroCajaC {
     	dateInicio = Date.from(dtpFechaInicio.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
 		dateFin = Date.from(dtpFechaFin.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
 		
-		if(rbResumido.isSelected()) {
+		/*if(rbResumido.isSelected()) {
 			PrintReport pr = new PrintReport();
 			Map<String, Object> param = new HashMap<String, Object>();
 			param.put("FECHA_INICIO", dateInicio);
 			param.put("FECHA_FIN", dateFin);
 			pr.crearReporte("/recursos/informes/reporteCajaResumido.jasper", facturaDao, param);
+			pr.showReport("Reporte de caja resumido");
+    	}*/
+		if(rbResumido.isSelected()) {
+			PrintReport pr = new PrintReport();
+			Map<String, Object> param = new HashMap<String, Object>();
+			//param.put("FECHA_INICIO", dateInicio);
+			//param.put("FECHA_FIN", dateFin);
+			param.put("descripcionDetalle", operacion);
+			pr.crearReporte("/recursos/informes/cajaResumido.jasper", facturaDao, param);
 			pr.showReport("Reporte de caja resumido");
     	}
     	else {

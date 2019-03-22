@@ -1,54 +1,49 @@
 package ec.com.jaapz.controlador;
 
 import java.util.List;
+import java.util.Optional;
+
 import ec.com.jaapz.modelo.CuentaCliente;
 import ec.com.jaapz.modelo.CuentaClienteDAO;
 import ec.com.jaapz.modelo.Planilla;
 import ec.com.jaapz.util.Constantes;
 import ec.com.jaapz.util.Context;
+import ec.com.jaapz.util.ControllerHelper;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
+import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
 import javafx.scene.control.TableColumn.CellDataFeatures;
-import javafx.scene.control.TableRow;
+import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.Callback;
 
-public class RecaudacionesPlanillasEmitidasC {
-	@FXML private TextField txtBuscar;
+public class CorteServicioC {
+	@FXML private CheckBox chkCorte;
+	@FXML private Button btnGrabar;
 	@FXML private TableView<CuentaCliente> tvDatos;
+	ControllerHelper helper = new ControllerHelper();
 	
-	//PlanillaDAO planillaDao = new PlanillaDAO();
 	CuentaClienteDAO cuentaClienteDao = new CuentaClienteDAO();
 	
-	public void initialize(){
-		try {			
+	public void initialize() {
+		try {
 			llenarDatos("");
-			tvDatos.setRowFactory(tv -> {
-				TableRow<CuentaCliente> row = new TableRow<>();
-				row.setOnMouseClicked(event -> {
-					if (event.getClickCount() == 2 && (! row.isEmpty()) ) {
-						if(tvDatos.getSelectionModel().getSelectedItem() != null){
-							Context.getInstance().setCuentaCliente(tvDatos.getSelectionModel().getSelectedItem());
-							Context.getInstance().getStageModal().close();
-						}
-					}
-				});
-				return row ;
-			});
+			tvDatos.setEditable(true);
 		}catch(Exception ex) {
 			System.out.println(ex.getMessage());
 		}
 	}
-	
-	public void buscarCliente() {
-		llenarDatos(txtBuscar.getText());
-	}	
 	
 	@SuppressWarnings("unchecked")
 	void llenarDatos(String patron) {
@@ -69,8 +64,11 @@ public class RecaudacionesPlanillasEmitidasC {
 						if(planilla.getCancelado().equals(Constantes.EST_FAC_PENDIENTE))
 							cont = cont + 1;
 				}
-				if(cont > 0)
-					datosCuenta.add(cuenta);
+				if(cont > 0) {
+					if(cont >= 3)
+						datosCuenta.add(cuenta);
+				}
+					
 			}
 
 			//llenar los datos en la tabla
@@ -101,7 +99,7 @@ public class RecaudacionesPlanillasEmitidasC {
 			
 			TableColumn<CuentaCliente, String> medidorColum = new TableColumn<>("Medidor");
 			medidorColum.setMinWidth(10);
-			medidorColum.setPrefWidth(80);
+			medidorColum.setPrefWidth(110);
 			medidorColum.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<CuentaCliente, String>, ObservableValue<String>>() {
 				@Override
 				public ObservableValue<String> call(CellDataFeatures<CuentaCliente, String> param) {
@@ -138,10 +136,59 @@ public class RecaudacionesPlanillasEmitidasC {
 				}
 			});
 			
-			tvDatos.getColumns().addAll(idColum, cedulaColum, clienteColum, medidorColum, direccionColum, totalColum);
+			TableColumn<CuentaCliente, Boolean> activeColumn = new TableColumn<CuentaCliente, Boolean>("Servicio Cortado");
+			activeColumn.setCellValueFactory(new Callback<CellDataFeatures<CuentaCliente, Boolean>, ObservableValue<Boolean>>() {
+				@Override
+				public ObservableValue<Boolean> call(CellDataFeatures<CuentaCliente, Boolean> param) {
+					CuentaCliente val = param.getValue();
+					SimpleBooleanProperty booleanProp;
+					if(val.getCortado() != null)
+						booleanProp = new SimpleBooleanProperty(val.getCortado());
+					else
+						booleanProp = new SimpleBooleanProperty(false);
+					booleanProp.addListener(new ChangeListener<Boolean>() {
+						@Override
+						public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue,
+								Boolean newValue) {
+							val.setCortado(newValue);
+						}
+					});
+					return booleanProp;
+				}
+			});
+			activeColumn.setCellFactory(new Callback<TableColumn<CuentaCliente, Boolean>, 
+					TableCell<CuentaCliente, Boolean>>() {
+				@Override
+				public TableCell<CuentaCliente, Boolean> call(TableColumn<CuentaCliente, Boolean> p) {
+					CheckBoxTableCell<CuentaCliente, Boolean> cell = new CheckBoxTableCell<CuentaCliente, Boolean>();
+					cell.setAlignment(Pos.CENTER);
+					return cell;
+				}
+			});
+			
+			tvDatos.getColumns().addAll(medidorColum, cedulaColum, clienteColum, direccionColum, totalColum, activeColumn);
 			tvDatos.setItems(datosCuenta);
 			
 		}catch(Exception ex){
+			System.out.println(ex.getMessage());
+		}
+	}
+
+	public void grabar() {
+		try {			
+			Optional<ButtonType> result = helper.mostrarAlertaConfirmacion("Desea Grabar los Datos?",Context.getInstance().getStage());
+			if(result.get() == ButtonType.OK){
+				cuentaClienteDao.getEntityManager().getTransaction().begin();
+				for(CuentaCliente cuenta : tvDatos.getItems()) {
+					if(cuenta.getCortado() != null)
+						cuentaClienteDao.getEntityManager().merge(cuenta);
+				}
+				cuentaClienteDao.getEntityManager().getTransaction().commit();
+				helper.mostrarAlertaInformacion("Datos guardados correctamente!!!", Context.getInstance().getStage());
+			}					
+		}catch(Exception ex) {
+			cuentaClienteDao.getEntityManager().getTransaction().rollback();
+			helper.mostrarAlertaError("Error al grabar", Context.getInstance().getStage());
 			System.out.println(ex.getMessage());
 		}
 	}

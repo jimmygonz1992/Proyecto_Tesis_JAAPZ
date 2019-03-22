@@ -371,19 +371,19 @@ public class RecaudacionesConvenioC {
 						convenioDAO.getEntityManager().persist(planilla);
 					convenioDAO.getEntityManager().getTransaction().commit();
 				}
+				helper.mostrarAlertaInformacion("Datos grabados!!", Context.getInstance().getStage());
 				List<Empresa> empresa;
 				empresa = empresaDao.getEmpresa();
 				if(empresa.size() == 1){
 					Context.getInstance().setEmpresaC(empresa.get(0));
 				}
-					
+				
 				PrintReport pr = new PrintReport();
 				Map<String, Object> param = new HashMap<String, Object>();
 				param.put("id_convenio", convenio.getIdConvenio());
 				param.put("presidente", empresa.get(0).getRepresentante());
 				pr.crearReporte("/recursos/informes/convenio.jasper", convenioDAO, param);
 				pr.showReport("Convenios de Pago");
-				helper.mostrarAlertaInformacion("Datos grabados!!", Context.getInstance().getStage());
 				limpiar();
 			}
 		}catch(Exception ex) {

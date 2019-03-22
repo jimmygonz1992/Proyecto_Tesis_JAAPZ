@@ -50,6 +50,9 @@ public class CuentaCliente implements Serializable {
 	private Double longitud;
 
 	private String observacion;
+	
+	@Column(nullable = false, columnDefinition = "bit")
+	private Boolean cortado;
 
 	@Column(name="usuario_crea")
 	private Integer usuarioCrea;
@@ -131,6 +134,14 @@ public class CuentaCliente implements Serializable {
 
 	public String getEstado() {
 		return this.estado;
+	}	
+
+	public Boolean getCortado() {
+		return cortado;
+	}
+
+	public void setCortado(Boolean cortado) {
+		this.cortado = cortado;
 	}
 
 	public void setEstado(String estado) {
