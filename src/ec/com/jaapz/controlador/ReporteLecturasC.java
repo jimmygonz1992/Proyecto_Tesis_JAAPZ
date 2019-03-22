@@ -1,6 +1,8 @@
 package ec.com.jaapz.controlador;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import ec.com.jaapz.modelo.Anio;
 import ec.com.jaapz.modelo.AnioDAO;
@@ -10,6 +12,7 @@ import ec.com.jaapz.modelo.Me;
 import ec.com.jaapz.modelo.MeDAO;
 import ec.com.jaapz.util.Context;
 import ec.com.jaapz.util.ControllerHelper;
+import ec.com.jaapz.util.PrintReport;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.Event;
@@ -55,7 +58,14 @@ public class ReporteLecturasC {
 				helper.mostrarAlertaAdvertencia("No se ha registrado apertura en la fecha seleccionada", Context.getInstance().getStage());
 				return;
 			}
-			
+			Map<String, Object> param = new HashMap<String, Object>();
+			param.put("ANIO", cboAnio.getSelectionModel().getSelectedItem().getDescripcion());
+			param.put("MES", cboMes.getSelectionModel().getSelectedItem().getDescripcion());
+			param.put("ID_ANIO",cboAnio.getSelectionModel().getSelectedItem().getIdAnio());
+			param.put("ID_MES", cboMes.getSelectionModel().getSelectedItem().getIdMes());
+			PrintReport reporte = new PrintReport();
+			reporte.crearReporte("/recursos/informes/reporteLecturas.jasper", anioDAO, param);
+			reporte.showReport("Nómina de clientes");
 		}catch(Exception ex) {
 			System.out.println(ex.getMessage());
 		}
