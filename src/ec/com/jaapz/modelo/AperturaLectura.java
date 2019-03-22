@@ -33,6 +33,8 @@ import javax.persistence.TemporalType;
 	@NamedQuery(name="AperturaLectura.buscarCiclo", query="SELECT a FROM AperturaLectura a where a.estado = 'A' and a.estadoApertura = 'EN PROCESO'"),
 	@NamedQuery(name="AperturaLectura.buscarAperturaId", query="SELECT a FROM AperturaLectura a where a.estado = 'A' and a.idApertura = :idApertura"),
 	@NamedQuery(name="AperturaLectura.buscarAperturaIdAnio", query="SELECT a FROM AperturaLectura a where a.estado = 'A' and a.anio.idAnio = :idAnio"),
+	@NamedQuery(name="AperturaLectura.buscarAperturaIdAnioIdMes", query="SELECT a "
+			+ "FROM AperturaLectura a where a.estado = 'A' and a.anio.idAnio = :idAnio and and a.me.idMes = :idMes"),
 	@NamedQuery(name="AperturaLectura.buscarAnioMes", query="SELECT a FROM AperturaLectura a where a.estado = 'A' and "
 			+ "(lower(a.anio.descripcion) like lower(:patron) or lower(a.me.descripcion) like lower(:patron))")
 })
@@ -53,7 +55,13 @@ public class AperturaLectura implements Serializable { //
 	private Date fecha;
 
 	private Time hora;
+	
+	@Column(name="cantidad_metros")
+	private Integer cantidadMetros;
 
+	@Column(name="costo_metros")
+	private Double costoMetros;
+	
 	private String observacion;
 
 	@Column(name="usuario_crea")
@@ -195,5 +203,23 @@ public class AperturaLectura implements Serializable { //
 
 		return responsableLectura;
 	}
+
+	public Integer getCantidadMetros() {
+		return cantidadMetros;
+	}
+
+	public void setCantidadMetros(Integer cantidadMetros) {
+		this.cantidadMetros = cantidadMetros;
+	}
+
+	public Double getCostoMetros() {
+		return costoMetros;
+	}
+
+	public void setCostoMetros(Double costoMetros) {
+		this.costoMetros = costoMetros;
+	}
+
+
 
 }

@@ -23,6 +23,7 @@ import ec.com.jaapz.util.Constantes;
 import ec.com.jaapz.util.Context;
 import ec.com.jaapz.util.ControllerHelper;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -60,7 +61,16 @@ public class LecturasAperturaC {
 			btnGrabarApertura.setStyle("-fx-cursor: hand;");
 			cboAnio.setStyle("-fx-cursor: hand;");
 			cboMes.setStyle("-fx-cursor: hand;");
-			
+			txtCantidad.textProperty().addListener(new ChangeListener<String>() {
+				@Override
+				public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+					if (newValue.matches("\\d*")) {
+						//int value = Integer.parseInt(newValue);
+					} else {
+						txtCantidad.setText(oldValue);
+					}
+				}
+			});
 			cargarCombos();
 			recuperarDatos();
 		}catch(Exception ex) {
@@ -186,7 +196,8 @@ public class LecturasAperturaC {
 				aperturaGrabar.setFecha(fecha);
 				aperturaGrabar.setUsuarioCrea(Context.getInstance().getIdUsuario());
 				aperturaGrabar.setAnio(cboAnio.getSelectionModel().getSelectedItem());
-				
+				aperturaGrabar.setCantidadMetros(Integer.parseInt(txtCantidad.getText()));
+				aperturaGrabar.setCostoMetros(Double.parseDouble(txtValor.getText()));
 				aperturaGrabar.setIdApertura(null);
 				aperturaGrabar.setMe(cboMes.getSelectionModel().getSelectedItem());
 				aperturaDAO.getEntityManager().getTransaction().begin();
@@ -307,6 +318,16 @@ public class LecturasAperturaC {
 			}
 			if(cboMes.getSelectionModel().getSelectedIndex() == -1) {
 				helper.mostrarAlertaAdvertencia("Debe Seleccionar el mes a aperturar", Context.getInstance().getStage());
+				bandera = true;
+				return bandera;
+			}
+			if(txtCantidad.getText().equals("")) {
+				helper.mostrarAlertaAdvertencia("Debe registrar cantidad de metros cúbicos del proveedor", Context.getInstance().getStage());
+				bandera = true;
+				return bandera;
+			}
+			if(txtValor.getText().equals("")) {
+				helper.mostrarAlertaAdvertencia("Registre el valor total", Context.getInstance().getStage());
 				bandera = true;
 				return bandera;
 			}

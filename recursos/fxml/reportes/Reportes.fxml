@@ -58,9 +58,9 @@
                         <AnchorPane fx:id="apRecaudaciones" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
                      </content>
                   </TitledPane>
-                  <TitledPane animated="false" text="Tomas de lectura">
+                  <TitledPane animated="false" text="Consumo mensual">
                      <content>
-                        <AnchorPane fx:id="apTomas" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                        <AnchorPane fx:id="apConsumo" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
                      </content>
                   </TitledPane>
                   <TitledPane animated="false" text="Usuarios al dia">

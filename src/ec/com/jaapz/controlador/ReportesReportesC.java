@@ -12,7 +12,7 @@ public class ReportesReportesC {
 	@FXML private AnchorPane apRecaudaciones;
 	@FXML private AnchorPane apDeudas;
 	@FXML private AnchorPane apNomina;
-	@FXML private AnchorPane apTomas;
+	@FXML private AnchorPane apConsumo;
 	@FXML private AnchorPane apMateriales;
 	@FXML private AnchorPane apDineroCaja;
 	
@@ -28,7 +28,7 @@ public class ReportesReportesC {
 			helper.mostrarVentanaContenedor("/reportes/ReporteHistorialUsuario.fxml", apHistorial);
 			helper.mostrarVentanaContenedor("/recaudaciones/RecaudacionesDeudaGeneral.fxml", apDeudas);
 			helper.mostrarVentanaContenedor("/reportes/ReporteNominas.fxml", apNomina);
-			helper.mostrarVentanaContenedor("/reportes/ReporteTomasLectura.fxml", apTomas);
+			helper.mostrarVentanaContenedor("/reportes/ReporteLecturas.fxml", apConsumo);
 			helper.mostrarVentanaContenedor("/recaudaciones/RecaudacionesVerReporte.fxml", apRecaudaciones);
 			helper.mostrarVentanaContenedor("/reportes/ReporteMateriales.fxml", apMateriales);
 			helper.mostrarVentanaContenedor("/reportes/DineroCaja.fxml", apDineroCaja);
