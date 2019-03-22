@@ -3,16 +3,43 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reporteSolicitudes" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="999d8d67-f344-44b2-b8a9-f48eddd133c0">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Conexion bd_jaapz postgresql"/>
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="364"/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="625"/>
 	<parameter name="FECHA" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[select 1 as tipo,'Solicitud de instalacion' as tipo_detalle, 
-s.id_sol_inspeccion,s.fecha_ingreso,s.uso_medidor,
+s.id_sol_inspeccion,s.fecha_ingreso,
 s.referencia,c.cedula,concat(c.nombre,' ',c.apellido) as cliente
 from sol_inspeccion_ins s,cliente c
 where s.id_cliente = c.id_cliente
 and s.estado_solicitud = 'PENDIENTE'
-and c.estado = 'A' and s.estado = 'A' 
-]]>
+and c.estado = 'A' and s.estado = 'A'
+union all
+select 1 as tipo,'Solicitud de instalacion' as tipo_detalle, 
+null,null,null,null,null
+where (select count (*) from sol_inspeccion_ins s,cliente c
+where s.id_cliente = c.id_cliente
+and s.estado_solicitud = 'PENDIENTE'
+and c.estado = 'A' and s.estado = 'A') = 0
+
+
+union all
+
+select 2 as tipo,'Solicitud de reparacion' as tipo_detalle, 
+s.id_solicitud_rep,s.fecha,
+s.referencia,c.cedula,concat(c.nombre,' ',c.apellido) as cliente
+
+from sol_inspeccion_rep s,cliente c,cuenta_cliente cu
+where s.id_cuenta = cu.id_cuenta and c.id_cliente = cu.id_cliente
+and s.estado_solicitud = 'PENDIENTE'
+and c.estado = 'A' and s.estado = 'A' and cu.estado = 'A'
+union all
+select 2 as tipo,'Solicitud de reparacion' as tipo_detalle, 
+null,null,null,null,null
+where (select count (*) from sol_inspeccion_rep s,cliente c,cuenta_cliente cu
+where s.id_cuenta = cu.id_cuenta and c.id_cliente = cu.id_cliente
+and s.estado_solicitud = 'PENDIENTE'
+and c.estado = 'A' and s.estado = 'A' and cu.estado = 'A') = 0]]>
 	</queryString>
 	<field name="tipo" class="java.lang.Integer">
 		<property name="com.jaspersoft.studio.field.label" value="tipo"/>
@@ -26,10 +53,6 @@ and c.estado = 'A' and s.estado = 'A'
 	</field>
 	<field name="fecha_ingreso" class="java.sql.Date">
 		<property name="com.jaspersoft.studio.field.label" value="fecha_ingreso"/>
-		<property name="com.jaspersoft.studio.field.tree.path" value="sol_inspeccion_ins"/>
-	</field>
-	<field name="uso_medidor" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.label" value="uso_medidor"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="sol_inspeccion_ins"/>
 	</field>
 	<field name="referencia" class="java.lang.String">
@@ -46,7 +69,7 @@ and c.estado = 'A' and s.estado = 'A'
 	<group name="Group1">
 		<groupExpression><![CDATA[$F{tipo}]]></groupExpression>
 		<groupHeader>
-			<band height="46">
+			<band height="35">
 				<textField>
 					<reportElement x="0" y="3" width="380" height="14" uuid="a12e6dc3-8761-42aa-9c51-934d44d0a59b"/>
 					<textElement verticalAlignment="Middle">
@@ -55,37 +78,43 @@ and c.estado = 'A' and s.estado = 'A'
 					<textFieldExpression><![CDATA[$F{tipo_detalle}]]></textFieldExpression>
 				</textField>
 				<staticText>
-					<reportElement x="0" y="30" width="80" height="14" uuid="b895df0a-b430-45e5-a732-f6fbe21b3b2f"/>
+					<reportElement x="0" y="20" width="80" height="14" uuid="b895df0a-b430-45e5-a732-f6fbe21b3b2f"/>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font fontName="Arial" isBold="true"/>
 					</textElement>
 					<text><![CDATA[No. Solicitud]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="186" y="30" width="244" height="14" uuid="55b54811-ba54-483b-997d-6b0e9a731411"/>
+					<reportElement x="186" y="20" width="244" height="14" uuid="55b54811-ba54-483b-997d-6b0e9a731411"/>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font fontName="Arial" isBold="true"/>
 					</textElement>
 					<text><![CDATA[Cliente]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="458" y="30" width="100" height="14" uuid="440a88ce-4e97-4e5a-b16c-3c7d0f6d92dc"/>
+					<reportElement x="458" y="20" width="100" height="14" uuid="440a88ce-4e97-4e5a-b16c-3c7d0f6d92dc"/>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font fontName="Arial" isBold="true"/>
 					</textElement>
 					<text><![CDATA[Fecha de solicitud]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="90" y="30" width="90" height="14" uuid="4ca7839e-ac25-4187-926d-4d3aeda26143"/>
+					<reportElement x="90" y="20" width="90" height="14" uuid="4ca7839e-ac25-4187-926d-4d3aeda26143"/>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font fontName="Arial" isBold="true"/>
 					</textElement>
 					<text><![CDATA[Cédula]]></text>
 				</staticText>
+				<line>
+					<reportElement x="0" y="18" width="555" height="1" uuid="f1eac840-0d69-43aa-bc3b-80ab3b4a5f77"/>
+				</line>
+				<line>
+					<reportElement x="0" y="34" width="555" height="1" uuid="73ac500d-9029-423a-a48b-303ca000a461"/>
+				</line>
 			</band>
 		</groupHeader>
 		<groupFooter>
-			<band/>
+			<band height="29"/>
 		</groupFooter>
 	</group>
 	<background>
@@ -165,44 +194,62 @@ and c.estado = 'A' and s.estado = 'A'
 		<band splitType="Stretch"/>
 	</columnHeader>
 	<detail>
-		<band height="22" splitType="Stretch">
-			<textField>
-				<reportElement x="0" y="3" width="80" height="14" uuid="5dfbebb3-6c8a-4f9a-b574-f8d13d21754f"/>
+		<band height="15" splitType="Stretch">
+			<textField isBlankWhenNull="true">
+				<reportElement x="0" y="0" width="80" height="14" uuid="5dfbebb3-6c8a-4f9a-b574-f8d13d21754f"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="Arial"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{id_sol_inspeccion}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="186" y="3" width="244" height="14" uuid="26ddcb7c-5a47-4959-bc4b-33a5ad00a200"/>
+			<textField isBlankWhenNull="true">
+				<reportElement x="186" y="0" width="244" height="14" uuid="26ddcb7c-5a47-4959-bc4b-33a5ad00a200"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Arial"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{cliente}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="90" y="3" width="90" height="14" uuid="4dd0b0ea-545d-4136-96dd-aaa219dc522c"/>
+			<textField isBlankWhenNull="true">
+				<reportElement x="90" y="0" width="90" height="14" uuid="4dd0b0ea-545d-4136-96dd-aaa219dc522c"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Arial"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{cedula}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="458" y="3" width="100" height="14" uuid="1683bacd-b1ca-4814-95fb-5fd97e3b25c1"/>
+			<textField isBlankWhenNull="true">
+				<reportElement x="458" y="0" width="100" height="14" uuid="1683bacd-b1ca-4814-95fb-5fd97e3b25c1"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Arial"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{fecha_ingreso}]]></textFieldExpression>
 			</textField>
+			<line>
+				<reportElement x="0" y="14" width="555" height="1" uuid="aed6e568-6767-473b-9583-08e486e5241b"/>
+			</line>
+			<line>
+				<reportElement x="555" y="-17" width="1" height="31" uuid="900edf43-70d2-4292-a91d-27a51fe420be"/>
+			</line>
+			<line>
+				<reportElement x="447" y="-17" width="1" height="31" uuid="ebbd270c-3c74-42b0-8bfd-c0f742d251bc"/>
+			</line>
+			<line>
+				<reportElement x="182" y="-17" width="1" height="31" uuid="7ab391a4-621d-4988-8bf4-e42fe4832465"/>
+			</line>
+			<line>
+				<reportElement x="0" y="-17" width="1" height="31" uuid="d123626e-62a4-4282-993e-af01f8c92664"/>
+			</line>
+			<line>
+				<reportElement x="85" y="-17" width="1" height="31" uuid="5585febc-3af2-4517-a39f-48c57700cafd"/>
+			</line>
 		</band>
 	</detail>
 	<columnFooter>
-		<band height="45" splitType="Stretch"/>
+		<band splitType="Stretch"/>
 	</columnFooter>
 	<pageFooter>
-		<band height="54" splitType="Stretch"/>
+		<band splitType="Stretch"/>
 	</pageFooter>
 	<summary>
-		<band height="42" splitType="Stretch"/>
+		<band splitType="Stretch"/>
 	</summary>
 </jasperReport>

@@ -63,6 +63,9 @@ public class SolInspeccionRep implements Serializable {
 	@Column(name="id_usu_encargado")
 	private Integer idUsuEncargado;
 
+	@Column(name="estado_solicitud")
+	private String estadoSolicitud;
+	
 	private String observacion;
 
 	@Column(name="usuario_crea")
@@ -201,6 +204,14 @@ public class SolInspeccionRep implements Serializable {
 
 	public void setTipoSolicitud(TipoSolicitud tipoSolicitud) {
 		this.tipoSolicitud = tipoSolicitud;
+	}
+
+	public String getEstadoSolicitud() {
+		return estadoSolicitud;
+	}
+
+	public void setEstadoSolicitud(String estadoSolicitud) {
+		this.estadoSolicitud = estadoSolicitud;
 	}
 
 }
