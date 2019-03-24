@@ -1,14 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.6.0.final using JasperReports Library version 6.6.0  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reporteCajaResumido" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="6baf4be4-b0be-4baa-bdf2-b0ee4773dfe7">
-	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="conexion postgresq"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Conexion bd_jaapz postgresql"/>
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="200"/>
 	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="792"/>
 	<parameter name="FECHA_INICIO" class="java.sql.Date"/>
 	<parameter name="FECHA_FIN" class="java.sql.Date"/>
 	<queryString>
-		<![CDATA[select 'Ingreso' as tipo, 'INSTALACION' as proceso,case when sum(fd.subtotal) is null then 0 else sum(fd.subtotal) end as total, ((select case when sum (fa.total_factura) is null 
+		<![CDATA[select 'Ingreso' as tipo, 'INSTALACION' as proceso,case when sum(fd.subtotal) is null then 0 else sum(fd.subtotal) end as total, 
+(select sum(fd.subtotal) from factura f,factura_detalle fd,planilla p,planilla_detalle pd where f.estado = 'A' and f.id_factura = fd.id_factura and p.id_planilla = fd.id_planilla 
+and pd.id_planilla = p.id_planilla and p.convenio = 'NO' and f.fecha between  $P{FECHA_INICIO} and $P{FECHA_FIN} ) as totales,
+((select case when sum (fa.total_factura) is null 
 then 0 else  sum (fa.total_factura) end from factura fa where fa.estado = 'A' and fa.fecha between $P{FECHA_INICIO} and $P{FECHA_FIN} ) - (select case when sum(eg.monto) is null
 then 0 else sum(eg.monto) end from egreso eg where eg.estado = 'A' and eg.fecha between  $P{FECHA_INICIO}  and  $P{FECHA_FIN}  )) as diferencia
 from factura f,factura_detalle fd,planilla p,planilla_detalle pd where f.estado = 'A' and f.id_factura = fd.id_factura and p.id_planilla = fd.id_planilla 
@@ -17,7 +20,10 @@ and f.fecha between  $P{FECHA_INICIO}  and  $P{FECHA_FIN}
 
 union all 
 
-select 'Ingreso' as tipo, 'REPARACION' as proceso,case when sum(fd.subtotal) is null then 0 else sum(fd.subtotal) end as total, ((select case when sum (fa.total_factura) is null 
+select 'Ingreso' as tipo, 'REPARACION' as proceso,case when sum(fd.subtotal) is null then 0 else sum(fd.subtotal) end as total,
+(select sum(fd.subtotal) from factura f,factura_detalle fd,planilla p,planilla_detalle pd where f.estado = 'A' and f.id_factura = fd.id_factura and p.id_planilla = fd.id_planilla 
+and pd.id_planilla = p.id_planilla and p.convenio = 'NO' and f.fecha between  $P{FECHA_INICIO}  and $P{FECHA_FIN}  ) as totales,
+ ((select case when sum (fa.total_factura) is null 
 then 0 else  sum (fa.total_factura) end from factura fa where fa.estado = 'A' and fa.fecha between  $P{FECHA_INICIO}  and $P{FECHA_FIN} ) - (select case when sum(eg.monto) is null
 then 0 else sum(eg.monto) end from egreso eg where eg.estado = 'A' and eg.fecha between  $P{FECHA_INICIO}  and   $P{FECHA_FIN} )) as diferencia
 from factura f,factura_detalle fd,planilla p,planilla_detalle pd where f.estado = 'A' and f.id_factura = fd.id_factura and p.id_planilla = fd.id_planilla 
@@ -26,7 +32,10 @@ and f.fecha between  $P{FECHA_INICIO} and  $P{FECHA_FIN}
 
 union all 
 
-select 'Ingreso' as tipo, 'CONSUMO DE AGUA' as proceso,case when sum(fd.subtotal) is null then 0 else sum(fd.subtotal) end as total, ((select case when sum (fa.total_factura) is null 
+select 'Ingreso' as tipo, 'CONSUMO DE AGUA' as proceso,case when sum(fd.subtotal) is null then 0 else sum(fd.subtotal) end as total, 
+(select sum(fd.subtotal) from factura f,factura_detalle fd,planilla p,planilla_detalle pd where f.estado = 'A' and f.id_factura = fd.id_factura and p.id_planilla = fd.id_planilla 
+and pd.id_planilla = p.id_planilla and p.convenio = 'NO' and f.fecha between $P{FECHA_INICIO}  and $P{FECHA_FIN} ) as totales,
+((select case when sum (fa.total_factura) is null 
 then 0 else  sum (fa.total_factura) end from factura fa where fa.estado = 'A' and fa.fecha between  $P{FECHA_INICIO} and  $P{FECHA_FIN}  ) - (select case when sum(eg.monto) is null
 then 0 else sum(eg.monto) end from egreso eg where eg.estado = 'A' and eg.fecha between  $P{FECHA_INICIO}  and  $P{FECHA_FIN} )) as diferencia
 from factura f,factura_detalle fd,planilla p,planilla_detalle pd where f.estado = 'A' and f.id_factura = fd.id_factura and p.id_planilla = fd.id_planilla 
@@ -35,7 +44,8 @@ and f.fecha between   $P{FECHA_INICIO} and  $P{FECHA_FIN}
 
 union all
 
-select 'Egreso' as tipo, '' as proceso,case when sum(e.monto) is null then 0 else sum(e.monto) end as total,
+select 'Egreso' as tipo, 'Egresos' as proceso,case when sum(e.monto) is null then 0 else sum(e.monto) end as total,
+case when sum(e.monto) is null then 0 else sum(e.monto) end as totales,
 ((select case when sum (fa.total_factura) is null 
 then 0 else  sum (fa.total_factura) end from factura fa
 where fa.estado = 'A' and fa.fecha between  $P{FECHA_INICIO} 
@@ -50,7 +60,7 @@ group by tipo,proceso
 
 union all 
 
-select 'Egreso' as tipo, '' as proceso,0 as total,
+select 'Egreso' as tipo, 'Egresos' as proceso,0 as total,0 as totales,
 ((select case when sum (fa.total_factura) is null 
 then 0 else  sum (fa.total_factura) end from factura fa
 where fa.estado = 'A' and fa.fecha between  $P{FECHA_INICIO} 
@@ -69,22 +79,23 @@ where (select count(*) from egreso e where e.estado = 'A') = 0]]>
 	<field name="total" class="java.lang.Double">
 		<property name="com.jaspersoft.studio.field.label" value="total"/>
 	</field>
+	<field name="totales" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.label" value="totales"/>
+	</field>
 	<field name="diferencia" class="java.lang.Double">
 		<property name="com.jaspersoft.studio.field.label" value="diferencia"/>
 	</field>
 	<group name="Group1">
 		<groupExpression><![CDATA[$F{tipo}]]></groupExpression>
-		<groupFooter>
-			<band/>
-		</groupFooter>
-	</group>
-	<group name="Group2">
-		<groupExpression><![CDATA[$F{tipo}]]></groupExpression>
 		<groupHeader>
-			<band height="70">
+			<band height="68">
 				<textField>
-					<reportElement x="53" y="34" width="100" height="30" uuid="f6ba332d-91ea-4231-b53a-cd63416baa0e"/>
+					<reportElement x="44" y="23" width="100" height="30" uuid="da91d4ef-e070-4063-9a66-469c47f9f274"/>
 					<textFieldExpression><![CDATA[$F{tipo}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="350" y="19" width="100" height="30" uuid="ea06fb92-0f84-4d2e-9ab8-39a5eae9559e"/>
+					<textFieldExpression><![CDATA[$F{totales}]]></textFieldExpression>
 				</textField>
 			</band>
 		</groupHeader>
@@ -158,16 +169,16 @@ where (select count(*) from egreso e where e.estado = 'A') = 0]]>
 		<band height="40" splitType="Stretch"/>
 	</columnHeader>
 	<detail>
-		<band height="68" splitType="Stretch">
+		<band height="71" splitType="Stretch">
 			<textField>
-				<reportElement x="127" y="23" width="100" height="30" uuid="e51ca5fa-1a25-4c14-90d1-464f2239d8e7">
-					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="c37f68d1-13c7-41a9-b7d1-ea01015e991e"/>
+				<reportElement x="121" y="31" width="100" height="30" uuid="96abba0e-f6a5-4ada-8546-b6f4a3f5c713">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="306c8ca7-f81c-4820-9cc0-4a0d7f33e976"/>
 				</reportElement>
 				<textFieldExpression><![CDATA[$F{proceso}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="287" y="38" width="100" height="30" uuid="0ef9adce-725a-4694-8d94-6836a1f13a5b">
-					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="e383cc21-cf8a-4269-88e0-87cb416c8e9b"/>
+				<reportElement x="311" y="41" width="100" height="30" uuid="91b5f388-b9dd-40c0-98b1-9091280a3b6c">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="30ce41b4-1528-4a91-9723-cdd3c59f56fc"/>
 				</reportElement>
 				<textFieldExpression><![CDATA[$F{total}]]></textFieldExpression>
 			</textField>
@@ -180,6 +191,11 @@ where (select count(*) from egreso e where e.estado = 'A') = 0]]>
 		<band splitType="Stretch"/>
 	</pageFooter>
 	<summary>
-		<band height="32" splitType="Stretch"/>
+		<band height="43" splitType="Stretch">
+			<textField>
+				<reportElement x="476" y="13" width="100" height="30" uuid="6010c77b-32f4-4d2d-912a-3fedfae1ba0a"/>
+				<textFieldExpression><![CDATA[$F{diferencia}]]></textFieldExpression>
+			</textField>
+		</band>
 	</summary>
 </jasperReport>
