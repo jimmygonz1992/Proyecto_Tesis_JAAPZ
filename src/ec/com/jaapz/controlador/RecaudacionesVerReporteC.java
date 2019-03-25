@@ -38,9 +38,9 @@ public class RecaudacionesVerReporteC {
 	SimpleDateFormat formateador = new SimpleDateFormat("dd/MM/yyyy");
 	
 	FacturaDAO facturaDao = new FacturaDAO();
-	Date dateInicio = new Date();
-	Date dateFin = new Date();
-	Date fechaImpresion = new Date(); 
+	java.util.Date utilDate = new java.util.Date();
+	java.util.Date dateInicio = new java.util.Date(utilDate.getTime());
+	java.util.Date dateFin = new java.util.Date(utilDate.getTime());
 	
 	public void initialize(){
 		btnCargarDatos.setStyle("-fx-cursor: hand;");
@@ -112,7 +112,7 @@ public class RecaudacionesVerReporteC {
 				}
 			});
 			
-			TableColumn<Factura, String> numMedidorColum = new TableColumn<>("Nº Medidor");
+			/*TableColumn<Factura, String> numMedidorColum = new TableColumn<>("Nº Medidor");
 			numMedidorColum.setMinWidth(10);
 			numMedidorColum.setPrefWidth(75);
 			numMedidorColum.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Factura, String>, ObservableValue<String>>() {
@@ -120,7 +120,7 @@ public class RecaudacionesVerReporteC {
 				public ObservableValue<String> call(CellDataFeatures<Factura, String> param) {
 					return new SimpleObjectProperty<String>(param.getValue().getCuentaCliente().getMedidor().getCodigo());
 				}
-			});
+			});*/
 			
 			TableColumn<Factura, String> direccionColum = new TableColumn<>("Dirección");
 			direccionColum.setMinWidth(10);
@@ -142,7 +142,7 @@ public class RecaudacionesVerReporteC {
 				}
 			});
 			
-			tvDatos.getColumns().addAll(idColum, numComprobColum, fechaColum, clienteColum, numMedidorColum, direccionColum, totalColum);
+			tvDatos.getColumns().addAll(idColum, numComprobColum, fechaColum, clienteColum, direccionColum, totalColum);
 			tvDatos.setItems(datos);
 			sumarDatos();
 		}catch(Exception ex){
@@ -168,17 +168,15 @@ public class RecaudacionesVerReporteC {
 	}
 	
 	public void verReporte() {
-	try {
-			PrintReport pr = new PrintReport();
-			Map<String, Object> param = new HashMap<String, Object>();
-			param.put("fechaInicio", dateInicio);
-			param.put("fechaFin", dateFin);
-			param.put("usuarioCrea", Encriptado.Desencriptar(Context.getInstance().getUsuariosC().getUsuario()));
-			param.put("fechaImpresion", fechaImpresion);
-			pr.crearReporte("/recursos/informes/ver_recaudaciones.jasper", facturaDao, param);
-			pr.showReport("Recaudaciones");
-		}catch(Exception ex) {
-			System.out.println(ex.getMessage());
-		}
+		dateInicio = Date.from(dtpFechaInicio.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
+		dateFin = Date.from(dtpFechaFin.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
+
+		PrintReport pr = new PrintReport();
+		Map<String, Object> param = new HashMap<String, Object>();
+		param.put("fechaInicio", dateInicio);
+		param.put("fechaFin", dateFin);
+		param.put("usuarioCrea", Encriptado.Desencriptar(Context.getInstance().getUsuariosC().getUsuario()));
+		pr.crearReporte("/recursos/informes/ver_recaudaciones.jasper", facturaDao, param);
+		pr.showReport("Recaudaciones");
 	}
 }

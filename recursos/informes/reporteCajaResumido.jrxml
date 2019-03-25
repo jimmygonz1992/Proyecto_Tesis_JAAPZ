@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.6.0.final using JasperReports Library version 6.6.0  -->
+<!-- Created with Jaspersoft Studio version 6.5.1.final using JasperReports Library version 6.5.1  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reporteCajaResumido" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="6baf4be4-b0be-4baa-bdf2-b0ee4773dfe7">
-	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Conexion bd_jaapz postgresql"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="conectionBDJAAPZ"/>
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="200"/>
 	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="792"/>
-	<parameter name="FECHA_INICIO" class="java.sql.Date"/>
-	<parameter name="FECHA_FIN" class="java.sql.Date"/>
+	<parameter name="FECHA_INICIO" class="java.util.Date"/>
+	<parameter name="FECHA_FIN" class="java.util.Date"/>
 	<queryString>
 		<![CDATA[select 'Ingreso' as tipo, 'INSTALACION' as proceso,case when sum(fd.subtotal) is null then 0 else sum(fd.subtotal) end as total, 
 (select sum(fd.subtotal) from factura f,factura_detalle fd,planilla p,planilla_detalle pd where f.estado = 'A' and f.id_factura = fd.id_factura and p.id_planilla = fd.id_planilla 
@@ -88,13 +88,22 @@ where (select count(*) from egreso e where e.estado = 'A') = 0]]>
 	<group name="Group1">
 		<groupExpression><![CDATA[$F{tipo}]]></groupExpression>
 		<groupHeader>
-			<band height="68">
+			<band height="35">
+				<rectangle>
+					<reportElement x="0" y="18" width="554" height="17" backcolor="#C9D1C2" uuid="eab64092-6655-447a-960c-6ae34907d906"/>
+				</rectangle>
 				<textField>
-					<reportElement x="44" y="23" width="100" height="30" uuid="da91d4ef-e070-4063-9a66-469c47f9f274"/>
+					<reportElement x="44" y="19" width="100" height="13" uuid="da91d4ef-e070-4063-9a66-469c47f9f274"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
 					<textFieldExpression><![CDATA[$F{tipo}]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement x="350" y="19" width="100" height="30" uuid="ea06fb92-0f84-4d2e-9ab8-39a5eae9559e"/>
+					<reportElement x="422" y="20" width="100" height="13" uuid="ea06fb92-0f84-4d2e-9ab8-39a5eae9559e"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
 					<textFieldExpression><![CDATA[$F{totales}]]></textFieldExpression>
 				</textField>
 			</band>
@@ -160,24 +169,43 @@ where (select count(*) from egreso e where e.estado = 'A') = 0]]>
 				<reportElement x="270" y="53" width="100" height="13" uuid="61b9cd28-6bf0-4249-9535-7ac4b0858c2d"/>
 				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="270" y="34" width="100" height="13" uuid="14fcfaa9-2440-4bb2-8e89-5264a4c2029f"/>
+				<textFieldExpression><![CDATA[$P{FECHA_INICIO}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="200" y="32" width="60" height="14" uuid="890634ae-ab85-4978-8d6f-c60009743b16"/>
+				<textElement>
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Desde:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="381" y="33" width="60" height="14" uuid="c312c165-6ff4-41df-970a-ee4eadc5292f"/>
+				<textElement>
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Hasta:]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="444" y="33" width="100" height="13" uuid="b72d91e2-b3a4-470d-9ac7-b6847244fade"/>
+				<textFieldExpression><![CDATA[$P{FECHA_FIN}]]></textFieldExpression>
+			</textField>
 		</band>
 	</title>
 	<pageHeader>
-		<band height="35" splitType="Stretch"/>
+		<band height="21" splitType="Stretch"/>
 	</pageHeader>
-	<columnHeader>
-		<band height="40" splitType="Stretch"/>
-	</columnHeader>
 	<detail>
-		<band height="71" splitType="Stretch">
+		<band height="30" splitType="Stretch">
 			<textField>
-				<reportElement x="121" y="31" width="100" height="30" uuid="96abba0e-f6a5-4ada-8546-b6f4a3f5c713">
+				<reportElement x="63" y="9" width="187" height="13" uuid="96abba0e-f6a5-4ada-8546-b6f4a3f5c713">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="306c8ca7-f81c-4820-9cc0-4a0d7f33e976"/>
 				</reportElement>
 				<textFieldExpression><![CDATA[$F{proceso}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="311" y="41" width="100" height="30" uuid="91b5f388-b9dd-40c0-98b1-9091280a3b6c">
+				<reportElement x="340" y="9" width="100" height="13" uuid="91b5f388-b9dd-40c0-98b1-9091280a3b6c">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="30ce41b4-1528-4a91-9723-cdd3c59f56fc"/>
 				</reportElement>
 				<textFieldExpression><![CDATA[$F{total}]]></textFieldExpression>
@@ -191,11 +219,24 @@ where (select count(*) from egreso e where e.estado = 'A') = 0]]>
 		<band splitType="Stretch"/>
 	</pageFooter>
 	<summary>
-		<band height="43" splitType="Stretch">
+		<band height="17" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="0" width="554" height="17" backcolor="#C9D1C2" uuid="3ee047c5-aec4-493e-8fd9-ac293959a655"/>
+			</rectangle>
 			<textField>
-				<reportElement x="476" y="13" width="100" height="30" uuid="6010c77b-32f4-4d2d-912a-3fedfae1ba0a"/>
+				<reportElement x="422" y="2" width="100" height="13" uuid="6010c77b-32f4-4d2d-912a-3fedfae1ba0a"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{diferencia}]]></textFieldExpression>
 			</textField>
+			<staticText>
+				<reportElement x="44" y="2" width="77" height="14" uuid="9229b379-09fc-46f7-a006-8e12fd2e0e61"/>
+				<textElement>
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total en caja]]></text>
+			</staticText>
 		</band>
 	</summary>
 </jasperReport>

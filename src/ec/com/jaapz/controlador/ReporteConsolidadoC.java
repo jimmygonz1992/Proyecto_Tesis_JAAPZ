@@ -34,6 +34,8 @@ public class ReporteConsolidadoC {
 		btnVisualizar.setStyle("-fx-cursor: hand;");
 		cargarComboAnio();
 		cargarComboMes();
+		btnImprimir.setVisible(false);
+		btnImprimir.setDisable(true);
 		btnVisualizar.setOnMouseClicked(new EventHandler<Event>() {
 			@Override
 			public void handle(Event arg0) {

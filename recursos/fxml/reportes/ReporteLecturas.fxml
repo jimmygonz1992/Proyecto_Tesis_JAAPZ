@@ -36,8 +36,8 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                 <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="110.0" minHeight="10.0" prefHeight="110.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="50.0" minHeight="0.0" prefHeight="0.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
                   <ComboBox fx:id="cboAnio" maxWidth="1.7976931348623157E308" GridPane.rowIndex="2" />
@@ -52,8 +52,7 @@
                         <Font name="Arial Bold" size="12.0" />
                      </font>
                   </Label>
-                  <Button fx:id="btnVisualizar" mnemonicParsing="false" prefHeight="40.0" prefWidth="90.0" text="Visualizar" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
-                  <Button fx:id="btnImprimir" mnemonicParsing="false" prefHeight="40.0" prefWidth="90.0" text="Imprimir" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
+                  <Button fx:id="btnVisualizar" alignment="BOTTOM_CENTER" contentDisplay="TOP" mnemonicParsing="false" prefHeight="53.0" prefWidth="90.0" styleClass="botonImprimir" text="Visualizar" GridPane.columnSpan="3" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
                </children>
             </GridPane>
          </children>
