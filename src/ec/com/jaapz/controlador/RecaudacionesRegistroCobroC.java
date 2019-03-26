@@ -138,19 +138,6 @@ public class RecaudacionesRegistroCobroC {
 			});
 			sumarDatos();
 
-			/*	txtAbono.textProperty().addListener(new ChangeListener<String>() {
-				@Override
-				public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-					txtAbono.setText(newValue);
-					if (txtAbono.getText().equals("")){
-						txtSaldo.setText(newValue);
-					}else{
-						Double resultado = Double.valueOf(txtTotal.getText())-Double.valueOf(txtAbono.getText());
-						txtSaldo.setText(resultado.toString());
-					}					
-				}
-			});*/
-
 			txtAbono.textProperty().addListener(new ChangeListener<String>() {
 				@Override
 				public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
@@ -162,7 +149,6 @@ public class RecaudacionesRegistroCobroC {
 						txtSaldo.setText(resultado.toString());
 					}else {
 						txtSaldo.setText("0.0");
-						//helper.mostrarAlertaAdvertencia("Ingresar Rubros", Context.getInstance().getStage());
 					}
 				}
 			});
@@ -190,9 +176,10 @@ public class RecaudacionesRegistroCobroC {
 							txtSaldo.setText(String.valueOf(resultado));
 							aceptar();
 						}
-						else
+						else {
 							helper.mostrarAlertaAdvertencia("Verifique el valor ingresado", Context.getInstance().getStage());
-						txtAbono.requestFocus();
+							txtAbono.requestFocus();
+						}
 					}
 				}
 			});
@@ -477,12 +464,18 @@ public class RecaudacionesRegistroCobroC {
 
 	void noEditable() {
 		try {
+			txtNumMedidor.setEditable(false);
+			txtIdCuenta.setEditable(false);
+			txtNumComp.setEditable(false);
+			txtUsuario.setEditable(false);
+			txtTotalPago.setEditable(false);
 			txtCedula.setEditable(false);
 			txtCliente.setEditable(false);
 			txtDireccion.setEditable(false);
 			txtTotal.setEditable(false);
 			txtSaldo.setEditable(false);
 			txtCambio.setEditable(false);
+			dtpFecha.setEditable(false);
 		}catch(Exception ex) {
 			System.out.println(ex.getMessage());
 		}

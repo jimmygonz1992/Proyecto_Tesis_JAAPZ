@@ -141,9 +141,6 @@
                   <Button fx:id="btnNuevo" alignment="BOTTOM_CENTER" contentDisplay="TOP" mnemonicParsing="false" onAction="#nuevo" prefHeight="53.0" prefWidth="73.0" styleClass="botonNuevo" text="Nuevo">
                      <HBox.margin><Insets left="10.0" /></HBox.margin>
                   </Button>
-                  <Button fx:id="btnImprimir" alignment="BOTTOM_CENTER" contentDisplay="TOP" mnemonicParsing="false" onAction="#imprimir" prefHeight="53.0" prefWidth="73.0" styleClass="botonGrabar" text="Imprimir">
-                     <HBox.margin><Insets left="10.0" /></HBox.margin>
-                  </Button>
                </children>
             </HBox>
             <Label text="DATOS DEL CLIENTE" GridPane.columnIndex="1" GridPane.rowIndex="3" GridPane.valignment="BOTTOM">

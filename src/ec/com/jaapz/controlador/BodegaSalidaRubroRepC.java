@@ -67,13 +67,15 @@ public class BodegaSalidaRubroRepC {
 	
 	public void initialize() {
 		try {
+			dtpFecha.setValue(LocalDate.now());
+			txtUsuarioCrea.setText(Encriptado.Desencriptar(String.valueOf(Context.getInstance().getUsuariosC().getUsuario())));
+			bloquear();
+			
 			btnBuscarInspCuenta.setStyle("-fx-cursor: hand;");
 			btnBuscarInspeccion.setStyle("-fx-cursor: hand;");
 			btnEliminar.setStyle("-fx-cursor: hand;");
 			btnGrabar.setStyle("-fx-cursor: hand;");
 			btnNuevo.setStyle("-fx-cursor: hand;");
-			
-			dtpFecha.setValue(LocalDate.now());
 			
 			//validar solo numeros
 			txtIdCuenta.textProperty().addListener(new ChangeListener<String>() {
@@ -100,8 +102,6 @@ public class BodegaSalidaRubroRepC {
 					}
 				}
 			});
-			txtUsuarioCrea.setText(Encriptado.Desencriptar(String.valueOf(Context.getInstance().getUsuariosC().getUsuario())));
-			bloquear();
 		}catch(Exception ex) {
 			System.out.println(ex.getMessage());
 		}
@@ -109,16 +109,20 @@ public class BodegaSalidaRubroRepC {
 	
 	void bloquear() {
 		txtCedula.setEditable(false);
+		txtIdCuenta.setEditable(false);
 		txtNombres.setEditable(false);
 		txtApellidos.setEditable(false);
 		txtDireccion.setEditable(false);
 		txtReferencia.setEditable(false);
 		txtTelefono.setEditable(false);
 		txtCodigoMedidor.setEditable(false);
+		txtIdInspecc.setEditable(false);
 		txtUsuarioInspeccion.setEditable(false);
 		txtUsuarioCrea.setEditable(false);
 		txtObservaciones.setEditable(false);
 		txtTotal.setEditable(false);
+		txtIdReparacion.setEditable(false);
+		txtIdReparacion.setVisible(false);
 	}
 	
 	public void	buscarInspCuenta() {

@@ -24,14 +24,18 @@ import ec.com.jaapz.util.Context;
 import ec.com.jaapz.util.ControllerHelper;
 import ec.com.jaapz.util.PrintReport;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.util.Callback;
@@ -58,16 +62,52 @@ public class RecaudacionesConvenioC {
 	EmpresaDAO empresaDao = new EmpresaDAO();
 	public void initialize() {
 		try {
+			bloquear();
 			btnBuscar.setStyle("-fx-cursor: hand;");
 			btnGenerar.setStyle("-fx-cursor: hand;");
 			btnGrabar.setStyle("-fx-cursor: hand;");
 			btnLimpiar.setStyle("-fx-cursor: hand;");
-			
 			limpiar();
-		}catch(Exception ex) {
 			
+			//validar solo numeros
+			txtNumMeses.textProperty().addListener(new ChangeListener<String>() {
+				@Override
+				public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+					if (newValue.matches("\\d*")) {
+						//int value = Integer.parseInt(newValue);
+					} else {
+						txtNumMeses.setText(oldValue);
+					}
+				}
+			});
+			
+			txtNumMeses.setOnKeyPressed(new EventHandler<KeyEvent>(){
+				@Override
+				public void handle(KeyEvent ke){
+					if (ke.getCode().equals(KeyCode.ENTER)){
+						if (Integer.parseInt(txtNumMeses.getText()) > 0){
+							generarDetalleConvenio();
+						}
+						else {
+							helper.mostrarAlertaAdvertencia("Verifique el valor ingresado", Context.getInstance().getStage());
+							txtNumMeses.requestFocus();
+						}
+					}
+				}
+			});
+		}catch(Exception ex) {
+			System.out.println(ex.getMessage());
 		}
 	}
+	
+	void bloquear() {
+		txtidCuenta.setEditable(false);
+		txtMedidor.setEditable(false);
+		txtCedula.setEditable(false);
+		txtCliente.setEditable(false);
+		txtTotalDeuda.setEditable(false);
+	}
+	
 	public void buscarCliente() {
 		try{
 			helper.abrirPantallaModal("/recaudaciones/ConvenioListadoPlanillas.fxml","Facturas Sin Cobrar", Context.getInstance().getStage());
@@ -284,6 +324,8 @@ public class RecaudacionesConvenioC {
 	}
 	public void grabarConvenio() {
 		try {
+			if(validarDatosDeEntrada() == false)
+				return;
 			Optional<ButtonType> result = helper.mostrarAlertaConfirmacion("Grabar el convenio.. revise los parámetros antes de continuar\nDesea continuar?",Context.getInstance().getStage());
 			if(result.get() == ButtonType.OK){	
 				Double cuota = 0.0;
@@ -313,9 +355,7 @@ public class RecaudacionesConvenioC {
 					convenioPlanilla.add(conPlanilla);
 				}
 				//enlace con el convenio
-				
 				convenio.setConvenioPlanillas(convenioPlanilla);
-				
 				convenioDAO.getEntityManager().getTransaction().begin();
 				convenioDAO.getEntityManager().persist(convenio);
 				convenioDAO.getEntityManager().getTransaction().commit();
@@ -332,7 +372,6 @@ public class RecaudacionesConvenioC {
 				List<Convenio> listaGuardada = convenioDAO.getConveniosAll();
 				List<Planilla> noPlanillado = planillaDAO.getNoPlanillado(cuentaSeleccionada.getIdCuenta());
 				
-
 				//crear las planillas para realizar el cobro
 				for(int i = 0 ; i < Integer.parseInt(String.valueOf(txtNumMeses.getText())) ; i ++) {
 					Planilla planilla;
@@ -345,7 +384,6 @@ public class RecaudacionesConvenioC {
 						planilla.setCuentaCliente(cuentaSeleccionada);
 						planilla.setEstado(Constantes.ESTADO_ACTIVO);
 					}
-					
 					
 					//enlace entre detalle de planilla y planilla
 					PlanillaDetalle detallePlanilla = new PlanillaDetalle();
@@ -391,18 +429,44 @@ public class RecaudacionesConvenioC {
 		}
 	}
 	
-	/*public void imprimirConvenio() {
+	boolean validarDatosDeEntrada() {
 		try {
-			PrintReport pr = new PrintReport();
-			Map<String, Object> param = new HashMap<String, Object>();
-			param.put("id_cuenta", cuentaSeleccionada.getIdCuenta());
-			param.put("presidente", Context.getInstance().getEmpresaC().getRepresentante());
-			pr.crearReporte("/recursos/informes/convenio.jasper", convenioDAO, param);
-			pr.showReport("Convenios de Pago");
+			if(txtidCuenta.getText().equals("")) {
+				helper.mostrarAlertaAdvertencia("No existe ID de la cuenta del Cliente!!", Context.getInstance().getStage());
+				txtidCuenta.requestFocus();
+				return false;
+			}
+			
+			if(txtCedula.getText().equals("")) {
+				helper.mostrarAlertaAdvertencia("No existe cédula de Cliente!!", Context.getInstance().getStage());
+				txtCedula.requestFocus();
+				return false;
+			}
+			
+			if(txtNumMeses.getText().equals("")) {
+				helper.mostrarAlertaAdvertencia("Ingrese número de letras o cuotas a diferir!!", Context.getInstance().getStage());
+				txtNumMeses.requestFocus();
+				return false;
+			}
+						
+			if(tvPlanillasImpagas.getItems().isEmpty()) {
+				helper.mostrarAlertaAdvertencia("No contiene planillas impagas!!", Context.getInstance().getStage());
+				tvPlanillasImpagas.requestFocus();
+				return false;
+			}
+			
+			if(tvDetalleConvenio.getItems().isEmpty()) {
+				helper.mostrarAlertaAdvertencia("No existe el detalle del convenio a generar!!", Context.getInstance().getStage());
+				tvDetalleConvenio.requestFocus();
+				return false;
+			}
+			
+			return true;
 		}catch(Exception ex) {
 			System.out.println(ex.getMessage());
+			return false;
 		}
-	}*/
+	}
 	
 	public void limpiarDatos() {
 		try {

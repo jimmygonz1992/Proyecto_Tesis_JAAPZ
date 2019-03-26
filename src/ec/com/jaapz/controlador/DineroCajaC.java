@@ -1,8 +1,8 @@
 package ec.com.jaapz.controlador;
 
+import java.sql.Date;
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -23,11 +23,10 @@ public class DineroCajaC {
     
     FacturaDAO facturaDao = new FacturaDAO();
     ControllerHelper helper = new ControllerHelper();
-    Date dateInicio = new Date();
-	Date dateFin = new Date();
-	Date fechaImpresion = new Date();
-	String operacion;
-	    
+    java.util.Date utilDate = new java.util.Date();
+    java.util.Date dateInicio = new java.util.Date(utilDate.getTime());
+    java.util.Date dateFin = new java.util.Date(utilDate.getTime());
+    
     public void initialize() {
     	try {
     		btnImprimir.setStyle("-fx-cursor: hand;");
@@ -57,24 +56,14 @@ public class DineroCajaC {
     	dateInicio = Date.from(dtpFechaInicio.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
 		dateFin = Date.from(dtpFechaFin.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
 		
-		/*if(rbResumido.isSelected()) {
+		if(rbResumido.isSelected()) {
 			PrintReport pr = new PrintReport();
 			Map<String, Object> param = new HashMap<String, Object>();
 			param.put("FECHA_INICIO", dateInicio);
 			param.put("FECHA_FIN", dateFin);
 			pr.crearReporte("/recursos/informes/reporteCajaResumido.jasper", facturaDao, param);
 			pr.showReport("Reporte de caja resumido");
-    	}*/
-		if(rbResumido.isSelected()) {
-			PrintReport pr = new PrintReport();
-			Map<String, Object> param = new HashMap<String, Object>();
-			//param.put("FECHA_INICIO", dateInicio);
-			//param.put("FECHA_FIN", dateFin);
-			param.put("descripcionDetalle", operacion);
-			pr.crearReporte("/recursos/informes/cajaResumido.jasper", facturaDao, param);
-			pr.showReport("Reporte de caja resumido");
-    	}
-    	else {
+    	}else {
     		PrintReport pr = new PrintReport();
 			Map<String, Object> param = new HashMap<String, Object>();
 			param.put("FECHA_INICIO", dateInicio);

@@ -55,7 +55,6 @@ public class ReparacionesAtencionSolicC {
 	
 	@FXML private Button btnGrabar;
 	@FXML private Button btnNuevo;
-	@FXML private Button btnImprimir;
 	
 	ControllerHelper helper = new ControllerHelper();
 	Reparacion reparacionSeleccionada = new Reparacion();
@@ -67,16 +66,13 @@ public class ReparacionesAtencionSolicC {
 		try {
 			btnBuscar.setStyle("-fx-cursor: hand;");
 			btnGrabar.setStyle("-fx-cursor: hand;");
-			btnImprimir.setStyle("-fx-cursor: hand;");
 			btnNuevo.setStyle("-fx-cursor: hand;");
 			cboEstadoReparacion.setStyle("-fx-cursor: hand;");
-			
 			
 			dtpFecha.setValue(LocalDate.now());
 			bloquear();
 			llenarCombo();
 			Encriptado encriptado = new Encriptado();
-			btnImprimir.setStyle("-fx-graphic: url('/imprimir.png');-fx-cursor: hand;");
 			txtUsuarioCreaRep.setText(encriptado.Desencriptar(String.valueOf(Context.getInstance().getUsuariosC().getUsuario())));
 			//validar solo numeros
 			txtIdSolicitud.textProperty().addListener(new ChangeListener<String>() {
@@ -132,7 +128,7 @@ public class ReparacionesAtencionSolicC {
 	
 	public void buscarSolicitudRep() {
 		try {
-			helper.abrirPantallaModal("/reparaciones/ReparacionesListadoInspRep.fxml","Listado de Órdenes de Reparaciones", Context.getInstance().getStage());
+			helper.abrirPantallaModal("/reparaciones/ReparacionesListadoInspRep.fxml","Listado de Órdenes de Reparación", Context.getInstance().getStage());
 			if (Context.getInstance().getReparaciones() != null) {
 				reparacionSeleccionada = Context.getInstance().getReparaciones();
 				llenarDatosReparacion(reparacionSeleccionada);
@@ -320,42 +316,8 @@ public class ReparacionesAtencionSolicC {
 					nuevo();
 					tvDatos.getColumns().clear();
 					tvDatos.getItems().clear();
-				}/*else {
-					List<Integer> integer = new ArrayList<Integer>();
-					for (ReparacionDetalle detalle : tvDatos.getItems()) {
-						if (detalle.getIdReparacionDet() != null)
-							integer.add(detalle.getIdReparacionDet());
-					}
-					for(ReparacionDetalle det : tvDatos.getItems()) {
-						if(det.getIdReparacionDet() == null) {
-							det.setIdReparacionDet(null);
-							det.setEstado(Constantes.ESTADO_ACTIVO);
-							det.setReparacion(reparacionSeleccionada);
-							reparacionSeleccionada.getReparacionDetalles().add(det);
-						}else {
-							for (ReparacionDetalle deta: reparacionSeleccionada.getReparacionDetalles()) {
-								if (!integer.contains(deta.getIdReparacionDet())) {
-									deta.setEstado(Constantes.ESTADO_INACTIVO);
-								}
-							}
-						}
-					}*/
-					
-					//salidaRepSeleccionada.setReparacionDetalles(listaAgregadaRubros);
-		/*			reparacionSeleccionada.setEstadoReparacion(cboEstadoReparacion.getPromptText());
-					reparacionSeleccionada.setFechaReparacion(date);
-					reparacionSeleccionada.setUsuarioReparacion(Context.getInstance().getUsuariosC().getIdUsuario());
-					//aqui voy a intentar guardar y tengo q preguntar si es nuevo
-					reparacionDao.getEntityManager().getTransaction().begin();
-					reparacionDao.getEntityManager().merge(reparacionSeleccionada);
-					reparacionDao.getEntityManager().getTransaction().commit();
-						
-					helper.mostrarAlertaInformacion("Datos grabados Correctamente", Context.getInstance().getStage());
-					nuevo();
-					tvDatos.getColumns().clear();
-					tvDatos.getItems().clear();
 				}
-	*/		}
+			}
 			reparacionSeleccionada = null;
 		}catch(Exception ex) {
 			reparacionDao.getEntityManager().getTransaction().rollback();
@@ -465,14 +427,6 @@ public class ReparacionesAtencionSolicC {
 			tvDatos.getColumns().clear();
 			cboEstadoReparacion.setPromptText("Seleccione Estado Reparación");
 			reparacionSeleccionada = null;
-		}catch(Exception ex) {
-			System.out.println(ex.getMessage());
-		}
-	}
-	
-	public void imprimir() {
-		try {
-			
 		}catch(Exception ex) {
 			System.out.println(ex.getMessage());
 		}

@@ -134,8 +134,7 @@ public class SeguridadUsuarioC {
 		//validar solo numeros
 		txtCedula.textProperty().addListener(new ChangeListener<String>() {
 			@Override
-			public void changed(ObservableValue<? extends String> observable, String oldValue, 
-					String newValue) {
+			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
 				if (newValue.matches("\\d*")) {
 					//int value = Integer.parseInt(newValue);
 				} else {
@@ -145,8 +144,7 @@ public class SeguridadUsuarioC {
 		});
 		txtTelefono.textProperty().addListener(new ChangeListener<String>() {
 			@Override
-			public void changed(ObservableValue<? extends String> observable, String oldValue, 
-					String newValue) {
+			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
 				if (newValue.matches("\\d*")) {
 					//int value = Integer.parseInt(newValue);
 				} else {

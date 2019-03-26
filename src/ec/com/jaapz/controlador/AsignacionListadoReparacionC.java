@@ -75,15 +75,6 @@ public class AsignacionListadoReparacionC {
 					listaAgregar.add(reparacionAdd);
 			}
 			
-			/*for(Reparacion orden : listadoReparaciones) {
-				for(int i = 0 ; i < listado.size() ; i ++) {
-					if(orden.getIdReparacion() == listado.get(i).getIdReparacion()) {
-						listado.remove(i);
-						break;
-					}
-				}
-			}*/
-			
 			ObservableList<Reparacion> datos = FXCollections.observableArrayList();
 			datos.setAll(listaAgregar);
 

@@ -52,6 +52,8 @@ public class AsignacionesInstalaC {
 			btnGrabarAsig.setStyle("-fx-cursor: hand;");
 			btnImprimirAsig.setStyle("-fx-cursor: hand;");
 			btnQuitarAsig.setStyle("-fx-cursor: hand;");
+			btnImprimirAsig.setDisable(true);
+			btnImprimirAsig.setVisible(false);
 			llenarListaResponsables();
 			cargarDatos();
 			if(tpRealizadas.isSelected())
@@ -150,7 +152,7 @@ public class AsignacionesInstalaC {
 			}
 			//pasar por parametro la lista de inspecciones a realzar para ir aminorando en el listado
 			Context.getInstance().setListaLiquidaciones(tvNuevosAsig.getItems());
-			helper.abrirPantallaModal("/asignaciones/AsignacionListadoLiquidaciones.fxml","Listado de Órdenes de Liquidación", Context.getInstance().getStage());
+			helper.abrirPantallaModal("/asignaciones/AsignacionListadoLiquidaciones.fxml","Listado de Instalaciones Pendientes", Context.getInstance().getStage());
 			
 			if (Context.getInstance().getLiquidaciones() != null) {
 				LiquidacionOrden ordenAgregar = Context.getInstance().getLiquidaciones();
@@ -259,7 +261,7 @@ public class AsignacionesInstalaC {
 			if(tpNuevas.isSelected()) {
 				LiquidacionOrden ordenQuitar = tvNuevosAsig.getSelectionModel().getSelectedItem();
 				if(ordenQuitar == null) {
-					helper.mostrarAlertaError("Debe Seleccionar una Asignación", Context.getInstance().getStage());
+					helper.mostrarAlertaError("Debe Seleccionar un registro", Context.getInstance().getStage());
 					return;
 				}
 				tvNuevosAsig.getItems().remove(ordenQuitar);
@@ -427,5 +429,4 @@ public class AsignacionesInstalaC {
 			System.out.println(ex.getMessage());
 		}
 	}
-
 }

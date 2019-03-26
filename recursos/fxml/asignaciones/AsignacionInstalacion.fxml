@@ -49,12 +49,15 @@
                   <Button fx:id="btnImprimirAsig" mnemonicParsing="false" onAction="#imprimirAsignacion" text="Imprimir" />
                   <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1">
                      <children>
-                        <Button fx:id="btnAsignarAsig" alignment="BOTTOM_CENTER" contentDisplay="TOP" mnemonicParsing="false" onAction="#buscarOrdenEmitida" prefHeight="60.0" prefWidth="65.0" styleClass="botonAsignacion" text="Asignar">
+                        <Button fx:id="btnAsignarAsig" alignment="BOTTOM_CENTER" contentDisplay="TOP" mnemonicParsing="false" onAction="#buscarOrdenEmitida" prefHeight="50.0" prefWidth="65.0" styleClass="botonAgregar" text="Agregar">
                            <HBox.margin>
-                              <Insets right="15.0" />
+                              <Insets right="30.0" />
                            </HBox.margin>
                         </Button>
-                        <Button fx:id="btnQuitarAsig" alignment="BOTTOM_CENTER" contentDisplay="TOP" mnemonicParsing="false" onAction="#quitarAsignacion" prefHeight="60.0" prefWidth="65.0" styleClass="botonQuitarAsignacion" text="Quitar" />
+                        <Button fx:id="btnQuitarAsig" alignment="BOTTOM_CENTER" contentDisplay="TOP" mnemonicParsing="false" onAction="#quitarAsignacion" prefHeight="49.0" prefWidth="65.0" styleClass="botonQuitarR" text="Quitar">
+                           <HBox.margin>
+                              <Insets right="20.0" />
+                           </HBox.margin></Button>
                      </children>
                   </HBox>
                </children>

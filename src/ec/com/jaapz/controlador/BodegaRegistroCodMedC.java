@@ -47,8 +47,10 @@ public class BodegaRegistroCodMedC {
 	IngresoDAO ingresoDAO = new IngresoDAO();
 	MedidorDAO medidorDAO = new MedidorDAO();
 	ControllerHelper helper = new ControllerHelper();
+	
 	public void initialize() {
 		try {
+			bloquear();
 			tvDatos.setEditable(true);
 			btnBuscar.setStyle("-fx-cursor: hand;");
 			btnGrabar.setStyle("-fx-cursor: hand;");
@@ -66,6 +68,16 @@ public class BodegaRegistroCodMedC {
 			System.out.println(ex.getMessage());
 		}
 	}
+	
+	void bloquear() {
+		txtNumFactura.setEditable(false);
+		txtRUC.setEditable(false);
+		txtCantidadMedidores.setEditable(false);
+		txtFechaIngreso.setEditable(false);
+		txtProveedor.setEditable(false);
+		txtTotal.setEditable(false);
+	}
+	
 	private void recuperarFactura(String numIngreso) {
 		try{		
 			List<Ingreso> listaIngreso = new ArrayList<Ingreso>();
@@ -229,6 +241,8 @@ public class BodegaRegistroCodMedC {
 
 	public void grabar() {
 		try {
+			if(validarDatos() == false)
+				return;
 			Optional<ButtonType> result = helper.mostrarAlertaConfirmacion("Se actualizaran los registros de los medidores \nDesea continuar?",Context.getInstance().getStage());
 			if(result.get() == ButtonType.OK){
 				medidorDAO.getEntityManager().getTransaction().begin();
@@ -241,6 +255,26 @@ public class BodegaRegistroCodMedC {
 			}
 		}catch(Exception ex) {
 			System.out.println(ex.getMessage());
+		}
+	}
+	
+	boolean validarDatos() {
+		try {
+			if(txtNumFactura.getText().equals("")) {
+				helper.mostrarAlertaAdvertencia("No existe Nº Factura asociada", Context.getInstance().getStage());
+				txtNumFactura.requestFocus();
+				return false;
+			}
+						
+			if(tvDatos.getItems().isEmpty()) {
+				helper.mostrarAlertaAdvertencia("No contiene rubros", Context.getInstance().getStage());
+				tvDatos.requestFocus();
+				return false;
+			}
+			return true;
+		}catch(Exception ex) {
+			System.out.println(ex.getMessage());
+			return false;
 		}
 	}
 	

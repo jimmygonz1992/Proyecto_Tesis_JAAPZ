@@ -24,8 +24,7 @@
 	c.telefono,
 	(p.total_pagar - sum(coalesce(pa.valor,0))) as deuda,
 	p.id_planilla,
-	p.fecha, m.codigo,
-	$P{usuario_crea} as usuarioCrea
+	p.fecha, m.codigo
 FROM cliente c inner join cuenta_cliente cc on c.id_cliente=cc.id_cliente
 	inner join medidor m on m.id_medidor=cc.id_medidor
 	right join planilla p on cc.id_cuenta=p.id_cuenta
@@ -65,9 +64,6 @@ order by cliente asc]]>
 	<field name="codigo" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.label" value="codigo"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="medidor"/>
-	</field>
-	<field name="usuariocrea" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.label" value="usuariocrea"/>
 	</field>
 	<variable name="deuda1" class="java.lang.Double" calculation="Sum">
 		<variableExpression><![CDATA[$F{deuda}]]></variableExpression>
@@ -342,7 +338,7 @@ order by cliente asc]]>
 		</band>
 	</detail>
 	<pageFooter>
-		<band height="19" splitType="Stretch">
+		<band height="38" splitType="Stretch">
 			<staticText>
 				<reportElement x="0" y="2" width="98" height="13" uuid="020c756f-f678-4510-b430-dad3a56dee62"/>
 				<textElement textAlignment="Left">
@@ -375,7 +371,7 @@ order by cliente asc]]>
 				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="107" y="1" width="83" height="14" uuid="01cd1e80-9349-49a2-a74e-c0ec14191c7d"/>
+				<reportElement x="108" y="2" width="100" height="13" uuid="c23efca7-02bb-4cc5-896b-c5d702381607"/>
 				<textFieldExpression><![CDATA[$P{usuario_crea}]]></textFieldExpression>
 			</textField>
 		</band>

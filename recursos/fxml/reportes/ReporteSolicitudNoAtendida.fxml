@@ -27,8 +27,7 @@
                   <Font name="Arial Bold" size="14.0" />
                </font>
             </Label>
-            <Button fx:id="btnVisualizar" mnemonicParsing="false" onAction="#visualizarReporte" prefHeight="50.0" prefWidth="100.0" text="Visualizar" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
-            <Button fx:id="btnImprimir" mnemonicParsing="false" onAction="#imprimirReporte" prefHeight="50.0" prefWidth="100.0" text="Imprimir" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+            <Button fx:id="btnVisualizar" alignment="BOTTOM_CENTER" contentDisplay="TOP" mnemonicParsing="false" onAction="#visualizarReporte" prefHeight="50.0" prefWidth="100.0" styleClass="botonImprimir" text="Visualizar" textAlignment="CENTER" wrapText="true" GridPane.columnSpan="4" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
          </children>
       </GridPane>
    </children>

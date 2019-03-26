@@ -33,37 +33,31 @@
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.columnSpan="4">
                <children>
                   <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="30.0" prefWidth="341.0" text="CONVENIOS DE PAGO">
-                     <font>
-                        <Font name="Arial Bold" size="24.0" />
-                     </font>
+                     <font><Font name="Arial Bold" size="24.0" /></font>
                   </Label>
                </children>
             </HBox>
-            <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="2">
+            <HBox prefHeight="100.0" prefWidth="200.0" style="-fx-border-color: #bbc8d0; -fx-border-width: 1px; -fx-background-radius: 6; -fx-max-height: 600; -fx-max-width: 1500; -fx-min-height: 10; -fx-min-width: 10" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="2">
                <children>
                   <GridPane prefHeight="88.0" prefWidth="674.0" HBox.hgrow="ALWAYS">
                      <children>
                         <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
                            <children>
                               <Label prefHeight="20.0" prefWidth="83.0" text="Id Cuenta:">
-                                 <font>
-                                    <Font name="System Bold" size="14.0" />
-                                 </font>
+                                 <font><Font name="System Bold" size="14.0" /></font>
                               </Label>
                            </children>
                         </HBox>
                         <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1">
                            <children>
                               <TextField fx:id="txtidCuenta" prefHeight="25.0" prefWidth="87.0" />
-                              <Button fx:id="btnBuscar" mnemonicParsing="false" onAction="#buscarCliente" prefHeight="25.0" prefWidth="50.0" text="..." />
+                              <Button fx:id="btnBuscar" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#buscarCliente" prefHeight="25.0" prefWidth="50.0" styleClass="botonBuscar" />
                            </children>
                         </HBox>
                         <HBox alignment="CENTER_LEFT" prefHeight="27.0" prefWidth="65.0" GridPane.columnIndex="3" GridPane.rowIndex="1">
                            <children>
                               <Label prefHeight="20.0" prefWidth="83.0" text="Cliente:">
-                                 <font>
-                                    <Font name="System Bold" size="14.0" />
-                                 </font>
+                                 <font><Font name="System Bold" size="14.0" /></font>
                               </Label>
                            </children>
                         </HBox>
@@ -75,27 +69,21 @@
                         <HBox alignment="CENTER_LEFT" prefHeight="27.0" prefWidth="65.0" GridPane.columnIndex="3">
                            <children>
                               <Label prefHeight="20.0" prefWidth="135.0" text="Cod. Medidor:">
-                                 <font>
-                                    <Font name="System Bold" size="14.0" />
-                                 </font>
+                                 <font><Font name="System Bold" size="14.0" /></font>
                               </Label>
                            </children>
                         </HBox>
                         <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.columnSpan="2">
                            <children>
                               <TextField fx:id="txtMedidor">
-                                 <HBox.margin>
-                                    <Insets />
-                                 </HBox.margin>
+                                 <HBox.margin><Insets /></HBox.margin>
                               </TextField>
                            </children>
                         </HBox>
                         <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="1">
                            <children>
                               <Label prefHeight="20.0" prefWidth="83.0" text="Cédula:">
-                                 <font>
-                                    <Font name="System Bold" size="14.0" />
-                                 </font>
+                                 <font><Font name="System Bold" size="14.0" /></font>
                               </Label>
                            </children>
                         </HBox>
@@ -122,28 +110,26 @@
                   </GridPane>
                </children>
             </HBox>
-            <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="5">
+            <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="5" GridPane.rowSpan="2">
                <children>
                   <TableView fx:id="tvPlanillasImpagas" prefHeight="405.0" prefWidth="674.0" />
                </children>
             </HBox>
-            <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="6">
+            <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" style="-fx-border-color: #bbc8d0; -fx-border-width: 1px; -fx-background-radius: 6; -fx-max-height: 600; -fx-max-width: 1500; -fx-min-height: 10; -fx-min-width: 10" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.halignment="RIGHT" GridPane.rowIndex="8">
                <children>
-                  <GridPane prefHeight="34.0" prefWidth="327.0" HBox.hgrow="ALWAYS">
+                  <GridPane alignment="CENTER_RIGHT" prefHeight="34.0" prefWidth="327.0" HBox.hgrow="ALWAYS">
                     <columnConstraints>
-                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="159.0" minWidth="10.0" prefWidth="89.0" />
-                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="236.0" minWidth="10.0" prefWidth="161.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="323.0" minWidth="10.0" prefWidth="323.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="236.0" minWidth="10.0" prefWidth="72.0" />
                     </columnConstraints>
                     <rowConstraints>
                       <RowConstraints maxHeight="36.0" minHeight="10.0" prefHeight="26.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
-                        <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
+                        <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0">
                            <children>
-                              <Label prefHeight="20.0" prefWidth="149.0" text="Total Deuda:">
-                                 <font>
-                                    <Font name="System Bold" size="14.0" />
-                                 </font>
+                              <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefHeight="20.0" prefWidth="149.0" text="Total Deuda:">
+                                 <font><Font name="System Bold" size="14.0" /></font>
                               </Label>
                            </children>
                         </HBox>
@@ -156,16 +142,14 @@
                   </GridPane>
                </children>
             </HBox>
-            <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="2">
+            <HBox prefHeight="100.0" prefWidth="200.0" style="-fx-border-color: #bbc8d0; -fx-border-width: 1px; -fx-background-radius: 6; -fx-max-height: 600; -fx-max-width: 1500; -fx-min-height: 10; -fx-min-width: 10" GridPane.columnIndex="4" GridPane.rowIndex="2">
                <children>
                   <GridPane prefHeight="88.0" prefWidth="674.0" HBox.hgrow="ALWAYS">
                      <children>
                         <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnSpan="2">
                            <children>
                               <Label prefHeight="20.0" prefWidth="140.0" text="Ingrese # de meses:">
-                                 <font>
-                                    <Font name="System Bold" size="14.0" />
-                                 </font>
+                                 <font><Font name="System Bold" size="14.0" /></font>
                               </Label>
                            </children>
                         </HBox>
@@ -174,10 +158,9 @@
                               <TextField fx:id="txtNumMeses" />
                            </children>
                         </HBox>
-                        <Button fx:id="btnGenerar" mnemonicParsing="false" onAction="#generarDetalleConvenio" text="Generar" GridPane.columnIndex="4">
-                           <GridPane.margin>
-                              <Insets left="10.0" />
-                           </GridPane.margin>
+                        <Button fx:id="btnGenerar" mnemonicParsing="false" onAction="#generarDetalleConvenio" styleClass="botonAceptarPago" text="Generar" GridPane.columnIndex="4">
+                           <GridPane.margin><Insets left="10.0" /></GridPane.margin>
+                           <font><Font name="System Bold" size="12.0" /></font>
                         </Button>
                      </children>
                      <columnConstraints>
@@ -196,42 +179,38 @@
                   </GridPane>
                </children>
             </HBox>
-            <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="4" GridPane.rowSpan="2">
+            <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="5" GridPane.rowSpan="2">
                <children>
                   <TableView fx:id="tvDetalleConvenio" prefHeight="405.0" prefWidth="674.0" />
                </children>
             </HBox>
-            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="8">
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" style="-fx-border-color: #bbc8d0; -fx-border-width: 1px; -fx-background-radius: 6; -fx-max-height: 600; -fx-max-width: 1500; -fx-min-height: 10; -fx-min-width: 10" GridPane.columnIndex="4" GridPane.rowIndex="8">
                <children>
-                  <Button fx:id="btnGrabar" alignment="BOTTOM_CENTER" contentDisplay="TOP" mnemonicParsing="false" onAction="#grabarConvenio" prefHeight="58.0" prefWidth="67.0" styleClass="botonGrabar" text="Grabar" />
-                  <Button fx:id="btnLimpiar" alignment="BOTTOM_CENTER" contentDisplay="TOP" mnemonicParsing="false" onAction="#limpiarDatos" prefHeight="58.0" prefWidth="67.0" styleClass="botonLimpiar" text="Limpiar">
-                     <HBox.margin>
-                        <Insets left="10.0" />
-                     </HBox.margin>
+                  <Button fx:id="btnGrabar" alignment="BOTTOM_CENTER" contentDisplay="TOP" mnemonicParsing="false" onAction="#grabarConvenio" prefHeight="58.0" prefWidth="67.0" styleClass="botonGrabar" text="Grabar">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font></Button>
+                  <Button fx:id="btnLimpiar" alignment="BOTTOM_CENTER" contentDisplay="TOP" mnemonicParsing="false" onAction="#limpiarDatos" prefHeight="58.0" prefWidth="67.0" styleClass="botonNuevo" text="Nuevo">
+                     <HBox.margin><Insets left="10.0" /></HBox.margin>
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
                   </Button>
                </children>
             </HBox>
             <HBox alignment="BOTTOM_CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="4">
                <children>
                   <Label alignment="BOTTOM_CENTER" contentDisplay="BOTTOM" prefHeight="8.0" prefWidth="163.0" text="Planillas Impagas">
-                     <font>
-                        <Font name="System Bold" size="12.0" />
-                     </font>
-                     <HBox.margin>
-                        <Insets />
-                     </HBox.margin>
+                     <font><Font name="System Bold" size="12.0" /></font>
+                     <HBox.margin><Insets /></HBox.margin>
                   </Label>
                </children>
             </HBox>
-            <HBox alignment="BOTTOM_CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="3">
+            <HBox alignment="BOTTOM_CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="4">
                <children>
                   <Label alignment="BOTTOM_CENTER" contentDisplay="BOTTOM" prefHeight="17.0" prefWidth="249.0" text="Detalle de Convenio - Forma de Pago">
-                     <font>
-                        <Font name="System Bold" size="12.0" />
-                     </font>
-                     <HBox.margin>
-                        <Insets />
-                     </HBox.margin>
+                     <font><Font name="System Bold" size="12.0" /></font>
+                     <HBox.margin><Insets /></HBox.margin>
                   </Label>
                </children>
             </HBox>

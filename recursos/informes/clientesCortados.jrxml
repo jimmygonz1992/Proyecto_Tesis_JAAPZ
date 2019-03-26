@@ -3,6 +3,8 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="clientesCortados" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="c4bcb11e-ab82-425b-a84e-4076309b3e01">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="conectionBDJAAPZ"/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="214"/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="779"/>
 	<parameter name="usuario_crea" class="java.lang.String"/>
 	<queryString language="SQL">
 		<![CDATA[SELECT cc.id_cuenta, c.cedula, c.nombre||' '|| c.apellido as cliente, m.codigo, cc.direccion, cc.cortado
@@ -12,7 +14,7 @@ FROM cuenta_cliente cc,
 WHERE 
 	 cc.id_cliente = c.id_cliente and
 	 cc.id_medidor = m.id_medidor and
-	 cc.cortado = 'true'
+	 cc.cortado = 'true' and cc.cortado <> null
 order by
 	cc.id_cuenta]]>
 	</queryString>
