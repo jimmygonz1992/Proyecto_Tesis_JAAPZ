@@ -53,8 +53,6 @@ public class BodegaSalidaRubroInstC {
 	@FXML private TextField txtModelo;
 	@FXML private TextField txtPrecioMed;
 	
-	@FXML private TextField txtSubtotal;
-	@FXML private TextField txtDescuento;
 	@FXML private TextField txtTotal;
 	@FXML private TextArea txtObservaciones;
 	@FXML private TextField txtEstadoValorInst;
@@ -75,14 +73,16 @@ public class BodegaSalidaRubroInstC {
 	
 	public void initialize() {
 		try {
+			dtpFecha.setValue(LocalDate.now());
+			txtUsuario.setText(Encriptado.Desencriptar(String.valueOf(Context.getInstance().getUsuariosC().getUsuario())));
+			bloquear();
+			
 			btnBuscarLiquidacion.setStyle("-fx-cursor: hand;");
 			btnBuscarLiquidCuenta.setStyle("-fx-cursor: hand;");
 			btnEliminar.setStyle("-fx-cursor: hand;");
 			btnGrabar.setStyle("-fx-cursor: hand;");
 			btnNuevo.setStyle("-fx-cursor: hand;");
 			
-			
-			dtpFecha.setValue(LocalDate.now());
 			//validar solo numeros
 			txtIdCuenta.textProperty().addListener(new ChangeListener<String>() {
 				@Override
@@ -118,9 +118,6 @@ public class BodegaSalidaRubroInstC {
 					txtObservaciones.setText(cadena);
 				}
 			});
-			
-			bloquear();
-			txtUsuario.setText(Encriptado.Desencriptar(String.valueOf(Context.getInstance().getUsuariosC().getUsuario())));
 		}catch(Exception ex) {
 			System.out.println(ex.getMessage());
 		}
@@ -136,10 +133,11 @@ public class BodegaSalidaRubroInstC {
 		txtMarca.setEditable(false);
 		txtModelo.setEditable(false);
 		txtPrecioMed.setEditable(false);
-		txtSubtotal.setEditable(false);
-		txtDescuento.setEditable(false);
 		txtTotal.setEditable(false);
 		txtEstadoValorInst.setEditable(false);
+		txtIdCuenta.setEditable(false);
+		txtIdLiquid.setEditable(false);
+		txtUsuario.setEditable(false);
 	}
 	
 	public void buscarLiqCuenta() {
@@ -281,7 +279,6 @@ public class BodegaSalidaRubroInstC {
 	public void sumarDatos() {
 		try {
 			if (tvDatos.getItems().isEmpty()) {
-				txtSubtotal.setText("0.0");
 				txtTotal.setText("0.0");
 			}else {
 				double subtotal = 0;
@@ -340,13 +337,7 @@ public class BodegaSalidaRubroInstC {
 				txtApellidos.requestFocus();
 				return false;
 			}
-			
-			/*if(txtTelefono.getText().equals("")) {
-				helper.mostrarAlertaAdvertencia("Ingresar Teléfono de Cliente", Context.getInstance().getStage());
-				txtTelefono.requestFocus();
-				return false;
-			}*/
-			
+					
 			if(txtIdLiquid.getText().equals("")) {
 				helper.mostrarAlertaAdvertencia("Ingresar ID de Liquidación", Context.getInstance().getStage());
 				txtIdLiquid.requestFocus();

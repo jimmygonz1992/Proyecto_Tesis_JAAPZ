@@ -61,7 +61,6 @@ public class InstalacionesAtencionSolicC {
 	
 	@FXML private Button btnGrabar;
 	@FXML private Button btnNuevo;
-	@FXML private Button btnImprimir;
 	
 	ControllerHelper helper = new ControllerHelper();
 	Instalacion instalacionSeleccionada = new Instalacion();
@@ -74,22 +73,18 @@ public class InstalacionesAtencionSolicC {
 		try {
 			btnBuscar.setStyle("-fx-cursor: hand;");
 			btnGrabar.setStyle("-fx-cursor: hand;");
-			btnImprimir.setStyle("-fx-cursor: hand;");
 			btnNuevo.setStyle("-fx-cursor: hand;");
 			cboEstadoInstalacion.setStyle("-fx-cursor: hand;");
-			
 			
 			dtpFecha.setValue(LocalDate.now());
 			bloquear();
 			llenarCombo();
 			Encriptado encriptado = new Encriptado();
-			btnImprimir.setStyle("-fx-graphic: url('/imprimir.png');-fx-cursor: hand;");
 			txtUsuarioCreaInst.setText(encriptado.Desencriptar(String.valueOf(Context.getInstance().getUsuariosC().getUsuario())));
 			//validar solo numeros
 			txtIdSolicitud.textProperty().addListener(new ChangeListener<String>() {
 				@Override
-				public void changed(ObservableValue<? extends String> observable, String oldValue, 
-						String newValue) {
+				public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
 					if (newValue.matches("\\d*")) {
 						//int value = Integer.parseInt(newValue);
 					} else {
@@ -122,8 +117,7 @@ public class InstalacionesAtencionSolicC {
     		cboEstadoInstalacion.setItems(listaEstado);
     		cboEstadoInstalacion.setPromptText("Seleccione Estado");
     		cboEstadoInstalacion.setStyle("-fx-background-color: #1ec6ff");
-    	}catch(Exception ex) {
-    		
+    	}catch(Exception ex) {	
     		System.out.println(ex.getMessage());
     	}
     }
@@ -201,7 +195,6 @@ public class InstalacionesAtencionSolicC {
 				return false;
 			}
 			
-			
 			if(txtFechaSolic.getText().equals("")) {
 				helper.mostrarAlertaAdvertencia("No existe fecha de Orden de Liquidación", Context.getInstance().getStage());
 				txtFechaSolic.requestFocus();
@@ -239,13 +232,13 @@ public class InstalacionesAtencionSolicC {
 			}
 			
 			if(txtCodigoMedidor.getText().equals("")) {
-				helper.mostrarAlertaAdvertencia("No medidor asignado", Context.getInstance().getStage());
+				helper.mostrarAlertaAdvertencia("Medidor no asignado", Context.getInstance().getStage());
 				txtCodigoMedidor.requestFocus();
 				return false;
 			}
 			
 			if(txtObservaciones.getText().equals("")) {
-				helper.mostrarAlertaAdvertencia("No medidor asignado", Context.getInstance().getStage());
+				helper.mostrarAlertaAdvertencia("Ingrese alguna observación o novedad", Context.getInstance().getStage());
 				txtCodigoMedidor.requestFocus();
 				return false;
 			}
@@ -264,7 +257,7 @@ public class InstalacionesAtencionSolicC {
 	
 	public void buscarSolicitudInst() {
 		try{
-			helper.abrirPantallaModal("/instalaciones/ListadoOrdenLiquidaciones.fxml","Listado de Órdenes de Liquidaciones", Context.getInstance().getStage());
+			helper.abrirPantallaModal("/instalaciones/ListadoOrdenLiquidaciones.fxml","Listado de Órdenes de Liquidación", Context.getInstance().getStage());
 			if (Context.getInstance().getInstalacion() != null) {
 				instalacionSeleccionada = Context.getInstance().getInstalacion();
 				llenarDatosLiquidacion(instalacionSeleccionada);
@@ -284,7 +277,6 @@ public class InstalacionesAtencionSolicC {
 			txtCedula.setText(instalacionSel.getCuentaCliente().getCliente().getCedula());
 			txtCliente.setText(instalacionSel.getCuentaCliente().getCliente().getNombre() + " " + instalacionSel.getCuentaCliente().getCliente().getApellido());
 			txtUsuarioSolic.setText(String.valueOf(instalacionSel.getUsuarioCrea()));
-			
 			txtCodigoMedidor.setText(instalacionSel.getSolInspeccionIn().getLiquidacionOrdens().get(0).getMedidor().getCodigo());
 			txtMarca.setText(instalacionSel.getSolInspeccionIn().getLiquidacionOrdens().get(0).getMedidor().getMarca());
 			txtModelo.setText(instalacionSel.getSolInspeccionIn().getLiquidacionOrdens().get(0).getMedidor().getModelo());
@@ -353,10 +345,5 @@ public class InstalacionesAtencionSolicC {
 		
 		tvDatos.getColumns().addAll(descripcionColum, cantidadColum, precioColum, totalColum);
 		tvDatos.setItems(datos);
-	}
-
-	
-	public void imprimir() {
-		
 	}
 }

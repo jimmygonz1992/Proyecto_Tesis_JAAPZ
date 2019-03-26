@@ -110,8 +110,7 @@ public class BodegaIngresoRubrosC {
 			//validar solo numeros
 			txtRuc.textProperty().addListener(new ChangeListener<String>() {
 				@Override
-				public void changed(ObservableValue<? extends String> observable, String oldValue, 
-						String newValue) {
+				public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
 					if (newValue.matches("\\d*")) {
 						//int value = Integer.parseInt(newValue);
 					} else {
@@ -123,8 +122,7 @@ public class BodegaIngresoRubrosC {
 			//validar solo numeros
 			txtCantidadMat.textProperty().addListener(new ChangeListener<String>() {
 				@Override
-				public void changed(ObservableValue<? extends String> observable, String oldValue, 
-						String newValue) {
+				public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
 					if (newValue.matches("\\d*")) {
 						//int value = Integer.parseInt(newValue);
 					} else {
@@ -159,7 +157,18 @@ public class BodegaIngresoRubrosC {
 					}
 				}
 			});
-
+			int maxLengthRuc = 13;
+			//validar solo 13 valores
+			txtRuc.textProperty().addListener(new ChangeListener<String>() {
+				@Override
+				public void changed(final ObservableValue<? extends String> ov, final String oldValue, final String newValue) {
+					if (txtRuc.getText().length() > maxLengthRuc) {
+						String s = txtRuc.getText().substring(0, maxLengthRuc);
+						txtRuc.setText(s);
+					}
+				}
+			});			
+			
 			//recuperar Proveedor
 			txtRuc.setOnKeyPressed(new EventHandler<KeyEvent>(){
 				@Override
@@ -1131,7 +1140,7 @@ public class BodegaIngresoRubrosC {
 
 	public boolean validarRucPersonaNatural(String numero) {
 		try {
-			validarInicial(numero, 13);
+			//validarInicial(numero, 13);
 			validarCodigoProvincia(numero.substring(0, 2));
 			validarTercerDigito(String.valueOf(numero.charAt(2)), Constantes.getTipoRucNatural());
 			validarCodigoEstablecimiento(numero.substring(10, 13));
@@ -1145,7 +1154,7 @@ public class BodegaIngresoRubrosC {
 		return true;
 	}
 
-	protected boolean validarInicial(String numero, int caracteres){   
+	/*protected boolean validarInicial(String numero, int caracteres){   
 		if(txtRuc.getText().equals("")) {
 			helper.mostrarAlertaAdvertencia("Ingresar RUC", Context.getInstance().getStage());
 			limpiarProveedor();
@@ -1162,11 +1171,11 @@ public class BodegaIngresoRubrosC {
 		}
 
 		return true;
-	}
+	}*/
 
 	protected boolean validarCodigoProvincia(String numero){
 		if (Integer.parseInt(numero) < 0 || Integer.parseInt(numero) > 24) {
-			helper.mostrarAlertaAdvertencia("RUC Inválido", Context.getInstance().getStage());
+			//helper.mostrarAlertaAdvertencia("RUC Inválido", Context.getInstance().getStage());
 			limpiarProveedor();
 			txtRuc.setText("");
 			txtRuc.requestFocus();
@@ -1177,7 +1186,7 @@ public class BodegaIngresoRubrosC {
 
 	protected boolean validarCodigoEstablecimiento(String numero){
 		if (Integer.parseInt(numero) < 1) {
-			helper.mostrarAlertaAdvertencia("RUC Inválido", Context.getInstance().getStage());
+			//helper.mostrarAlertaAdvertencia("RUC Inválido", Context.getInstance().getStage());
 			limpiarProveedor();
 			txtRuc.setText("");
 			txtRuc.requestFocus();

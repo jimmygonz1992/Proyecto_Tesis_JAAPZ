@@ -131,8 +131,11 @@
             </Label>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" style="-fx-border-color: #bbc8d0; -fx-border-width: 1px; -fx-background-radius: 6; -fx-max-height: 600; -fx-max-width: 1500; -fx-min-height: 10; -fx-min-width: 10" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.halignment="CENTER" GridPane.rowIndex="12" GridPane.rowSpan="2" GridPane.valignment="CENTER">
                <children>
-                  <Button fx:id="btnResultados" alignment="BOTTOM_CENTER" contentDisplay="TOP" mnemonicParsing="false" onAction="#visualizarResultados" prefHeight="60.0" prefWidth="100.0" text="Resultados" textAlignment="CENTER" wrapText="true" />
-                  <Button fx:id="btnCerrarCiclo" alignment="BOTTOM_CENTER" contentDisplay="TOP" mnemonicParsing="false" onAction="#cerrarCiclo" prefHeight="60.0" prefWidth="100.0" styleClass="botonCierreCiclo" text="Cerrar ciclo" textAlignment="CENTER">
+                  <Button fx:id="btnResultados" alignment="BOTTOM_CENTER" contentDisplay="TOP" mnemonicParsing="false" onAction="#visualizarResultados" prefHeight="60.0" prefWidth="80.0" styleClass="botonResultados" text="Resultados" textAlignment="CENTER" wrapText="true">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font></Button>
+                  <Button fx:id="btnCerrarCiclo" alignment="BOTTOM_CENTER" contentDisplay="TOP" mnemonicParsing="false" onAction="#cerrarCiclo" prefHeight="60.0" prefWidth="80.0" styleClass="botonCierreCiclo" text="Cerrar ciclo" textAlignment="CENTER">
                      <HBox.margin>
                         <Insets left="10.0" />
                      </HBox.margin>

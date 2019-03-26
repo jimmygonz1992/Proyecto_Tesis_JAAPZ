@@ -95,8 +95,6 @@ public class AsignacionListadoLiquidacionC {
 				}
 			}
 			
-			
-			
 			ObservableList<LiquidacionOrden> datosReq = FXCollections.observableArrayList();
 			datosReq.setAll(listaLiquidaciones);
 

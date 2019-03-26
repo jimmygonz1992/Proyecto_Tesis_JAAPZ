@@ -31,7 +31,7 @@ public class AsignacionesInstRepC {
 		try {
 			ObservableList<TipoTrabajo> listaEstado = FXCollections.observableArrayList(TipoTrabajo.values()); 
 			cboTipoTrabajo.setItems(listaEstado);
-			cboTipoTrabajo.setPromptText("Seleccione Estado");
+			cboTipoTrabajo.setPromptText("Seleccionar opción");
     	}catch(Exception ex) {
     		System.out.println(ex.getMessage());
     	}
@@ -40,7 +40,7 @@ public class AsignacionesInstRepC {
 	public void cargarContenido() {
 		try {
 			if(cboTipoTrabajo.getSelectionModel().getSelectedIndex() == -1) {
-				helper.mostrarAlertaAdvertencia("Debe seleccionar tipo de solicitud", Context.getInstance().getStage());
+				helper.mostrarAlertaAdvertencia("Debe seleccionar tipo de trabajo", Context.getInstance().getStage());
 				return;
 			}
 			if(cboTipoTrabajo.getSelectionModel().getSelectedIndex() == 0) { // es una solicitud de inspeccion
