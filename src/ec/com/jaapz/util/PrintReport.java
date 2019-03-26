@@ -48,7 +48,6 @@ public class PrintReport {
 	public void imprimirReporte() {
 		try {
 			JasperPrintManager.printReport(reportFilled, false);
-			
 		}catch(Exception ex) {
 			System.out.println(ex.getMessage());
 		}

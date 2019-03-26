@@ -44,7 +44,7 @@ public class ReporteLecturasC {
 			btnImprimir.setOnMouseClicked(new EventHandler<Event>() {
 				@Override
 				public void handle(Event event) {
-					
+					imprimir();
 				}
 			});
 		}catch(Exception ex) {
@@ -53,6 +53,14 @@ public class ReporteLecturasC {
 	}
 	private void visualizar() {
 		try {
+			if(cboAnio.getSelectionModel().getSelectedItem() == null) {
+				helper.mostrarAlertaAdvertencia("Seleccione año", Context.getInstance().getStage());
+				return;
+			}
+			if(cboMes.getSelectionModel().getSelectedItem() == null) {
+				helper.mostrarAlertaAdvertencia("Seleccione mes", Context.getInstance().getStage());
+				return;
+			}
 			List<AperturaLectura> listaApertura = aperturaDAO.getAperturaAnioMes(cboAnio.getSelectionModel().getSelectedItem().getIdAnio(), cboMes.getSelectionModel().getSelectedItem().getIdMes());
 			if(listaApertura.size() <= 0) {
 				helper.mostrarAlertaAdvertencia("No se ha registrado apertura en la fecha seleccionada", Context.getInstance().getStage());
@@ -65,7 +73,34 @@ public class ReporteLecturasC {
 			param.put("ID_MES", cboMes.getSelectionModel().getSelectedItem().getIdMes());
 			PrintReport reporte = new PrintReport();
 			reporte.crearReporte("/recursos/informes/reporteLecturas.jasper", anioDAO, param);
-			reporte.showReport("Nómina de clientes");
+			reporte.showReport("Listado de reporte de lecturas");
+		}catch(Exception ex) {
+			System.out.println(ex.getMessage());
+		}
+	}
+	private void imprimir() {
+		try {
+			if(cboAnio.getSelectionModel().getSelectedItem() == null) {
+				helper.mostrarAlertaAdvertencia("Seleccione año", Context.getInstance().getStage());
+				return;
+			}
+			if(cboMes.getSelectionModel().getSelectedItem() == null) {
+				helper.mostrarAlertaAdvertencia("Seleccione mes", Context.getInstance().getStage());
+				return;
+			}
+			List<AperturaLectura> listaApertura = aperturaDAO.getAperturaAnioMes(cboAnio.getSelectionModel().getSelectedItem().getIdAnio(), cboMes.getSelectionModel().getSelectedItem().getIdMes());
+			if(listaApertura.size() <= 0) {
+				helper.mostrarAlertaAdvertencia("No se ha registrado apertura en la fecha seleccionada", Context.getInstance().getStage());
+				return;
+			}
+			Map<String, Object> param = new HashMap<String, Object>();
+			param.put("ANIO", cboAnio.getSelectionModel().getSelectedItem().getDescripcion());
+			param.put("MES", cboMes.getSelectionModel().getSelectedItem().getDescripcion());
+			param.put("ID_ANIO",cboAnio.getSelectionModel().getSelectedItem().getIdAnio());
+			param.put("ID_MES", cboMes.getSelectionModel().getSelectedItem().getIdMes());
+			PrintReport reporte = new PrintReport();
+			reporte.crearReporte("/recursos/informes/reporteLecturas.jasper", anioDAO, param);
+			reporte.imprimirReporte();
 		}catch(Exception ex) {
 			System.out.println(ex.getMessage());
 		}

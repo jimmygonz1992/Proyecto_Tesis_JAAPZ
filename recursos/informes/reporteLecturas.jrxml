@@ -1,22 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.6.0.final using JasperReports Library version 6.6.0  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reporteLecturas" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="402b6966-d63a-440c-95d2-915cccbe3002">
-	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="conexion postgresq"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Conexion bd_jaapz postgresql"/>
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="240"/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="752"/>
 	<parameter name="ID_ANIO" class="java.lang.Integer"/>
 	<parameter name="ID_MES" class="java.lang.Integer"/>
 	<parameter name="ANIO" class="java.lang.String"/>
 	<parameter name="MES" class="java.lang.String"/>
 	<queryString>
-		<![CDATA[select concat(c.apellido , ' ' , c.nombre) as nombres,c.cedula,m.codigo,p.lectura_anterior,p.lectura_actual,p.consumo_minimo,p.consumo,pl.subtotal
+		<![CDATA[select case when ap.cantidad_metros is null then 0 else ap.cantidad_metros end as cantidad_metros,
+case when ap.costo_metros is null then 0 else ap.costo_metros end as costo_metros,
+concat(c.apellido , ' ' , c.nombre) as nombres,c.cedula,m.codigo,p.lectura_anterior,p.lectura_actual,p.consumo_minimo,p.consumo,pl.subtotal,
+(select sum(pla.consumo) from planilla pla,apertura_lectura apl where pla.estado = 'A' and apl.id_apertura = pla.id_apertura 
+and apl.id_anio = $P{ID_ANIO} and apl.id_mes = $P{ID_MES}) as total_consumo,
+((select sum(pla.consumo) from planilla pla,apertura_lectura apl where pla.estado = 'A' and apl.id_apertura = pla.id_apertura 
+and apl.id_anio = $P{ID_ANIO} and apl.id_mes = $P{ID_MES} ) - (case when ap.cantidad_metros is null then 0 else ap.cantidad_metros end)) as diferencia
 from cliente c,cuenta_cliente cu,planilla p,apertura_lectura ap,medidor m,planilla_detalle pl
 where c.id_cliente = cu.id_cliente and m.id_medidor = cu.id_medidor and
 pl.id_planilla = p.id_planilla and pl.identificador_operacion = 'LEC' and
 p.id_cuenta = cu.id_cuenta and ap.id_apertura = p.id_apertura
-and ap.id_anio = $P{ID_ANIO}  and ap.id_mes =$P{ID_MES} 
+and ap.id_anio = $P{ID_ANIO} and ap.id_mes = $P{ID_MES} 
 and c.estado = 'A' and cu.estado = 'A' and p.estado = 'A'
 order by c.apellido asc]]>
 	</queryString>
+	<field name="cantidad_metros" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="cantidad_metros"/>
+	</field>
+	<field name="costo_metros" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.label" value="costo_metros"/>
+	</field>
 	<field name="nombres" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.label" value="nombres"/>
 	</field>
@@ -47,6 +61,12 @@ order by c.apellido asc]]>
 	<field name="subtotal" class="java.lang.Double">
 		<property name="com.jaspersoft.studio.field.label" value="subtotal"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="planilla_detalle"/>
+	</field>
+	<field name="total_consumo" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.label" value="total_consumo"/>
+	</field>
+	<field name="diferencia" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.label" value="diferencia"/>
 	</field>
 	<variable name="consumo1" class="java.lang.Integer" calculation="Sum">
 		<variableExpression><![CDATA[$F{consumo}]]></variableExpression>
@@ -137,7 +157,7 @@ order by c.apellido asc]]>
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="140637f4-be8d-4d28-a7ea-7253fa806d28"/>
 				</reportElement>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font isBold="true"/>
+					<font fontName="Arial" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Apellidos y nombres]]></text>
 			</staticText>
@@ -146,7 +166,7 @@ order by c.apellido asc]]>
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="b58e1376-d024-41ad-a285-8b47fe4b3125"/>
 				</reportElement>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font isBold="true"/>
+					<font fontName="Arial" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Lectura anterior]]></text>
 			</staticText>
@@ -155,7 +175,7 @@ order by c.apellido asc]]>
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="82834fc4-330a-450a-9e5a-5c92844ce4f8"/>
 				</reportElement>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font isBold="true"/>
+					<font fontName="Arial" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Lectura actual]]></text>
 			</staticText>
@@ -164,7 +184,7 @@ order by c.apellido asc]]>
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="439f7954-70ec-43f9-90e5-d3ba33028b59"/>
 				</reportElement>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font isBold="true"/>
+					<font fontName="Arial" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Consumo]]></text>
 			</staticText>
@@ -174,6 +194,13 @@ order by c.apellido asc]]>
 			<line>
 				<reportElement x="-3" y="69" width="560" height="1" uuid="d532d46d-0152-40c4-a304-98c24a4517d6"/>
 			</line>
+			<staticText>
+				<reportElement x="0" y="10" width="554" height="24" uuid="4e847119-3d5a-4489-b10d-3643a4f974d3"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[REPORTE DE LECTURAS]]></text>
+			</staticText>
 		</band>
 	</columnHeader>
 	<detail>
@@ -182,24 +209,36 @@ order by c.apellido asc]]>
 				<reportElement x="0" y="0" width="280" height="15" uuid="63a8b3d0-01fd-4160-a8b7-649b41166c41">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="140637f4-be8d-4d28-a7ea-7253fa806d28"/>
 				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{nombres}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="291" y="0" width="80" height="15" uuid="4253709d-757f-418a-af40-2e9f4eaf82be">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="b58e1376-d024-41ad-a285-8b47fe4b3125"/>
 				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{lectura_anterior}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="380" y="0" width="81" height="15" uuid="c9577b3f-9a31-4d40-9b7f-18ba186e7e96">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="82834fc4-330a-450a-9e5a-5c92844ce4f8"/>
 				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{lectura_actual}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="471" y="0" width="80" height="15" uuid="d5e01f00-7e22-4506-a444-1e695eb58ab6">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="439f7954-70ec-43f9-90e5-d3ba33028b59"/>
 				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{consumo}]]></textFieldExpression>
 			</textField>
 			<line>
@@ -214,18 +253,50 @@ order by c.apellido asc]]>
 		<band splitType="Stretch"/>
 	</pageFooter>
 	<summary>
-		<band height="53" splitType="Stretch">
+		<band height="83" splitType="Stretch">
 			<textField>
 				<reportElement x="471" y="1" width="83" height="15" uuid="d0e64895-93cc-4b24-bd9b-0c649f36c4a4"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$V{consumo1}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="380" y="1" width="86" height="15" uuid="b0645c71-eead-4f82-a685-27d2e1bb5996"/>
-				<textElement>
+				<reportElement x="360" y="1" width="106" height="15" uuid="b0645c71-eead-4f82-a685-27d2e1bb5996"/>
+				<textElement verticalAlignment="Middle">
 					<font fontName="Arial" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Total planillado:]]></text>
 			</staticText>
+			<staticText>
+				<reportElement x="360" y="21" width="106" height="15" uuid="1cfb7e3e-c48a-4ea5-b401-c2b17cbae50b"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Ingreso de proveedor:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="470" y="21" width="84" height="15" uuid="405f2933-cd23-414e-8ee2-475d9af38328"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cantidad_metros}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="360" y="38" width="197" height="1" uuid="8993a55f-f90d-48fe-a499-7fc326fe4fb9"/>
+			</line>
+			<staticText>
+				<reportElement x="360" y="41" width="106" height="15" uuid="d1da52ce-b485-4876-99ba-7eeaf99cb385"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Diferencia:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="471" y="39" width="86" height="17" uuid="2ef53ddd-68db-4802-a849-29642fc0e1cb"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{diferencia}]]></textFieldExpression>
+			</textField>
 		</band>
 	</summary>
 </jasperReport>

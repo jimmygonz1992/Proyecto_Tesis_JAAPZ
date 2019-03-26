@@ -16,13 +16,13 @@ import java.util.List;
 @NamedQueries({
 	@NamedQuery(name="Reparacion.findAll", query="SELECT r FROM Reparacion r WHERE r.estado = 'A'"),
 	@NamedQuery(name="Reparacion.buscarIDRepar", query="SELECT r FROM Reparacion r WHERE r.estado = 'A' order by r.idReparacion desc"),
-	
+
 
 	@NamedQuery(name="Reparacion.findAllReparaciones", query="SELECT r FROM Reparacion r "
-		+ "where (lower(r.cuentaCliente.cliente.apellido) like :patron or lower(r.cuentaCliente.cliente.nombre) like :patron "
-		+ "or lower(r.cuentaCliente.cliente.cedula) like :patron) and r.estadoReparacion = 'PENDIENTE' and r.estado = 'A' "
-		+ "order by r.estadoReparacion asc"),
-	
+			+ "where (lower(r.cuentaCliente.cliente.apellido) like :patron or lower(r.cuentaCliente.cliente.nombre) like :patron "
+			+ "or lower(r.cuentaCliente.cliente.cedula) like :patron) and r.estadoReparacion = 'PENDIENTE' and r.estado = 'A' "
+			+ "order by r.estadoReparacion asc"),
+
 	@NamedQuery(name="Reparacion.buscarReparacionPerfilReparaciones", query="SELECT r FROM Reparacion r "
 			+ "where (lower(r.cuentaCliente.cliente.apellido) like :patron or lower(r.cuentaCliente.cliente.nombre) like :patron "
 			+ "or lower(r.cuentaCliente.cliente.cedula) like :patron) and r.estadoReparacion = 'PENDIENTE' "
@@ -32,28 +32,31 @@ import java.util.List;
 			+ "where (lower(r.cuentaCliente.cliente.apellido) like :patron or lower(r.cuentaCliente.cliente.nombre) like :patron "
 			+ "or lower(r.cuentaCliente.cliente.cedula) like :patron) and r.estadoEntrega = 'PENDIENTE' "
 			+ "order by r.idReparacion asc"),
-	
+
 	@NamedQuery(name="Reparacion.buscarReparacionListadoSalidaPerfilReparaciones", query="SELECT r FROM Reparacion r "
 			+ "where (lower(r.cuentaCliente.cliente.apellido) like :patron or lower(r.cuentaCliente.cliente.nombre) like :patron "
 			+ "or lower(r.cuentaCliente.cliente.cedula) like :patron) and r.estadoEntrega = 'PENDIENTE'"
 			+ "and r.usuarioCrea = :idPerfilUsuario order by r.idReparacion asc"),
 	//esta consulta es provisional voy a hacer lo mismo q hice para editar una orden de liquidacion
 	@NamedQuery(name="Reparacion.recuperaReparaciones", query="SELECT r FROM Reparacion r WHERE (r.idReparacion = (:idReparacion) and r.estado = 'A')"),
-		
+
 	//para asignar los trabajos de reparaciones
 	@NamedQuery(name="Reparacion.buscarReparacionAsignada", query="SELECT r FROM Reparacion r "
 			+ "where r.usuarioReparacion = :idPerfilUsuario and r.estado = 'A' order by r.idReparacion desc"),
-	
+
 	////////
 	//para asignacion de trabajos de reparacion
 	@NamedQuery(name="Reparacion.buscarListaReparacion", query="SELECT r FROM Reparacion r "
 			+ "where (lower(r.cuentaCliente.cliente.apellido) like :patron or lower(r.cuentaCliente.cliente.nombre) like :patron) "
 			+ "and r.estadoReparacion='PENDIENTE' and r.usuarioReparacion = null and r.estado = 'A' order by r.idReparacion desc"),
-	
+
 	//para asignar trabajos de reparacion
 	@NamedQuery(name="Reparacion.buscarListaReparacionPerfil", query="SELECT r FROM Reparacion r "
 			+ "where (lower(r.cuentaCliente.cliente.apellido) like :patron or lower(r.cuentaCliente.cliente.nombre) like :patron) "
-			+ " and r.usuarioReparacion = :idPerfilUsuario and r.estadoReparacion = 'PENDIENTE' and r.estado = 'A' order by r.idReparacion desc")
+			+ " and r.usuarioReparacion = :idPerfilUsuario and r.estadoReparacion = 'PENDIENTE' and r.estado = 'A' order by r.idReparacion desc"),
+	//para asignar trabajos de reparacion
+	@NamedQuery(name="Reparacion.buscarReparacionSolicitud", query="SELECT r FROM Reparacion r "
+			+ "where r.estado = 'A' and r.solInspeccionRep.idSolicitudRep = :idSolicitud order by r.idReparacion desc")
 })
 public class Reparacion implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -69,7 +72,7 @@ public class Reparacion implements Serializable {
 
 	@Column(name="estado_entrega")
 	private String estadoEntrega;
-	
+
 	@Column(name="estado_reparacion")
 	private String estadoReparacion;
 
@@ -79,11 +82,11 @@ public class Reparacion implements Serializable {
 	@Temporal(TemporalType.DATE)
 	@Column(name="fecha_reparacion")
 	private Date fechaReparacion;
-	
+
 	@Temporal(TemporalType.DATE)
 	@Column(name="fecha_cierre_inspeccion")
 	private Date fechaCierreInspeccion;
-	
+
 	@Temporal(TemporalType.DATE)
 	@Column(name="fecha_salida")
 	private Date fechaSalida;
@@ -95,7 +98,7 @@ public class Reparacion implements Serializable {
 	private Time horaReparacion;
 
 	private String observcion;
-	
+
 	private String referencia;
 
 	private double subtotal;
@@ -104,10 +107,10 @@ public class Reparacion implements Serializable {
 
 	@Column(name="usuario_crea")
 	private Integer usuarioCrea;
-	
+
 	@Column(name="usuario_crea_salida")
 	private Integer usuarioCreaSalida;
-	
+
 	@Column(name="usuario_reparacion")
 	private Integer usuarioReparacion;
 
@@ -163,8 +166,8 @@ public class Reparacion implements Serializable {
 	public void setFechaSalida(Date fechaSalida) {
 		this.fechaSalida = fechaSalida;
 	}
-	
-	
+
+
 	public Date getFechaCierreInspeccion() {
 		return fechaCierreInspeccion;
 	}
@@ -172,7 +175,7 @@ public class Reparacion implements Serializable {
 	public void setFechaCierreInspeccion(Date fechaCierreInspeccion) {
 		this.fechaCierreInspeccion = fechaCierreInspeccion;
 	}
-	
+
 
 	public String getReferencia() {
 		return referencia;
@@ -269,7 +272,7 @@ public class Reparacion implements Serializable {
 	public void setUsuarioCrea(Integer usuarioCrea) {
 		this.usuarioCrea = usuarioCrea;
 	}
-	
+
 	public Integer getUsuarioCreaSalida() {
 		return this.usuarioCreaSalida;
 	}
