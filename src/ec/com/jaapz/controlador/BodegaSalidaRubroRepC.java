@@ -332,7 +332,12 @@ public class BodegaSalidaRubroRepC {
 		try {
 			if(validarDatos() == false)
 				return;
-		
+			
+			if(validarStockRubro() == false) {
+				helper.mostrarAlertaError("Stock insuficiente de materiales", Context.getInstance().getStage());
+				return;
+			}
+			
 			if(salidaRepSeleccionada == null) {
 				salidaRepSeleccionada = new Reparacion();
 			}
@@ -455,6 +460,33 @@ public class BodegaSalidaRubroRepC {
 			System.out.println(ex.getMessage());
 		}
 	}
+	
+	private boolean validarStockRubro() {
+		try {
+			boolean bandera = false;
+			if(tvDatos != null) {
+				List<Rubro> listaSalidaRubros = new ArrayList<Rubro>();
+				for(ReparacionDetalle detalle: tvDatos.getItems())
+					listaSalidaRubros.add(detalle.getRubro());
+				
+				for(Rubro rubro : listaSalidaRubros) {
+					if(rubro.getIdRubro() != Constantes.ID_MEDIDOR || rubro.getIdRubro() != Constantes.ID_TASA_CONEXION) {
+						for(ReparacionDetalle detalle : tvDatos.getItems()) {
+							if(rubro.getIdRubro() == detalle.getRubro().getIdRubro()) { 
+								if(rubro.getStock() >= detalle.getCantidad())//si es mayor o igual q permita grabar
+									bandera = true;
+							}
+						}	
+					}
+				}
+			}
+			return bandera;
+		}catch(Exception ex) {
+			System.out.println(ex.getMessage());
+			return false;
+		}
+	}
+	
 	private void grabarKardexSalida() {
 		try {
 			java.util.Date utilDate = new java.util.Date(); 

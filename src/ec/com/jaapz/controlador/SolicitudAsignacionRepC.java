@@ -2,7 +2,9 @@ package ec.com.jaapz.controlador;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import ec.com.jaapz.modelo.SegUsuario;
@@ -12,6 +14,8 @@ import ec.com.jaapz.modelo.SolInspeccionRepDAO;
 import ec.com.jaapz.util.Constantes;
 import ec.com.jaapz.util.Context;
 import ec.com.jaapz.util.ControllerHelper;
+import ec.com.jaapz.util.Encriptado;
+import ec.com.jaapz.util.PrintReport;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -286,11 +290,41 @@ public class SolicitudAsignacionRepC {
 		}
 	}
 	
+	@SuppressWarnings("unlikely-arg-type")
 	public void imprimirAsignacion() {
 		try {
-			System.out.println("listado a eliminar: " + listaInspeccionesEliminar.size());
+			if(tvAsignados.getSelectionModel().getSelectedItem() != null) {
+				SimpleDateFormat formateador = new SimpleDateFormat("dd/MM/yyyy");
+				SolInspeccionRep rep = tvAsignados.getSelectionModel().getSelectedItem();
+				Map<String, Object> param = new HashMap<String, Object>();
+				param.put("ID_CUENTA", rep.getCuentaCliente().getIdCuenta());
+				param.put("ID_INSPECCION", rep.getIdSolicitudRep());
+				param.put("referencia", rep.getReferencia());
+				param.put("USUARIO_RESPONSABLE", Encriptado.Desencriptar(tvPersonalAsig.getSelectionModel().getSelectedItem().getUsuario()));
+				if(rep.getCuentaCliente().getCategoria().equals(Constantes.CAT_VIVIENDA))
+					param.put("vivienda", "X");
+				else
+					param.put("vivienda", "");
+				if(rep.getCuentaCliente().getCategoria().equals(Constantes.CAT_COMERCIAL))
+					param.put("comercial", "X");
+				else
+					param.put("comercial", "");
+				param.put("LATITUD", rep.getCuentaCliente().getLatitud());
+				param.put("LONGITUD", rep.getCuentaCliente().getLongitud());
+				if(rep.getCuentaCliente().getCategoria().equals(Constantes.CAT_ESTABLECIMIENTO))
+					param.put("publico", "X");
+				else
+					param.put("publico", "");
+
+				param.put("fecha_inspeccion", formateador.format(rep.getFecha()));
+
+				PrintReport printReport = new PrintReport();
+				printReport.crearReporte("/recursos/informes/ficha_inspeccion_reparacion.jasper", usuarioDAO, param);
+				printReport.showReport("Ficha de Inspección de Reparación");
+			}else 
+				helper.mostrarAlertaError("Debe Seleccionar un registro", Context.getInstance().getStage());
 		}catch(Exception ex) {
-			ex.printStackTrace();
+			System.out.println(ex.getMessage());
 		}
 	}
 	

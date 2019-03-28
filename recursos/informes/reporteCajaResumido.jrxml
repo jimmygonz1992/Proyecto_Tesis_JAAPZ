@@ -191,6 +191,10 @@ where (select count(*) from egreso e where e.estado = 'A') = 0]]>
 				<reportElement x="444" y="33" width="100" height="13" uuid="b72d91e2-b3a4-470d-9ac7-b6847244fade"/>
 				<textFieldExpression><![CDATA[$P{FECHA_FIN}]]></textFieldExpression>
 			</textField>
+			<image>
+				<reportElement x="46" y="0" width="75" height="50" uuid="29eadae1-a8d8-4b75-84c6-a82e956de185"/>
+				<imageExpression><![CDATA["recursos/img/logo_jaapz.png"]]></imageExpression>
+			</image>
 		</band>
 	</title>
 	<pageHeader>

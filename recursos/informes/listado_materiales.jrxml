@@ -84,6 +84,10 @@ ORDER BY rubro.id_rubro ASC]]>
 				</textElement>
 				<text><![CDATA[Fecha:]]></text>
 			</staticText>
+			<image>
+				<reportElement x="12" y="0" width="72" height="44" uuid="af1c03b5-d57c-42eb-87e3-04e0baa78004"/>
+				<imageExpression><![CDATA["recursos/img/logo_jaapz.png"]]></imageExpression>
+			</image>
 		</band>
 	</title>
 	<columnHeader>

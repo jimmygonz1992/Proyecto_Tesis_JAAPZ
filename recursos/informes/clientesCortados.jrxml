@@ -116,6 +116,10 @@ order by
 				<reportElement x="270" y="54" width="150" height="13" uuid="a62648d9-1dd6-4d3f-a3da-91f9e9051eda"/>
 				<textFieldExpression><![CDATA[$P{usuario_crea}]]></textFieldExpression>
 			</textField>
+			<image>
+				<reportElement x="60" y="10" width="56" height="34" uuid="7ef124c7-75a2-4e63-b48b-bdcf4721da1d"/>
+				<imageExpression><![CDATA["recursos/img/logo_jaapz.png"]]></imageExpression>
+			</image>
 		</band>
 	</title>
 	<pageHeader>

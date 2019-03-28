@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.6.0.final using JasperReports Library version 6.6.0  -->
+<!-- Created with Jaspersoft Studio version 6.5.1.final using JasperReports Library version 6.5.1  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="clientes_al_dia" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="22b1b7fd-a141-49e2-9957-72c6c1fb85f5">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="conectionBDJAAPZ"/>
@@ -57,7 +57,7 @@ order by cliente asc]]>
 				<text><![CDATA[FUNDADO EL 2 DE OCTUBRE DEL 2001]]></text>
 			</staticText>
 			<image>
-				<reportElement x="33" y="0" width="56" height="34" uuid="9c74b6cc-3b55-40e0-94c6-2a0f22398be6"/>
+				<reportElement x="33" y="0" width="60" height="40" uuid="9c74b6cc-3b55-40e0-94c6-2a0f22398be6"/>
 				<imageExpression><![CDATA["recursos/img/logo_jaapz.png"]]></imageExpression>
 			</image>
 			<line>

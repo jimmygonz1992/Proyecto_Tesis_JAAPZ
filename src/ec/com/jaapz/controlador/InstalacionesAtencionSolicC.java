@@ -92,6 +92,16 @@ public class InstalacionesAtencionSolicC {
 					}
 				}
 			});
+			
+			//solo letras mayusculas
+			txtObservaciones.textProperty().addListener(new ChangeListener<String>() {
+				@Override
+				public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+					// TODO Auto-generated method stub
+					String cadena = txtObservaciones.getText().toUpperCase();
+					txtObservaciones.setText(cadena);
+				}
+			});
 		}catch(Exception ex) {
 			System.out.println(ex.getMessage());
 		}
@@ -130,12 +140,13 @@ public class InstalacionesAtencionSolicC {
 		txtCedula.setText("");
 		txtCliente.setText("");
 		txtUsuarioSolic.setText("");
-		dtpFecha.setValue(null);
+		dtpFecha.setValue(LocalDate.now());
 		cboEstadoInstalacion.setPromptText("Seleccione Estado");
 		txtCodigoMedidor.setText("");
 		txtMarca.setText("");
 		txtModelo.setText("");
 		txtPrecioMed.setText("");
+		txtObservaciones.setText("");
 		tvDatos.getItems().clear();
 		tvDatos.getColumns().clear();
 		instalacionSeleccionada = null;
@@ -239,7 +250,7 @@ public class InstalacionesAtencionSolicC {
 			
 			if(txtObservaciones.getText().equals("")) {
 				helper.mostrarAlertaAdvertencia("Ingrese alguna observación o novedad", Context.getInstance().getStage());
-				txtCodigoMedidor.requestFocus();
+				txtObservaciones.requestFocus();
 				return false;
 			}
 			

@@ -332,39 +332,6 @@
                         <Font name="Arial Bold Italic" size="12.0" />
                      </font>
                   </Label>
-                  <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="11">
-                     <children>
-                        <GridPane HBox.hgrow="ALWAYS">
-                          <columnConstraints>
-                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="135.0" minWidth="10.0" prefWidth="115.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="120.0" minWidth="10.0" prefWidth="116.0" />
-                          </columnConstraints>
-                          <rowConstraints>
-                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                          </rowConstraints>
-                           <children>
-                              <HBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="200.0">
-                                 <children>
-                                    <Label contentDisplay="TOP" prefHeight="37.0" prefWidth="104.0" text="Estado Valor Instalación:" textAlignment="CENTER" wrapText="true">
-                                       <font>
-                                          <Font name="Arial Bold" size="12.0" />
-                                       </font>
-                                    </Label>
-                                 </children>
-                              </HBox>
-                              <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1">
-                                 <children>
-                                    <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
-                                       <children>
-                                          <TextField fx:id="txtEstadoValorInst" prefHeight="25.0" prefWidth="173.0" />
-                                       </children>
-                                    </HBox>
-                                 </children>
-                              </HBox>
-                           </children>
-                        </GridPane>
-                     </children>
-                  </HBox>
                </children>
                <columnConstraints>
                   <ColumnConstraints hgrow="SOMETIMES" maxWidth="162.0" minWidth="10.0" prefWidth="73.0" />
@@ -388,8 +355,6 @@
                   <RowConstraints maxHeight="381.0" minHeight="0.0" prefHeight="42.0" vgrow="SOMETIMES" />
                   <RowConstraints maxHeight="381.0" minHeight="0.0" prefHeight="70.0" vgrow="SOMETIMES" />
                   <RowConstraints maxHeight="381.0" minHeight="5.0" prefHeight="12.0" vgrow="SOMETIMES" />
-                  <RowConstraints maxHeight="381.0" minHeight="10.0" prefHeight="43.0" vgrow="SOMETIMES" />
-                  <RowConstraints maxHeight="381.0" minHeight="0.0" prefHeight="19.0" vgrow="SOMETIMES" />
                </rowConstraints>
             </GridPane>
             <Label alignment="BOTTOM_LEFT" contentDisplay="BOTTOM" prefHeight="15.0" prefWidth="108.0" text="Datos Cliente" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
