@@ -5,7 +5,6 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import com.lynden.gmapsfx.GoogleMapView?>
 
 
 <AnchorPane prefHeight="410.0" prefWidth="492.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="ec.com.jaapz.controlador.ReporteMapaC">
@@ -35,7 +34,7 @@
             
             <AnchorPane fx:id="apMapa" prefHeight="200.0" prefWidth="200.0" GridPane.columnSpan="4" GridPane.rowIndex="1" GridPane.rowSpan="4" >
             	<children>
-      				<GoogleMapView fx:id="mapView" layoutX="-311.0" layoutY="-244.0" prefWidth="490.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+      				
    				</children>
             </AnchorPane>
             <Button fx:id="btnImprimir" mnemonicParsing="false" prefHeight="56.0" prefWidth="98.0" text="Imprimir" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="2" />

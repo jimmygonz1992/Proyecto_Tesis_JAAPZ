@@ -129,7 +129,7 @@ public class SolicitudVerProcesoInsC {
 
 	public void buscarCliente(){
 		try{
-			helper.abrirPantallaModal("/reportes/SolicitudesNoAtendidas.fxml","Listado de solicitudes no atendidas", Context.getInstance().getStage());
+			helper.abrirPantallaModal("/solicitudes/SolicitudesNoAtendidas.fxml","Listado de solicitudes no atendidas", Context.getInstance().getStage());
 			if (Context.getInstance().getInspeccion() != null) {
 				limpiarDatos();
 				Cliente datoSeleccionado = Context.getInstance().getInspeccion().getCliente();
