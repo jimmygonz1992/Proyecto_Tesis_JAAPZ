@@ -446,6 +446,7 @@ public class BodegaSalidaRubroRepC {
 					reparacionDao.getEntityManager().getTransaction().begin();
 					reparacionDao.getEntityManager().merge(salidaRepSeleccionada);
 					reparacionDao.getEntityManager().getTransaction().commit();
+					actualizarListaArticulos();
 					grabarKardexSalida();
 					helper.mostrarAlertaInformacion("Datos grabados Correctamente", Context.getInstance().getStage());
 					nuevo();
@@ -458,6 +459,26 @@ public class BodegaSalidaRubroRepC {
 			reparacionDao.getEntityManager().getTransaction().rollback();
 			helper.mostrarAlertaError("Error al grabar", Context.getInstance().getStage());
 			System.out.println(ex.getMessage());
+		}
+	}
+	
+	public void actualizarListaArticulos() {
+		if(tvDatos != null) {		
+			List<Rubro> listaSalidaRubros = new ArrayList<Rubro>();
+			for(ReparacionDetalle detalle: tvDatos.getItems()) {
+				listaSalidaRubros.add(detalle.getRubro());
+			}
+			rubroDAO.getEntityManager().getTransaction().begin();
+			for (Rubro rubro : listaSalidaRubros) {
+				if(rubro.getIdRubro() != Constantes.ID_MEDIDOR || rubro.getIdRubro() != Constantes.ID_TASA_CONEXION) {
+					for(ReparacionDetalle detalle : tvDatos.getItems()) {
+						if(rubro.getIdRubro() == detalle.getRubro().getIdRubro())
+							rubro.setStock(rubro.getStock() - detalle.getCantidad());
+					}
+					rubroDAO.getEntityManager().merge(rubro);	
+				}
+			}
+			rubroDAO.getEntityManager().getTransaction().commit();
 		}
 	}
 	
