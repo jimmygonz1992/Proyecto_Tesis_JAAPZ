@@ -241,7 +241,7 @@ public class SolicitudesCierreReparacionC {
 		txtSubtotal.setText("");
 		txtTotal.setText("");
 		txtNovedadesReportadas.setText("");
-		dtpFecha.setValue(null);
+		dtpFecha.setValue(LocalDate.now());
 		txtNovedadesInspeccion.setText("");
 		tvDatosDetalle.getColumns().clear();
 		tvDatosDetalle.getItems().clear();
@@ -372,8 +372,13 @@ public class SolicitudesCierreReparacionC {
 	}
 	
 	boolean validarDatos() {
-		try {
-			
+		try {	
+			if(txtCedula.getText().toString().equals("")) {
+				helper.mostrarAlertaAdvertencia("No existen datos del cliente", Context.getInstance().getStage());
+				txtCedula.requestFocus();
+				return false;
+			}
+
 			if(dtpFecha.getValue().equals(null)) {
 				helper.mostrarAlertaAdvertencia("Escoja una fecha", Context.getInstance().getStage());
 				dtpFecha.requestFocus();
@@ -391,7 +396,7 @@ public class SolicitudesCierreReparacionC {
 				helper.mostrarAlertaAdvertencia("No existe un ciclo iniciado.. por lo que no se puede procesar el pago", Context.getInstance().getStage());
 				return false;
 			}
-			*/
+			 */
 			return true;
 		}catch(Exception ex) {
 			System.out.println(ex.getMessage());

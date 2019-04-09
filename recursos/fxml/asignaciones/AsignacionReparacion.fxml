@@ -46,15 +46,15 @@
             </TabPane>
             <GridPane GridPane.columnIndex="4" GridPane.columnSpan="2" GridPane.rowIndex="1">
                <children>
-                  <Button fx:id="btnImprimirAsig" mnemonicParsing="false" onAction="#imprimirAsignacion" text="Imprimir" />
+                  <Button fx:id="btnImprimirAsig" mnemonicParsing="false" onAction="#imprimirAsignacion" styleClass="botonImprimir" text="Imprimir" />
                   <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1">
                      <children>
-                        <Button fx:id="btnAsignarAsig" alignment="BOTTOM_CENTER" contentDisplay="TOP" mnemonicParsing="false" onAction="#buscarOrdenEmitida" prefHeight="60.0" prefWidth="65.0" styleClass="botonAsignacion" text="Asignar">
+                        <Button fx:id="btnAsignarAsig" alignment="BOTTOM_CENTER" contentDisplay="TOP" mnemonicParsing="false" onAction="#buscarOrdenEmitida" prefHeight="60.0" prefWidth="65.0" styleClass="botonAgregar" text="Asignar">
                            <HBox.margin>
                               <Insets right="15.0" />
                            </HBox.margin>
                         </Button>
-                        <Button fx:id="btnQuitarAsig" alignment="BOTTOM_CENTER" contentDisplay="TOP" mnemonicParsing="false" onAction="#quitarAsignacion" prefHeight="60.0" prefWidth="65.0" styleClass="botonQuitarAsignacion" text="Quitar" />
+                        <Button fx:id="btnQuitarAsig" alignment="BOTTOM_CENTER" contentDisplay="TOP" mnemonicParsing="false" onAction="#quitarAsignacion" prefHeight="60.0" prefWidth="65.0" styleClass="botonQuitarR" text="Quitar" />
                      </children>
                   </HBox>
                </children>

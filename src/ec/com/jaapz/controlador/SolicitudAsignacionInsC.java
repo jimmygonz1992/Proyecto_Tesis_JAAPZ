@@ -57,7 +57,6 @@ public class SolicitudAsignacionInsC {
 			btnImprimirAsig.setStyle("-fx-cursor: hand;");
 			btnQuitarAsig.setStyle("-fx-cursor: hand;");
 			
-			
 			llenarListaResponsables();
 			if(tpRealizadas.isSelected())
 				bloquearBotonesAsignacion();
@@ -69,7 +68,6 @@ public class SolicitudAsignacionInsC {
 						desbloquearBotonesAsignacion();
 						listaInspeccionesEliminar.clear();
 						recuperarPersonalInspeccion(tvPersonalAsig.getSelectionModel().getSelectedItem());
-						
 					}
 				}
 			});
@@ -246,7 +244,7 @@ public class SolicitudAsignacionInsC {
 				printReport.crearReporte("/recursos/informes/ficha_inspeccion.jasper", usuarioDAO, param);
 				printReport.showReport("Ficha de Inspección");
 			}else 
-				helper.mostrarAlertaError("Debe Seleccionar un Inspección a imprimir la ficha de Inspección", Context.getInstance().getStage());
+				helper.mostrarAlertaError("Debe Seleccionar un registro", Context.getInstance().getStage());
 		}catch(Exception ex) {
 			System.out.println(ex.getMessage());
 		}

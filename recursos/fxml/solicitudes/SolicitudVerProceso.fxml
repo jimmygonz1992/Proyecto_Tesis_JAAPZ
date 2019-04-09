@@ -41,7 +41,7 @@
                      </children>
                   </VBox>
                   <Group GridPane.columnIndex="1" />
-                  <Button fx:id="btnCargar" mnemonicParsing="false" onAction="#cargarFormulario" prefHeight="47.0" prefWidth="80.0" text="Cargar" GridPane.columnIndex="1" />
+                  <Button fx:id="btnCargar" alignment="BOTTOM_CENTER" contentDisplay="TOP" mnemonicParsing="false" onAction="#cargarFormulario" prefHeight="47.0" prefWidth="80.0" styleClass="botonCargar" text="Cargar" GridPane.columnIndex="1" />
                </children>
             </GridPane>
             <AnchorPane fx:id="apVisualizar" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="3" />

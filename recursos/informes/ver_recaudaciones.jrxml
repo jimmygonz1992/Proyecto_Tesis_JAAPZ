@@ -57,7 +57,7 @@ ORDER BY cliente asc]]>
 	<title>
 		<band height="79" splitType="Stretch">
 			<image>
-				<reportElement x="33" y="0" width="56" height="34" uuid="3563f5bb-a647-4f0a-b035-5b3eb7d06ad7"/>
+				<reportElement x="33" y="0" width="60" height="40" uuid="3563f5bb-a647-4f0a-b035-5b3eb7d06ad7"/>
 				<imageExpression><![CDATA["recursos/img/logo_jaapz.png"]]></imageExpression>
 			</image>
 			<staticText>

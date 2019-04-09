@@ -187,6 +187,10 @@ and fecha between  $P{FECHA_INICIO}  and  $P{FECHA_FIN}) = 0]]>
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$P{FECHA_FIN}]]></textFieldExpression>
 			</textField>
+			<image>
+				<reportElement x="46" y="0" width="75" height="50" uuid="395d6cae-b952-4dfc-bec6-f4f96a0f2755"/>
+				<imageExpression><![CDATA["recursos/img/logo_jaapz.png"]]></imageExpression>
+			</image>
 		</band>
 	</title>
 	<pageHeader>

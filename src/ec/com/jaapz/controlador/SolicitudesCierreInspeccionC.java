@@ -29,6 +29,7 @@ import ec.com.jaapz.util.Constantes;
 import ec.com.jaapz.util.Context;
 import ec.com.jaapz.util.ControllerHelper;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -89,6 +90,16 @@ public class SolicitudesCierreInspeccionC {
 	SimpleDateFormat formateador = new SimpleDateFormat("dd/MM/yyyy");
 	
 	public void initialize() {
+		//solo letras mayusculas
+		txtObservacion.textProperty().addListener(new ChangeListener<String>() {
+			@Override
+			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+				// TODO Auto-generated method stub
+				String cadena = txtObservacion.getText().toUpperCase();
+				txtObservacion.setText(cadena);
+			}
+		});
+		
 		btnAgregar.setStyle("-fx-cursor: hand;");
 		btnBuscar.setStyle("-fx-cursor: hand;");
 		btnBuscarMedidor.setStyle("-fx-cursor: hand;");

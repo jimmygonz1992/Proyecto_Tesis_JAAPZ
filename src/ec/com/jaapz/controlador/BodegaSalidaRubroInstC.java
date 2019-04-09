@@ -55,7 +55,6 @@ public class BodegaSalidaRubroInstC {
 	
 	@FXML private TextField txtTotal;
 	@FXML private TextArea txtObservaciones;
-	@FXML private TextField txtEstadoValorInst;
 	
 	@FXML private Button btnBuscarLiquidCuenta;
 	@FXML private Button btnBuscarLiquidacion;
@@ -77,12 +76,16 @@ public class BodegaSalidaRubroInstC {
 			txtUsuario.setText(Encriptado.Desencriptar(String.valueOf(Context.getInstance().getUsuariosC().getUsuario())));
 			bloquear();
 			
-			btnBuscarLiquidacion.setStyle("-fx-cursor: hand;");
-			btnBuscarLiquidCuenta.setStyle("-fx-cursor: hand;");
-			btnEliminar.setStyle("-fx-cursor: hand;");
-			btnGrabar.setStyle("-fx-cursor: hand;");
-			btnNuevo.setStyle("-fx-cursor: hand;");
-			
+			//solo letras mayusculas
+			txtObservaciones.textProperty().addListener(new ChangeListener<String>() {
+				@Override
+				public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+					// TODO Auto-generated method stub
+					String cadena = txtObservaciones.getText().toUpperCase();
+					txtObservaciones.setText(cadena);
+				}
+			});
+
 			//validar solo numeros
 			txtIdCuenta.textProperty().addListener(new ChangeListener<String>() {
 				@Override
@@ -95,7 +98,7 @@ public class BodegaSalidaRubroInstC {
 					}
 				}
 			});
-			
+
 			//validar solo numeros
 			txtIdLiquid.textProperty().addListener(new ChangeListener<String>() {
 				@Override
@@ -109,15 +112,11 @@ public class BodegaSalidaRubroInstC {
 				}
 			});
 			
-			//solo letras mayusculas
-			txtObservaciones.textProperty().addListener(new ChangeListener<String>() {
-				@Override
-				public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-					// TODO Auto-generated method stub
-					String cadena = txtObservaciones.getText().toUpperCase();
-					txtObservaciones.setText(cadena);
-				}
-			});
+			btnBuscarLiquidacion.setStyle("-fx-cursor: hand;");
+			btnBuscarLiquidCuenta.setStyle("-fx-cursor: hand;");
+			btnEliminar.setStyle("-fx-cursor: hand;");
+			btnGrabar.setStyle("-fx-cursor: hand;");
+			btnNuevo.setStyle("-fx-cursor: hand;");
 		}catch(Exception ex) {
 			System.out.println(ex.getMessage());
 		}
@@ -134,7 +133,6 @@ public class BodegaSalidaRubroInstC {
 		txtModelo.setEditable(false);
 		txtPrecioMed.setEditable(false);
 		txtTotal.setEditable(false);
-		txtEstadoValorInst.setEditable(false);
 		txtIdCuenta.setEditable(false);
 		txtIdLiquid.setEditable(false);
 		txtUsuario.setEditable(false);
@@ -379,7 +377,7 @@ public class BodegaSalidaRubroInstC {
 			if(validarDatos() == false)
 				return;
 			if(validarStockRubro() == false) {
-				helper.mostrarAlertaError("Stock insuficiente de rubros", Context.getInstance().getStage());
+				helper.mostrarAlertaError("Stock insuficiente de materiales", Context.getInstance().getStage());
 				return;
 			}
 			Optional<ButtonType> result = helper.mostrarAlertaConfirmacion("Desea Grabar los Datos?",Context.getInstance().getStage());
@@ -396,7 +394,6 @@ public class BodegaSalidaRubroInstC {
 				instalacion.setTotal(Double.parseDouble(txtTotal.getText()));
 				instalacion.setEstadoInstalacion(Constantes.EST_INSPECCION_PENDIENTE);
 				instalacion.setUsuarioCrea(Context.getInstance().getUsuariosC().getIdUsuario());
-				instalacion.setEstadoValor(txtEstadoValorInst.getText());
 				instalacion.setEstado(Constantes.ESTADO_ACTIVO);
 				List<InstalacionDetalle> listaAgregadaRubros = new ArrayList<InstalacionDetalle>();
 				for(InstalacionDetalle det : tvDatos.getItems()) {

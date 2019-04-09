@@ -41,9 +41,9 @@
                       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                     </columnConstraints>
                     <rowConstraints>
-                      <RowConstraints maxHeight="10.0" minHeight="10.0" prefHeight="10.0" vgrow="SOMETIMES" />
-                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                      <RowConstraints maxHeight="10.0" minHeight="10.0" prefHeight="10.0" vgrow="SOMETIMES" />
+                      <RowConstraints maxHeight="10.0" minHeight="3.0" prefHeight="3.0" vgrow="SOMETIMES" />
+                      <RowConstraints maxHeight="41.0" minHeight="10.0" prefHeight="41.0" vgrow="SOMETIMES" />
+                      <RowConstraints maxHeight="10.0" minHeight="2.0" prefHeight="2.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
                         <Label text="Seleccione rubro:" GridPane.rowIndex="1">
@@ -52,7 +52,7 @@
                            </font>
                         </Label>
                         <ComboBox fx:id="cboRubro" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                        <Button fx:id="btnCargar" mnemonicParsing="false" onAction="#cargarRubro" text="Cargar" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+                        <Button fx:id="btnCargar" alignment="BOTTOM_CENTER" contentDisplay="TOP" mnemonicParsing="false" onAction="#cargarRubro" prefHeight="39.0" prefWidth="52.0" styleClass="botonCargar" text="Cargar" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
                      </children>
                   </GridPane>
                </children>
