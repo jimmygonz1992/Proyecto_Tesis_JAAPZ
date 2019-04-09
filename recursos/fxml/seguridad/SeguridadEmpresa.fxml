@@ -150,8 +150,21 @@
                            </GridPane.margin>
                         </Label>
                         <TextField fx:id="txtInconsistencia" prefHeight="25.0" prefWidth="136.0" GridPane.columnIndex="3" />
-                        <Button mnemonicParsing="false" text="Button" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
-                        <Button mnemonicParsing="false" text="Button" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" style="-fx-border-color: #bbc8d0; -fx-border-width: 1px; -fx-spacing: 8; -fx-background-radius: 6.0; -fx-max-height: 300" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+                           <children>
+                              <Button mnemonicParsing="false" onAction="#cargar" prefHeight="25.0" prefWidth="95.0" text="Cargar apk" />
+                              <Button mnemonicParsing="false" onAction="#descargar" prefHeight="25.0" prefWidth="95.0" text="Descargar apk">
+                                 <HBox.margin>
+                                    <Insets left="10.0" />
+                                 </HBox.margin>
+                              </Button>
+                           </children>
+                        </HBox>
+                        <Label text="Aplicación móvil" GridPane.rowIndex="1">
+                           <font>
+                              <Font name="Arial Bold" size="12.0" />
+                           </font>
+                        </Label>
                      </children>
                      <columnConstraints>
                         <ColumnConstraints hgrow="SOMETIMES" minWidth="80.0" prefWidth="92.0" />
@@ -161,6 +174,7 @@
                      </columnConstraints>
                      <rowConstraints>
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="20.0" minHeight="10.0" prefHeight="20.0" vgrow="SOMETIMES" />
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                      </rowConstraints>
                   </GridPane>

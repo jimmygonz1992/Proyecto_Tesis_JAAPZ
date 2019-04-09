@@ -1,13 +1,20 @@
 package ec.com.jaapz.controlador;
 
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.imageio.ImageIO;
+
 import ec.com.jaapz.modelo.Anio;
 import ec.com.jaapz.modelo.AnioDAO;
+import ec.com.jaapz.modelo.Empresa;
 import ec.com.jaapz.modelo.Me;
 import ec.com.jaapz.modelo.MeDAO;
+import ec.com.jaapz.modelo.SeguridadEmpresaDAO;
 import ec.com.jaapz.util.Context;
 import ec.com.jaapz.util.ControllerHelper;
 import ec.com.jaapz.util.PrintReport;
@@ -59,6 +66,10 @@ public class ReporteConsolidadoC {
 				helper.mostrarAlertaAdvertencia("Debe seleccionar mes", Context.getInstance().getStage());
 				return;
 			}
+			SeguridadEmpresaDAO empresaDAO = new SeguridadEmpresaDAO();
+			List<Empresa> listaEmpresa = new ArrayList<Empresa>();
+			listaEmpresa = empresaDAO.getRecuperaDatosEmpresa();
+			
 			Map<String, Object> param = new HashMap<String, Object>();
 			param.put("MES", cboMes.getSelectionModel().getSelectedItem().getDescripcion());
 			param.put("ANIO", cboAnio.getSelectionModel().getSelectedItem().getDescripcion());
@@ -106,4 +117,5 @@ public class ReporteConsolidadoC {
 			System.out.println(ex.getMessage());
 		}
 	}
+	
 }

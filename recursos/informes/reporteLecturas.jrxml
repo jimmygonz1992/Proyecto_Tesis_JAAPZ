@@ -145,6 +145,10 @@ order by c.apellido asc]]>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{MES}]]></textFieldExpression>
 			</textField>
+			<image hAlign="Center">
+				<reportElement x="13" y="2" width="150" height="47" uuid="f404dc14-b373-419f-9598-729cc80fc850"/>
+				<imageExpression><![CDATA["recursos/img/logo_jaapz.png"]]></imageExpression>
+			</image>
 		</band>
 	</title>
 	<pageHeader>

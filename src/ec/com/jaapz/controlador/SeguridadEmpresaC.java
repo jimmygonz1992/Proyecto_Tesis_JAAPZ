@@ -1,6 +1,12 @@
 package ec.com.jaapz.controlador;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -19,11 +25,12 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 
 public class SeguridadEmpresaC {
 	@FXML TextField txtCodigo;
-	
+
 	@FXML TextField txtNoPlanillas;
 	@FXML TextField txtRuc;
 	@FXML TextField txtRazonSocial;
@@ -41,17 +48,18 @@ public class SeguridadEmpresaC {
 
 	ControllerHelper helper = new ControllerHelper();
 	SeguridadEmpresaDAO empresaDao = new SeguridadEmpresaDAO();
+	String rutaCarpeta = String.valueOf(System.getProperty("user.dir")) + "\\app_movil";
 	public void initialize() {
 		btnExaminar.setStyle("-fx-cursor: hand;");
 		btnGrabar.setStyle("-fx-cursor: hand;");
 		btnQuitar.setStyle("-fx-cursor: hand;");
-		
+
 		txtCodigo.setText("0");
 		txtCodigo.setEditable(false);
 		int maxLength = 13;
 		int maxLengthTelf = 10;
 		recuperarDatos();
-		
+
 		//validar solo numeros
 		txtRuc.textProperty().addListener(new ChangeListener<String>() {
 			@Override
@@ -115,7 +123,7 @@ public class SeguridadEmpresaC {
 				}
 			}
 		});
-		
+
 		//validar solo 10 valores
 		txtTelefono.textProperty().addListener(new ChangeListener<String>() {
 			@Override
@@ -147,7 +155,7 @@ public class SeguridadEmpresaC {
 			}
 		});
 	}
-	
+
 	public void recuperarDatos(){
 		try{
 			List<Empresa> listaEmpresa = new ArrayList<Empresa>();
@@ -167,7 +175,7 @@ public class SeguridadEmpresaC {
 				}else {
 					chkEstado.setSelected(false);
 				}
-				
+
 				if(listaEmpresa.get(i).getLogo() != null) {
 					String imgString = new String(listaEmpresa.get(i).getLogo(), "UTF-8");
 					ivLogo.setImage(helper.getImageFromBase64String(imgString).getImage());
@@ -217,7 +225,7 @@ public class SeguridadEmpresaC {
 				estado = Constantes.ESTADO_ACTIVO;
 			else
 				estado = Constantes.ESTADO_INACTIVO;
-			
+
 			Empresa empresa = new Empresa();
 			empresa.setRuc(txtRuc.getText());
 			empresa.setRazonSocial(txtRazonSocial.getText());
@@ -314,6 +322,58 @@ public class SeguridadEmpresaC {
 		}catch(Exception ex) {
 			System.out.println(ex.getMessage());
 			return false;
+		}
+	}
+	public void cargar() {
+		try {
+			try {
+				FileChooser fileChooser = new FileChooser();
+				fileChooser.setTitle("Buscar archivo apk");
+				// Agregar filtros para facilitar la busqueda
+				fileChooser.getExtensionFilters().addAll(
+						new FileChooser.ExtensionFilter("Archivo apk", "*.apk")
+						);
+				// Obtener la imagen seleccionada
+				File file = fileChooser.showOpenDialog(Context.getInstance().getStage());
+				// Mostar la ruta
+				if(file != null) {
+					System.out.println(file.getAbsolutePath());
+					copiarArchivo(file.getAbsolutePath(),rutaCarpeta + "\\app_jaapz.apk");
+					helper.mostrarAlertaInformacion("Archivo subido a ruta de la aplicación", Context.getInstance().getStage());
+				}
+			}catch(Exception ex) {
+				System.out.println(ex.getMessage());
+			}
+		}catch(Exception ex) {
+			System.out.println(ex.getMessage());
+		}
+	}
+	public void descargar() {
+		try {
+			DirectoryChooser fileChooser = new DirectoryChooser(); 
+		    fileChooser.setTitle("Open Folder"); 
+		    File file = fileChooser.showDialog(Context.getInstance().getStage());
+			if(file != null) {
+		        System.out.println(file.getAbsolutePath());
+		        copiarArchivo(rutaCarpeta + "\\app_jaapz.apk",file.getAbsolutePath() + "\\app_jaapz.apk");
+		        helper.mostrarAlertaInformacion("Archivo copiado a la ruta seleccionada", Context.getInstance().getStage());
+			}
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		} 
+	}
+	public void copiarArchivo(String origenArchivo, String destinoArchivo) {
+		try {
+			File folder = new File(rutaCarpeta);
+			if(!folder.exists()) {
+				folder.mkdir();
+			}
+			Path origenPath = Paths.get(origenArchivo);
+			Path destinoPath = Paths.get(destinoArchivo);
+			//sobreescribir el fichero de destino si existe y lo copia
+			Files.copy(origenPath, destinoPath, StandardCopyOption.REPLACE_EXISTING);
+		} catch (FileNotFoundException ex) {
+		} catch (IOException ex) {
 		}
 	}
 }

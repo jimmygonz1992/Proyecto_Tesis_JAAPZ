@@ -130,6 +130,10 @@ order by pl.id_planilla]]>
 				<reportElement x="264" y="59" width="516" height="14" uuid="c6631aec-f241-4c3c-bf77-c6d8cac116b8"/>
 				<textFieldExpression><![CDATA[$P{ANIO}]]></textFieldExpression>
 			</textField>
+			<image hAlign="Center">
+				<reportElement x="13" y="1" width="137" height="49" uuid="792f1243-c886-46be-b8a0-d9299fec00a4"/>
+				<imageExpression><![CDATA["recursos/img/logo_jaapz.png"]]></imageExpression>
+			</image>
 		</band>
 	</title>
 	<pageHeader>

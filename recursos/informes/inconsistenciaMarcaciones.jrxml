@@ -181,6 +181,10 @@ and r.id_apertura = $P{ID_APERTURA} ) = 0]]>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{FECHA}]]></textFieldExpression>
 			</textField>
+			<image hAlign="Center">
+				<reportElement x="13" y="2" width="150" height="47" uuid="61685425-ac93-45de-aecd-5a7af01224dd"/>
+				<imageExpression><![CDATA["recursos/img/logo_jaapz.png"]]></imageExpression>
+			</image>
 		</band>
 	</title>
 	<pageHeader>

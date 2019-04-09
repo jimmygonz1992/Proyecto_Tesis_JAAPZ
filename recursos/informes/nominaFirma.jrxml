@@ -82,6 +82,10 @@ order by c.apellido asc]]>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{FECHA}]]></textFieldExpression>
 			</textField>
+			<image hAlign="Center">
+				<reportElement x="13" y="1" width="150" height="47" uuid="b74a7aee-a915-4e3a-b465-54b6e6c53b59"/>
+				<imageExpression><![CDATA["recursos/img/logo_jaapz.png"]]></imageExpression>
+			</image>
 		</band>
 	</title>
 	<pageHeader>

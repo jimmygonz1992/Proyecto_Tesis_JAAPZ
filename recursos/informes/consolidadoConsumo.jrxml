@@ -114,6 +114,10 @@ order by c.apellido asc]]>
 				<reportElement x="270" y="58" width="240" height="14" uuid="776c2edf-60f8-4f9f-b459-41617940d3e6"/>
 				<textFieldExpression><![CDATA[$P{ANIO}]]></textFieldExpression>
 			</textField>
+			<image hAlign="Center">
+				<reportElement x="40" y="0" width="110" height="50" uuid="d06307f9-8f9b-43ae-b36b-ceacaf7bebe7"/>
+				<imageExpression><![CDATA["recursos/img/logo_jaapz.png"]]></imageExpression>
+			</image>
 		</band>
 	</title>
 	<pageHeader>
@@ -122,148 +126,148 @@ order by c.apellido asc]]>
 	<columnHeader>
 		<band height="41" splitType="Stretch">
 			<staticText>
-				<reportElement x="0" y="8" width="60" height="31" uuid="907eacc1-9b01-481c-859b-1cc87f236f52">
+				<reportElement x="0" y="16" width="60" height="23" uuid="907eacc1-9b01-481c-859b-1cc87f236f52">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="7ee9bb6f-0360-4c2f-8d1b-ca83413e41c7"/>
 				</reportElement>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Calibri" isBold="true"/>
+					<font fontName="Arial" size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Cédula]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="63" y="8" width="67" height="30" uuid="e305bcb4-d28b-4e0c-8ca9-836da37b7f48">
+				<reportElement x="63" y="16" width="67" height="23" uuid="e305bcb4-d28b-4e0c-8ca9-836da37b7f48">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="61db4429-8769-49c0-8907-610684dadd47"/>
 				</reportElement>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Calibri" isBold="true"/>
+					<font fontName="Arial" size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Código]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="137" y="8" width="229" height="30" uuid="ed97e0e3-99f3-47aa-9b4c-3a610445a39a">
+				<reportElement x="137" y="16" width="229" height="23" uuid="ed97e0e3-99f3-47aa-9b4c-3a610445a39a">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="08cf1e03-f190-4028-a429-466c4f33678d"/>
 				</reportElement>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Calibri" isBold="true"/>
+					<font fontName="Arial" size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Apellidos y nombres]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="366" y="8" width="50" height="30" uuid="2a6ed5d1-83d2-40cb-8811-b33891a15765">
+				<reportElement x="366" y="16" width="50" height="23" uuid="2a6ed5d1-83d2-40cb-8811-b33891a15765">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="75ba2761-65dd-488d-adef-3a418ac4abed"/>
 				</reportElement>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Arial" isBold="true"/>
+					<font fontName="Arial" size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Lectura anterior]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="421" y="8" width="50" height="30" uuid="64529905-a601-4515-9744-149ec2a024e4">
+				<reportElement x="421" y="16" width="50" height="23" uuid="64529905-a601-4515-9744-149ec2a024e4">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="af0a380a-73c2-4977-ba83-a6f3568a2969"/>
 				</reportElement>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Calibri" isBold="true"/>
+					<font fontName="Arial" size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Lectura actual]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="525" y="8" width="29" height="30" uuid="e7406180-d8c1-4ba8-9884-e1f1b5533164">
+				<reportElement x="525" y="16" width="29" height="23" uuid="e7406180-d8c1-4ba8-9884-e1f1b5533164">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="e2f4f98f-d23b-41aa-8130-618295d9d4c9"/>
 				</reportElement>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Calibri" isBold="true"/>
+					<font fontName="Arial" size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Total]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="475" y="8" width="44" height="30" uuid="8d85fe47-96d6-46cf-955e-214660530ceb">
+				<reportElement x="475" y="16" width="44" height="23" uuid="8d85fe47-96d6-46cf-955e-214660530ceb">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="a5917dd3-d29f-4540-a338-fc6c1ef53f24"/>
 				</reportElement>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Calibri" isBold="true"/>
+					<font fontName="Arial" size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Consumo mínimo]]></text>
 			</staticText>
 			<line>
-				<reportElement x="0" y="4" width="561" height="1" uuid="9724b6c2-083b-4df6-83a9-119ff422b93d"/>
+				<reportElement x="0" y="15" width="561" height="1" uuid="9724b6c2-083b-4df6-83a9-119ff422b93d"/>
 			</line>
 			<line>
-				<reportElement x="0" y="39" width="561" height="1" uuid="1a0b4bbb-ca78-4f70-a4be-6f7b8124922a"/>
+				<reportElement x="0" y="40" width="561" height="1" uuid="1a0b4bbb-ca78-4f70-a4be-6f7b8124922a"/>
 			</line>
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="25" splitType="Stretch">
+		<band height="15" splitType="Stretch">
 			<textField>
-				<reportElement x="0" y="0" width="60" height="20" uuid="13ab5a9e-5fb1-4540-8c1f-65e0c97e18b6">
+				<reportElement x="0" y="0" width="60" height="13" uuid="13ab5a9e-5fb1-4540-8c1f-65e0c97e18b6">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="7ee9bb6f-0360-4c2f-8d1b-ca83413e41c7"/>
 				</reportElement>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Calibri"/>
+					<font fontName="Calibri" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{cedula}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="63" y="0" width="67" height="20" uuid="ae1ba8b3-a128-4f9e-ad59-a7dc46e812ba">
+				<reportElement x="63" y="0" width="67" height="13" uuid="ae1ba8b3-a128-4f9e-ad59-a7dc46e812ba">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="61db4429-8769-49c0-8907-610684dadd47"/>
 				</reportElement>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Calibri"/>
+					<font fontName="Calibri" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{codigo}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="136" y="0" width="230" height="20" uuid="854c8547-6e30-4b6a-90b3-111ae7e8e1b2">
+				<reportElement x="136" y="0" width="230" height="13" uuid="854c8547-6e30-4b6a-90b3-111ae7e8e1b2">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="08cf1e03-f190-4028-a429-466c4f33678d"/>
 				</reportElement>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Calibri"/>
+					<font fontName="Calibri" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{nombres}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="366" y="0" width="50" height="19" uuid="58794b21-38f8-42f3-bb83-2434d5ac9de8">
+				<reportElement x="366" y="0" width="50" height="13" uuid="58794b21-38f8-42f3-bb83-2434d5ac9de8">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="75ba2761-65dd-488d-adef-3a418ac4abed"/>
 				</reportElement>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Calibri"/>
+					<font fontName="Calibri" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{lectura_anterior}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="420" y="0" width="50" height="19" uuid="6f833519-c53b-4ab4-a794-bce72089e8a1">
+				<reportElement x="420" y="0" width="50" height="13" uuid="6f833519-c53b-4ab4-a794-bce72089e8a1">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="af0a380a-73c2-4977-ba83-a6f3568a2969"/>
 				</reportElement>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Calibri"/>
+					<font fontName="Calibri" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{lectura_actual}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="525" y="1" width="29" height="19" uuid="ca2c9030-9071-4955-bccd-f165ee34c0ce">
+				<reportElement x="525" y="0" width="29" height="13" uuid="ca2c9030-9071-4955-bccd-f165ee34c0ce">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="e2f4f98f-d23b-41aa-8130-618295d9d4c9"/>
 				</reportElement>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Calibri"/>
+					<font fontName="Calibri" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{consumo}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="475" y="1" width="44" height="19" uuid="f688ee8e-0118-46e3-ba24-176798d9e105">
+				<reportElement x="475" y="0" width="44" height="13" uuid="f688ee8e-0118-46e3-ba24-176798d9e105">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="a5917dd3-d29f-4540-a338-fc6c1ef53f24"/>
 				</reportElement>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Calibri"/>
+					<font fontName="Calibri" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{consumo_minimo}]]></textFieldExpression>
 			</textField>
 			<line>
-				<reportElement x="0" y="22" width="561" height="1" uuid="1ffcf37d-b1c3-4d4c-af3c-d99f93bc6887"/>
+				<reportElement x="0" y="14" width="561" height="1" uuid="1ffcf37d-b1c3-4d4c-af3c-d99f93bc6887"/>
 			</line>
 		</band>
 	</detail>
 	<columnFooter>
-		<band height="45" splitType="Stretch"/>
+		<band height="13" splitType="Stretch"/>
 	</columnFooter>
 	<pageFooter>
 		<band height="54" splitType="Stretch"/>

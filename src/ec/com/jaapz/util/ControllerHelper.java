@@ -357,5 +357,14 @@ public class ControllerHelper {
 		double distanciaMP3 = distancia * 1000;
 		return distanciaMP3;  
 	}  
+	
+	public static BufferedImage createImageFromBytes(byte[] imageData) {
+		ByteArrayInputStream bite = new ByteArrayInputStream(imageData);
+		try {
+			return ImageIO.read(bite);
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
+	}
 }
 
