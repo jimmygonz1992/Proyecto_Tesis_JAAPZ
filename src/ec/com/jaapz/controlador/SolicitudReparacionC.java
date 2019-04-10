@@ -474,9 +474,26 @@ public class SolicitudReparacionC {
 				txtTelefono.requestFocus();
 				return false;	
 			}
+			if(verificarExistencia() == true) {
+				helper.mostrarAlertaAdvertencia("El cliente tiene una solicitud en proceso", Context.getInstance().getStage());
+				return false;	
+			}
 			return true;
 		}catch(Exception ex) {
 			System.out.println(ex.getMessage());
+			return false;
+		}
+	}
+	
+	boolean verificarExistencia() {
+		try {
+			boolean bandera = false;
+			SolInspeccionRepDAO reparacionDAO = new SolInspeccionRepDAO();
+			List<SolInspeccionRep> lista = reparacionDAO.getSolicitudesExistente(Integer.parseInt(txtCuenta.getText()));
+			if(lista.size() > 0) 
+				bandera = true;
+			return bandera;
+		}catch(Exception ex) {
 			return false;
 		}
 	}

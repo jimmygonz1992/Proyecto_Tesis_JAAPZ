@@ -178,10 +178,7 @@ public class SeguridadUsuarioC {
 				if (ke.getCode().equals(KeyCode.ENTER)){
 					if (validarCedula(txtCedula.getText()) == false){
 						helper.mostrarAlertaAdvertencia("El número de cedula es incorrecto!", Context.getInstance().getStage());
-						txtCedula.setText("");
-						txtCedula.requestFocus();	
-						txtUsuario.setText("");
-						txtClave.setText("");
+						limpiar();
 					}else
 						recuperarDatos(txtCedula.getText());
 						//txtNombres.requestFocus();
@@ -209,6 +206,22 @@ public class SeguridadUsuarioC {
 					txtTelefono.setText(s);
 				}
 			}
+		});
+		txtCedula.focusedProperty().addListener(new ChangeListener<Boolean>(){
+		    @Override
+		    public void changed(ObservableValue<? extends Boolean> arg0, Boolean oldPropertyValue, Boolean newPropertyValue){
+		        if (newPropertyValue){
+		            //System.out.println("Textfield on focus");
+		        }
+		        else{
+		        	if (validarCedula(txtCedula.getText()) == false){
+						helper.mostrarAlertaAdvertencia("El número de cedula es incorrecto!", Context.getInstance().getStage());
+						limpiar();
+					}else
+						recuperarDatos(txtCedula.getText());
+						//txtNombres.requestFocus();
+		        }
+		    }
 		});
 		txtUsuario.setEditable(false);
 		txtClave.setEditable(false);
@@ -417,6 +430,7 @@ public class SeguridadUsuarioC {
 
 	public void nuevo() throws IOException{
 		limpiar();
+		txtCedula.setText("");
 	}
 
 	void limpiar() {
@@ -424,7 +438,6 @@ public class SeguridadUsuarioC {
 		listaEliminar.clear();
 		txtCodigo.setText("0");
 		txtCodigo.setEditable(false);
-		txtCedula.setText("");
 		txtNombres.setText("");
 		txtApellidos.setText("");
 		chkEstado.setSelected(true);

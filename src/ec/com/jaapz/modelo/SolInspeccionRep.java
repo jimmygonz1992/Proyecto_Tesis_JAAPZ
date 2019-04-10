@@ -36,7 +36,10 @@ import java.util.List;
 			+ "where (lower(r.cuentaCliente.cliente.apellido) like :patron  or lower(r.cuentaCliente.cliente.nombre) like :patron) "
 			+ " and r.idUsuEncargado = :idPerfilUsuario and r.idUsuEncargado = null and r.estadoInspecRep = 'PENDIENTE' and r.estado = 'A' order by r.idSolicitudRep desc"),
 	@NamedQuery(name="SolInspeccionRep.buscarSolicitudesNoAtendidas", query="SELECT r FROM SolInspeccionRep r "
-			+ "where r.estado = 'A' and r.estadoSolicitud = 'PENDIENTE' order by r.idSolicitudRep desc")
+			+ "where r.estado = 'A' and r.estadoSolicitud = 'PENDIENTE' order by r.idSolicitudRep desc"),
+	
+	@NamedQuery(name="SolInspeccionRep.buscarExistente", query="SELECT r FROM SolInspeccionRep r "
+			+ "where r.estado = 'A' and r.estadoSolicitud = 'PENDIENTE' and r.cuentaCliente.idCuenta = :idCuenta")
 })
 
 public class SolInspeccionRep implements Serializable {
