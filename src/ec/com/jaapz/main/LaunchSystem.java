@@ -14,8 +14,12 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
+
+
+
 public class LaunchSystem extends Application {
 	ControllerHelper helper = new ControllerHelper();
+	
 	@Override
 	public void start(Stage stage) {
 		try {

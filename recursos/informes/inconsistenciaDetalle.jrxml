@@ -17,10 +17,10 @@
 	<parameter name="CANTIDAD" class="java.lang.Integer"/>
 	<queryString>
 		<![CDATA[select cu.id_cuenta,m.codigo,concat(c.nombre,' ',c.apellido) as cliente, 
-case when p.latitud is null then CAST(9.5 AS decimal(8,2)) else
+case when p.latitud is null then CAST(9.5 AS decimal(8,0)) else
 CAST(((acos(sin(radians(cu.latitud)) * sin(radians(p.latitud)) + 
 cos(radians(cu.latitud)) * cos(radians(p.latitud)) * 
-cos(radians(cu.longitud) - radians(p.longitud))) * 6378) * 1000) AS decimal(8,2)) end as distancia
+cos(radians(cu.longitud) - radians(p.longitud))) * 6378) * 1000) AS decimal(8,0)) end as distancia
 from cuenta_cliente cu, cliente c,planilla p,medidor m
 where cu.id_cliente = c.id_cliente
 and cu.id_cuenta = p.id_cuenta
@@ -29,10 +29,10 @@ and cu.estado = 'A' and c.estado = 'A' and p.estado = 'A'
 and m.estado = 'A'
 and p.origen = 'MOVIL'
 and p.id_apertura =  $P{ID_APERTURA}  and cu.id_barrio =  $P{ID_BARRIO} 
-and case when p.latitud is null then CAST(9.5 AS decimal(8,2)) else
+and case when p.latitud is null then CAST(9.5 AS decimal(8,0)) else
 CAST(((acos(sin(radians(cu.latitud)) * sin(radians(p.latitud)) + 
 cos(radians(cu.latitud)) * cos(radians(p.latitud)) * 
-cos(radians(cu.longitud) - radians(p.longitud))) * 6378) * 1000) AS decimal(8,2)) end >=  $P{CANTIDAD} 
+cos(radians(cu.longitud) - radians(p.longitud))) * 6378) * 1000) AS decimal(8,0)) end >=  $P{CANTIDAD} 
 
 union all
 select null,null,null,null

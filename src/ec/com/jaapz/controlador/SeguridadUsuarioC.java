@@ -177,7 +177,7 @@ public class SeguridadUsuarioC {
 			public void handle(KeyEvent ke){
 				if (ke.getCode().equals(KeyCode.ENTER)){
 					if (validarCedula(txtCedula.getText()) == false){
-						helper.mostrarAlertaAdvertencia("El número de cedula es incorrecto!", Context.getInstance().getStage());
+						helper.mostrarAlertaError("El número de cedula es incorrecto!", Context.getInstance().getStage());
 						limpiar();
 					}else
 						recuperarDatos(txtCedula.getText());
@@ -215,7 +215,7 @@ public class SeguridadUsuarioC {
 		        }
 		        else{
 		        	if (validarCedula(txtCedula.getText()) == false){
-						helper.mostrarAlertaAdvertencia("El número de cedula es incorrecto!", Context.getInstance().getStage());
+						helper.mostrarAlertaError("El número de cedula es incorrecto!", Context.getInstance().getStage());
 						limpiar();
 					}else
 						recuperarDatos(txtCedula.getText());
