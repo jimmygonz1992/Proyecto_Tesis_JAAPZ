@@ -83,9 +83,8 @@ public class SolicitudInstalacionC {
     			public void handle(KeyEvent ke){
     				if (ke.getCode().equals(KeyCode.ENTER)){
     					if (validarCedula(txtCedula.getText()) == false){
-    						helper.mostrarAlertaAdvertencia("El número de cedula es incorrecto!", Context.getInstance().getStage());
-    						txtCedula.setText("");
-    						txtCedula.requestFocus();
+    						helper.mostrarAlertaError("El número de cedula es incorrecto!", Context.getInstance().getStage());
+    						limpiar();
     					}else {
     						recuperarDatos(txtCedula.getText());
     						
@@ -99,6 +98,34 @@ public class SolicitudInstalacionC {
     				}
     			}
     		});
+    		
+    		
+    		txtCedula.focusedProperty().addListener(new ChangeListener<Boolean>(){
+    		    @Override
+    		    public void changed(ObservableValue<? extends Boolean> arg0, Boolean oldPropertyValue, Boolean newPropertyValue){
+    		        if (newPropertyValue){
+    		            //System.out.println("Textfield on focus");
+    		        }
+    		        else{
+    		        	if (validarCedula(txtCedula.getText()) == false){
+    						helper.mostrarAlertaError("El número de cedula es incorrecto!", Context.getInstance().getStage());
+    						limpiar();
+    					}else {
+    						recuperarDatos(txtCedula.getText());
+    						
+    						//dtpFechaIns.setValue(null);
+    				    	cboUsoMedidor.getSelectionModel().select(-1);
+    				    	txtReferenciaIns.setText("");
+    				    	txtDireccionIns.setText("");
+    				    	txtContacto.setText("");
+    				    	cboBarrio.getSelectionModel().select(-1);
+    					}
+    		        }
+    		    }
+    		});
+    		
+    		
+    		
     		//validar solo numeros
 			txtCedula.textProperty().addListener(new ChangeListener<String>() {
 				@Override
@@ -386,8 +413,12 @@ public class SolicitudInstalacionC {
     		clienteRecuperado.setIdCliente(null);
     }
     public void nuevo() {
-    	clienteRecuperado = null;
+    	limpiar();
     	txtCedula.setText("");
+    }
+
+    private void limpiar() {
+    	clienteRecuperado = null;
     	txtNombres.setText("");
     	txtApellidos.setText("");
     	txtDireccion.setText("");
@@ -402,8 +433,6 @@ public class SolicitudInstalacionC {
     	txtCorreo.setText("");
     	cboBarrio.getSelectionModel().select(-1);
     }
-
-    
     public void buscarIns() {
     	try{
 			helper.abrirPantallaModal("/clientes/ClientesListaClientes.fxml","Listado de Clientes", Context.getInstance().getStage());

@@ -1,13 +1,9 @@
 package ec.com.jaapz.controlador;
 
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import javax.imageio.ImageIO;
 
 import ec.com.jaapz.modelo.Anio;
 import ec.com.jaapz.modelo.AnioDAO;

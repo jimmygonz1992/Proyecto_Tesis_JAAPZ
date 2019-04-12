@@ -61,7 +61,19 @@ public class LecturasAperturaC {
 			btnGrabarApertura.setStyle("-fx-cursor: hand;");
 			cboAnio.setStyle("-fx-cursor: hand;");
 			cboMes.setStyle("-fx-cursor: hand;");
+			txtCantidad.setText("0");
+			txtValor.setText("0");
 			txtCantidad.textProperty().addListener(new ChangeListener<String>() {
+				@Override
+				public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+					if (newValue.matches("\\d*")) {
+						//int value = Integer.parseInt(newValue);
+					} else {
+						txtCantidad.setText(oldValue);
+					}
+				}
+			});
+			txtValor.textProperty().addListener(new ChangeListener<String>() {
 				@Override
 				public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
 					if (newValue.matches("\\d*")) {
@@ -221,6 +233,8 @@ public class LecturasAperturaC {
 								Planilla planilla = noPlanillado.get(0); // se llena los datos de la planilla ya generada
 								System.out.println("planilla ya generada: " + planilla.getIdPlanilla());
 								planilla.setFecha(fecha);
+								planilla.setEnvia(false);
+								planilla.setImprime(false);
 								planilla.setConvenio(Constantes.CONVENIO_NO);
 								//obtener el consumo del mes anterior
 								planilla.setConsumo(0);
@@ -321,16 +335,6 @@ public class LecturasAperturaC {
 				bandera = true;
 				return bandera;
 			}
-			if(txtCantidad.getText().equals("")) {
-				helper.mostrarAlertaAdvertencia("Debe registrar cantidad de metros cúbicos del proveedor", Context.getInstance().getStage());
-				bandera = true;
-				return bandera;
-			}
-			if(txtValor.getText().equals("")) {
-				helper.mostrarAlertaAdvertencia("Registre el valor total", Context.getInstance().getStage());
-				bandera = true;
-				return bandera;
-			}
 			List<AperturaLectura> listaApertura = tvAperturas.getItems();
 			for(AperturaLectura apertura : listaApertura) {
 				if(apertura.getAnio().getIdAnio() == cboAnio.getSelectionModel().getSelectedItem().getIdAnio() 
@@ -339,7 +343,6 @@ public class LecturasAperturaC {
 					helper.mostrarAlertaAdvertencia("Apertura ya realizada", Context.getInstance().getStage());
 					return bandera;
 				}
-
 			}
 			for(AperturaLectura apertura : listaApertura) {
 				if(apertura.getEstadoApertura().equals(Constantes.EST_APERTURA_PROCESO)) {

@@ -70,4 +70,14 @@ public class SolInspeccionRepDAO extends ClaseDAO{
 		resultado = (List<SolInspeccionRep>) query.getResultList();
 		return resultado;
 	}
+	
+	@SuppressWarnings("unchecked")
+	public List<SolInspeccionRep> getSolicitudesExistente(Integer idCuenta){
+		List<SolInspeccionRep> resultado = new ArrayList<SolInspeccionRep>();
+		Query query = getEntityManager().createNamedQuery("SolInspeccionRep.buscarExistente");
+		query.setHint("javax.persistence.cache.storeMode", "REFRESH");
+		query.setParameter("idCuenta", idCuenta);
+		resultado = (List<SolInspeccionRep>) query.getResultList();
+		return resultado;
+	}
 }
