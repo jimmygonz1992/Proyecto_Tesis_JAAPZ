@@ -5,7 +5,9 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import ec.com.jaapz.modelo.CuentaCliente;
@@ -20,6 +22,7 @@ import ec.com.jaapz.util.Constantes;
 import ec.com.jaapz.util.Context;
 import ec.com.jaapz.util.ControllerHelper;
 import ec.com.jaapz.util.Encriptado;
+import ec.com.jaapz.util.PrintReport;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -61,6 +64,7 @@ public class InstalacionesAtencionSolicC {
 	
 	@FXML private Button btnGrabar;
 	@FXML private Button btnNuevo;
+	@FXML private Button btnImprimir;
 	
 	ControllerHelper helper = new ControllerHelper();
 	Instalacion instalacionSeleccionada = new Instalacion();
@@ -295,6 +299,38 @@ public class InstalacionesAtencionSolicC {
 			recuperarDetalleLiquidacion(instalacionSel);
 		}catch(Exception e) {
 			e.printStackTrace();
+		}
+	}
+	
+	public void imprimir() {
+		try {
+		/*	Map<String, Object> param = new HashMap<String, Object>();
+			param.put("ID_CUENTA", inspeccionRepSeleccionado.getCuentaCliente().getIdCuenta());
+			param.put("ID_INSPECCION", inspeccionRepSeleccionado.getIdSolicitudRep());
+			param.put("referencia", inspeccionRepSeleccionado.getReferencia());
+			param.put("USUARIO_RESPONSABLE", Encriptado.Desencriptar(Context.getInstance().getUsuariosC().getUsuario()));
+			if(inspeccionRepSeleccionado.getCuentaCliente().getCategoria().equals(Constantes.CAT_VIVIENDA))
+				param.put("vivienda", "X");
+			else
+				param.put("vivienda", "");
+			if(inspeccionRepSeleccionado.getCuentaCliente().getCategoria().equals(Constantes.CAT_COMERCIAL))
+				param.put("comercial", "X");
+			else
+				param.put("comercial", "");
+			param.put("LATITUD", inspeccionRepSeleccionado.getCuentaCliente().getLatitud());
+			param.put("LONGITUD", inspeccionRepSeleccionado.getCuentaCliente().getLongitud());
+			if(inspeccionRepSeleccionado.getCuentaCliente().getCategoria().equals(Constantes.CAT_ESTABLECIMIENTO))
+				param.put("publico", "X");
+			else
+				param.put("publico", "");
+
+			param.put("fecha_inspeccion", formateador.format(inspeccionRepSeleccionado.getFecha()));
+
+			PrintReport printReport = new PrintReport();
+			printReport.crearReporte("/recursos/informes/ficha_inspeccion_reparacion.jasper", reparacionDao, param);
+			printReport.showReport("Ficha de Inspección de Reparación");*/
+		}catch(Exception ex) {
+			System.out.println(ex.getMessage());
 		}
 	}
 	

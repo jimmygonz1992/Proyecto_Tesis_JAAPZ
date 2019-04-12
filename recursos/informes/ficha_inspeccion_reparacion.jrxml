@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.6.0.final using JasperReports Library version 6.6.0  -->
+<!-- Created with Jaspersoft Studio version 6.5.1.final using JasperReports Library version 6.5.1  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ficha_inspeccion_reparacion" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="5c32cae0-310f-4b68-bd3a-9cfb8b0ef80d">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
-	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="conectionBDJAAPZ"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="jaapz_conection"/>
 	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="172"/>
 	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="820"/>
 	<parameter name="ID_CUENTA" class="java.lang.Integer"/>
@@ -20,13 +20,18 @@
 	c.id_cliente,
 	i.referencia,
 	i.fecha,
-	i.id_solicitud_rep
+	i.id_solicitud_rep,
+	cat.descripcion,
+	cc.direccion,
+	i.telf_contacto
 FROM sol_inspeccion_rep i,
 	cliente c,
-	cuenta_cliente cc
+	cuenta_cliente cc,
+	categoria cat
 WHERE 
 	 i.id_cuenta = cc.id_cuenta and
 	 cc.id_cliente = c.id_cliente and
+	 cat.id_categoria = cc.id_categoria and
 	 cc.id_cuenta = $P{ID_CUENTA}  and i.id_solicitud_rep = $P{ID_INSPECCION}]]>
 	</queryString>
 	<field name="nombres" class="java.lang.String">
@@ -46,6 +51,18 @@ WHERE
 	</field>
 	<field name="id_solicitud_rep" class="java.lang.Integer">
 		<property name="com.jaspersoft.studio.field.label" value="id_solicitud_rep"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="sol_inspeccion_rep"/>
+	</field>
+	<field name="descripcion" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="descripcion"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="categoria"/>
+	</field>
+	<field name="direccion" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="direccion"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="cuenta_cliente"/>
+	</field>
+	<field name="telf_contacto" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="telf_contacto"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="sol_inspeccion_rep"/>
 	</field>
 	<background>
@@ -106,7 +123,7 @@ WHERE
 		</band>
 	</pageHeader>
 	<columnHeader>
-		<band height="171" splitType="Stretch">
+		<band height="202" splitType="Stretch">
 			<staticText>
 				<reportElement x="0" y="14" width="551" height="13" uuid="6d257ba4-441f-4e51-99b0-83bcd0ab5105"/>
 				<textElement textAlignment="Center">
@@ -121,26 +138,12 @@ WHERE
 				</textElement>
 				<text><![CDATA[REPARACIÓN]]></text>
 			</staticText>
-			<line>
-				<reportElement x="297" y="119" width="49" height="1" uuid="08f868d1-991d-45b8-a20d-3756208a0295"/>
-			</line>
 			<staticText>
-				<reportElement x="248" y="106" width="48" height="14" uuid="5a76e598-9058-4997-8d70-0b621546a01f"/>
-				<text><![CDATA[Comercial:]]></text>
-			</staticText>
-			<line>
-				<reportElement x="188" y="119" width="49" height="1" uuid="46d9ee3c-8805-44df-9df6-f64b63e4d533"/>
-			</line>
-			<staticText>
-				<reportElement x="142" y="106" width="48" height="14" uuid="09291abf-3c29-4bce-90a2-190857a009cc"/>
-				<text><![CDATA[Vivienda:]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="41" y="106" width="100" height="14" uuid="5bd290fa-4cb8-488f-ba5e-8798f5fe0341"/>
+				<reportElement x="37" y="123" width="100" height="14" uuid="5bd290fa-4cb8-488f-ba5e-8798f5fe0341"/>
 				<text><![CDATA[Uso del medidor:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="41" y="86" width="104" height="14" uuid="d566ebe7-a6b5-4c16-ab2e-61a51207db09"/>
+				<reportElement x="38" y="103" width="104" height="14" uuid="d566ebe7-a6b5-4c16-ab2e-61a51207db09"/>
 				<text><![CDATA[Referencia domiciliaria:]]></text>
 			</staticText>
 			<staticText>
@@ -158,74 +161,91 @@ WHERE
 				<reportElement x="143" y="79" width="378" height="1" uuid="6800c48e-a562-42ea-9b45-957a18291bc5"/>
 			</line>
 			<line>
-				<reportElement x="143" y="98" width="378" height="1" uuid="f3cd8dd3-0352-4704-934e-1a93617caa33"/>
-			</line>
-			<staticText>
-				<reportElement x="358" y="106" width="108" height="14" uuid="adaa1e8e-7a2c-4c9b-bc96-bf2958dcf62f"/>
-				<text><![CDATA[Establecimiento público:]]></text>
-			</staticText>
-			<line>
-				<reportElement x="471" y="119" width="49" height="1" uuid="41b05231-113d-4293-944b-dd24d50a410c"/>
+				<reportElement x="143" y="118" width="378" height="1" uuid="f3cd8dd3-0352-4704-934e-1a93617caa33"/>
 			</line>
 			<subreport>
-				<reportElement x="47" y="157" width="200" height="14" uuid="46ec52c5-92e5-4c33-b508-520a097be059"/>
+				<reportElement x="47" y="185" width="200" height="14" uuid="46ec52c5-92e5-4c33-b508-520a097be059"/>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 				<subreportExpression><![CDATA["recursos/informes/materiales_reparacion.jasper"]]></subreportExpression>
 			</subreport>
 			<staticText>
-				<reportElement x="33" y="140" width="217" height="13" uuid="6a5a9a00-c4b7-4a0b-970f-620ccf0fb061"/>
+				<reportElement x="33" y="171" width="217" height="13" uuid="6a5a9a00-c4b7-4a0b-970f-620ccf0fb061"/>
 				<textElement textAlignment="Left">
 					<font isBold="true" isUnderline="true"/>
 				</textElement>
 				<text><![CDATA[B) RESULTADOS DE LA INSPECCIÓN]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="148" y="64" width="342" height="13" uuid="9309a0cf-02fb-4253-b57a-b9d87916e204"/>
+				<reportElement x="148" y="64" width="372" height="13" uuid="9309a0cf-02fb-4253-b57a-b9d87916e204"/>
 				<textFieldExpression><![CDATA[$F{nombres}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="150" y="83" width="340" height="13" uuid="176b4634-3afb-4991-ae40-4e7add808cb5"/>
+				<reportElement x="150" y="103" width="370" height="13" uuid="176b4634-3afb-4991-ae40-4e7add808cb5"/>
 				<textFieldExpression><![CDATA[$F{referencia}]]></textFieldExpression>
 			</textField>
+			<staticText>
+				<reportElement x="39" y="84" width="102" height="14" uuid="03864449-f137-49c5-afad-579c27e4e189"/>
+				<text><![CDATA[Dirección:]]></text>
+			</staticText>
+			<line>
+				<reportElement x="144" y="98" width="378" height="1" uuid="b215a1bf-ca8b-429e-b893-4d403b9860b9"/>
+			</line>
 			<textField>
-				<reportElement x="195" y="105" width="40" height="13" uuid="412dbe57-04de-4fe7-954f-d971d3148108"/>
-				<textFieldExpression><![CDATA[$P{vivienda}]]></textFieldExpression>
+				<reportElement x="147" y="85" width="373" height="13" uuid="3187d658-4529-44ee-8c08-b3489066faae"/>
+				<textFieldExpression><![CDATA[$F{direccion}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="302" y="104" width="44" height="13" uuid="395e433d-053a-4014-94f8-22e87418ab94"/>
-				<textFieldExpression><![CDATA[$P{comercial}]]></textFieldExpression>
+				<reportElement x="143" y="124" width="117" height="13" uuid="e13a2644-dbc1-457d-ab65-670fe8107ec7"/>
+				<textFieldExpression><![CDATA[$F{descripcion}]]></textFieldExpression>
 			</textField>
+			<line>
+				<reportElement x="144" y="137" width="378" height="1" uuid="cd331e76-1fe9-448d-85a9-1283ff4242a0"/>
+			</line>
+			<staticText>
+				<reportElement x="38" y="142" width="91" height="14" uuid="7c655687-0e25-40de-ab0a-7a17f839671d"/>
+				<text><![CDATA[Telf. contacto:]]></text>
+			</staticText>
+			<line>
+				<reportElement x="143" y="158" width="378" height="1" uuid="929fa807-1a3b-42cd-8aea-9607d8e74d92"/>
+			</line>
 			<textField>
-				<reportElement x="480" y="104" width="41" height="13" uuid="c7180f94-5726-405c-9462-a5ca4a34740f"/>
-				<textFieldExpression><![CDATA[$P{publico}]]></textFieldExpression>
+				<reportElement x="144" y="143" width="176" height="13" uuid="e0249b77-6bff-4efd-91aa-1fb7e423bc18"/>
+				<textFieldExpression><![CDATA[$F{telf_contacto}]]></textFieldExpression>
 			</textField>
 		</band>
 	</columnHeader>
-	<detail>
-		<band height="7" splitType="Stretch"/>
-	</detail>
 	<columnFooter>
-		<band height="84" splitType="Stretch">
+		<band height="126" splitType="Stretch">
 			<staticText>
-				<reportElement x="106" y="70" width="119" height="14" uuid="e6be8bc2-ea05-45ea-9b4d-e662650c4fc3"/>
+				<reportElement x="106" y="112" width="119" height="14" uuid="e6be8bc2-ea05-45ea-9b4d-e662650c4fc3"/>
 				<textElement textAlignment="Center"/>
 				<text><![CDATA[PRESIDENTE]]></text>
 			</staticText>
 			<line>
-				<reportElement x="96" y="66" width="139" height="1" uuid="48b0952b-2dc5-4b3b-a2ef-f7d39a6fab68"/>
+				<reportElement x="96" y="108" width="139" height="1" uuid="48b0952b-2dc5-4b3b-a2ef-f7d39a6fab68"/>
 			</line>
 			<line>
-				<reportElement x="333" y="66" width="139" height="1" uuid="97d72057-870e-428f-b6fb-e52fc5474d10"/>
+				<reportElement x="333" y="108" width="139" height="1" uuid="97d72057-870e-428f-b6fb-e52fc5474d10"/>
 			</line>
 			<staticText>
-				<reportElement x="340" y="70" width="119" height="14" uuid="f33c663f-3d06-413f-8feb-53af20755ee7"/>
+				<reportElement x="340" y="112" width="119" height="14" uuid="f33c663f-3d06-413f-8feb-53af20755ee7"/>
 				<textElement textAlignment="Center"/>
 				<text><![CDATA[SOLICITANTE]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="41" y="20" width="349" height="14" uuid="ac8b0ae8-62a9-4e33-b461-c7dd158e1164"/>
+				<reportElement x="41" y="62" width="349" height="14" uuid="ac8b0ae8-62a9-4e33-b461-c7dd158e1164"/>
 				<text><![CDATA[Para constancia firman las partes involucradas de este documento]]></text>
 			</staticText>
+			<staticText>
+				<reportElement x="30" y="0" width="217" height="13" uuid="fb8ddbda-213b-4ddf-b908-c26fc00c98f5"/>
+				<textElement textAlignment="Left">
+					<font isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[C) Novedades encontradas]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="30" y="15" width="481" height="33" uuid="a3431890-1c17-4a66-91c7-b8f210ebdf42"/>
+			</rectangle>
 		</band>
 	</columnFooter>
 	<pageFooter>

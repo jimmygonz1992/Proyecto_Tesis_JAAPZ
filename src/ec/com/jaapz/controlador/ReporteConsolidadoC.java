@@ -52,6 +52,7 @@ public class ReporteConsolidadoC {
 			}
 		});
 	}
+	@SuppressWarnings("unused")
 	private void visualizarReporte() {
 		try {
 			if(cboAnio.getSelectionModel().getSelectedItem() == null) {

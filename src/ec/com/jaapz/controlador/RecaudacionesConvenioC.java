@@ -249,7 +249,7 @@ public class RecaudacionesConvenioC {
 	}
 	@SuppressWarnings("unchecked")
 	public void generarDetalleConvenio() {
-		try {
+		try {			
 			if(Integer.parseInt(String.valueOf(txtNumMeses.getText())) <= 0 || txtNumMeses.getText().toString() == "") {
 				helper.mostrarAlertaAdvertencia("El número de meses debe se mayor a cero", Context.getInstance().getStage());
 				txtNumMeses.requestFocus();
@@ -311,8 +311,7 @@ public class RecaudacionesConvenioC {
 			boolean bandera = false;
 			if(tvPlanillasImpagas.getItems().size() <= 0) {
 				helper.mostrarAlertaAdvertencia("No existen planillas sin pagar!!", Context.getInstance().getStage());
-				txtNumMeses.requestFocus();
-				return false;
+				bandera = false;
 			}
 			
 			bandera = true;

@@ -5,7 +5,9 @@ import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import ec.com.jaapz.correo.Hilo2;
@@ -28,6 +30,8 @@ import ec.com.jaapz.modelo.SolInspeccionIn;
 import ec.com.jaapz.util.Constantes;
 import ec.com.jaapz.util.Context;
 import ec.com.jaapz.util.ControllerHelper;
+import ec.com.jaapz.util.Encriptado;
+import ec.com.jaapz.util.PrintReport;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -70,6 +74,7 @@ public class SolicitudesCierreInspeccionC {
 	@FXML private TextField txtStock;
 	@FXML private TextField txtCantidad;
 	@FXML private TextField txtPrecio;
+	@FXML private Button btnImprimir;
 	
 	//nuevos componentes
 	@FXML private TextField txtModelo;
@@ -235,6 +240,55 @@ public class SolicitudesCierreInspeccionC {
 			System.out.println(ex.getMessage());
 		}
 	}
+	
+	public void imprimir() {
+		try {
+			Map<String, Object> param = new HashMap<String, Object>();
+			param.put("ID_CLIENTE", inspeccionSeleccionado.getCliente().getIdCliente());
+			param.put("ID_INSPECCION", inspeccionSeleccionado.getIdSolInspeccion());
+			param.put("referencia", inspeccionSeleccionado.getReferencia());
+			param.put("USUARIO_RESPONSABLE", Encriptado.Desencriptar(Context.getInstance().getUsuariosC().getUsuario()));
+			if(inspeccionSeleccionado.getUsoMedidor().equals(Constantes.CAT_VIVIENDA))
+				param.put("vivienda", "X");
+			else
+				param.put("vivienda", "");
+			if(inspeccionSeleccionado.getUsoMedidor().equals(Constantes.CAT_COMERCIAL))
+				param.put("comercial", "X");
+			else
+				param.put("comercial", "");
+			param.put("LATITUD", "");
+			param.put("LONGITUD", "");
+			if(inspeccionSeleccionado.getUsoMedidor().equals(Constantes.CAT_ESTABLECIMIENTO))
+				param.put("publico", "X");
+			else
+				param.put("publico", "");
+
+			param.put("fecha_inspeccion", formateador.format(inspeccionSeleccionado.getFechaIngreso()));
+
+			if(inspeccionSeleccionado.getFechaAprobacion() != null)
+				param.put("fecha_aprobacion", formateador.format(inspeccionSeleccionado.getFechaAprobacion()));
+			else
+				param.put("fecha_aprobacion", "");
+
+			if(inspeccionSeleccionado.getFactibilidad() == null) {
+				param.put("reprobado", "");
+				param.put("aprobado", "");
+			}else if(inspeccionSeleccionado.getFactibilidad().equals(Constantes.EST_NO_FACTIBLE)) {
+				param.put("reprobado", "X");
+				param.put("aprobado", "");
+			}
+			else if(inspeccionSeleccionado.getFactibilidad().equals(Constantes.EST_FACTIBLE)) {
+				param.put("aprobado", "X");
+				param.put("reprobado", "");
+			}
+			PrintReport printReport = new PrintReport();
+			printReport.crearReporte("/recursos/informes/ficha_inspeccion.jasper", inspeccionDAO, param);
+			printReport.showReport("Ficha de Inspección");
+		}catch(Exception ex) {
+			System.out.println(ex.getMessage());
+		}
+	}
+	
 	public void grabar() {
 		try {
 			if(validarDatos() == false)

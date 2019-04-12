@@ -30,14 +30,14 @@
                         <Label text="Teléfono:" GridPane.columnIndex="1" GridPane.rowIndex="5">
                            <font><Font name="System Bold Italic" size="12.0" /></font>
                         </Label>
-                        <GridPane GridPane.columnIndex="2">
+                        <GridPane GridPane.columnIndex="2" GridPane.columnSpan="2">
                            <children>
                               <TextField fx:id="txtCedula" maxWidth="150.0" minWidth="20.0" prefWidth="150.0" />
                               <Button fx:id="btnBuscarIns" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#buscarCuenta" styleClass="botonBuscar" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
                            </children>
                            <columnConstraints>
-                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="89.0" minWidth="10.0" prefWidth="89.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="60.0" minWidth="60.0" prefWidth="60.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="195.0" minWidth="10.0" prefWidth="195.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="60.0" minWidth="0.0" prefWidth="14.0" />
                            </columnConstraints>
                            <rowConstraints>
                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -157,11 +157,11 @@
             
          </children>
          <columnConstraints>
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="54.0" minWidth="10.0" prefWidth="20.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="229.0" minWidth="10.0" prefWidth="229.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="54.0" minWidth="0.0" prefWidth="0.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="267.0" minWidth="10.0" prefWidth="267.0" />
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="138.0" minWidth="10.0" prefWidth="138.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="51.0" minWidth="10.0" prefWidth="20.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="184.0" minWidth="10.0" prefWidth="184.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="51.0" minWidth="0.0" prefWidth="0.0" />
             <ColumnConstraints />
          </columnConstraints>
          <rowConstraints>

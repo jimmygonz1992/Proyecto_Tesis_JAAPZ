@@ -256,6 +256,9 @@ public class SolicitudAsignacionRepC {
 	
 	public void grabarAsig() {
 		try {
+			if(validarDatos() == false)
+				return;
+			
 			Optional<ButtonType> result = helper.mostrarAlertaConfirmacion("Desea Grabar los Datos?",Context.getInstance().getStage());
 			if(result.get() == ButtonType.OK){
 				if(tpRealizadas.isSelected()) {
@@ -287,6 +290,21 @@ public class SolicitudAsignacionRepC {
 		}catch(Exception ex) {
 			System.out.println(ex.getMessage());
 			reparacionDao.getEntityManager().getTransaction().rollback();
+		}
+	}
+	
+	boolean validarDatos() {
+		try {
+			if(tvNuevosAsig.getItems().size() <= 0) {
+				helper.mostrarAlertaAdvertencia("No existen solicitudes agregadas", Context.getInstance().getStage());
+				tvNuevosAsig.requestFocus();
+				return false;
+			}
+		
+			return true;
+		}catch(Exception ex) {
+			System.out.println(ex.getMessage());
+			return false;
 		}
 	}
 	

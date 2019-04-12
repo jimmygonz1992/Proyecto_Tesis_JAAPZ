@@ -285,6 +285,7 @@ public class SolicitudInstalacionC {
     	try {
     		if(txtCedula.getText().toString().equals("")) {
 				helper.mostrarAlertaAdvertencia("Debe seleccionar un cliente", Context.getInstance().getStage());
+				txtCedula.requestFocus();
 				return;
 			}
     		if(cboGenero.getSelectionModel().getSelectedIndex() == -1) {
@@ -301,15 +302,24 @@ public class SolicitudInstalacionC {
 			}
 			if(txtReferenciaIns.getText().toString().equals("")) {
 				helper.mostrarAlertaAdvertencia("Es necesario registrar referencia domiciliaria", Context.getInstance().getStage());
+				txtReferenciaIns.requestFocus();
 				return;
 			}
 			if(txtContacto.getText().toString().equals("")) {
 				helper.mostrarAlertaAdvertencia("Es recesario registrar número de contacto", Context.getInstance().getStage());
+				txtContacto.requestFocus();
+				return;
+			}
+			
+			if(txtDireccion.getText().toString().equals("")) {
+				helper.mostrarAlertaAdvertencia("Dirección actual del cliente obligatorio", Context.getInstance().getStage());
+				txtDireccion.requestFocus();
 				return;
 			}
 			
 			if(txtDireccionIns.getText().toString().equals("")) {
 				helper.mostrarAlertaAdvertencia("Es recesario registrar dirección de inspección", Context.getInstance().getStage());
+				txtDireccionIns.requestFocus();
 				return;
 			}
 			
@@ -321,6 +331,7 @@ public class SolicitudInstalacionC {
 				if(!txtCorreo.getText().toString().equals("")) {
 					if(ControllerHelper.validarEmail(txtCorreo.getText()) == false) {
 						helper.mostrarAlertaAdvertencia("Correo electrónico no valido", Context.getInstance().getStage());
+						txtCorreo.requestFocus();
 						return;	
 					}
 				}

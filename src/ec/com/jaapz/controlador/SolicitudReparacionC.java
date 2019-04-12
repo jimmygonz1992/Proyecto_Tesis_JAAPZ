@@ -474,6 +474,36 @@ public class SolicitudReparacionC {
 				txtTelefono.requestFocus();
 				return false;	
 			}
+			
+			if(dtpFechaRep.getValue() == null) {
+				helper.mostrarAlertaAdvertencia("Debe ingresar fecha de inspección", Context.getInstance().getStage());
+				return false;	
+			}
+			
+			if(txtReferenciaIns.getText().equals("")) {
+				helper.mostrarAlertaAdvertencia("Ingresar referencia domiciliaria", Context.getInstance().getStage());
+				txtReferenciaIns.requestFocus();
+				return false;	
+			}
+			
+			if(txtDireccionIns.getText().equals("")) {
+				helper.mostrarAlertaAdvertencia("Ingresar dirección", Context.getInstance().getStage());
+				txtDireccionIns.requestFocus();
+				return false;	
+			}
+			
+			if(txtContacto.getText().equals("")) {
+				helper.mostrarAlertaAdvertencia("Ingresar teléfono de contacto", Context.getInstance().getStage());
+				txtContacto.requestFocus();
+				return false;	
+			}
+			
+			if(txtObservaciones.getText().equals("")) {
+				helper.mostrarAlertaAdvertencia("Describa el problema presentado", Context.getInstance().getStage());
+				txtObservaciones.requestFocus();
+				return false;	
+			}
+			
 			if(verificarExistencia() == true) {
 				helper.mostrarAlertaAdvertencia("El cliente tiene una solicitud en proceso", Context.getInstance().getStage());
 				return false;	
