@@ -13,15 +13,18 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 public class BodegaListadoRubrosC {
 	private @FXML TableView<Rubro> tvDatos;
 	private @FXML Button btnVerReporte;
+	private @FXML TextField txtBuscar;
 	RubroDAO rubroDAO = new RubroDAO();
 	public void initialize(){
 		btnVerReporte.setStyle("-fx-cursor: hand;");
-		llenarDatos();
+		btnVerReporte.setStyle("-fx-graphic: url('/imprimir.png');-fx-cursor: hand;");
+		llenarDatos("");
 		tvDatos.setRowFactory(tv -> {
             TableRow<Rubro> row = new TableRow<>();
             row.setOnMouseClicked(event -> {
@@ -42,13 +45,18 @@ public class BodegaListadoRubrosC {
 		pr.showReport("Listado");
 	}
 	
+	public void buscarMaterial() {
+		llenarDatos(txtBuscar.getText());
+	}
+	
+	
 	@SuppressWarnings("unchecked")
-	void llenarDatos(){
+	void llenarDatos(String patron){
 		try{
 			tvDatos.getColumns().clear();
 			RubroDAO rubroDAO = new RubroDAO();
 			List<Rubro> listaRubros;
-			listaRubros = rubroDAO.getListaRubros();
+			listaRubros = rubroDAO.getListaRubros(patron);
 			ObservableList<Rubro> datos = FXCollections.observableArrayList();
 			datos.setAll(listaRubros);
 

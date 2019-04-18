@@ -5,7 +5,9 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import ec.com.jaapz.modelo.Estado;
@@ -17,6 +19,7 @@ import ec.com.jaapz.util.Constantes;
 import ec.com.jaapz.util.Context;
 import ec.com.jaapz.util.ControllerHelper;
 import ec.com.jaapz.util.Encriptado;
+import ec.com.jaapz.util.PrintReport;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -55,6 +58,7 @@ public class ReparacionesAtencionSolicC {
 	
 	@FXML private Button btnGrabar;
 	@FXML private Button btnNuevo;
+	@FXML private Button btnImprimir;
 	
 	ControllerHelper helper = new ControllerHelper();
 	Reparacion reparacionSeleccionada = new Reparacion();
@@ -134,6 +138,19 @@ public class ReparacionesAtencionSolicC {
 				llenarDatosReparacion(reparacionSeleccionada);
 				Context.getInstance().setReparaciones(null);
 			}
+		}catch(Exception ex) {
+			System.out.println(ex.getMessage());
+		}
+	}
+	
+	public void imprimir() {
+		try {
+			Map<String, Object> param = new HashMap<String, Object>();
+			param.put("id_solicitud", reparacionSeleccionada.getSolInspeccionRep().getIdSolicitudRep());
+			
+			PrintReport printReport = new PrintReport();
+			printReport.crearReporte("/recursos/informes/ficha_reparacion.jasper", reparacionDao, param);
+			printReport.showReport("Orden de Reparación");
 		}catch(Exception ex) {
 			System.out.println(ex.getMessage());
 		}

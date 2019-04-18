@@ -41,4 +41,15 @@ public class FacturaDAO extends ClaseDAO{
 		resultado = (List<Factura>) query.getResultList();
 		return resultado;
 	}
+	
+	//planillas cobradas para reimpresion de comprobante
+	@SuppressWarnings("unchecked")
+	public List<Factura> getListaFacturasCobradas(String patron){
+		List<Factura> resultado = new ArrayList<Factura>();
+		Query query = getEntityManager().createNamedQuery("Factura.facturasCobradas");
+		query.setHint("javax.persistence.cache.storeMode", "REFRESH");
+		query.setParameter("patron", "%" + patron + "%");
+		resultado = (List<Factura>) query.getResultList();
+		return resultado;
+	}
 }

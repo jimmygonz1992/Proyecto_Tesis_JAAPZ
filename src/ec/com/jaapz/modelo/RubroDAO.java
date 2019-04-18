@@ -28,9 +28,19 @@ public class RubroDAO extends ClaseDAO {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<Rubro> getListaRubros(){
+	public List<Rubro> getListaRubros(String patron){
 		List<Rubro> resultado = new ArrayList<Rubro>();
 		Query query = getEntityManager().createNamedQuery("Rubro.findAll");
+		query.setHint("javax.persistence.cache.storeMode", "REFRESH");
+		query.setParameter("patron", "%" + patron + "%");
+		resultado = (List<Rubro>) query.getResultList();
+		return resultado;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Rubro> getListaRubrosKardex(){
+		List<Rubro> resultado = new ArrayList<Rubro>();
+		Query query = getEntityManager().createNamedQuery("Rubro.findAllKardex");
 		query.setHint("javax.persistence.cache.storeMode", "REFRESH");
 		resultado = (List<Rubro>) query.getResultList();
 		return resultado;

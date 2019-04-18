@@ -9,9 +9,9 @@
 
 <AnchorPane prefHeight="620.0" prefWidth="770.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ec.com.jaapz.controlador.ReparacionesAtencionSolicC">
    <children>
-      <GridPane alignment="CENTER" layoutX="20.0" layoutY="22.0" prefHeight="546.0" prefWidth="674.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <GridPane alignment="TOP_CENTER" layoutX="20.0" layoutY="22.0" prefHeight="546.0" prefWidth="674.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS">
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.columnSpan="2">
                <children>
                   <Label alignment="CENTER" prefHeight="27.0" prefWidth="336.0" text="REGISTRO DE REPARACIONES">
                      <font><Font name="System Bold" size="18.0" /></font>
@@ -141,6 +141,11 @@
                   <Button fx:id="btnNuevo" alignment="BOTTOM_CENTER" contentDisplay="TOP" mnemonicParsing="false" onAction="#nuevo" prefHeight="53.0" prefWidth="73.0" styleClass="botonNuevo" text="Nuevo">
                      <HBox.margin><Insets left="10.0" /></HBox.margin>
                   </Button>
+                  <Button fx:id="btnImprimir" alignment="BOTTOM_CENTER" contentDisplay="TOP" mnemonicParsing="false" onAction="#imprimir" prefHeight="52.0" prefWidth="80.0" styleClass="botonImprimir" text="Imprimir">
+                     <HBox.margin>
+                        <Insets left="10.0" />
+                     </HBox.margin>
+                  </Button>
                </children>
             </HBox>
             <Label text="DATOS DEL CLIENTE" GridPane.columnIndex="1" GridPane.rowIndex="3" GridPane.valignment="BOTTOM">
@@ -164,21 +169,21 @@
             </Label>
          </children>
          <columnConstraints>
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="511.0" minWidth="4.0" prefWidth="11.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="511.0" minWidth="10.0" prefWidth="204.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="535.0" minWidth="10.0" prefWidth="521.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="386.0" minWidth="1.0" prefWidth="16.0" />
+            <ColumnConstraints maxWidth="5.0" minWidth="1.0" prefWidth="5.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="511.0" minWidth="10.0" prefWidth="198.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="546.0" minWidth="10.0" prefWidth="525.0" />
+            <ColumnConstraints maxWidth="5.0" minWidth="1.0" prefWidth="5.0" />
          </columnConstraints>
          <rowConstraints>
-            <RowConstraints maxHeight="171.0" minHeight="0.0" prefHeight="32.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="171.0" minHeight="0.0" prefHeight="32.0" />
             <RowConstraints maxHeight="171.0" minHeight="9.0" prefHeight="21.0" vgrow="SOMETIMES" />
             <RowConstraints maxHeight="486.0" minHeight="10.0" prefHeight="119.0" vgrow="SOMETIMES" />
             <RowConstraints maxHeight="486.0" minHeight="10.0" prefHeight="29.0" vgrow="SOMETIMES" />
             <RowConstraints maxHeight="486.0" minHeight="10.0" prefHeight="113.0" vgrow="SOMETIMES" />
             <RowConstraints maxHeight="486.0" minHeight="10.0" prefHeight="31.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="439.0" minHeight="10.0" prefHeight="189.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="439.0" minHeight="10.0" prefHeight="16.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="439.0" minHeight="10.0" prefHeight="54.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="439.0" minHeight="10.0" prefHeight="200.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="439.0" minHeight="5.0" prefHeight="5.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="439.0" minHeight="10.0" prefHeight="70.0" vgrow="SOMETIMES" />
          </rowConstraints>
       </GridPane>
    </children>

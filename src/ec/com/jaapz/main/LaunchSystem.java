@@ -15,8 +15,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
-
-
 public class LaunchSystem extends Application {
 	ControllerHelper helper = new ControllerHelper();
 	
@@ -52,5 +50,4 @@ public class LaunchSystem extends Application {
 	public static void main(String[] args) {
 		launch(args);
 	}
-
 }

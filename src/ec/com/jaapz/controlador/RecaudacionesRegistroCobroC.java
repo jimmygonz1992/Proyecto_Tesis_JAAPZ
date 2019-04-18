@@ -80,6 +80,8 @@ public class RecaudacionesRegistroCobroC {
 
 	public void initialize(){
 		try {
+			//System.out.println(facturaDao.getIdFactura()+1);
+			txtNumComp.setText(String.valueOf(facturaDao.getIdFactura()+1));
 			btnAceptar.setStyle("-fx-cursor: hand;");
 			btnBuscaCuentas.setStyle("-fx-cursor: hand;");
 			btnCobrar.setStyle("-fx-cursor: hand;");
@@ -199,8 +201,6 @@ public class RecaudacionesRegistroCobroC {
 					}
 				}
 			});
-			//System.out.println(facturaDao.getIdFactura()+1);
-			txtNumComp.setText(String.valueOf(facturaDao.getIdFactura()+1));
 		}catch(Exception ex) {
 			System.out.println(ex.getMessage());
 		}

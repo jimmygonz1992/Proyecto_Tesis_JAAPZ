@@ -15,7 +15,8 @@ import java.util.List;
 @Table(name="rubro")
 
 @NamedQueries({
-	@NamedQuery(name="Rubro.findAll", query="SELECT r FROM Rubro r WHERE r.estado = 'A' ORDER BY r.idRubro"),
+	@NamedQuery(name="Rubro.findAll", query="SELECT r FROM Rubro r WHERE r.estado = 'A' and (lower(r.descripcion) like :patron or lower(r.codigo) like :patron) and r.tipoRubro.descripcion = 'MATERIALES' ORDER BY r.idRubro"),
+	@NamedQuery(name="Rubro.findAllKardex", query="SELECT r FROM Rubro r WHERE r.estado = 'A' and r.tipoRubro.descripcion = 'MATERIALES' ORDER BY r.idRubro"),
 	@NamedQuery(name="Rubro.buscarPatron", query="SELECT r FROM Rubro r "
 			+ "WHERE lower(r.descripcion) like lower(:descripcion) and r.estado = 'A'"),
 	@NamedQuery(name="Rubro.validarMaterial", query="SELECT r FROM Rubro r "
