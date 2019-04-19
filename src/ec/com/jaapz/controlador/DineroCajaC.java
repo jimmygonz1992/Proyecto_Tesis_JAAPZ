@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import ec.com.jaapz.modelo.FacturaDAO;
+import ec.com.jaapz.util.Context;
 import ec.com.jaapz.util.ControllerHelper;
 import ec.com.jaapz.util.PrintReport;
 import javafx.fxml.FXML;
@@ -19,6 +20,8 @@ public class DineroCajaC {
 	@FXML private DatePicker dtpFechaFin;
     @FXML private RadioButton rbResumido;
     @FXML private RadioButton rbDetallado;
+    @FXML private RadioButton rbPorUsuario;
+    @FXML private RadioButton rbGeneral;
     @FXML private Button btnImprimir;
     
     FacturaDAO facturaDao = new FacturaDAO();
@@ -31,11 +34,26 @@ public class DineroCajaC {
     	try {
     		btnImprimir.setStyle("-fx-cursor: hand;");
     		rbResumido.selectedProperty().set(true);
+    		rbPorUsuario.selectedProperty().set(true);
     		dtpFechaInicio.setValue(LocalDate.now());
     		dtpFechaFin.setValue(LocalDate.now());		
     	}catch(Exception ex) {
     		System.out.println(ex.getMessage());
     	}
+    }
+    
+    public void cambiarGeneral() {
+    	if(rbGeneral.isSelected() == true)
+    		rbPorUsuario.selectedProperty().set(false);
+    	else
+    		rbGeneral.selectedProperty().set(true);
+    }
+    
+    public void cambiarPorUsuario() {
+    	if(rbPorUsuario.isSelected() == true)
+    		rbGeneral.selectedProperty().set(false);
+    	else
+    		rbPorUsuario.selectedProperty().set(true);
     }
         
     public void cambiarResumido() {
@@ -55,21 +73,46 @@ public class DineroCajaC {
     public void imprimirReporte() {
     	dateInicio = Date.from(dtpFechaInicio.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
 		dateFin = Date.from(dtpFechaFin.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
-		
-		if(rbResumido.isSelected()) {
-			PrintReport pr = new PrintReport();
-			Map<String, Object> param = new HashMap<String, Object>();
-			param.put("FECHA_INICIO", dateInicio);
-			param.put("FECHA_FIN", dateFin);
-			pr.crearReporte("/recursos/informes/reporteCajaResumido.jasper", facturaDao, param);
-			pr.showReport("Reporte de caja resumido");
-    	}else {
-    		PrintReport pr = new PrintReport();
-			Map<String, Object> param = new HashMap<String, Object>();
-			param.put("FECHA_INICIO", dateInicio);
-			param.put("FECHA_FIN", dateFin);
-			pr.crearReporte("/recursos/informes/reporteCajaDetallado.jasper", facturaDao, param);
-			pr.showReport("Reporte de caja detallado");
-    	}
+		int usuario = Context.getInstance().getUsuariosC().getIdUsuario();
+		String usuarioNombre = Context.getInstance().getUsuariosC().getNombre() + " " + Context.getInstance().getUsuariosC().getApellido();
+		if(rbPorUsuario.isSelected()) {
+			//aumenta usurio como otro parametro
+			if(rbResumido.isSelected()) {
+				PrintReport pr = new PrintReport();
+				Map<String, Object> param = new HashMap<String, Object>();
+				param.put("FECHA_INICIO", dateInicio);
+				param.put("usuario", usuario);
+				param.put("usuarioNombre", usuarioNombre);
+				param.put("FECHA_FIN", dateFin);
+				pr.crearReporte("/recursos/informes/reporteCajaResumidoPorUsuario.jasper", facturaDao, param);
+				pr.showReport("Reporte de caja resumido");
+	    	}else {
+	    		PrintReport pr = new PrintReport();
+				Map<String, Object> param = new HashMap<String, Object>();
+				param.put("FECHA_INICIO", dateInicio);
+				param.put("usuario", usuario);
+				param.put("usuarioNombre", usuarioNombre);
+				param.put("FECHA_FIN", dateFin);
+				pr.crearReporte("/recursos/informes/reporteCajaDetalladoPorUsuario.jasper", facturaDao, param);
+				pr.showReport("Reporte de caja detallado");
+	    	}
+		}else {
+			//estos llama a los generales tendria q hacer otros reportes pero incluyendo y comparando al usuario
+			if(rbResumido.isSelected()) {
+				PrintReport pr = new PrintReport();
+				Map<String, Object> param = new HashMap<String, Object>();
+				param.put("FECHA_INICIO", dateInicio);
+				param.put("FECHA_FIN", dateFin);
+				pr.crearReporte("/recursos/informes/reporteCajaResumido.jasper", facturaDao, param);
+				pr.showReport("Reporte de caja resumido");
+	    	}else {
+	    		PrintReport pr = new PrintReport();
+				Map<String, Object> param = new HashMap<String, Object>();
+				param.put("FECHA_INICIO", dateInicio);
+				param.put("FECHA_FIN", dateFin);
+				pr.crearReporte("/recursos/informes/reporteCajaDetallado.jasper", facturaDao, param);
+				pr.showReport("Reporte de caja detallado");
+	    	}
+		}
     }
 }

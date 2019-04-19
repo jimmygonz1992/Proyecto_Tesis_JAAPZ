@@ -1,5 +1,6 @@
 package ec.com.jaapz.controlador;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import ec.com.jaapz.modelo.Factura;
@@ -21,7 +22,7 @@ public class RecaudacionesFacturasCobradasC {
 	@FXML private TextField txtBuscar;
 	@FXML private TableView<Factura> tvDatos;
 	FacturaDAO facturaDao = new FacturaDAO();
-	
+	SimpleDateFormat formateador= new SimpleDateFormat("dd/MM/yyyy");
 	public void initialize() {
 		try {
 			llenarDatos("");
@@ -82,7 +83,7 @@ public class RecaudacionesFacturasCobradasC {
 			fechaColum.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Factura, String>, ObservableValue<String>>() {
 				@Override
 				public ObservableValue<String> call(CellDataFeatures<Factura, String> param) {
-					return new SimpleObjectProperty<String>(String.valueOf(param.getValue().getFecha()));
+					return new SimpleObjectProperty<String>(String.valueOf(formateador.format(param.getValue().getFecha())));
 				}
 			});
 			

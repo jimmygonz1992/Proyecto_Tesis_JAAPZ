@@ -97,8 +97,7 @@ public class RecaudacionesRegistroCobroC {
 			//solo numeros
 			txtIdCuenta.textProperty().addListener(new ChangeListener<String>() {
 				@Override
-				public void changed(ObservableValue<? extends String> observable, String oldValue, 
-						String newValue) {
+				public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
 					if (newValue.matches("\\d*")) {
 						//int value = Integer.parseInt(newValue);
 					} else {
@@ -131,8 +130,8 @@ public class RecaudacionesRegistroCobroC {
 				row.setOnMouseClicked(event -> {
 					if (event.getClickCount() == 1 && (! row.isEmpty()) ) {
 						if(tvDatos.getSelectionModel().getSelectedItem() != null){
-							Planilla planilla = tvDatos.getSelectionModel().getSelectedItem();
-							recuperarDetallePlanilla(planilla);
+							Planilla planillaSelec = tvDatos.getSelectionModel().getSelectedItem();
+							recuperarDetallePlanilla(planillaSelec);
 						}
 					}
 				});
@@ -259,7 +258,7 @@ public class RecaudacionesRegistroCobroC {
 
 			TableColumn<PlanillaDetalle, String> idColum = new TableColumn<>("Id");
 			idColum.setMinWidth(10);
-			idColum.setPrefWidth(100);
+			idColum.setPrefWidth(40);
 			idColum.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<PlanillaDetalle, String>, ObservableValue<String>>() {
 				@Override
 				public ObservableValue<String> call(CellDataFeatures<PlanillaDetalle, String> param) {
@@ -269,7 +268,7 @@ public class RecaudacionesRegistroCobroC {
 
 			TableColumn<PlanillaDetalle, String> cantidadColum = new TableColumn<>("Cantidad");
 			cantidadColum.setMinWidth(10);
-			cantidadColum.setPrefWidth(100);
+			cantidadColum.setPrefWidth(50);
 			cantidadColum.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<PlanillaDetalle, String>, ObservableValue<String>>() {
 				@Override
 				public ObservableValue<String> call(CellDataFeatures<PlanillaDetalle, String> param) {
@@ -279,7 +278,7 @@ public class RecaudacionesRegistroCobroC {
 
 			TableColumn<PlanillaDetalle, String> descripcionColum = new TableColumn<>("Descripción");
 			descripcionColum.setMinWidth(10);
-			descripcionColum.setPrefWidth(200);
+			descripcionColum.setPrefWidth(400);
 			descripcionColum.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<PlanillaDetalle, String>, ObservableValue<String>>() {
 				@Override
 				public ObservableValue<String> call(CellDataFeatures<PlanillaDetalle, String> param) {
@@ -289,7 +288,7 @@ public class RecaudacionesRegistroCobroC {
 
 			TableColumn<PlanillaDetalle, String> subtotalColum = new TableColumn<>("Subtotal");
 			subtotalColum.setMinWidth(10);
-			subtotalColum.setPrefWidth(200);
+			subtotalColum.setPrefWidth(100);
 			subtotalColum.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<PlanillaDetalle, String>, ObservableValue<String>>() {
 				@Override
 				public ObservableValue<String> call(CellDataFeatures<PlanillaDetalle, String> param) {
@@ -512,7 +511,6 @@ public class RecaudacionesRegistroCobroC {
 			Optional<ButtonType> result = helper.mostrarAlertaConfirmacion("Desea Grabar los Datos?",Context.getInstance().getStage());
 			if(result.get() == ButtonType.OK){
 				Factura factura = new Factura();
-				String estado = "A";
 				factura.setIdFactura(null);
 				Date date = Date.from(dtpFecha.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
 				Timestamp fecha = new Timestamp(date.getTime());
@@ -520,7 +518,7 @@ public class RecaudacionesRegistroCobroC {
 				factura.setNumFactura(txtNumComp.getText());
 				factura.setCuentaCliente(cuentaSeleccionada);
 				factura.setUsuarioCrea(Context.getInstance().getUsuariosC().getIdUsuario());
-				factura.setEstado(estado);
+				factura.setEstado(Constantes.ESTADO_ACTIVO);
 				factura.setTotalFactura(Double.parseDouble(txtAbono.getText()));
 				List<Planilla> listaPla = new ArrayList<Planilla>();
 
@@ -540,7 +538,7 @@ public class RecaudacionesRegistroCobroC {
 						
 					det.setFactura(factura);
 					listaPla.add(det.getPlanilla());
-					det.setEstado("A");
+					det.setEstado(Constantes.ESTADO_ACTIVO);
 					listaAgregadaPlanillas.add(det);
 				}
 				factura.setFacturaDetalles(listaAgregadaPlanillas);
@@ -579,10 +577,9 @@ public class RecaudacionesRegistroCobroC {
 					pr.showReport("Comprobante de Pago");
 				}
 				limpiar();
-				txtNumComp.setText("");
+				txtNumComp.setText(String.valueOf(facturaDao.getIdFactura()+1));
 				tvDetallePago.getColumns().clear();
 				tvDetallePago.getItems().clear();
-				//initialize();
 			}
 		}catch(Exception ex) {
 			facturaDao.getEntityManager().getTransaction().rollback();
@@ -751,7 +748,6 @@ public class RecaudacionesRegistroCobroC {
 			tvDetallePago.getColumns().clear();
 			tvDetallePago.getItems().clear();
 			chkAbonoTotal.setSelected(false);
-			chkImprimirComp.setSelected(false);
 			txtAbono.setText("");
 			txtPagaCon.setText("");
 			txtSaldo.setText("");
