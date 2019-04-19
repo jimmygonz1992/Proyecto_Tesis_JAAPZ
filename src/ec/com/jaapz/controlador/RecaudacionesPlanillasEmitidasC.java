@@ -55,11 +55,7 @@ public class RecaudacionesPlanillasEmitidasC {
 		try{
 			tvDatos.getColumns().clear();
 			List<CuentaCliente> listaCuentas;
-			if(Context.getInstance().getIdPerfil() == 1) {
-				listaCuentas = cuentaClienteDao.getListaCuentaClientes(patron);
-			}else {
-				listaCuentas = cuentaClienteDao.getListaCuentaClientePerfil(patron);
-			}
+			listaCuentas = cuentaClienteDao.getListaCuentaClientes(patron);
 			ObservableList<CuentaCliente> datosCuenta = FXCollections.observableArrayList();
 			
 			for(CuentaCliente cuenta : listaCuentas) {

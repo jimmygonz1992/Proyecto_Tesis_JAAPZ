@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
@@ -14,6 +15,19 @@
         <Label alignment="CENTER" prefHeight="42.0" prefWidth="394.0" text="LISTADO DE MATERIALES" GridPane.columnSpan="5" GridPane.halignment="CENTER"><font><Font name="Arial Bold" size="24.0" /></font></Label>
         <TableView fx:id="tvDatos" prefHeight="171.0" prefWidth="432.0" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="2" />
             <Button fx:id="btnVerReporte" alignment="BOTTOM_CENTER" contentDisplay="TOP" mnemonicParsing="false" onAction="#verReporte" prefHeight="59.0" prefWidth="80.0" styleClass="botonImprimir" text="Imprimir" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
+            <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="1">
+               <children>
+                  <Label text="Buscar material:">
+                     <font>
+                        <Font name="Arial Bold" size="12.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets right="10.0" />
+                     </HBox.margin>
+                  </Label>
+                  <TextField fx:id="txtBuscar" onKeyPressed="#buscarMaterial" prefHeight="31.0" prefWidth="381.0" />
+               </children>
+            </HBox>
       </children>
       <columnConstraints>
         <ColumnConstraints hgrow="SOMETIMES" maxWidth="85.0" minWidth="6.0" prefWidth="7.0" />
@@ -24,9 +38,9 @@
       </columnConstraints>
       <rowConstraints>
         <RowConstraints maxHeight="77.0" minHeight="0.0" prefHeight="33.0" vgrow="SOMETIMES" />
-        <RowConstraints maxHeight="132.0" minHeight="0.0" prefHeight="6.0" vgrow="SOMETIMES" />
-        <RowConstraints maxHeight="563.0" minHeight="10.0" prefHeight="499.0" vgrow="SOMETIMES" />
-        <RowConstraints maxHeight="111.0" minHeight="0.0" prefHeight="71.0" vgrow="SOMETIMES" />
+        <RowConstraints maxHeight="132.0" minHeight="0.0" prefHeight="37.0" vgrow="SOMETIMES" />
+        <RowConstraints maxHeight="563.0" minHeight="10.0" prefHeight="464.0" vgrow="SOMETIMES" />
+        <RowConstraints maxHeight="111.0" minHeight="0.0" prefHeight="78.0" vgrow="SOMETIMES" />
       </rowConstraints>
     </GridPane>
   </children>

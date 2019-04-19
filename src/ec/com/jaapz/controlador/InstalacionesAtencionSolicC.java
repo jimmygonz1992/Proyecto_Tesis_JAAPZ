@@ -285,7 +285,7 @@ public class InstalacionesAtencionSolicC {
 	
 	public void llenarDatosLiquidacion(Instalacion instalacionSel){
 		try{		
-			txtIdSolicitud.setText(Integer.toString(instalacionSel.getIdInstalacion()));
+			txtIdSolicitud.setText(Integer.toString(instalacionSel.getSolInspeccionIn().getIdSolInspeccion()));
 			txtFechaSolic.setText(String.valueOf(formateador.format(instalacionSel.getFechaSalida())));
 			txtDireccion.setText(instalacionSel.getSolInspeccionIn().getDireccion());
 			txtReferencia.setText(instalacionSel.getSolInspeccionIn().getReferencia());
@@ -304,31 +304,12 @@ public class InstalacionesAtencionSolicC {
 	
 	public void imprimir() {
 		try {
-		/*	Map<String, Object> param = new HashMap<String, Object>();
-			param.put("ID_CUENTA", inspeccionRepSeleccionado.getCuentaCliente().getIdCuenta());
-			param.put("ID_INSPECCION", inspeccionRepSeleccionado.getIdSolicitudRep());
-			param.put("referencia", inspeccionRepSeleccionado.getReferencia());
-			param.put("USUARIO_RESPONSABLE", Encriptado.Desencriptar(Context.getInstance().getUsuariosC().getUsuario()));
-			if(inspeccionRepSeleccionado.getCuentaCliente().getCategoria().equals(Constantes.CAT_VIVIENDA))
-				param.put("vivienda", "X");
-			else
-				param.put("vivienda", "");
-			if(inspeccionRepSeleccionado.getCuentaCliente().getCategoria().equals(Constantes.CAT_COMERCIAL))
-				param.put("comercial", "X");
-			else
-				param.put("comercial", "");
-			param.put("LATITUD", inspeccionRepSeleccionado.getCuentaCliente().getLatitud());
-			param.put("LONGITUD", inspeccionRepSeleccionado.getCuentaCliente().getLongitud());
-			if(inspeccionRepSeleccionado.getCuentaCliente().getCategoria().equals(Constantes.CAT_ESTABLECIMIENTO))
-				param.put("publico", "X");
-			else
-				param.put("publico", "");
-
-			param.put("fecha_inspeccion", formateador.format(inspeccionRepSeleccionado.getFecha()));
-
+			Map<String, Object> param = new HashMap<String, Object>();
+			param.put("id_solicitud", instalacionSeleccionada.getSolInspeccionIn().getIdSolInspeccion());
+			
 			PrintReport printReport = new PrintReport();
-			printReport.crearReporte("/recursos/informes/ficha_inspeccion_reparacion.jasper", reparacionDao, param);
-			printReport.showReport("Ficha de Inspección de Reparación");*/
+			printReport.crearReporte("/recursos/informes/ficha_instalacion.jasper", instalacionDao, param);
+			printReport.showReport("Orden de Instalación");
 		}catch(Exception ex) {
 			System.out.println(ex.getMessage());
 		}

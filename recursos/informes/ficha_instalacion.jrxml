@@ -5,18 +5,25 @@
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="jaapz_conection"/>
 	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="404"/>
 	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="591"/>
+	<parameter name="id_solicitud" class="java.lang.Integer"/>
 	<queryString language="SQL">
-		<![CDATA[SELECT lo.fecha, r.descripcion, ld.cantidad 
+		<![CDATA[SELECT lo.fecha, r.descripcion, ld.cantidad, m.codigo, m.modelo, c.cedula, (c.nombre || ' ' ||c.apellido) as cliente, i. direccion,
+	i.referencia, i.telefono_contacto
 FROM cliente c,
 	cuenta_cliente cc,
 	liquidacion_orden lo,
 	liquidacion_detalle ld,
-	rubro r
+	rubro r,
+	medidor m,
+	sol_inspeccion_ins i
 WHERE 
+	 i.id_sol_inspeccion = lo.id_sol_inspeccion and
 	 r.id_rubro = ld.id_rubro and
 	 lo.id_liquidacion = ld.id_liquidacion and
 	 cc.id_cuenta = lo.id_cuenta and
-	 c.id_cliente = cc.id_cliente]]>
+	 c.id_cliente = cc.id_cliente and
+	 m.id_medidor = lo.id_medidor and
+	 lo.id_sol_inspeccion = $P{id_solicitud}]]>
 	</queryString>
 	<field name="fecha" class="java.sql.Date">
 		<property name="com.jaspersoft.studio.field.label" value="fecha"/>
@@ -29,6 +36,33 @@ WHERE
 	<field name="cantidad" class="java.lang.Integer">
 		<property name="com.jaspersoft.studio.field.label" value="cantidad"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="liquidacion_detalle"/>
+	</field>
+	<field name="codigo" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="codigo"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="medidor"/>
+	</field>
+	<field name="modelo" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="modelo"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="medidor"/>
+	</field>
+	<field name="cedula" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="cedula"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="cliente"/>
+	</field>
+	<field name="cliente" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="cliente"/>
+	</field>
+	<field name="direccion" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="direccion"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="sol_inspeccion_ins"/>
+	</field>
+	<field name="referencia" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="referencia"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="sol_inspeccion_ins"/>
+	</field>
+	<field name="telefono_contacto" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="telefono_contacto"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="sol_inspeccion_ins"/>
 	</field>
 	<background>
 		<band splitType="Stretch"/>
@@ -130,21 +164,49 @@ WHERE
 				<reportElement x="111" y="76" width="378" height="1" uuid="3e582663-0a21-4ba2-88a8-1f7646e95b56"/>
 			</line>
 			<staticText>
-				<reportElement x="5" y="168" width="428" height="13" uuid="bbc678e6-428d-4a9e-824f-e378026e63cf"/>
+				<reportElement x="1" y="168" width="428" height="13" uuid="bbc678e6-428d-4a9e-824f-e378026e63cf"/>
 				<textElement textAlignment="Left">
 					<font isBold="true" isUnderline="true"/>
 				</textElement>
 				<text><![CDATA[B) MATERIALES A UTILIZAR]]></text>
 			</staticText>
+			<textField>
+				<reportElement x="120" y="30" width="100" height="13" uuid="2aeee8ef-a3d1-4c09-8fdc-5b70b89abcfe"/>
+				<textFieldExpression><![CDATA[$F{fecha}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="440" y="30" width="100" height="13" uuid="dcb555ba-a968-4433-bf2a-ff9e302fcaca"/>
+				<textFieldExpression><![CDATA[$P{id_solicitud}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="118" y="63" width="100" height="13" uuid="007ab700-39be-432c-86d6-bc435b1836c9"/>
+				<textFieldExpression><![CDATA[$F{cedula}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="119" y="81" width="291" height="13" uuid="19d566bd-a35e-4cd6-b7e6-c607b729a2b4"/>
+				<textFieldExpression><![CDATA[$F{cliente}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="119" y="102" width="361" height="13" uuid="386a03b8-2330-488c-896a-ca5a09a09e61"/>
+				<textFieldExpression><![CDATA[$F{direccion}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="119" y="121" width="361" height="13" uuid="c526c794-c951-4593-b81b-34bc7f23ee86"/>
+				<textFieldExpression><![CDATA[$F{referencia}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="116" y="139" width="364" height="13" uuid="c5b1506b-dc6c-41a0-84b2-55b6f5743041"/>
+				<textFieldExpression><![CDATA[$F{telefono_contacto}]]></textFieldExpression>
+			</textField>
 		</band>
 	</pageHeader>
 	<columnHeader>
 		<band height="15" splitType="Stretch">
 			<rectangle>
-				<reportElement x="0" y="0" width="431" height="15" uuid="0cc94062-e7fb-462d-b5a2-1cfafbc906ed"/>
+				<reportElement x="10" y="0" width="431" height="15" uuid="0cc94062-e7fb-462d-b5a2-1cfafbc906ed"/>
 			</rectangle>
 			<staticText>
-				<reportElement x="1" y="1" width="100" height="13" uuid="0420293f-95f2-466d-810d-b42c1971228b">
+				<reportElement x="11" y="1" width="100" height="13" uuid="0420293f-95f2-466d-810d-b42c1971228b">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="1e06c4f0-f229-4c49-a374-7641ff25a588"/>
 				</reportElement>
 				<textElement>
@@ -153,7 +215,7 @@ WHERE
 				<text><![CDATA[Descripción]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="290" y="1" width="90" height="13" uuid="a7fe285f-d66f-40af-89b0-254019f21be8">
+				<reportElement x="300" y="1" width="90" height="13" uuid="a7fe285f-d66f-40af-89b0-254019f21be8">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="8cf3d480-4927-4093-bbe0-e5ce441e34c1"/>
 				</reportElement>
 				<textElement>
@@ -162,65 +224,71 @@ WHERE
 				<text><![CDATA[Cantidad]]></text>
 			</staticText>
 			<line>
-				<reportElement x="270" y="0" width="1" height="15" uuid="e39ffe96-b685-4b15-92c2-7c6cdb747cfb"/>
+				<reportElement x="280" y="0" width="1" height="15" uuid="e39ffe96-b685-4b15-92c2-7c6cdb747cfb"/>
 			</line>
 		</band>
 	</columnHeader>
 	<detail>
 		<band height="15" splitType="Stretch">
 			<rectangle>
-				<reportElement x="0" y="0" width="431" height="15" uuid="2f71a409-07db-4c53-8327-53d7b7975091"/>
+				<reportElement x="10" y="0" width="431" height="15" uuid="2f71a409-07db-4c53-8327-53d7b7975091"/>
 			</rectangle>
 			<textField>
-				<reportElement x="1" y="1" width="194" height="13" uuid="ffaf51e8-9788-4a3c-892c-114c117d458f">
+				<reportElement x="11" y="1" width="194" height="13" uuid="ffaf51e8-9788-4a3c-892c-114c117d458f">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="1e06c4f0-f229-4c49-a374-7641ff25a588"/>
 				</reportElement>
 				<textFieldExpression><![CDATA[$F{descripcion}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="290" y="1" width="84" height="13" uuid="1e2a3068-d992-4c30-94af-ac08cabbd6db">
+				<reportElement x="300" y="1" width="84" height="13" uuid="1e2a3068-d992-4c30-94af-ac08cabbd6db">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="8cf3d480-4927-4093-bbe0-e5ce441e34c1"/>
 				</reportElement>
 				<textFieldExpression><![CDATA[$F{cantidad}]]></textFieldExpression>
 			</textField>
 			<line>
-				<reportElement x="270" y="0" width="1" height="15" uuid="139ac9b2-1165-4712-bb2b-ac8153a2fb68"/>
+				<reportElement x="280" y="0" width="1" height="15" uuid="139ac9b2-1165-4712-bb2b-ac8153a2fb68"/>
 			</line>
 		</band>
 	</detail>
-	<columnFooter>
-		<band height="45" splitType="Stretch"/>
-	</columnFooter>
 	<pageFooter>
-		<band height="144" splitType="Stretch">
-			<staticText>
-				<reportElement x="1" y="0" width="86" height="14" uuid="5a13fef6-caaf-4685-96d2-2ff9b27edd6a"/>
-				<textElement>
-					<font isBold="false"/>
-				</textElement>
-				<text><![CDATA[Medidor Asignado:]]></text>
-			</staticText>
+		<band height="58" splitType="Stretch">
 			<line>
-				<reportElement x="3" y="116" width="160" height="1" uuid="553f5d3a-f837-46e5-8626-06a291b5feea"/>
+				<reportElement x="0" y="24" width="160" height="1" uuid="553f5d3a-f837-46e5-8626-06a291b5feea"/>
 			</line>
 			<staticText>
-				<reportElement x="5" y="120" width="160" height="14" uuid="dce6b3fb-96c8-4c46-91f3-b7e2dfff487f"/>
+				<reportElement x="2" y="28" width="160" height="14" uuid="dce6b3fb-96c8-4c46-91f3-b7e2dfff487f"/>
 				<textElement textAlignment="Center"/>
 				<text><![CDATA[Firma aceptación solicitante]]></text>
 			</staticText>
-			<rectangle>
-				<reportElement x="7" y="42" width="481" height="33" uuid="940e1be5-be09-43d0-a2b5-3f3740f5978d"/>
-			</rectangle>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="79" splitType="Stretch">
 			<staticText>
-				<reportElement x="7" y="27" width="217" height="13" uuid="e2adf914-208c-496e-a892-25d93eb4c504"/>
+				<reportElement x="22" y="6" width="98" height="14" uuid="5a13fef6-caaf-4685-96d2-2ff9b27edd6a"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Medidor Asignado:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="128" y="6" width="134" height="13" uuid="a4c833c7-d8a9-4967-a870-c6a51c0119cf"/>
+				<textFieldExpression><![CDATA[$F{codigo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="271" y="7" width="140" height="13" uuid="23752356-83e0-4bdd-b50a-0ecbe445912e"/>
+				<textFieldExpression><![CDATA[$F{modelo}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="2" y="31" width="217" height="13" uuid="e2adf914-208c-496e-a892-25d93eb4c504"/>
 				<textElement textAlignment="Left">
 					<font isBold="true" isUnderline="true"/>
 				</textElement>
 				<text><![CDATA[C) Novedades]]></text>
 			</staticText>
+			<rectangle>
+				<reportElement x="7" y="46" width="481" height="33" uuid="940e1be5-be09-43d0-a2b5-3f3740f5978d"/>
+			</rectangle>
 		</band>
-	</pageFooter>
-	<summary>
-		<band height="42" splitType="Stretch"/>
 	</summary>
 </jasperReport>

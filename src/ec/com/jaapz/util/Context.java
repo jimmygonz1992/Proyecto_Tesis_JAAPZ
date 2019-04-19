@@ -9,6 +9,7 @@ import ec.com.jaapz.modelo.Categoria;
 import ec.com.jaapz.modelo.Cliente;
 import ec.com.jaapz.modelo.CuentaCliente;
 import ec.com.jaapz.modelo.Empresa;
+import ec.com.jaapz.modelo.Factura;
 import ec.com.jaapz.modelo.Ingreso;
 import ec.com.jaapz.modelo.IngresoDetalle;
 import ec.com.jaapz.modelo.Instalacion;
@@ -51,6 +52,7 @@ public class Context {
 	private Cliente cliente;
 	private Medidor medidor;
 	private CuentaCliente cuentaCliente;
+	private Factura factura;
 	private Categoria categoria;
 	private Barrio barrio;
 	private List<SolInspeccionIn> listaInspecciones;
@@ -216,7 +218,15 @@ public class Context {
 	public void setCuentaCliente(CuentaCliente cuentaCliente) {
 		this.cuentaCliente = cuentaCliente;
 	}
+	
+	public Factura getFactura() {
+		return factura;
+	}
 
+	public void setFactura(Factura factura) {
+		this.factura = factura;
+	}
+	
 	public Categoria getCategoria() {
 		return categoria;
 	}

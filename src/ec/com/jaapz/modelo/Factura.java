@@ -18,7 +18,10 @@ import java.util.List;
 	@NamedQuery(name="Factura.buscarFactCuenta", query="SELECT f FROM Factura f WHERE f.cuentaCliente.idCuenta = :idCuenta and "
 			+ "f.estado = 'A' order by f.idFactura desc"),
 	@NamedQuery(name="Factura.buscarFactRecaudadas", query="SELECT f FROM Factura f WHERE f.fecha between :fechaInicio and :fechaFin and "
-			+ "f.estado = 'A' order by f.idFactura desc")
+			+ "f.estado = 'A' order by f.idFactura desc"),
+	//para reimpresion de comprobante
+	@NamedQuery(name="Factura.facturasCobradas", query="SELECT f FROM Factura f WHERE (lower(f.numFactura) like :patron or lower(f.cuentaCliente.cliente.apellido) like :patron or lower(f.cuentaCliente.cliente.nombre) like :patron)"
+			+ " and f.estado = 'A' order by f.idFactura asc")
 })
 public class Factura implements Serializable {
 	private static final long serialVersionUID = 1L;

@@ -42,7 +42,7 @@ public class BodegaKardexC {
 	private void llenarCombo() {
 		try {
 			cboRubro.setPromptText("Seleccione Rubro");
-			List<Rubro> listaRubros = rubroDAO.getListaRubros();
+			List<Rubro> listaRubros = rubroDAO.getListaRubrosKardex();
 			List<Rubro> listaAgregar = new ArrayList<Rubro>();
 			Rubro rubroAdd = new Rubro();
 			rubroAdd.setIdRubro(null);
@@ -129,7 +129,7 @@ public class BodegaKardexC {
 	private List<KardexValorado> llenarKardexTodo() {
 		try {
 			List<KardexValorado> kardexMostrar = new ArrayList<KardexValorado>();
-			List<Rubro> listaRubro = rubroDAO.getListaRubros();
+			List<Rubro> listaRubro = rubroDAO.getListaRubrosKardex();
 			for(Rubro rubro : listaRubro) {//hago un ciclo para cada rubro y mantener agrupado los rubros dentro del kardex
 				List<Kardex> listaKardex = kardexDao.getListaKardex(rubro.getIdRubro());
 				Integer cantSaldoAnterior = 0;
@@ -203,7 +203,7 @@ public class BodegaKardexC {
 			
 			TableColumn<KardexValorado, String> rubroColum = new TableColumn<>("Rubro");
 			rubroColum.setMinWidth(10);
-			rubroColum.setPrefWidth(70);
+			rubroColum.setPrefWidth(180);
 			rubroColum.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<KardexValorado,String>, ObservableValue<String>>() {
 				@Override
 				public ObservableValue<String> call(CellDataFeatures<KardexValorado, String> param) {
@@ -213,7 +213,7 @@ public class BodegaKardexC {
 			
 			TableColumn<KardexValorado, String> fechaColum = new TableColumn<>("Fecha");
 			fechaColum.setMinWidth(10);
-			fechaColum.setPrefWidth(70);
+			fechaColum.setPrefWidth(100);
 			fechaColum.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<KardexValorado,String>, ObservableValue<String>>() {
 				@Override
 				public ObservableValue<String> call(CellDataFeatures<KardexValorado, String> param) {
@@ -222,7 +222,7 @@ public class BodegaKardexC {
 			});
 			TableColumn<KardexValorado, String> documentoColum = new TableColumn<>("Documento");
 			documentoColum.setMinWidth(10);
-			documentoColum.setPrefWidth(120);
+			documentoColum.setPrefWidth(225);
 			documentoColum.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<KardexValorado,String>, ObservableValue<String>>() {
 				@Override
 				public ObservableValue<String> call(CellDataFeatures<KardexValorado, String> param) {
@@ -231,7 +231,7 @@ public class BodegaKardexC {
 			});
 			TableColumn<KardexValorado, String> detalleColum = new TableColumn<>("Detalle");
 			detalleColum.setMinWidth(10);
-			detalleColum.setPrefWidth(200);
+			detalleColum.setPrefWidth(275);
 			detalleColum.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<KardexValorado,String>, ObservableValue<String>>() {
 				@Override
 				public ObservableValue<String> call(CellDataFeatures<KardexValorado, String> param) {
@@ -269,6 +269,8 @@ public class BodegaKardexC {
 				}
 			});
 			TableColumn<KardexValorado, String> entradaColum = new TableColumn<>("Entradas");
+			entradaColum.setMinWidth(10);
+			entradaColum.setPrefWidth(200);
 			entradaColum.getColumns().addAll(cantEColum,valEColum,totEColum);
 			
 			//salidas ------------------------------------------------------------
@@ -302,6 +304,8 @@ public class BodegaKardexC {
 				}
 			});
 			TableColumn<KardexValorado, String> salidaColum = new TableColumn<>("Salidas");
+			salidaColum.setMinWidth(10);
+			salidaColum.setPrefWidth(200);
 			salidaColum.getColumns().addAll(cantSColum,valSColum,totSColum);
 			
 			//saldo ------------------------------------------------------------
@@ -335,6 +339,8 @@ public class BodegaKardexC {
 				}
 			});
 			TableColumn<KardexValorado, String> saldoColum = new TableColumn<>("Saldos");
+			saldoColum.setMinWidth(10);
+			saldoColum.setPrefWidth(200);
 			saldoColum.getColumns().addAll(cantSalColum,valSalColum,totSalColum);
 			
 			tvDatos.getColumns().addAll(rubroColum,fechaColum,documentoColum,detalleColum,entradaColum,salidaColum,saldoColum);
@@ -458,7 +464,5 @@ public class BodegaKardexC {
 		public void setRubro(String rubro) {
 			this.rubro = rubro;
 		}
-		
-		
 	}
 }
