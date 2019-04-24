@@ -39,6 +39,7 @@ public class Context {
 	
 	private Stage stage;
 	private Stage stageModal;
+	private Stage stageModalSolicitud;
 	private SegUsuario usuarios;
 	private SegUsuario usuariosC;
 	private Empresa empresaC;
@@ -358,4 +359,13 @@ public class Context {
 	public void setListadoAsignados(List<LiquidacionOrden> listadoAsignados) {
 		this.listadoAsignados = listadoAsignados;
 	}
+
+	public Stage getStageModalSolicitud() {
+		return stageModalSolicitud;
+	}
+
+	public void setStageModalSolicitud(Stage stageModalSolicitud) {
+		this.stageModalSolicitud = stageModalSolicitud;
+	}
+	
 }

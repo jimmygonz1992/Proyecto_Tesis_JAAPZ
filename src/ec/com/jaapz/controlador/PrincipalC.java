@@ -9,6 +9,7 @@ import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import ec.com.jaapz.modelo.SegMenu;
 import ec.com.jaapz.modelo.SegMenuDAO;
@@ -23,6 +24,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Accordion;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.SplitPane;
 import javafx.scene.image.Image;
@@ -83,13 +85,13 @@ public class PrincipalC {
 			List<SegMenu> menuListTitle = new ArrayList<SegMenu>();
 			List<SegMenu> menuListCont = new ArrayList<SegMenu>();
 			
-			
 			for(int i = 0 ; i < listaAcceso.size() ; i ++) {
 				if(listaAcceso.get(i).getSegMenu().getIdMenuPadre() != 0) {
 					//menuListTitle.add(listaAcceso.get(i).getSegMenu());
 					menuListCont.add(listaAcceso.get(i).getSegMenu());
 				}
 			}
+			
 			boolean bandera = false;
 			for(int i = 0 ; i < listaAcceso.size() ; i ++) {
 				bandera = false;
@@ -107,7 +109,15 @@ public class PrincipalC {
 					Collections.sort(menuListTitle);
 				}
 			}
-			
+			//agregar el boton salir
+			SegMenu menuSalir = new SegMenu();
+			menuSalir.setDescripcion("Salir");
+			menuSalir.setEstado("A");
+			menuSalir.setIcono("/salir.png");
+			menuSalir.setIdMenu(200);
+			menuSalir.setIdMenuPadre(0);
+			menuSalir.setPosicion(15);
+			menuListTitle.add(menuSalir);
 			for(int i = 0 ; i < menuListTitle.size() ; i ++) {
 				
 				if(menuListTitle.get(i).getIdMenuPadre() == 0 && menuListTitle.get(i).getEstado().equals("A")) {//se pregunta si el menu es padre
@@ -121,10 +131,21 @@ public class PrincipalC {
 						Image imageBoton = new Image(getClass().getResourceAsStream(menuListTitle.get(i).getIcono()),dimesionIcono - 5,dimesionIcono - 5,false,false);
 						btnMenuPadre.setGraphic(new ImageView(imageBoton));	
 					}
-					
 					btnMenuPadre.setMaxWidth(Double.MAX_VALUE);
+					//agregar el evento del boton salir, le puse por defecto el id = 200, x ese preguntamos
+					/*if(menuListTitle.get(i).getIdMenu() == 200) {
+						System.out.println("Tiene el evento salir");
+						btnMenuPadre.setOnMouseClicked(new EventHandler<Event>() {
+							@Override
+							public void handle(Event event) {
+								System.out.println("Evento salir");
+								Optional<ButtonType> result = helper.mostrarAlertaConfirmacion("Desea salir del sistema?",Context.getInstance().getStage());
+								if(result.get() == ButtonType.OK)
+									System.exit(0);
+							}
+						});
+					}*/
 					vbMenu.getChildren().add(btnMenuPadre);
-
 					//se empiezan a agregar los menu hijos
 					for(int j = 0 ; j < menuListCont.size() ; j ++) {
 						if(menuListCont.get(j).getIdMenuPadre() == menuListTitle.get(i).getIdMenu()) {
@@ -150,23 +171,30 @@ public class PrincipalC {
 						}
 					}
 					vbMenu.getChildren().add(vbSubMenu);
+					
 					vBoxMenu.getChildren().add(vbMenu);
 					map.put(vbMenu,vbSubMenu);
 
 					btnMenuPadre.setOnMouseClicked(new EventHandler<Event>() {
 						@Override
 						public void handle(Event event) {
+							String evento = event.getSource().toString(); String[] arr = evento.split("'");
 							toolsSlider(vbMenu,vbSubMenu);
 							removeOtherMenus(vbMenu);
+							if(arr[1].toString().equals("Salir")) {
+								Optional<ButtonType> result = helper.mostrarAlertaConfirmacion("Desea salir del sistema?",Context.getInstance().getStage());
+								if(result.get() == ButtonType.OK)
+									System.exit(0);
+							}
 						}
 					});
-
+					
 				}
 
 			}
 			for (Map.Entry<VBox,VBox> entry : map.entrySet()) {
 				entry.getKey().getChildren().remove(entry.getValue());
-			}
+			}			
 		}catch(Exception ex) {
 			System.out.println(ex.getMessage());
 		}

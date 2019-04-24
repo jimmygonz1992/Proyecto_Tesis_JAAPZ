@@ -46,7 +46,11 @@
                                  <font>
                                     <Font name="Arial Bold" size="14.0" />
                                  </font></Label>
-                              <VBox fx:id="vBoxMenu" layoutX="37.0" layoutY="61.0" prefHeight="211.0" prefWidth="77.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="50.0" />
+                              <ScrollPane layoutX="-13.0" layoutY="65.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="50.0">
+                                 <content>
+                                    <VBox fx:id="vBoxMenu" />
+                                 </content>
+                              </ScrollPane>
                            </children>
                         </AnchorPane>
                         <AnchorPane fx:id="ap_derecha" minHeight="0.0" minWidth="0.0" />

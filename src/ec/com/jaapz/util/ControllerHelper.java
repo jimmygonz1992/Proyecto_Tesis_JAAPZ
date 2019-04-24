@@ -59,6 +59,23 @@ public class ControllerHelper {
 			e.printStackTrace(); //Retorna Connection reset cuando demora mucho
 		}
 	}
+	public void abrirPantallaModalSolicitud(String uriVista, String titulo,Stage parent){
+		try {
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(LaunchSystem.class.getResource(uriVista));
+			Parent page = (Parent) loader.load();
+			Stage stage = new Stage();
+			stage.setTitle(titulo);
+			stage.initOwner(parent);
+			stage.initModality(Modality.APPLICATION_MODAL);
+			Scene scene = new Scene(page);
+			stage.setScene(scene);
+			Context.getInstance().setStageModalSolicitud(stage);
+			stage.showAndWait();
+		} catch(Exception e) {
+			e.printStackTrace(); //Retorna Connection reset cuando demora mucho
+		}
+	}
 	public void abrirPantallaPrincipal(String titulo,String uriVista,Stage stage) {
 		try {
 			Stage nuevo = new Stage();
