@@ -2,7 +2,6 @@ package ec.com.jaapz.main;
 
 import java.util.Optional;
 
-import ec.com.jaapz.controlador.InicioSesionC;
 import ec.com.jaapz.util.Context;
 import ec.com.jaapz.util.ControllerHelper;
 import javafx.application.Application;
@@ -28,8 +27,7 @@ public class LaunchSystem extends Application {
 			stage.setScene(scene);
 			stage.getIcons().add(new Image("/logo_jaapz.png"));
 			stage.setTitle("Inicio de Sesion");
-			InicioSesionC inicio = (InicioSesionC) root.getController();
-			inicio.setDialogStage(stage);
+			Context.getInstance().setStagePrincipal(stage);
 			stage.setMaximized(true);
 			stage.show();
 			stage.setOnCloseRequest(new EventHandler<WindowEvent>() {

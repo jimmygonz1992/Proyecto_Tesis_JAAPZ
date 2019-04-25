@@ -23,6 +23,7 @@ import ec.com.jaapz.modelo.SegUsuario;
 import ec.com.jaapz.modelo.SegUsuarioPerfil;
 import ec.com.jaapz.modelo.SolInspeccionIn;
 import ec.com.jaapz.modelo.SolInspeccionRep;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 public class Context {
@@ -40,6 +41,8 @@ public class Context {
 	private Stage stage;
 	private Stage stageModal;
 	private Stage stageModalSolicitud;
+	private Stage stagePrincipal;
+	private AnchorPane apInicioSesion;
 	private SegUsuario usuarios;
 	private SegUsuario usuariosC;
 	private Empresa empresaC;
@@ -366,6 +369,22 @@ public class Context {
 
 	public void setStageModalSolicitud(Stage stageModalSolicitud) {
 		this.stageModalSolicitud = stageModalSolicitud;
+	}
+
+	public Stage getStagePrincipal() {
+		return stagePrincipal;
+	}
+
+	public void setStagePrincipal(Stage stagePrincipal) {
+		this.stagePrincipal = stagePrincipal;
+	}
+
+	public AnchorPane getApInicioSesion() {
+		return apInicioSesion;
+	}
+
+	public void setApInicioSesion(AnchorPane apInicioSesion) {
+		this.apInicioSesion = apInicioSesion;
 	}
 	
 }

@@ -76,7 +76,7 @@ public class ControllerHelper {
 			e.printStackTrace(); //Retorna Connection reset cuando demora mucho
 		}
 	}
-	public void abrirPantallaPrincipal(String titulo,String uriVista,Stage stage) {
+	public void abrirPantallaPrincipal(String titulo,String uriVista) {
 		try {
 			Stage nuevo = new Stage();
 			FXMLLoader root = new FXMLLoader();
@@ -101,7 +101,7 @@ public class ControllerHelper {
 			});
 
 			Context.getInstance().setStage(nuevo);
-			stage.close();
+			Context.getInstance().getStagePrincipal().close();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
