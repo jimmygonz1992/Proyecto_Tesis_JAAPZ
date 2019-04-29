@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ec.com.jaapz.controlador.InicioFormInicioC">
+   <children>
+      <VBox layoutX="10.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <VBox styleClass="estiloInicio" VBox.vgrow="ALWAYS">
+               <children>
+                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+                     <children>
+                        <ImageView fx:id="ivLogin" fitHeight="131.0" fitWidth="87.0" pickOnBounds="true" preserveRatio="true" HBox.hgrow="ALWAYS" />
+                     </children>
+                  </HBox>
+                  <Label text="Usuario">
+                     <effect>
+                        <Bloom />
+                     </effect>
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets left="10.0" top="25.0" />
+                     </VBox.margin>
+                  </Label>
+                  <TextField fx:id="txtUsuario" prefHeight="24.960737500005052" prefWidth="250.0" promptText="nombre de usuario" styleClass="textFieldUsuario">
+                     <VBox.margin>
+                        <Insets left="10.0" right="10.0" />
+                     </VBox.margin>
+                  </TextField>
+                  <Label text="Contraseña">
+                     <effect>
+                        <Bloom />
+                     </effect>
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets left="10.0" top="12.0" />
+                     </VBox.margin>
+                  </Label>
+                  <PasswordField fx:id="txtClave" prefHeight="24.960845947265625" prefWidth="250.0" promptText="Su contraseña" styleClass="textFieldClave">
+                     <VBox.margin>
+                        <Insets left="10.0" right="10.0" />
+                     </VBox.margin>
+                  </PasswordField>
+                  <HBox alignment="BOTTOM_CENTER" prefHeight="19.0" prefWidth="202.0" VBox.vgrow="ALWAYS">
+                     <children>
+                        <Button fx:id="btnAceptar" mnemonicParsing="false" onAction="#aceptar" prefWidth="84.0" styleClass="botonesInicio" text="Entrar" textFill="WHITE">
+                           <HBox.margin>
+                              <Insets bottom="15.0" right="10.0" />
+                           </HBox.margin>
+                        </Button>
+                        <Button fx:id="btnCancelar" mnemonicParsing="false" onAction="#cancelar" prefWidth="84.0" styleClass="botonesInicio" text="Salir" textFill="WHITE">
+                           <HBox.margin>
+                              <Insets bottom="15.0" />
+                           </HBox.margin>
+                        </Button>
+                     </children>
+                     <VBox.margin>
+                        <Insets top="12.0" />
+                     </VBox.margin>
+                  </HBox>
+               </children>
+            </VBox>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

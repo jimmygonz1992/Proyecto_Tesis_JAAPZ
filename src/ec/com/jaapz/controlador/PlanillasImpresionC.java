@@ -194,16 +194,20 @@ public class PlanillasImpresionC {
 				public ObservableValue<Boolean> call(CellDataFeatures<Planilla, Boolean> param) {
 					Planilla val = param.getValue();
 					SimpleBooleanProperty booleanProp;
+					
+					System.out.println(val.getImprime());
 					if(val.getImprime() != null)
 						booleanProp = new SimpleBooleanProperty(val.getImprime());
 					else
 						booleanProp = new SimpleBooleanProperty(false);
+					
 					booleanProp.addListener(new ChangeListener<Boolean>() {
 						@Override
 						public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue,
 								Boolean newValue) {
 							val.setImprime(newValue);
 							int contador = 0;
+							
 							for(Planilla pl : tvDatos.getItems()) {
 								if(pl.getImprime() != null)
 									if(pl.getImprime() == true)
