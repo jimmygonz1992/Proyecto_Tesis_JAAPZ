@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.5.1.final using JasperReports Library version 6.5.1  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="deudaClienteDetalle" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="c4733238-d416-4e07-9339-4a8d6f2c2063">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="jaapz_conection"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<parameter name="cedula" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select p.id_planilla, m.codigo, cc.direccion, cc.id_cuenta, c.nombre || ' ' || c.apellido as cliente, c.telefono, sum(p.total_pagar) as deuda, sum(coalesce(pa.valor,0)) as pagado,
+sum(p.total_pagar)-sum(coalesce(pa.valor,0)) as pagar
+from planilla p left join pagos pa on p.id_planilla = pa.id_planilla
+inner join cuenta_cliente cc on cc.id_cuenta = p.id_cuenta inner join cliente c
+on c.id_cliente=cc.id_cliente inner join medidor m on m.id_medidor=cc.id_medidor
+where c.cedula= $P{cedula} and
+p.cancelado = 'PENDIENTE'
+group by p.id_planilla, m.codigo, cc.direccion, cc.id_cuenta, cliente, c.telefono]]>
+	</queryString>
+	<field name="id_planilla" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="id_planilla"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="planilla"/>
+	</field>
+	<field name="codigo" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="codigo"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="medidor"/>
+	</field>
+	<field name="direccion" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="direccion"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="cuenta_cliente"/>
+	</field>
+	<field name="id_cuenta" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="id_cuenta"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="cuenta_cliente"/>
+	</field>
+	<field name="cliente" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="cliente"/>
+	</field>
+	<field name="telefono" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="telefono"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="cliente"/>
+	</field>
+	<field name="deuda" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.label" value="deuda"/>
+	</field>
+	<field name="pagado" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.label" value="pagado"/>
+	</field>
+	<field name="pagar" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.label" value="pagar"/>
+	</field>
+	<variable name="pagar1" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{pagar}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<columnHeader>
+		<band height="15" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="0" width="550" height="15" uuid="effa1952-a495-4372-a76a-b720a7c6f3d5"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="170" y="1" width="100" height="13" uuid="0b8d7275-78df-4336-b788-b76097dfb678">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="0a2c8eb0-0e9c-4709-9e41-d0aa73d3efea"/>
+				</reportElement>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Valor Planilla]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="310" y="1" width="100" height="13" uuid="7a54ffad-7e81-484c-9b78-bd3b5d92fdbf">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="4d0703b0-8616-4729-b027-65b0ae59baab"/>
+				</reportElement>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Abono]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="445" y="1" width="76" height="13" uuid="a4832193-7bb9-419b-aa64-4313704a1cdc">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="7062986d-8cf1-4210-a42e-9cbdd5a36910"/>
+				</reportElement>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Valor a pagar]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="1" width="60" height="13" uuid="3713f0b5-5e22-430a-ac5f-8e9291f2e46f">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="c01e35d0-17ba-41fa-b2af-80784fb62ca0"/>
+				</reportElement>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Id planilla]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="80" y="1" width="70" height="13" uuid="b5fd3c72-0d0a-4840-a8d1-bb94777af00f">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="cebd376c-996e-4047-88c4-e594ecc4ca0b"/>
+				</reportElement>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[N° Cuenta]]></text>
+			</staticText>
+			<line>
+				<reportElement x="70" y="0" width="1" height="15" uuid="360e6903-72f1-4b90-bd0a-c90ba75b847a"/>
+			</line>
+			<line>
+				<reportElement x="160" y="0" width="1" height="15" uuid="1bb7b548-c528-40d1-9b81-90a0a4775305"/>
+			</line>
+			<line>
+				<reportElement x="285" y="0" width="1" height="15" uuid="0bedc368-b53b-4ffb-8400-d84ec93c16a7"/>
+			</line>
+			<line>
+				<reportElement x="430" y="0" width="1" height="15" uuid="bbea2126-412c-43fc-a6ec-83e43b8f7563"/>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="15" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="0" width="550" height="15" uuid="854ba4b7-4f21-4a24-966b-c2d11338cfbe"/>
+			</rectangle>
+			<textField>
+				<reportElement x="170" y="1" width="100" height="13" uuid="392f1185-784a-4b56-88bd-3f35f4855528">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="0a2c8eb0-0e9c-4709-9e41-d0aa73d3efea"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{deuda}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="310" y="1" width="100" height="13" uuid="a8715b34-3708-411d-9489-c3c3de040e7a">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="4d0703b0-8616-4729-b027-65b0ae59baab"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{pagado}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="445" y="1" width="100" height="13" uuid="95e0cbe7-5a2a-46b2-95f2-8048065705b9">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="7062986d-8cf1-4210-a42e-9cbdd5a36910"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{pagar}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="1" y="1" width="70" height="13" uuid="ef2ef190-a29d-45ef-aeed-23ce9bc171a5">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="c01e35d0-17ba-41fa-b2af-80784fb62ca0"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{id_planilla}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="80" y="1" width="70" height="13" uuid="299fd93c-79b7-44b1-8308-27b7bdf68ff5">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="cebd376c-996e-4047-88c4-e594ecc4ca0b"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{id_cuenta}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="70" y="0" width="1" height="15" uuid="8baf400f-b73b-42fe-9bf2-5e79d6b7ab8f"/>
+			</line>
+			<line>
+				<reportElement x="160" y="0" width="1" height="15" uuid="8d82bd62-ff1c-4bef-a479-0c5891e79404"/>
+			</line>
+			<line>
+				<reportElement x="285" y="0" width="1" height="15" uuid="60129da2-bfe2-4f50-a45e-2393ee25ecb0"/>
+			</line>
+			<line>
+				<reportElement x="430" y="0" width="1" height="15" uuid="1dd1aea9-e59b-49ba-a373-ed359c387dde"/>
+			</line>
+		</band>
+	</detail>
+	<summary>
+		<band height="26">
+			<textField>
+				<reportElement x="440" y="11" width="100" height="15" uuid="aa6cae44-8eee-438a-9a3e-1a605848e0ce"/>
+				<textFieldExpression><![CDATA[$V{pagar1}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="320" y="12" width="100" height="13" uuid="79eaeee6-3a61-498b-9281-6864b64c0fc9">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="0a2c8eb0-0e9c-4709-9e41-d0aa73d3efea"/>
+				</reportElement>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total Deuda:]]></text>
+			</staticText>
+		</band>
+	</summary>
+</jasperReport>
