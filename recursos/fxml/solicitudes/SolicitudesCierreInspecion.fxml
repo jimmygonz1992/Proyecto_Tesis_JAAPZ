@@ -29,7 +29,7 @@
           <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Label alignment="CENTER" prefHeight="42.0" prefWidth="703.0" text="LISTADO DE CLIENTES CON SERVICIO DE AGUA POTABLE" GridPane.columnSpan="5" GridPane.halignment="CENTER">
+            <Label alignment="CENTER" prefHeight="42.0" prefWidth="703.0" text="SOLICITUDES DE INSPECCIÓN DE INSTALACIÓN" GridPane.columnSpan="5" GridPane.halignment="CENTER">
                <font>
                   <Font name="Arial Bold" size="24.0" />
                </font></Label>
