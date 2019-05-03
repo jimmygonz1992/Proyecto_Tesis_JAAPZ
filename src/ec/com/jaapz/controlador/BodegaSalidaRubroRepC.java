@@ -545,7 +545,7 @@ public class BodegaSalidaRubroRepC {
 			txtTelefono.setText("");
 			txtCodigoMedidor.setText("");
 			txtIdInspecc.setText("");
-			dtpFecha.setValue(null);
+			dtpFecha.setValue(LocalDate.now());
 			txtUsuarioInspeccion.setText("");
 			txtObservaciones.setText("");
 			tvDatos.getItems().clear();

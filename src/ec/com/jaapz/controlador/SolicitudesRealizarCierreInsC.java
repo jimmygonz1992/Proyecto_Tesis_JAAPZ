@@ -168,7 +168,8 @@ public class SolicitudesRealizarCierreInsC {
 				costoColum.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<LiquidacionDetalle,String>, ObservableValue<String>>() {
 					@Override
 					public ObservableValue<String> call(CellDataFeatures<LiquidacionDetalle, String> param) {
-						return new SimpleObjectProperty<String>(String.valueOf(decimales.format(param.getValue().getTotal())));
+						double subtotalDeta = param.getValue().getCantidad()*param.getValue().getPrecio();
+						return new SimpleObjectProperty<String>(String.valueOf(decimales.format(subtotalDeta)));
 					}
 				});
 

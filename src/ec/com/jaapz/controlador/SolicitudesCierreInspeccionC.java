@@ -49,7 +49,7 @@ public class SolicitudesCierreInspeccionC {
 			tvDatos.getColumns().clear();
 			List<SolInspeccionIn> listaInspecciones;
 			
-			if(Context.getInstance().getIdPerfil() == 1) {
+			if(Context.getInstance().getIdPerfil() == Constantes.ID_USU_ADMINISTRADOR) {
 				listaInspecciones = inspeccionDAO.getListaInspeccion(patron);
 			}else {
 				listaInspecciones = inspeccionDAO.getListaInspeccionPerfil(patron);

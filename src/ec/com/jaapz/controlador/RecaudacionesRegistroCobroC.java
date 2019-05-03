@@ -322,11 +322,12 @@ public class RecaudacionesRegistroCobroC {
 			tvDatos.getColumns().clear();
 			tvDatos.getItems().clear();
 			
-			if(datoSeleccionado.getMedidor() != null)
+			if(datoSeleccionado.getMedidor() != null) {
 				if(datoSeleccionado.getMedidor().getCodigo() == null)
-					txtNumMedidor.setText("");
+					txtNumMedidor.setText("Medidor No Asignado");
 				else
 					txtNumMedidor.setText(datoSeleccionado.getMedidor().getCodigo());
+			}
 
 			if(datoSeleccionado.getIdCuenta() == null)
 				txtIdCuenta.setText("");

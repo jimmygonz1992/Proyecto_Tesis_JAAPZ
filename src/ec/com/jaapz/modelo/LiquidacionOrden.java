@@ -14,77 +14,65 @@ import java.util.List;
 @Entity
 @Table(name="liquidacion_orden")
 @NamedQueries({
+	//SI se está utilizando //ya utilizado //bodega Listado Liquidaciones
 	@NamedQuery(name="LiquidacionOrden.findAll", query="SELECT l FROM LiquidacionOrden l "
-			+ "where (lower(l.cuentaCliente.cliente.apellido) like :patron or lower(l.cuentaCliente.cliente.nombre) like :patron "
-			+ "or lower(l.cuentaCliente.cliente.cedula) like :patron) and l.solInspeccionIn.estadoInspeccion = 'REALIZADO' and l.estadoOrden = 'PENDIENTE'"
-			+ "order by l.idLiquidacion asc"),
+		+ "where (lower(l.cuentaCliente.cliente.apellido) like :patron or lower(l.cuentaCliente.cliente.nombre) like :patron "
+		+ "or lower(l.cuentaCliente.cliente.cedula) like :patron) and l.solInspeccionIn.estadoInspeccion = 'REALIZADO' "
+		+ "and l.estadoInstalacion = 'PENDIENTE' and l.estadoOrden = 'PENDIENTE' "
+		+ "and l.estado = 'A' order by l.idLiquidacion asc"),	
 	
+	//ya utilizado
 	@NamedQuery(name="LiquidacionOrden.buscarLiquidacionOrdenPerfil", query="SELECT l FROM LiquidacionOrden l "
-			+ "where (lower(l.cuentaCliente.cliente.apellido) like :patron or lower(l.cuentaCliente.cliente.nombre) like :patron "
-			+ "or lower(l.cuentaCliente.cliente.cedula) like :patron) and l.solInspeccionIn.estadoInspeccion = 'REALIZADO' and l.estadoOrden = 'PENDIENTE'"
-			+ "and l.usuarioCrea = :idPerfilUsuario order by l.idLiquidacion asc"),
+		+ "where (lower(l.cuentaCliente.cliente.apellido) like :patron or lower(l.cuentaCliente.cliente.nombre) like :patron "
+		+ "or lower(l.cuentaCliente.cliente.cedula) like :patron) and l.solInspeccionIn.estadoInspeccion = 'REALIZADO' and l.estadoOrden = 'PENDIENTE' "
+		+ "and l.usuarioInstalacion = :idPerfilUsuario and l.usuarioInstalacion = null and l.estadoInstalacion = 'PENDIENTE' order by l.idLiquidacion asc"),
+
+	//paraListar en ver Instalaciones Pendientes
+	@NamedQuery(name="LiquidacionOrden.findAllOrdenes", query="SELECT l FROM LiquidacionOrden l "
+			+ "where (lower(l.cuentaCliente.cliente.apellido) like :patron  or lower(l.cuentaCliente.cliente.nombre) like :patron "
+			+ "or lower(l.cuentaCliente.cliente.cedula) like :patron) and l.estadoInstalacion = 'PENDIENTE' and l.estadoOrden = 'PENDIENTE' "
+			+ "and l.estado = 'A' order by l.idLiquidacion asc"),
 	
-	@NamedQuery(name="LiquidacionOrden.findAllInstalaciones", query="SELECT l FROM LiquidacionOrden l "
-			+ "where (lower(l.cuentaCliente.cliente.apellido) like :patron or lower(l.cuentaCliente.cliente.nombre) like :patron "
-			+ "or lower(l.cuentaCliente.cliente.cedula) like :patron) and l.estadoInstalacion = 'PENDIENTE' and l.estado = 'A' "
-			+ "order by l.estadoInstalacion asc"),
+	//paraListar en ver Instalaciones Pendientes
+	@NamedQuery(name="LiquidacionOrden.buscarLiquidacionesPerfil", query="SELECT l FROM LiquidacionOrden l "
+		+ "where (lower(l.cuentaCliente.cliente.apellido) like :patron  or lower(l.cuentaCliente.cliente.nombre) like :patron "
+		+ "or lower(l.cuentaCliente.cliente.cedula) like :patron) and l.usuarioInstalacion = :idPerfilUsuario and l.estado = 'A' "
+		+ "and l.estadoOrden = 'PENDIENTE' order by l.idLiquidacion asc"),
 	
-	@NamedQuery(name="LiquidacionOrden.buscarLiquidacionOrdenPerfilInstalaciones", query="SELECT l FROM LiquidacionOrden l "
-			+ "where (lower(l.cuentaCliente.cliente.apellido) like :patron or lower(l.cuentaCliente.cliente.nombre) like :patron "
-			+ "or lower(l.cuentaCliente.cliente.cedula) like :patron) and l.estadoInstalacion = 'PENDIENTE' "
-			+ "and l.usuarioInstalacion = :idPerfilUsuario and l.estado = 'A' order by l.idLiquidacion desc"),
+	//utilizado
+	@NamedQuery(name="LiquidacionOrden.buscarLiquidacionAsignada", query="SELECT l FROM LiquidacionOrden l "
+		+ "where l.usuarioInstalacion = :idPerfilUsuario and l.estadoInstalacion = 'PENDIENTE' and l.estado = 'A' order by l.idLiquidacion desc"),
 	
-	//para agregar mas materiales solo cambia el estado
-	@NamedQuery(name="LiquidacionOrden.findAllEmitida", query="SELECT l FROM LiquidacionOrden l "
-			+ "where (lower(l.cuentaCliente.cliente.apellido) like :patron or lower(l.cuentaCliente.cliente.nombre) like :patron "
-			+ "or lower(l.cuentaCliente.cliente.cedula) like :patron) and l.solInspeccionIn.estadoInspeccion = 'REALIZADO' and l.estadoOrden = 'REALIZADO'"
-			+ "order by l.idLiquidacion asc"),
-	
-	@NamedQuery(name="LiquidacionOrden.buscarLiqOrdenPerfilEmitida", query="SELECT l FROM LiquidacionOrden l "
-			+ "where (lower(l.cuentaCliente.cliente.apellido) like :patron or lower(l.cuentaCliente.cliente.nombre) like :patron "
-			+ "or lower(l.cuentaCliente.cliente.cedula) like :patron) and l.solInspeccionIn.estadoInspeccion = 'REALIZADO' and l.estadoOrden = 'REALIZADO'"
-			+ "and l.usuarioCrea = :idPerfilUsuario order by l.idLiquidacion asc"),
-	
-	//esta consulta es provisional para ver si sale editar una orden de liquidacion
-	@NamedQuery(name="LiquidacionOrden.recuperaLiquidacionEmitida", query="SELECT l FROM LiquidacionOrden l WHERE (l.idLiquidacion = (:idLiquidacion) and l.estado = 'A')"),
-	
-	@NamedQuery(name="LiquidacionOrden.findAllPendiente", query="SELECT l FROM LiquidacionOrden l "
-			+ "where (lower(l.cuentaCliente.cliente.apellido) like :patron  or lower(l.cuentaCliente.cliente.nombre) like :patron) "
-			+ "and (l.estadoInstalacion = 'PENDIENTE' and l.usuarioInstalacion = null and l.estado = 'A') order by l.idLiquidacion desc"),
-	
+	//utilizado
 	@NamedQuery(name="LiquidacionOrden.buscarAsignacionLiquidacionPerfilPendiente", query="SELECT l FROM LiquidacionOrden l "
 			+ "where lower(l.cuentaCliente.cliente.apellido) like :patron  or lower(l.cuentaCliente.cliente.nombre) like :patron "
 			+ " and l.usuarioInstalacion = :idPerfilUsuario and l.usuarioInstalacion = null "
 			+ " and l.estadoInstalacion = 'PENDIENTE' and l.estado = 'A' order by l.idLiquidacion desc"),
 	
-	//para las asignaciones
-	/*@NamedQuery(name="LiquidacionOrden.findAllPendiente", query="SELECT l FROM LiquidacionOrden l "
+	//utilizado
+	@NamedQuery(name="LiquidacionOrden.findAllPendiente", query="SELECT l FROM LiquidacionOrden l "
 			+ "where (lower(l.cuentaCliente.cliente.apellido) like :patron  or lower(l.cuentaCliente.cliente.nombre) like :patron) "
-			+ "and l.estadoInstalacion = 'PENDIENTE' and l.usuarioInstalacion = null and l.estado = 'A' order by l.idLiquidacion desc"),*/
-	
-	/*@NamedQuery(name="LiquidacionOrden.buscarAsignacionPerfilPendiente", query="SELECT l FROM LiquidacionOrden l "
-			+ "where (lower(l.cuentaCliente.cliente.apellido) like :patron  or lower(l.cuentaCliente.cliente.nombre) like :patron) "
-			+ " and l.usuarioInstalacion = :idPerfilUsuario and l.usuarioInstalacion = null"
-			+ " and l.estadoInstalacion = 'PENDIENTE' and l.estado = 'A' order by l.idLiquidacion desc"),*/
-	
-	//aqui agregue la condicion estadoInstalacion = 'PENDIENTE'
-	//para q obviamente solo aparezacan esas
-	@NamedQuery(name="LiquidacionOrden.buscarLiquidacionAsignada", query="SELECT l FROM LiquidacionOrden l "
-			+ "where l.usuarioInstalacion = :idPerfilUsuario and l.estadoInstalacion = 'PENDIENTE' and l.estado = 'A' order by l.idLiquidacion desc"),
-	
-	//para asignar trabajos de instalacion
-	@NamedQuery(name="LiquidacionOrden.buscarListaLiquidacion", query="SELECT l FROM LiquidacionOrden l "
-			+ "where (lower(l.solInspeccionIn.cliente.apellido) like :patron  or lower(l.solInspeccionIn.cliente.nombre) like :patron) "
-			+ "and l.estadoInstalacion = 'PENDIENTE' and l.usuarioInstalacion = null and l.estado = 'A' order by l.idLiquidacion desc"),
+			+ "and (l.estadoInstalacion = 'PENDIENTE' and l.usuarioInstalacion = null and l.estado = 'A') order by l.idLiquidacion desc"),
 
-	//para asignar trabajos de instalacion
-	@NamedQuery(name="LiquidacionOrden.buscarListaLiquidacionPerfil", query="SELECT l FROM LiquidacionOrden l "
-			+ "where lower(l.solInspeccionIn.cliente.apellido) like :patron  or lower(l.solInspeccionIn.cliente.nombre) like :patron "
-			+ " and l.usuarioInstalacion = :idPerfilUsuario and l.usuarioInstalacion = null "
-			+ " and l.estadoInstalacion = 'PENDIENTE' and l.estado = 'A' order by l.idLiquidacion desc"),
+	//para agregar mas materiales solo cambia el estado //cuando ya han salido de bodega
+	@NamedQuery(name="LiquidacionOrden.findAllEmitida", query="SELECT l FROM LiquidacionOrden l "
+		+ "where (lower(l.cuentaCliente.cliente.apellido) like :patron or lower(l.cuentaCliente.cliente.nombre) like :patron "
+		+ "or lower(l.cuentaCliente.cliente.cedula) like :patron) and l.solInspeccionIn.estadoInspeccion = 'REALIZADO' and l.estadoOrden = 'REALIZADO'"
+		+ "order by l.idLiquidacion asc"),
 	
-	//para asignar trabajos de instalacion
-	@NamedQuery(name="LiquidacionOrden.buscarPorSolicitud", query="SELECT l FROM LiquidacionOrden l where l.solInspeccionIn.idSolInspeccion = :idSolicitud and l.estado = 'A'"),
+	//para agregar mas materiales solo cambia el estado //cuando ya han salido de bodega
+	@NamedQuery(name="LiquidacionOrden.buscarLiqOrdenPerfilEmitida", query="SELECT l FROM LiquidacionOrden l "
+		+ "where (lower(l.cuentaCliente.cliente.apellido) like :patron or lower(l.cuentaCliente.cliente.nombre) like :patron "
+		+ "or lower(l.cuentaCliente.cliente.cedula) like :patron) and l.solInspeccionIn.estadoInspeccion = 'REALIZADO' and l.estadoOrden = 'REALIZADO'"
+		+ "and l.usuarioCrea = :idPerfilUsuario order by l.idLiquidacion asc"),
+
+	//para ver en que proceso va la solicitud
+	@NamedQuery(name="LiquidacionOrden.buscarPorSolicitud", query="SELECT l FROM LiquidacionOrden l where "
+		+ "l.solInspeccionIn.idSolInspeccion = :idSolicitud and l.estado = 'A'"),
+	
+	//esta consulta es provisional para ver si sale editar una orden de liquidacion
+	@NamedQuery(name="LiquidacionOrden.recuperaLiquidacionEmitida", query="SELECT l FROM LiquidacionOrden l WHERE (l.idLiquidacion = (:idLiquidacion)"
+			+ " and l.estado = 'A')")	
 })
 public class LiquidacionOrden implements Serializable {
 	private static final long serialVersionUID = 1L;

@@ -500,7 +500,7 @@ public class BodegaSalidaRubroInstC {
 		txtDireccion.setText("");
 		txtTelefono.setText("");
 		txtIdLiquid.setText("");
-		dtpFecha.setValue(null);
+		dtpFecha.setValue(LocalDate.now());
 		txtCodigoMedidor.setText("");
 		txtMarca.setText("");
 		txtModelo.setText("");

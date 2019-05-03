@@ -20,7 +20,7 @@
                         <ImageView fx:id="ivLogin" fitHeight="131.0" fitWidth="87.0" pickOnBounds="true" preserveRatio="true" HBox.hgrow="ALWAYS" />
                      </children>
                   </HBox>
-                  <Button fx:id="btnAtras" mnemonicParsing="false" prefHeight="47.0" prefWidth="79.0" text="Atras">
+                  <Button fx:id="btnAtras" mnemonicParsing="false" prefHeight="47.0" prefWidth="117.0" text="Atrás">
                      <VBox.margin>
                         <Insets left="6.0" />
                      </VBox.margin>

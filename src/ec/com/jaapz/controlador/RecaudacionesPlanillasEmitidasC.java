@@ -102,8 +102,11 @@ public class RecaudacionesPlanillasEmitidasC {
 				@Override
 				public ObservableValue<String> call(CellDataFeatures<CuentaCliente, String> param) {
 					String codigoMedidor =  "";
-					if(param.getValue().getMedidor() != null)
-						codigoMedidor = String.valueOf(param.getValue().getMedidor().getCodigo());
+					if(param.getValue().getMedidor() == null)
+						codigoMedidor = "NO ASIGNADO";
+					else
+						if(param.getValue().getMedidor() != null)
+							codigoMedidor = String.valueOf(param.getValue().getMedidor().getCodigo());
 					return new SimpleObjectProperty<String>(codigoMedidor);
 				}
 			});

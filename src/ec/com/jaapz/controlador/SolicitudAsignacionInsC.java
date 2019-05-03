@@ -163,9 +163,9 @@ public class SolicitudAsignacionInsC {
 	}
 	public void grabarAsig() {
 		try {
-			if(validarDatos() == false)
+			/*if(validarDatos() == false)
 				return;
-
+*/
 			Optional<ButtonType> result = helper.mostrarAlertaConfirmacion("Desea Grabar los Datos?",Context.getInstance().getStage());
 			if(result.get() == ButtonType.OK){
 				if(tpRealizadas.isSelected()) {
@@ -200,7 +200,7 @@ public class SolicitudAsignacionInsC {
 		}
 	}
 	
-	boolean validarDatos() {
+	/*boolean validarDatos() {
 		try {
 			if(tvNuevosAsig.getItems().size() <= 0) {
 				helper.mostrarAlertaAdvertencia("No existen solicitudes agregadas", Context.getInstance().getStage());
@@ -213,7 +213,7 @@ public class SolicitudAsignacionInsC {
 			System.out.println(ex.getMessage());
 			return false;
 		}
-	}
+	}*/
 
 	public void imprimirAsignacion() {
 		try {

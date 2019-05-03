@@ -1,0 +1,339 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.5.1.final using JasperReports Library version 6.5.1  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="VerOrdLiquidacion" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="db337df9-811d-493b-9c81-19330eb49361">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="jaapz_conection"/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="176"/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="815"/>
+	<parameter name="idLiquid" class="java.lang.Integer"/>
+	<parameter name="usuario" class="java.lang.String"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT l.id_liquidacion, l.fecha as fecha_liquidacion, i.telefono_contacto, i.direccion, i.referencia, i.fecha_ingreso, i.id_sol_inspeccion, l.total as total_liquid, c.cedula, (c.nombre || ' ' ||c.apellido) as cliente, r.descripcion, ld.cantidad, ld.precio, ld.total as det_total
+FROM sol_inspeccion_ins i,
+	cliente c,
+	cuenta_cliente cc,
+	liquidacion_orden l,
+	liquidacion_detalle ld,
+	rubro r
+	WHERE
+	i.id_cliente = c.id_cliente and
+	c.id_cliente = cc.id_cliente and
+	cc.id_cuenta = l.id_cuenta and
+	l.id_liquidacion = ld.id_liquidacion and
+	ld.id_rubro = r.id_rubro and
+	l.id_liquidacion = $P{idLiquid}]]>
+	</queryString>
+	<field name="id_liquidacion" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="id_liquidacion"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="liquidacion_orden"/>
+	</field>
+	<field name="fecha_liquidacion" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.label" value="fecha_liquidacion"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="liquidacion_orden"/>
+	</field>
+	<field name="telefono_contacto" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="telefono_contacto"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="sol_inspeccion_ins"/>
+	</field>
+	<field name="direccion" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="direccion"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="sol_inspeccion_ins"/>
+	</field>
+	<field name="referencia" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="referencia"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="sol_inspeccion_ins"/>
+	</field>
+	<field name="fecha_ingreso" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.label" value="fecha_ingreso"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="sol_inspeccion_ins"/>
+	</field>
+	<field name="id_sol_inspeccion" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="id_sol_inspeccion"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="sol_inspeccion_ins"/>
+	</field>
+	<field name="total_liquid" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.label" value="total_liquid"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="liquidacion_orden"/>
+	</field>
+	<field name="cedula" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="cedula"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="cliente"/>
+	</field>
+	<field name="cliente" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="cliente"/>
+	</field>
+	<field name="descripcion" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="descripcion"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="rubro"/>
+	</field>
+	<field name="cantidad" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="cantidad"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="liquidacion_detalle"/>
+	</field>
+	<field name="precio" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.label" value="precio"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="liquidacion_detalle"/>
+	</field>
+	<field name="det_total" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.label" value="det_total"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="liquidacion_detalle"/>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="41" splitType="Stretch">
+			<staticText>
+				<reportElement x="100" y="4" width="400" height="13" uuid="3c16232d-a20d-4770-ac9a-fb7b1645fe3d"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[JUNTA ADMINISTRADORA DE AGUA POTABLE - ZAPOTAL]]></text>
+			</staticText>
+			<image>
+				<reportElement x="33" y="0" width="60" height="40" uuid="a00b5bbc-ac6a-49ba-9bbd-9daf15ab3994"/>
+				<imageExpression><![CDATA["recursos/img/logo_jaapz.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="100" y="19" width="400" height="13" uuid="38ccc524-b7e0-44d9-bbe1-5ba2f4295af4"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[FUNDADO EL 2 DE OCTUBRE DEL 2001]]></text>
+			</staticText>
+			<line>
+				<reportElement x="31" y="40" width="490" height="1" uuid="28979d99-b7e6-40a0-8e6e-fa9eaad7cbf3"/>
+				<graphicElement>
+					<pen lineWidth="2.0"/>
+				</graphicElement>
+			</line>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="135" splitType="Stretch">
+			<staticText>
+				<reportElement x="1" y="10" width="99" height="13" uuid="d1df4c6e-7f3a-47ca-b3c0-20605438b066"/>
+				<textElement textAlignment="Left">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Ord. liquidación N°:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="275" y="10" width="80" height="13" uuid="fbaf123e-cb0f-4122-ad02-62793f5d498f"/>
+				<textElement textAlignment="Left">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Inspección N°:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="275" y="29" width="90" height="13" uuid="43a6f4aa-74ed-4657-a83f-18851f2d63dc"/>
+				<textElement textAlignment="Left">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha Inspección:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="29" width="80" height="13" uuid="1a490fda-616f-47eb-9d5f-55425594900f"/>
+				<textElement textAlignment="Left">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha Aprob.:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="220" y="46" width="53" height="13" uuid="562302ea-5fad-404d-acf7-003946c2677d"/>
+				<textElement textAlignment="Left">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Cliente: ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="46" width="70" height="13" uuid="90e9ad18-b45f-479d-bec1-6c3143b55bcd"/>
+				<textElement textAlignment="Left">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Cédula:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="63" width="80" height="13" uuid="c09963fd-b8b0-486e-9798-f6d623d5cb87"/>
+				<textElement textAlignment="Left">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Dirección:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="80" width="80" height="13" uuid="724032a3-3255-41e3-b2d8-578628814052"/>
+				<textElement textAlignment="Left">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Referencia:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="107" y="29" width="100" height="13" uuid="91a43586-7a37-4243-93f4-d0cb950aa313"/>
+				<textFieldExpression><![CDATA[$F{fecha_liquidacion}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="1" y="97" width="80" height="13" uuid="d9c51b64-ff32-4ecf-8677-950088fdeea3"/>
+				<textElement textAlignment="Left">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Telf. Contacto:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="107" y="97" width="100" height="13" uuid="ece9f416-8c9b-4a18-9fa0-5492aa595fa0"/>
+				<textFieldExpression><![CDATA[$F{telefono_contacto}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="107" y="63" width="448" height="13" uuid="80527802-262f-4640-84a9-92532f1b3b95"/>
+				<textFieldExpression><![CDATA[$F{direccion}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="107" y="80" width="448" height="13" uuid="5302ab0b-a5c3-424c-a733-e4e144b96616"/>
+				<textFieldExpression><![CDATA[$F{referencia}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="107" y="46" width="100" height="13" uuid="8f37e776-af17-4c38-beaf-cc6b1cf39589"/>
+				<textFieldExpression><![CDATA[$F{cedula}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="275" y="46" width="280" height="13" uuid="4fe105df-66ca-489f-ab2c-1237408482db"/>
+				<textFieldExpression><![CDATA[$F{cliente}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="370" y="29" width="140" height="13" uuid="628cf582-7b2c-4d49-8862-eca3dd6fd8ee"/>
+				<textFieldExpression><![CDATA[$F{fecha_ingreso}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="370" y="10" width="140" height="13" uuid="7b1f6069-499d-4a60-9a00-45c4659a71ab"/>
+				<textFieldExpression><![CDATA[$F{id_sol_inspeccion}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="107" y="10" width="100" height="13" uuid="88c45574-2b13-41da-af21-2389255adc71"/>
+				<textFieldExpression><![CDATA[$P{idLiquid}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="15" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="0" width="555" height="15" uuid="41d19f87-0236-4b1c-9ca4-4d503dd36dd1"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="1" y="1" width="60" height="13" uuid="00d9bd15-52ca-4590-87ef-a1fe16d85bbe">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="c6fb28d2-3973-4aac-9f33-a595b7ecc756"/>
+				</reportElement>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Material]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="200" y="1" width="67" height="13" uuid="87f9a997-18ff-4ee4-b1b1-a4741c9cc9db">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="b5489411-8ad9-4a08-bf49-1497efe99dc5"/>
+				</reportElement>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Cantidad]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="319" y="1" width="50" height="13" uuid="241296ba-2aac-4757-b992-0c97f8d3552c">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="3a410bed-bf3d-432a-ba76-62bdab01767a"/>
+				</reportElement>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Precio]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="463" y="1" width="60" height="13" uuid="43f70005-404d-4de1-ae11-92f671925633">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="be29d3c8-7d39-4883-a73d-d1d78cf8efe1"/>
+				</reportElement>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Subtotal]]></text>
+			</staticText>
+			<line>
+				<reportElement x="190" y="0" width="1" height="15" uuid="207023dd-151e-4054-a5cc-db044f07c2c0"/>
+			</line>
+			<line>
+				<reportElement x="306" y="0" width="1" height="15" uuid="b3c3232d-a9b6-46f2-8946-2cccf35dcb46"/>
+			</line>
+			<line>
+				<reportElement x="430" y="0" width="1" height="15" uuid="2472258a-7269-4763-8f99-998c76f0165c"/>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="15" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="0" width="555" height="15" uuid="d77e223f-e7b3-4960-848b-4ef3732723c6"/>
+			</rectangle>
+			<textField>
+				<reportElement x="1" y="1" width="180" height="13" uuid="8954bc3d-fcd9-4420-b17b-723654d3545c">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="c6fb28d2-3973-4aac-9f33-a595b7ecc756"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{descripcion}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="193" y="1" width="100" height="13" uuid="72985329-0fca-4546-b0d3-e62be1485db6">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="b5489411-8ad9-4a08-bf49-1497efe99dc5"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{cantidad}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="316" y="1" width="100" height="13" uuid="6f0ca86a-b0d9-4648-93ca-57e398cdbb3b">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="3a410bed-bf3d-432a-ba76-62bdab01767a"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{precio}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="450" y="1" width="100" height="13" uuid="b0509638-57b3-4771-94f5-3cba331fd8b8">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="be29d3c8-7d39-4883-a73d-d1d78cf8efe1"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{det_total}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="306" y="0" width="1" height="15" uuid="0d2d5526-bf58-450a-8690-ca03361c5b63"/>
+			</line>
+			<line>
+				<reportElement x="190" y="0" width="1" height="15" uuid="441a84d1-d5a5-4b88-a79c-aa341c7319e9"/>
+			</line>
+			<line>
+				<reportElement x="430" y="0" width="1" height="15" uuid="122c087c-0189-4b82-95ce-c1ca1dedf5df"/>
+			</line>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="23" splitType="Stretch">
+			<staticText>
+				<reportElement x="390" y="10" width="50" height="13" uuid="a0877f0e-bdc9-4b1f-be4e-8cdbc927a334"/>
+				<textElement textAlignment="Left">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="450" y="10" width="105" height="13" uuid="3cbef10a-4bc3-453c-b114-c34c5c9a62b8"/>
+				<textFieldExpression><![CDATA[$F{total_liquid}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="1" y="10" width="50" height="13" uuid="ffa3289b-24a2-42b5-9018-7e451fa2dde9"/>
+				<textElement textAlignment="Left">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Usuario:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="60" y="10" width="178" height="13" uuid="4c520919-9697-468d-adc9-85784c7cda07"/>
+				<textFieldExpression><![CDATA[$P{usuario}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

@@ -1,75 +1,91 @@
 package ec.com.jaapz.controlador;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import ec.com.jaapz.modelo.LiquidacionOrden;
 import ec.com.jaapz.modelo.LiquidacionOrdenDAO;
+import ec.com.jaapz.modelo.Pago;
+import ec.com.jaapz.modelo.Planilla;
 import ec.com.jaapz.util.Constantes;
 import ec.com.jaapz.util.Context;
+import ec.com.jaapz.util.ControllerHelper;
+import ec.com.jaapz.util.PrintReport;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.Callback;
 
-public class LiquidacionesEmitidasC {
-	LiquidacionOrdenDAO liqOrdenDao = new LiquidacionOrdenDAO();
-	@FXML private TextField txtBuscar;
+public class InstalacionesVerPendienteC {
 	@FXML private TableView<LiquidacionOrden> tvDatos;
-	SimpleDateFormat formateador = new SimpleDateFormat("dd/MM/yyyy");
+	@FXML private TextField txtBuscar;
+	@FXML private Button btnImprimirFicha;
+	@FXML private Button btnEditarOrden;
 	
+	LiquidacionOrdenDAO liquidacionOrdenDao = new LiquidacionOrdenDAO();
+	SimpleDateFormat formateador = new SimpleDateFormat("dd/MM/yyyy");
+	ControllerHelper helper = new ControllerHelper();
+
 	public void initialize() {
-		llenarDatos("");
-		tvDatos.setRowFactory(tv -> {
-            TableRow<LiquidacionOrden> row = new TableRow<>();
-            row.setOnMouseClicked(event -> {
-                if (event.getClickCount() == 2 && (! row.isEmpty()) ) {
-                	if(tvDatos.getSelectionModel().getSelectedItem() != null){
-                		Context.getInstance().setLiquidaciones(tvDatos.getSelectionModel().getSelectedItem());
-    					Context.getInstance().getStageModal().close();
-    				}
-                }
-            });
-            return row ;
-        });
+		llenarTablaLiquidaciones("");
+		btnEditarOrden.setStyle("-fx-graphic: url('/editar.png');-fx-cursor: hand;");
+		btnImprimirFicha.setStyle("-fx-graphic: url('/imprimir.png');-fx-cursor: hand;");
 	}
 	
-	public void buscarLiquidCuenta() {
-		llenarDatos(txtBuscar.getText());
+	public void buscarLiquidacion() {
+		llenarTablaLiquidaciones(txtBuscar.getText());
 	}
 	
 	@SuppressWarnings("unchecked")
-	void llenarDatos(String patron) {
+	public void llenarTablaLiquidaciones(String patron) {
 		try{
 			tvDatos.getColumns().clear();
-			List<LiquidacionOrden> listaLiquidaciones;
+			tvDatos.getItems().clear();
+			List<LiquidacionOrden> listado;
+			
 			if(Context.getInstance().getIdPerfil() == Constantes.ID_USU_ADMINISTRADOR) {
-				listaLiquidaciones = liqOrdenDao.getListaLiqOrdenEmitida(patron);
+				listado = liquidacionOrdenDao.getListaLiquidaciones(patron);
 			}else {
-				listaLiquidaciones = liqOrdenDao.getListaLiqOrdenPerfilEmitida(patron);
+				listado = liquidacionOrdenDao.getListaLiquidacionesPerfil(patron);
+			}
+						
+			//con esto muestro las q hayan pagado al menos el 60%
+			List<LiquidacionOrden> listaLiquidaciones = new ArrayList<>();
+			for(LiquidacionOrden liq : listado) {
+				double porcentaje = 0.0;
+				double valorPagado = 0.0;
+				for(Planilla pl : liq.getCuentaCliente().getPlanillas()) {
+					if(pl.getIdentInstalacion().equals(Constantes.IDENT_INSTALACION)) {
+						porcentaje = pl.getTotalPagar() * 0.6;//60 % del total a pagar
+						for(Pago pag : pl.getPagos()) {
+							if(pag.getEstado().equals(Constantes.ESTADO_ACTIVO))
+								valorPagado = valorPagado + pag.getValor();
+						}
+					}
+				}
+				if(valorPagado >= porcentaje)
+					listaLiquidaciones.add(liq);
 			}
 			
 			ObservableList<LiquidacionOrden> datosReq = FXCollections.observableArrayList();
 			datosReq.setAll(listaLiquidaciones);
 
-			//llenar los datos en la tabla			
+			//llenar los datos en la tabla
 			TableColumn<LiquidacionOrden, String> idColum = new TableColumn<>("Nº");
 			idColum.setMinWidth(10);
-			idColum.setPrefWidth(80);
-			idColum.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<LiquidacionOrden, String>, ObservableValue<String>>() {
-				@Override
-				public ObservableValue<String> call(CellDataFeatures<LiquidacionOrden, String> param) {
-					return new SimpleObjectProperty<String>(String.valueOf(param.getValue().getIdLiquidacion()));
-				}
-			});
+			idColum.setPrefWidth(40);
+			idColum.setCellValueFactory(new PropertyValueFactory<LiquidacionOrden, String>("idLiquidacion"));
 			
 			TableColumn<LiquidacionOrden, String> ordenColum = new TableColumn<>("Inspección");
 			ordenColum.setMinWidth(10);
@@ -146,20 +162,43 @@ public class LiquidacionesEmitidasC {
 					return new SimpleObjectProperty<String>(String.valueOf(param.getValue().getSolInspeccionIn().getEstadoInspeccion()));
 				}
 			});
-			
-			TableColumn<LiquidacionOrden, String> estadoOrdColum = new TableColumn<>("Estado Liquidación");
-			estadoOrdColum.setMinWidth(10);
-			estadoOrdColum.setPrefWidth(80);
-			estadoOrdColum.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<LiquidacionOrden, String>, ObservableValue<String>>() {
-				@Override
-				public ObservableValue<String> call(CellDataFeatures<LiquidacionOrden, String> param) {
-					return new SimpleObjectProperty<String>(String.valueOf(param.getValue().getEstadoOrden()));
-				}
-			});
 
+			TableColumn<LiquidacionOrden, String> estadoOrdColum = new TableColumn<>("Estado Liquidacion");
+			estadoOrdColum.setMinWidth(10);
+			estadoOrdColum.setPrefWidth(85);
+			estadoOrdColum.setCellValueFactory(new PropertyValueFactory<LiquidacionOrden, String>("estadoOrden"));
+			
 			tvDatos.getColumns().addAll(idColum, ordenColum, fechaOrdenColum, fechaInspColum, cedulaColum, clienteColum, direccionColum, referenciaColum, estadoInspColum, estadoOrdColum);
 			tvDatos.setItems(datosReq);
 		}catch(Exception ex){
+			System.out.println(ex.getMessage());
+		}
+	}
+	
+	public void editarOrden() {
+		try {
+			if(tvDatos.getSelectionModel().getSelectedItem() == null) {
+				helper.mostrarAlertaAdvertencia("Debe seleccionar un registro", Context.getInstance().getStage());
+				return;
+			}
+			Context.getInstance().setLiquidaciones(tvDatos.getSelectionModel().getSelectedItem());
+			helper.abrirPantallaModalSolicitud("/solicitudes/VerOrdenLiquidacion.fxml","Orden de Liquidación", Context.getInstance().getStage());
+			llenarTablaLiquidaciones("");
+			Context.getInstance().setInspeccion(null);
+		}catch(Exception ex) {
+			System.out.println(ex.getMessage());
+		}
+	}
+	
+	public void imprimirFicha() {
+		try {
+			PrintReport printReport = new PrintReport();
+			Map<String, Object> param = new HashMap<String, Object>();
+			param.put("usuario", Context.getInstance().getUsuariosC().getNombre() + ' ' + Context.getInstance().getUsuariosC().getApellido());
+			param.put("idLiquid", tvDatos.getSelectionModel().getSelectedItem().getIdLiquidacion());
+			printReport.crearReporte("/recursos/informes/VerOrdLiquidacion.jasper", liquidacionOrdenDao, param);
+			printReport.showReport("Orden de Liquidación");
+		}catch(Exception ex) {
 			System.out.println(ex.getMessage());
 		}
 	}

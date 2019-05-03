@@ -5,6 +5,7 @@ import java.util.List;
 
 import ec.com.jaapz.modelo.Reparacion;
 import ec.com.jaapz.modelo.ReparacionDAO;
+import ec.com.jaapz.util.Constantes;
 import ec.com.jaapz.util.Context;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ObservableValue;
@@ -50,7 +51,7 @@ public class ReparacionesListadoInspRepC {
 		try{
 			tvDatos.getColumns().clear();
 			List<Reparacion> listaReparaciones;
-			if(Context.getInstance().getIdPerfil() == 1) {
+			if(Context.getInstance().getIdPerfil() == Constantes.ID_USU_ADMINISTRADOR) {
 				listaReparaciones = reparacionesDao.getListaReparacionesInsp(patron);
 			}else {
 				listaReparaciones = reparacionesDao.getListaReparacionesPerfilReparaciones(patron);
