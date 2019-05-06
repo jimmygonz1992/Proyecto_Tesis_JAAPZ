@@ -54,12 +54,12 @@ public class BodegaSalidaListadoLiquidInstC {
 		try{
 			tvDatos.getColumns().clear();
 			List<LiquidacionOrden> listado;
-			
-			if(Context.getInstance().getIdPerfil() == Constantes.ID_USU_ADMINISTRADOR) {
+			listado = liquidacionOrdenDao.getListaLiquidacionOrden(patron);
+			/*if(Context.getInstance().getIdPerfil() == Constantes.ID_USU_ADMINISTRADOR) {
 				listado = liquidacionOrdenDao.getListaLiquidacionOrden(patron);
 			}else {
 				listado = liquidacionOrdenDao.getListaLiquidacionOrdenPerfil(patron);
-			}
+			}*/
 			
 			//con esto muestro las q hayan pagado al menos el 60%
 			List<LiquidacionOrden> listaLiquidaciones = new ArrayList<>();

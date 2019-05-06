@@ -1,5 +1,6 @@
 package ec.com.jaapz.controlador;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import ec.com.jaapz.modelo.SolInspeccionIn;
@@ -19,6 +20,7 @@ import javafx.util.Callback;
 public class SolicitudesNoAtendidasC {
 	SolInspeccionInDAO inspeccionDAO = new SolInspeccionInDAO();
 	private @FXML TableView<SolInspeccionIn> tvDatos;
+	SimpleDateFormat formateador = new SimpleDateFormat("dd/MM/yyyy");
 	public void initialize(){
 		llenarDatos();
 		tvDatos.setRowFactory(tv -> {
@@ -71,7 +73,7 @@ public class SolicitudesNoAtendidasC {
 			fechaColum.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<SolInspeccionIn,String>, ObservableValue<String>>() {
 				@Override
 				public ObservableValue<String> call(CellDataFeatures<SolInspeccionIn, String> param) {
-					return new SimpleObjectProperty<String>(String.valueOf(param.getValue().getFechaIngreso()));
+					return new SimpleObjectProperty<String>(String.valueOf(formateador.format(param.getValue().getFechaIngreso())));
 				}
 			});
 			TableColumn<SolInspeccionIn, String> telefonoColum = new TableColumn<>("Telefono");

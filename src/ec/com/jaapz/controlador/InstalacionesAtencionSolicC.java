@@ -177,8 +177,7 @@ public class InstalacionesAtencionSolicC {
 				cuentaCliente.setMedidor(medidor);
 				System.out.println(solicitud.getIdSolInspeccion());
 				solicitud.setEstadoSolicitud(Constantes.EST_INSPECCION_REALIZADO);
-				
-				instalacionSeleccionada.setEstadoInstalacion(Constantes.EST_APERTURA_REALIZADO);
+
 				Date date = Date.from(dtpFecha.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
 				instalacionSeleccionada.setFechaInst(date);
 				instalacionSeleccionada.setHoraInst(sqlTime);

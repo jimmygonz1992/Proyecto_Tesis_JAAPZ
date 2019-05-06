@@ -52,6 +52,7 @@ public class SolicitudesCierreReparacionC {
 		}
 	}
 
+	@SuppressWarnings("unlikely-arg-type")
 	public void imprimirFicha() {
 		try {
 			if(tvDatos.getSelectionModel().getSelectedItem() == null) {

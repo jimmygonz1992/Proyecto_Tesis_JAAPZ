@@ -285,7 +285,8 @@ public class BodegaSalidaRubroInstC {
 					Double valorSubt = new Double(tvDatos.getItems().get(i).getCantidad()*tvDatos.getItems().get(i).getPrecio());
 					subtotal += valorSubt;
 					//txtSubtotal.setText(String.valueOf(Double.valueOf(subtotal)));
-					txtTotal.setText(String.valueOf(Double.valueOf(subtotal)));
+					Double precioMed = Double.valueOf(txtPrecioMed.getText());
+					txtTotal.setText(String.valueOf(Double.valueOf(subtotal + precioMed)));
 				}
 			}
 		}catch(Exception ex) {
@@ -394,6 +395,7 @@ public class BodegaSalidaRubroInstC {
 				instalacion.setTotal(Double.parseDouble(txtTotal.getText()));
 				instalacion.setEstadoInstalacion(Constantes.EST_INSPECCION_PENDIENTE);
 				instalacion.setUsuarioCrea(Context.getInstance().getUsuariosC().getIdUsuario());
+				instalacion.setUsuarioInstalacion(liquidacionSeleccionada.getUsuarioInstalacion());
 				instalacion.setEstado(Constantes.ESTADO_ACTIVO);
 				List<InstalacionDetalle> listaAgregadaRubros = new ArrayList<InstalacionDetalle>();
 				for(InstalacionDetalle det : tvDatos.getItems()) {

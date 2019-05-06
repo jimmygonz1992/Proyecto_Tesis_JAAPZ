@@ -11,8 +11,8 @@
    <children>
       <GridPane layoutX="14.0" layoutY="14.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="339.0" />
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="353.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="631.0" minWidth="10.0" prefWidth="448.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="357.0" minWidth="10.0" prefWidth="262.0" />
         </columnConstraints>
         <rowConstraints>
           <RowConstraints maxHeight="20.0" minHeight="0.0" prefHeight="20.0" vgrow="SOMETIMES" />
@@ -33,7 +33,10 @@
                <children>
                   <GridPane prefHeight="80.0" prefWidth="505.0" HBox.hgrow="ALWAYS">
                      <children>
-                        <Button fx:id="btnBuscar" mnemonicParsing="false" onAction="#buscarCliente" text="Buscar" GridPane.columnIndex="2" GridPane.halignment="CENTER" />
+                        <Button fx:id="btnBuscar" alignment="BOTTOM_CENTER" contentDisplay="TOP" mnemonicParsing="false" onAction="#buscarCliente" prefHeight="39.0" prefWidth="68.0" styleClass="botonBuscar" text="Buscar" GridPane.columnIndex="2" GridPane.halignment="CENTER">
+                           <font>
+                              <Font name="System Bold" size="15.0" />
+                           </font></Button>
                         <Label text="Dirección:" GridPane.rowIndex="2">
                            <font>
                               <Font name="Arial Bold" size="13.0" />
@@ -61,14 +64,14 @@
                      </children>
                      <columnConstraints>
                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="110.0" minWidth="10.0" prefWidth="110.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="110.0" minWidth="10.0" prefWidth="110.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="175.0" minWidth="10.0" prefWidth="141.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="136.0" minWidth="10.0" prefWidth="79.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="122.0" minWidth="10.0" prefWidth="122.0" />
                      </columnConstraints>
                      <rowConstraints>
-                        <RowConstraints maxHeight="65.0" minHeight="0.0" prefHeight="27.0" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="140.0" minHeight="0.0" prefHeight="27.0" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="172.0" minHeight="9.0" prefHeight="26.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="65.0" minHeight="0.0" prefHeight="58.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="140.0" minHeight="0.0" prefHeight="35.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="172.0" minHeight="9.0" prefHeight="30.0" vgrow="SOMETIMES" />
                      </rowConstraints>
                   </GridPane>
                </children>
@@ -78,8 +81,6 @@
                   <Font name="Arial Bold" size="14.0" />
                </font>
             </Label>
-            <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
-            </HBox>
          </children>
       </GridPane>
    </children>
