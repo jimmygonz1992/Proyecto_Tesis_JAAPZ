@@ -26,6 +26,7 @@ import javafx.scene.control.Accordion;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.SplitPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -73,6 +74,9 @@ public class PrincipalC {
 		dia = fecha.get(Calendar.DAY_OF_MONTH);
 		lblFecha.setText("" + dia + "/" + (mes + 1) + "/" + anio);
 		llenarMenu();
+		
+		ScrollPane scrollPane = new ScrollPane(vBoxMenu);
+	    scrollPane.setFitToHeight(true);
 	}
 	
 	void llenarMenu() {

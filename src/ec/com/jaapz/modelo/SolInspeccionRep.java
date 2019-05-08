@@ -22,7 +22,7 @@ import java.util.List;
 	//para cierre de inspeccion
 	@NamedQuery(name="SolInspeccionRep.findAllPendiente", query="SELECT r FROM SolInspeccionRep r "
 		+ "where (lower(r.cuentaCliente.cliente.apellido) like :patron  or lower(r.cuentaCliente.cliente.nombre) like :patron) "
-		+ "and r.estadoInspecRep = 'PENDIENTE' and r.estado = 'A' order by r.idSolicitudRep desc"),
+		+ "and r.estadoInspecRep = 'PENDIENTE' and r.idUsuEncargado = null and r.estado = 'A' order by r.idSolicitudRep desc"),
 	
 	@NamedQuery(name="SolInspeccionRep.buscarInspeccionAsignada", query="SELECT r FROM SolInspeccionRep r "
 		+ "where r.idUsuEncargado = :idPerfilUsuario and r.estado = 'A' order by r.idSolicitudRep desc"),
