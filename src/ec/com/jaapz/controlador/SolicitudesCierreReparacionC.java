@@ -46,7 +46,14 @@ public class SolicitudesCierreReparacionC {
 	}
 	public void realizarCierre() {
 		try {
-			
+			if(tvDatos.getSelectionModel().getSelectedItem() == null) {
+				helper.mostrarAlertaAdvertencia("Debe seleccionar la solicitud", Context.getInstance().getStage());
+				return;
+			}
+			Context.getInstance().setReparacion(tvDatos.getSelectionModel().getSelectedItem());
+			helper.abrirPantallaModalSolicitud("/solicitudes/SolicitudesRealizarCierreRep.fxml","Solicitudes de reparación", Context.getInstance().getStage());
+			llenarTablaInspecciones("");
+			Context.getInstance().setReparacion(null);
 		}catch(Exception ex) {
 			System.out.println(ex.getMessage());
 		}

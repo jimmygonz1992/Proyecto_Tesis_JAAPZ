@@ -10,12 +10,11 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="548.0" prefWidth="769.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ec.com.jaapz.controlador.SolicitudesCierreReparacionC">
    <children>
       <GridPane layoutX="41.0" layoutY="18.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Label alignment="CENTER" prefHeight="42.0" prefWidth="703.0" text="SOLICITUDES DE INSPECCIÓN DE INSTALACIÓN" GridPane.columnSpan="5" GridPane.halignment="CENTER">
+            <Label alignment="CENTER" prefHeight="42.0" prefWidth="703.0" text="SOLICITUDES DE INSPECCIÓN DE REPARACIÓN" GridPane.columnSpan="5" GridPane.halignment="CENTER">
                <font>
                   <Font name="Arial Bold" size="24.0" />
                </font>

@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="630.0" prefWidth="725.0" stylesheets="/estilo.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ec.com.jaapz.controlador.SolicitudesCierreReparacionC">
+<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="630.0" prefWidth="725.0" stylesheets="/estilo.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ec.com.jaapz.controlador.SolicitudesRealizarCierreRepC">
 	<children>
 		<GridPane layoutX="76.0" layoutY="36.0" minHeight="0.0" minWidth="0.0" prefHeight="347.0" prefWidth="570.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
 			<columnConstraints>
@@ -46,11 +46,6 @@
 				<HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" style="-fx-border-color: #bbc8d0; -fx-border-width: 1px; -fx-background-radius: 6; -fx-max-height: 600; -fx-max-width: 1500; -fx-min-height: 10; -fx-min-width: 10" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="13">
 					<children>
 						<Button fx:id="btnGrabar" alignment="BOTTOM_CENTER" contentDisplay="TOP" graphicTextGap="0.0" mnemonicParsing="false" onAction="#grabar" prefHeight="49.0" prefWidth="72.0" styleClass="botonGrabar" text="Grabar" />
-						<Button fx:id="btnNuevo" alignment="BOTTOM_CENTER" contentDisplay="TOP" graphicTextGap="0.0" mnemonicParsing="false" onAction="#nuevo" prefHeight="49.0" prefWidth="72.0" styleClass="botonNuevo" text="Nuevo">
-							<HBox.margin>
-								<Insets left="20.0" />
-							</HBox.margin>
-						</Button>
                   <Button fx:id="btnImprimir" alignment="BOTTOM_CENTER" contentDisplay="TOP" graphicTextGap="0.0" mnemonicParsing="false" onAction="#imprimir" prefHeight="49.0" prefWidth="83.0" styleClass="botonImprimir" text="Imprimir">
                      <HBox.margin>
                         <Insets left="20.0" />
@@ -92,7 +87,6 @@
 									</rowConstraints>
 									<children>
 										<TextField fx:id="txtCodigo" />
-										<Button fx:id="btnBuscar" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#buscarSolicitudRep" styleClass="botonBuscar" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
 									</children>
 								</GridPane>
 								<Label text="Fecha:" GridPane.columnIndex="6" GridPane.halignment="CENTER">

@@ -130,7 +130,7 @@ public class SolicitudesCierreInspeccionC {
 				return;
 			}
 			Context.getInstance().setInspeccion(tvDatos.getSelectionModel().getSelectedItem());
-			helper.abrirPantallaModalSolicitud("/solicitudes/SolicitudesRealizarCierreIns.fxml","Listado de Órdenes", Context.getInstance().getStage());
+			helper.abrirPantallaModalSolicitud("/solicitudes/SolicitudesRealizarCierreIns.fxml","Solicitudes de instalación", Context.getInstance().getStage());
 			llenarTablaInspecciones("");
 			Context.getInstance().setInspeccion(null);
 		}catch(Exception ex) {
