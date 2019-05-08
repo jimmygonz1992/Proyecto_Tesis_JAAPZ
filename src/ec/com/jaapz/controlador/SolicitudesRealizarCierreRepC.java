@@ -316,6 +316,7 @@ public class SolicitudesRealizarCierreRepC {
 
 				helper.mostrarAlertaInformacion("Datos Grabados Correctamente", Context.getInstance().getStage());
 				nuevo();
+				Context.getInstance().getStageModalSolicitud().close();
 			}
 		}catch(Exception ex) {
 			reparacionDao.getEntityManager().getTransaction().rollback();
