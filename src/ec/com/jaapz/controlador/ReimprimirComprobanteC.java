@@ -81,6 +81,9 @@ public class ReimprimirComprobanteC {
 	
 	void noEditable() {
 		try {
+			txtNumMedidor.setEditable(false);
+			txtIdCuenta.setEditable(false);
+			txtNumComprobante.setEditable(false);
 			txtCedula.setEditable(false);
 			txtCliente.setEditable(false);
 			txtDireccion.setEditable(false);

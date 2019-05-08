@@ -173,20 +173,12 @@
           <TableView fx:id="tvDatos" prefHeight="303.0" prefWidth="106.0" GridPane.columnSpan="4" GridPane.hgrow="ALWAYS" GridPane.rowIndex="6" GridPane.rowSpan="3" GridPane.vgrow="ALWAYS" />               
           <VBox alignment="CENTER" prefHeight="300.0" prefWidth="88.0" style="-fx-border-color: #bbc8d0; -fx-border-width: 1px; -fx-background-radius: 6; -fx-max-height: 600; -fx-max-width: 1500; -fx-min-height: 10; -fx-min-width: 10" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="6" GridPane.rowSpan="3" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
                <children>
-                  <Button fx:id="btnEliminar" alignment="BOTTOM_CENTER" contentDisplay="TOP" graphicTextGap="0.0" maxHeight="75.0" minHeight="50.0" mnemonicParsing="false" onAction="#eliminar" prefHeight="60.0" prefWidth="71.0" styleClass="botonQuitarR" text="Eliminar" textAlignment="CENTER">
-                     <font>
-                        <Font name="Arial Bold" size="12.0" />
-                     </font>
-                     <VBox.margin>
-                        <Insets top="5.0" />
-                     </VBox.margin>
-                  </Button>
                   <Button fx:id="btnGrabar" alignment="BOTTOM_CENTER" contentDisplay="TOP" graphicTextGap="0.0" maxHeight="75.0" minHeight="50.0" mnemonicParsing="false" onAction="#grabar" prefHeight="60.0" prefWidth="71.0" styleClass="botonGrabar" text="Grabar">
                      <font>
                         <Font name="Arial Bold" size="12.0" />
                      </font>
                      <VBox.margin>
-                        <Insets top="10.0" />
+                        <Insets />
                      </VBox.margin>
                   </Button>
                   <Button fx:id="btnNuevo" alignment="BOTTOM_CENTER" contentDisplay="TOP" graphicTextGap="0.0" maxHeight="75.0" minHeight="50.0" mnemonicParsing="false" onAction="#nuevo" prefHeight="60.0" prefWidth="71.0" styleClass="botonNuevo" text="Nuevo">
