@@ -217,8 +217,10 @@ public class SeguridadUsuarioC {
 		        	if (validarCedula(txtCedula.getText()) == false){
 						helper.mostrarAlertaError("El número de cedula es incorrecto!", Context.getInstance().getStage());
 						limpiar();
-					}else
+					}else {
+						limpiar();
 						recuperarDatos(txtCedula.getText());
+					}
 						//txtNombres.requestFocus();
 		        }
 		    }
@@ -335,6 +337,7 @@ public class SeguridadUsuarioC {
 				}
 			}
 			//agregar los nuevos
+			List<SegUsuarioPerfil> perfilesUsuarios = new ArrayList<SegUsuarioPerfil>();
 			for(SegUsuarioPerfil usuPer : tvPerfiles.getItems()) {
 				if(usuPer.getIdUsuarioPerfil() == null) {//si es nulo es una nueva asignacion de perfil
 					usuPer.setEstado(Constantes.ESTADO_ACTIVO);
@@ -343,11 +346,11 @@ public class SeguridadUsuarioC {
 						usuarioSeleccionado.getSegUsuarioPerfils().add(usuPer);
 					}else {
 						usuPer.setSegUsuario(usuarioSeleccionado);
-						usuarioSeleccionado.getSegUsuarioPerfils().add(usuPer);
+						perfilesUsuarios.add(usuPer);
 					}
 				}
 			}
-			
+			usuarioSeleccionado.setSegUsuarioPerfils(perfilesUsuarios);
 			Optional<ButtonType> result = helper.mostrarAlertaConfirmacion("Desea Grabar los Datos?",Context.getInstance().getStage());
 			if(result.get() == ButtonType.OK){
 				usuarioSeleccionado.setEstado(estado);
@@ -362,6 +365,9 @@ public class SeguridadUsuarioC {
 				segUsuarioDAO.getEntityManager().getTransaction().commit();
 				helper.mostrarAlertaInformacion("Datos Grabados Correctamente", Context.getInstance().getStage());
 				limpiar();
+				txtCedula.requestFocus();
+				txtUsuario.setText("");
+				txtClave.setText("");
 			}
 		}catch(Exception ex) {
 			helper.mostrarAlertaError("Error al grabar", Context.getInstance().getStage());
@@ -431,6 +437,9 @@ public class SeguridadUsuarioC {
 	public void nuevo() throws IOException{
 		limpiar();
 		txtCedula.setText("");
+		txtCedula.requestFocus();
+		txtUsuario.setText("");
+		txtClave.setText("");
 	}
 
 	void limpiar() {
@@ -444,11 +453,8 @@ public class SeguridadUsuarioC {
 		txtCargo.setText("");
 		txtTelefono.setText("");
 		txtDireccion.setText("");
-		txtUsuario.setText("");
-		txtClave.setText("");
 		Image img = new Image("/usuario.jpg");
 		ivFoto.setImage(img);
-		txtCedula.requestFocus();
 		tvPerfiles.getItems().clear();
 		tvPerfiles.getColumns().clear();
 	}

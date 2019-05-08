@@ -275,6 +275,8 @@ public class LecturasAperturaC {
 								//obtener el consumo del mes anterior
 								planilla.setConsumo(0);
 								planilla.setConsumoMinimo(0);
+								planilla.setEnvia(false);
+								planilla.setImprime(false);
 								List<Planilla> listaPlanillasCuenta = new ArrayList<Planilla>(); //lista que guarda las planillas de la cuenta del cliente
 								listaPlanillasCuenta = planillaDAO.getPlanillaCuenta(cuentas.getIdCuenta());
 								if(listaPlanillasCuenta.size() != 0) {
