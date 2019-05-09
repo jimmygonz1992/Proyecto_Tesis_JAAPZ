@@ -29,7 +29,7 @@
             </HBox>
             <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" style="-fx-border-color: #bbc8d0; -fx-border-width: 1px; -fx-spacing: 8; -fx-background-radius: 6.0; -fx-max-height: 300" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="2">
                <children>
-                  <Button fx:id="btnEditarOrden" mnemonicParsing="false" onAction="#editarOrden" prefHeight="40.0" prefWidth="150.0" text="Editar Órden" textAlignment="RIGHT">
+                  <Button fx:id="btnEditarOrden" mnemonicParsing="false" onAction="#editarOrden" prefHeight="40.0" prefWidth="150.0" text="Ver Órden" textAlignment="RIGHT">
                      <HBox.margin>
                         <Insets left="5.0" />
                      </HBox.margin>

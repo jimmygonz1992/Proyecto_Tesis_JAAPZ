@@ -216,6 +216,12 @@
 .botonResultados {
 	-fx-graphic: url("resultados.png");
 }
+.botonUpload {
+	-fx-graphic: url("upload.png");
+}
+.botonDownload {
+	-fx-graphic: url("download.png");
+}
 .imagenViewInicio{
 	-fx-background-image: url("sesiones.png");
 	-fx-background-size: stretch;

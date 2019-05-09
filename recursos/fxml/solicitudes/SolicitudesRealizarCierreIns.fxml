@@ -183,12 +183,12 @@
 								<TableView fx:id="tvDatosOrdenPrevia" GridPane.columnIndex="3" GridPane.columnSpan="2" GridPane.rowIndex="2" GridPane.rowSpan="5" />
 								<VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="5" GridPane.rowIndex="2" GridPane.rowSpan="4" GridPane.valignment="CENTER">
 									<children>
-										<Button fx:id="btnAgregar" alignment="BOTTOM_CENTER" contentDisplay="TOP" mnemonicParsing="false" onAction="#agregarPrecioUnitario" prefHeight="25.0" prefWidth="65.0" styleClass="botonAgregar" text="Agregar">
+										<Button fx:id="btnAgregar" alignment="BOTTOM_CENTER" contentDisplay="TOP" mnemonicParsing="false" onAction="#agregarPrecioUnitario" prefHeight="25.0" prefWidth="75.0" styleClass="botonAgregar" text="Agregar">
 											<VBox.margin>
 												<Insets bottom="20.0" />
 											</VBox.margin>
 										</Button>
-										<Button fx:id="btnQuitar" alignment="BOTTOM_CENTER" contentDisplay="TOP" mnemonicParsing="false" onAction="#quitarPrecioUnitario" prefHeight="25.0" prefWidth="65.0" styleClass="botonQuitarR" text="Quitar" />
+										<Button fx:id="btnQuitar" alignment="BOTTOM_CENTER" contentDisplay="TOP" mnemonicParsing="false" onAction="#quitarPrecioUnitario" prefHeight="25.0" prefWidth="75.0" styleClass="botonQuitarR" text="Quitar" />
 									</children>
 								</VBox>
 								<HBox alignment="CENTER" style="-fx-border-color: #bbc8d0; -fx-border-width: 1px; -fx-background-radius: 6; -fx-max-height: 600; -fx-max-width: 1500; -fx-min-height: 10; -fx-min-width: 10" GridPane.columnIndex="3" GridPane.columnSpan="3" GridPane.rowSpan="2">

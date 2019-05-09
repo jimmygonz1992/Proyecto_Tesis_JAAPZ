@@ -11,26 +11,25 @@
 
 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="624.0" prefWidth="835.0" stylesheets="/estilo.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ec.com.jaapz.controlador.SeguridadEmpresaC">
    <children>
-      <GridPane alignment="TOP_CENTER" hgap="1.0" layoutX="22.0" layoutY="40.0" minHeight="0.0" minWidth="0.0" prefHeight="331.0" prefWidth="699.0" vgap="1.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="0.0">
+      <GridPane alignment="TOP_CENTER" hgap="1.0" layoutX="22.0" layoutY="40.0" minHeight="0.0" minWidth="0.0" prefHeight="625.0" prefWidth="835.0" vgap="1.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="95.0" minWidth="0.0" prefWidth="3.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="424.0" minWidth="10.0" prefWidth="403.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="410.0" minWidth="10.0" prefWidth="410.0" />
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="95.0" minWidth="0.0" prefWidth="0.0" />
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="424.0" minWidth="10.0" prefWidth="252.0" />
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="319.0" minWidth="10.0" prefWidth="241.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="95.0" minWidth="0.0" prefWidth="4.0" />
             <ColumnConstraints />
             <ColumnConstraints />
             <ColumnConstraints />
         </columnConstraints>
         <rowConstraints>
-          <RowConstraints maxHeight="40.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-          <RowConstraints maxHeight="30.0" minHeight="0.0" prefHeight="13.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="250.0" minHeight="10.0" prefHeight="241.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="20.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="20.0" minHeight="10.0" prefHeight="10.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="100.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="20.0" minHeight="10.0" prefHeight="20.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="59.0" minHeight="4.0" prefHeight="59.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="2.0" prefHeight="2.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="52.0" minHeight="10.0" prefHeight="52.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="52.0" minHeight="0.0" prefHeight="3.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="290.0" minHeight="10.0" prefHeight="290.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="29.0" minHeight="10.0" prefHeight="13.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="29.0" minHeight="10.0" prefHeight="20.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="141.0" minHeight="10.0" prefHeight="132.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="75.0" minHeight="10.0" prefHeight="12.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="70.0" minHeight="4.0" prefHeight="70.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
             <Label alignment="CENTER" prefHeight="42.0" prefWidth="154.0" text="EMPRESA" GridPane.columnSpan="7" GridPane.halignment="CENTER">
@@ -94,10 +93,10 @@
                         </VBox>
                         <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="5">
                            <children>
-                              <Button fx:id="btnExaminar" mnemonicParsing="false" onAction="#examinar" text="Examinar...">
+                              <Button fx:id="btnExaminar" mnemonicParsing="false" onAction="#examinar" styleClass="botonAgregar" text="Examinar...">
                                  <font><Font name="Arial Bold" size="12.0" /></font>
                               </Button>
-                              <Button fx:id="btnQuitar" mnemonicParsing="false" onAction="#quitar" text="Quitar">
+                              <Button fx:id="btnQuitar" mnemonicParsing="false" onAction="#quitar" styleClass="botonQuitarR" text="Quitar">
                                  <HBox.margin><Insets left="10.0" /></HBox.margin>
                                  <font><Font name="Arial Bold" size="12.0" /></font>
                               </Button>
@@ -121,8 +120,8 @@
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="37.0" minHeight="10.0" prefHeight="37.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="25.0" minHeight="10.0" prefHeight="23.0" vgrow="SOMETIMES" />
                      </rowConstraints>
                      <HBox.margin>
                         <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
@@ -130,7 +129,6 @@
                   </GridPane>
                </children>
             </HBox>
-            <Separator prefHeight="0.0" prefWidth="430.0" GridPane.columnSpan="4" GridPane.rowIndex="1" />
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" style="-fx-border-color: #bbc8d0; -fx-border-width: 1px; -fx-spacing: 8; -fx-background-radius: 6.0; -fx-max-height: 300" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="5">
                <children>
                   <GridPane alignment="CENTER" hgap="1.0" vgap="1.0" HBox.hgrow="ALWAYS">
@@ -152,8 +150,8 @@
                         <TextField fx:id="txtInconsistencia" prefHeight="25.0" prefWidth="136.0" GridPane.columnIndex="3" />
                         <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" style="-fx-border-color: #bbc8d0; -fx-border-width: 1px; -fx-spacing: 8; -fx-background-radius: 6.0; -fx-max-height: 300" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
                            <children>
-                              <Button mnemonicParsing="false" onAction="#cargar" prefHeight="25.0" prefWidth="95.0" text="Cargar apk" />
-                              <Button mnemonicParsing="false" onAction="#descargar" prefHeight="25.0" prefWidth="95.0" text="Descargar apk">
+                              <Button mnemonicParsing="false" onAction="#cargar" prefHeight="31.0" prefWidth="144.0" styleClass="botonUpload" text="Cargar apk" />
+                              <Button mnemonicParsing="false" onAction="#descargar" prefHeight="31.0" prefWidth="151.0" styleClass="botonDownload" text="Descargar apk">
                                  <HBox.margin>
                                     <Insets left="10.0" />
                                  </HBox.margin>
@@ -167,10 +165,10 @@
                         </Label>
                      </children>
                      <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="80.0" prefWidth="92.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="70.0" minWidth="10.0" prefWidth="100.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="70.0" minWidth="0.0" prefWidth="5.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="372.0" minWidth="80.0" prefWidth="372.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="339.0" minWidth="10.0" prefWidth="83.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="335.0" minWidth="10.0" prefWidth="222.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="118.0" minWidth="0.0" prefWidth="89.0" />
                      </columnConstraints>
                      <rowConstraints>
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />

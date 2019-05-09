@@ -49,6 +49,7 @@ public class ControllerHelper {
 			Parent page = (Parent) loader.load();
 			Stage stage = new Stage();
 			stage.setTitle(titulo);
+			stage.getIcons().add(new Image("/logo_jaapz.png"));
 			stage.initOwner(parent);
 			stage.initModality(Modality.APPLICATION_MODAL);
 			Scene scene = new Scene(page);
