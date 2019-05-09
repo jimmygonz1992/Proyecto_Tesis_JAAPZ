@@ -50,7 +50,7 @@ public class CuentaCliente implements Serializable {
 	private Double longitud;
 
 	private String observacion;
-	
+
 	@Column(nullable = false, columnDefinition = "bit")
 	private Boolean cortado;
 
@@ -61,6 +61,50 @@ public class CuentaCliente implements Serializable {
 	@OneToMany(mappedBy="cuentaCliente", cascade = CascadeType.ALL)
 	private List<Convenio> convenios;
 
+	//bi-directional many-to-one association to Reconexion
+	@OneToMany(mappedBy="cuentaCliente", cascade = CascadeType.ALL)
+	private List<Reconexion> reconexions;
+	public List<Reconexion> getReconexions() {
+		return reconexions;
+	}
+	public void setReconexions(List<Reconexion> reconexions) {
+		this.reconexions = reconexions;
+	}
+	public Reconexion addReconexion(Reconexion reconexion) {
+		getReconexions().add(reconexion);
+		reconexion.setCuentaCliente(this);
+		return reconexion;
+	}
+
+	public Reconexion removeReconexion(Reconexion reconexion) {
+		getReconexions().remove(reconexion);
+		reconexion.setCuentaCliente(null);
+
+		return reconexion;
+	}
+
+
+	//bi-directional many-to-one association to Reconexion
+	@OneToMany(mappedBy="cuentaCliente", cascade = CascadeType.ALL)
+	private List<Corte> cortes;
+	public List<Corte> getCortes() {
+		return cortes;
+	}
+	public void setCortes(List<Corte> cortes) {
+		this.cortes = cortes;
+	}
+	public Corte addCorte(Corte corte) {
+		getCortes().add(corte);
+		corte.setCuentaCliente(this);
+		return corte;
+	}
+
+	public Corte removeCorte(Corte corte) {
+		getCortes().remove(corte);
+		corte.setCuentaCliente(null);
+
+		return corte;
+	}
 	//bi-directional many-to-one association to Barrio
 	@ManyToOne
 	@JoinColumn(name="id_barrio")
