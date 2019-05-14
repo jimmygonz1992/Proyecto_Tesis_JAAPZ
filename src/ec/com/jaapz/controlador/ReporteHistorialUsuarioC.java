@@ -23,7 +23,6 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 
 public class ReporteHistorialUsuarioC {
-	@FXML private Button btnImprimir;
 	@FXML private TextField txtMedidor;
 	@FXML private TextField txtidCuenta;
 	@FXML private ComboBox<Anio> cboAnio;

@@ -4,7 +4,6 @@ import java.util.Optional;
 
 import ec.com.jaapz.util.Context;
 import ec.com.jaapz.util.ControllerHelper;
-import ec.com.jaapz.util.Encriptado;
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
@@ -21,7 +20,6 @@ public class LaunchSystem extends Application {
 	@Override
 	public void start(Stage stage) {
 		try {
-			System.out.println(Encriptado.Desencriptar("f3iOsp4oT3ZoNGwbEs6BQCKx3Ue8sRSGlbkfwuJtg1U="));
 			FXMLLoader root = new FXMLLoader();
 			root.setLocation(getClass().getResource("/principal/InicioSesion.fxml"));
 			AnchorPane page = (AnchorPane) root.load();

@@ -27,8 +27,8 @@
                   <Font name="Arial Bold" size="14.0" />
                </font>
             </Label>
-            <Button fx:id="btnNominaSimple" mnemonicParsing="false" prefHeight="50.0" prefWidth="100.0" text="Nómina simple" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
-            <Button fx:id="btnNominaFirma" mnemonicParsing="false" prefHeight="50.0" prefWidth="100.0" text="Nómina para firma" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+            <Button fx:id="btnNominaSimple" alignment="BOTTOM_CENTER" contentDisplay="TOP" mnemonicParsing="false" prefHeight="50.0" prefWidth="95.0" styleClass="botonImprimir" text="Simple" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+            <Button fx:id="btnNominaFirma" alignment="BOTTOM_CENTER" contentDisplay="TOP" mnemonicParsing="false" prefHeight="50.0" prefWidth="95.0" styleClass="botonImprimir" text="Para firma" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
          </children>
       </GridPane>
    </children>

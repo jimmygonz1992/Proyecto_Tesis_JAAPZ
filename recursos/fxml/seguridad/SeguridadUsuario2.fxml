@@ -161,8 +161,8 @@
                                     <TableView fx:id="tvPerfiles" prefHeight="121.0" prefWidth="243.0" />
                                     <HBox alignment="CENTER" prefHeight="0.0" prefWidth="243.0" VBox.vgrow="ALWAYS">
                                        <children>
-                                          <Button fx:id="btnAgregarPerfil" alignment="BOTTOM_CENTER" contentDisplay="TOP" mnemonicParsing="false" onAction="#agregarPerfil" prefHeight="46.0" prefWidth="59.0" styleClass="botonAgregar" text="Agregar" />
-                                          <Button fx:id="btnQuitarPerfil" alignment="BOTTOM_CENTER" contentDisplay="TOP" mnemonicParsing="false" onAction="#quitarPerfil" prefHeight="45.0" prefWidth="59.0" styleClass="botonQuitarR" text="Quitar">
+                                          <Button fx:id="btnAgregarPerfil" alignment="BOTTOM_CENTER" contentDisplay="TOP" mnemonicParsing="false" onAction="#agregarPerfil" prefHeight="46.0" prefWidth="80.0" styleClass="botonAgregar" text="Agregar" />
+                                          <Button fx:id="btnQuitarPerfil" alignment="BOTTOM_CENTER" contentDisplay="TOP" mnemonicParsing="false" onAction="#quitarPerfil" prefHeight="45.0" prefWidth="80.0" styleClass="botonQuitarR" text="Quitar">
                                              <HBox.margin>
                                                 <Insets left="15.0" />
                                              </HBox.margin>

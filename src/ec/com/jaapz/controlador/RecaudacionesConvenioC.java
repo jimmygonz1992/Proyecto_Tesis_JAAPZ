@@ -251,7 +251,7 @@ public class RecaudacionesConvenioC {
 	public void generarDetalleConvenio() {
 		try {			
 			if(Integer.parseInt(String.valueOf(txtNumMeses.getText())) <= 0 || txtNumMeses.getText().toString() == "") {
-				helper.mostrarAlertaAdvertencia("El número de meses debe se mayor a cero", Context.getInstance().getStage());
+				helper.mostrarAlertaAdvertencia("El número de meses debe se mayor a cero..!!", Context.getInstance().getStage());
 				txtNumMeses.requestFocus();
 				return;
 			}

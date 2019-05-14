@@ -179,6 +179,8 @@ public class SeguridadUsuarioC {
 					if (validarCedula(txtCedula.getText()) == false){
 						helper.mostrarAlertaError("El número de cedula es incorrecto!", Context.getInstance().getStage());
 						limpiar();
+						txtCedula.setText("");
+						txtCedula.requestFocus();
 					}else
 						recuperarDatos(txtCedula.getText());
 						//txtNombres.requestFocus();
@@ -217,6 +219,8 @@ public class SeguridadUsuarioC {
 		        	if (validarCedula(txtCedula.getText()) == false){
 						helper.mostrarAlertaError("El número de cedula es incorrecto!", Context.getInstance().getStage());
 						limpiar();
+						txtCedula.setText("");
+						txtCedula.requestFocus();
 					}else {
 						limpiar();
 						recuperarDatos(txtCedula.getText());

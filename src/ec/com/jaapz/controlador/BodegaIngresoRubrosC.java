@@ -89,6 +89,7 @@ public class BodegaIngresoRubrosC {
 
 	public void initialize(){
 		try {
+			txtRuc.requestFocus();
 			btnAñadir.setStyle("-fx-cursor: hand;");
 			btnBuscarRubro.setStyle("-fx-cursor: hand;");
 			btnEliminar.setStyle("-fx-cursor: hand;");
@@ -103,7 +104,6 @@ public class BodegaIngresoRubrosC {
 			txtDescripcionMat.setEditable(false);
 			txtStockMat.setEditable(false);
 			dtpFecha.setValue(LocalDate.now());
-			txtRuc.requestFocus();
 			txtCodigo.setVisible(false);
 			txtCodigoProv.setVisible(false);
 
@@ -181,6 +181,7 @@ public class BodegaIngresoRubrosC {
 						}else {
 							if (validarProveedorExiste() == false) {
 								helper.mostrarAlertaAdvertencia("RUC no existente.. Debe llenar todos los datos!", Context.getInstance().getStage());
+								txtNombresPro.requestFocus();
 							}else {
 								recuperarDatos(txtRuc.getText());
 								txtNumero.requestFocus();
@@ -188,6 +189,32 @@ public class BodegaIngresoRubrosC {
 						}
 					}
 				}
+			});
+			
+			txtRuc.focusedProperty().addListener(new ChangeListener<Boolean>(){
+			    @Override
+			    public void changed(ObservableValue<? extends Boolean> arg0, Boolean oldPropertyValue, Boolean newPropertyValue){
+			        if (newPropertyValue){
+			            //System.out.println("Textfield on focus");
+			        }
+			        else{
+			        	if (validarRucPersonaNatural(txtRuc.getText()) == false){
+							helper.mostrarAlertaError("El número de RUC es incorrecto!", Context.getInstance().getStage());
+							limpiar();
+							txtRuc.setText("");
+							txtRuc.requestFocus();
+						}else {
+							if (validarProveedorExiste() == false) {
+								helper.mostrarAlertaAdvertencia("RUC no existente.. Debe llenar todos los datos!", Context.getInstance().getStage());
+								txtProveedor.requestFocus();
+							}else {
+								recuperarDatos(txtRuc.getText());
+								txtNumero.requestFocus();
+							}
+						}
+							//txtNombres.requestFocus();
+			        }
+			    }
 			});
 
 			//numeros con decimales
@@ -1147,31 +1174,11 @@ public class BodegaIngresoRubrosC {
 			validarCedula(numero.substring(0, 9));
 		} catch (Exception ex) {
 			limpiarProveedor();
-			System.out.println(ex.getMessage());
 			return false; 
 		}
 
 		return true;
 	}
-
-	/*protected boolean validarInicial(String numero, int caracteres){   
-		if(txtRuc.getText().equals("")) {
-			helper.mostrarAlertaAdvertencia("Ingresar RUC", Context.getInstance().getStage());
-			limpiarProveedor();
-			txtRuc.requestFocus();
-			return false;
-		}
-
-		if (numero.length() != caracteres) {
-			helper.mostrarAlertaAdvertencia("Valor debe tener " + caracteres + " caracteres", Context.getInstance().getStage());
-			limpiarProveedor();
-			txtRuc.setText("");
-			txtRuc.requestFocus();
-			return false;
-		}
-
-		return true;
-	}*/
 
 	protected boolean validarCodigoProvincia(String numero){
 		if (Integer.parseInt(numero) < 0 || Integer.parseInt(numero) > 24) {
@@ -1186,7 +1193,6 @@ public class BodegaIngresoRubrosC {
 
 	protected boolean validarCodigoEstablecimiento(String numero){
 		if (Integer.parseInt(numero) < 1) {
-			//helper.mostrarAlertaAdvertencia("RUC Inválido", Context.getInstance().getStage());
 			limpiarProveedor();
 			txtRuc.setText("");
 			txtRuc.requestFocus();

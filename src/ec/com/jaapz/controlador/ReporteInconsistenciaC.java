@@ -21,7 +21,6 @@ public class ReporteInconsistenciaC {
 	@FXML private TextField txtMesAperRes;
 	@FXML private Button btnBuscarApertura;
 	@FXML private Button btnVisualizar;
-	@FXML private Button btnImprimir;
 	
 	@FXML private TextField txtAnioAperRes;
 	@FXML private TextField txtFechAperRes;
@@ -33,8 +32,6 @@ public class ReporteInconsistenciaC {
 	public void initialize() {
 		btnBuscarApertura.setStyle("-fx-cursor: hand;");
 		btnVisualizar.setStyle("-fx-cursor: hand;");
-		btnImprimir.setStyle("-fx-cursor: hand;");
-		
 	}
 	
 	public void buscarApertura() {
@@ -68,13 +65,6 @@ public class ReporteInconsistenciaC {
 		}
 	}
 	
-	public void imprimirReporte() {
-		try {
-			
-		}catch(Exception ex) {
-			System.out.println(ex.getMessage());
-		}
-	}
 	public void visualizarReporte() {
 		try {
 			if(aperturaSeleccionada == null) {

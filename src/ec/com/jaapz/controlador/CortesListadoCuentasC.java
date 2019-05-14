@@ -1,40 +1,55 @@
 package ec.com.jaapz.controlador;
 
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import ec.com.jaapz.modelo.CuentaCliente;
 import ec.com.jaapz.modelo.CuentaClienteDAO;
 import ec.com.jaapz.modelo.EmpresaDAO;
 import ec.com.jaapz.modelo.Planilla;
-import ec.com.jaapz.modelo.PlanillaDAO;
 import ec.com.jaapz.util.Constantes;
 import ec.com.jaapz.util.Context;
-import ec.com.jaapz.util.Encriptado;
-import ec.com.jaapz.util.PrintReport;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.util.Callback;
 
-public class ReportesUsuariosOrdenCorteC {
-	@FXML private Button btnReporte;
+public class CortesListadoCuentasC {
 	private @FXML TableView<CuentaCliente> tvDatos;
+	private @FXML TextField txtBuscar;
 	CuentaClienteDAO cuentaClienteDao = new CuentaClienteDAO();
-	PlanillaDAO planillaDao = new PlanillaDAO();
+	List<CuentaCliente> listadoCuentas = new ArrayList<CuentaCliente>();
 	EmpresaDAO empresaDao = new EmpresaDAO();
 	int numCorte;
 	
 	public void initialize(){
-		btnReporte.setStyle("-fx-cursor: hand;");
+		listadoCuentas = Context.getInstance().getListaCortes();
+		Context.getInstance().getListaCortes().clear();
 		llenarDatos("");
+		
+		tvDatos.setRowFactory(tv -> {
+            TableRow<CuentaCliente> row = new TableRow<>();
+            row.setOnMouseClicked(event -> {
+                if (event.getClickCount() == 2 && (! row.isEmpty()) ) {
+                	if(tvDatos.getSelectionModel().getSelectedItem() != null){
+                		Context.getInstance().setCuentaCliente(tvDatos.getSelectionModel().getSelectedItem());
+    					Context.getInstance().getStageModal().close();
+    				}
+                }
+            });
+            return row ;
+        });
+	}
+	
+	public void buscarCliente() {
+		llenarDatos(txtBuscar.getText());
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -42,12 +57,11 @@ public class ReportesUsuariosOrdenCorteC {
 		try{
 			tvDatos.getColumns().clear();
 			numCorte = empresaDao.getEmpresa().get(0).getCorte();
-			System.out.println("Corte: " + numCorte);
 			List<CuentaCliente> listaCuentas;
 			if(Context.getInstance().getIdPerfil() == Constantes.ID_USU_ADMINISTRADOR) {
-				listaCuentas = cuentaClienteDao.getListaCuentaClientes(patron);
+				listaCuentas = cuentaClienteDao.getListaCuentaCortes(patron);
 			}else {
-				listaCuentas = cuentaClienteDao.getListaCuentaClientePerfil(patron);
+				listaCuentas = cuentaClienteDao.getListaCuentaCortesPerfil(patron);
 			}
 			ObservableList<CuentaCliente> datosCuenta = FXCollections.observableArrayList();
 			
@@ -137,19 +151,6 @@ public class ReportesUsuariosOrdenCorteC {
 			tvDatos.setItems(datosCuenta);
 			
 		}catch(Exception ex){
-			System.out.println(ex.getMessage());
-		}
-	}
-	
-	public void verReporte() {
-		try {
-			PrintReport pr = new PrintReport();
-			Map<String, Object> param = new HashMap<String, Object>();
-			param.put("usuarioCrea", Encriptado.Desencriptar(Context.getInstance().getUsuariosC().getUsuario()));
-			param.put("numCorte", numCorte);
-			pr.crearReporte("/recursos/informes/clientes_orden_corte.jasper", cuentaClienteDao, param);
-			pr.showReport("Clientes con Orden de Corte");
-		}catch(Exception ex) {
 			System.out.println(ex.getMessage());
 		}
 	}

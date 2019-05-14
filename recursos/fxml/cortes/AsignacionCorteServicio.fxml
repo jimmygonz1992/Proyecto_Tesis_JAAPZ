@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="650.0" prefWidth="950.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ec.com.jaapz.controlador.CorteServicioAsignacionC">
+   <children>
+      <GridPane alignment="TOP_CENTER" layoutX="14.0" layoutY="14.0" prefHeight="650.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="600.0" minWidth="10.0" prefWidth="370.0" />
+            <ColumnConstraints maxWidth="25.0" minWidth="10.0" prefWidth="20.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="600.0" minWidth="10.0" prefWidth="379.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints maxHeight="50.0" minHeight="0.0" prefHeight="35.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="20.0" minHeight="5.0" prefHeight="15.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="100.0" minHeight="10.0" prefHeight="63.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="500.0" minHeight="10.0" prefHeight="450.0" vgrow="ALWAYS" />
+            <RowConstraints maxHeight="20.0" minHeight="10.0" prefHeight="16.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="100.0" minHeight="10.0" prefHeight="72.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Label text="Asignación de Corte del Servicio de Agua Potable" GridPane.columnSpan="3" GridPane.halignment="CENTER">
+               <font>
+                  <Font name="System Bold" size="20.0" />
+               </font>
+            </Label>
+            <Label text="Listado de Personal de Corte/Reconexión" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+               <font>
+                  <Font name="Arial Bold Italic" size="12.0" />
+               </font>
+            </Label>
+            <GridPane GridPane.columnIndex="2" GridPane.rowIndex="2">
+               <children>
+                  <Button fx:id="btnImprimirAsig" alignment="BOTTOM_CENTER" contentDisplay="TOP" mnemonicParsing="false" onAction="#imprimirAsignacion" styleClass="botonImprimir" text="Imprimir" GridPane.halignment="CENTER" />
+                  <HBox alignment="CENTER" prefHeight="63.0" prefWidth="300.0" GridPane.columnIndex="1">
+                     <children>
+                        <Button fx:id="btnAsignarAsig" alignment="BOTTOM_CENTER" contentDisplay="TOP" mnemonicParsing="false" onAction="#buscarOrdenEmitida" styleClass="botonAgregar" text="Asignar">
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                        </Button>
+                        <Button fx:id="btnQuitarAsig" alignment="BOTTOM_CENTER" contentDisplay="TOP" mnemonicParsing="false" onAction="#quitarAsignacion" styleClass="botonQuitarR" text="Quitar">
+                           <HBox.margin>
+                              <Insets left="10.0" />
+                           </HBox.margin></Button>
+                     </children>
+                  </HBox>
+               </children>
+               <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="273.0" minWidth="10.0" prefWidth="171.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="298.0" minWidth="10.0" prefWidth="298.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               </rowConstraints>
+            </GridPane>
+            <TableView fx:id="tvPersonalAsig" prefHeight="200.0" prefWidth="600.0" GridPane.rowIndex="3" />
+            <TabPane fx:id="tpAsignaciones" prefHeight="200.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" GridPane.columnIndex="2" GridPane.rowIndex="3">
+               <tabs>
+                  <Tab fx:id="tpRealizadas" text="Asignadas">
+                     <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <TableView fx:id="tvAsignados" layoutY="-6.0" prefHeight="200.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                           </children>
+                        </AnchorPane>
+                     </content>
+                  </Tab>
+                  <Tab fx:id="tpNuevas" text="Nuevas">
+                     <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <TableView fx:id="tvNuevosAsig" layoutX="-12.0" layoutY="21.0" prefHeight="200.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                           </children>
+                        </AnchorPane>
+                     </content>
+                  </Tab>
+               </tabs>
+            </TabPane>
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" style="-fx-border-color: #bbc8d0; -fx-border-width: 1px; -fx-background-radius: 6; -fx-max-height: 600; -fx-max-width: 1500; -fx-min-height: 10; -fx-min-width: 10" GridPane.columnSpan="3" GridPane.rowIndex="5">
+               <children>
+                  <Button fx:id="btnGrabarAsig" alignment="BOTTOM_CENTER" contentDisplay="TOP" graphicTextGap="0.0" mnemonicParsing="false" onAction="#grabarAsig" prefHeight="49.0" prefWidth="72.0" styleClass="botonGrabar" text="Grabar" />
+               </children>
+            </HBox>
+         </children>
+      </GridPane>
+   </children>
+</AnchorPane>

@@ -7,6 +7,7 @@ import ec.com.jaapz.modelo.Planilla;
 import ec.com.jaapz.util.Constantes;
 import ec.com.jaapz.util.Context;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -22,10 +23,10 @@ import javafx.util.Callback;
 public class RecaudacionesPlanillasEmitidasC {
 	@FXML private TextField txtBuscar;
 	@FXML private TableView<CuentaCliente> tvDatos;
-	
+
 	//PlanillaDAO planillaDao = new PlanillaDAO();
 	CuentaClienteDAO cuentaClienteDao = new CuentaClienteDAO();
-	
+
 	public void initialize(){
 		try {			
 			llenarDatos("");
@@ -41,15 +42,25 @@ public class RecaudacionesPlanillasEmitidasC {
 				});
 				return row ;
 			});
+
+			//solo letras mayusculas
+			txtBuscar.textProperty().addListener(new ChangeListener<String>() {
+				@Override
+				public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+					// TODO Auto-generated method stub
+					String cadena = txtBuscar.getText().toUpperCase();
+					txtBuscar.setText(cadena);
+				}
+			});
 		}catch(Exception ex) {
 			System.out.println(ex.getMessage());
 		}
 	}
-	
+
 	public void buscarCliente() {
 		llenarDatos(txtBuscar.getText());
 	}	
-	
+
 	@SuppressWarnings("unchecked")
 	void llenarDatos(String patron) {
 		try{
@@ -57,7 +68,7 @@ public class RecaudacionesPlanillasEmitidasC {
 			List<CuentaCliente> listaCuentas;
 			listaCuentas = cuentaClienteDao.getListaCuentaClientes(patron);
 			ObservableList<CuentaCliente> datosCuenta = FXCollections.observableArrayList();
-			
+
 			for(CuentaCliente cuenta : listaCuentas) {
 				int cont = 0;
 				for(Planilla planilla : cuenta.getPlanillas()) {
@@ -74,7 +85,7 @@ public class RecaudacionesPlanillasEmitidasC {
 			idColum.setMinWidth(10);
 			idColum.setPrefWidth(40);
 			idColum.setCellValueFactory(new PropertyValueFactory<CuentaCliente, String>("idCuenta"));
-			
+
 			TableColumn<CuentaCliente, String> cedulaColum = new TableColumn<>("Cédula");
 			cedulaColum.setMinWidth(10);
 			cedulaColum.setPrefWidth(80);
@@ -84,7 +95,7 @@ public class RecaudacionesPlanillasEmitidasC {
 					return new SimpleObjectProperty<String>(String.valueOf(param.getValue().getCliente().getCedula()));
 				}
 			});
-			
+
 			TableColumn<CuentaCliente, String> clienteColum = new TableColumn<>("Cliente");
 			clienteColum.setMinWidth(10);
 			clienteColum.setPrefWidth(80);
@@ -94,7 +105,7 @@ public class RecaudacionesPlanillasEmitidasC {
 					return new SimpleObjectProperty<String>(String.valueOf(param.getValue().getCliente().getNombre() + " " + param.getValue().getCliente().getApellido()));
 				}
 			});
-			
+
 			TableColumn<CuentaCliente, String> medidorColum = new TableColumn<>("Medidor");
 			medidorColum.setMinWidth(10);
 			medidorColum.setPrefWidth(80);
@@ -110,7 +121,7 @@ public class RecaudacionesPlanillasEmitidasC {
 					return new SimpleObjectProperty<String>(codigoMedidor);
 				}
 			});
-			
+
 			TableColumn<CuentaCliente, String> direccionColum = new TableColumn<>("Dirección");
 			direccionColum.setMinWidth(10);
 			direccionColum.setPrefWidth(80);
@@ -120,7 +131,7 @@ public class RecaudacionesPlanillasEmitidasC {
 					return new SimpleObjectProperty<String>(String.valueOf(param.getValue().getDireccion()));
 				}
 			});
-			
+
 			TableColumn<CuentaCliente, String> totalColum = new TableColumn<>("Planillas Vencidas");
 			totalColum.setMinWidth(10);
 			totalColum.setPrefWidth(80);
@@ -136,10 +147,10 @@ public class RecaudacionesPlanillasEmitidasC {
 					return new SimpleObjectProperty<String>(String.valueOf(cont));
 				}
 			});
-			
+
 			tvDatos.getColumns().addAll(idColum, cedulaColum, clienteColum, medidorColum, direccionColum, totalColum);
 			tvDatos.setItems(datosCuenta);
-			
+
 		}catch(Exception ex){
 			System.out.println(ex.getMessage());
 		}

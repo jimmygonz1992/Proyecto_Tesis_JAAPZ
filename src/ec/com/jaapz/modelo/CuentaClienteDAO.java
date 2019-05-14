@@ -56,4 +56,60 @@ public class CuentaClienteDAO extends ClaseDAO{
 		resultado = (List<CuentaCliente>) query.getResultList();
 		return resultado;
 	}
+	
+	//para corte de agua
+	@SuppressWarnings("unchecked")
+	public List<CuentaCliente> getListaCuentasAsignadas(Integer patron){
+		List<CuentaCliente> resultado = new ArrayList<CuentaCliente>();
+		Query query = getEntityManager().createNamedQuery("CuentaCliente.buscarCuentaAsignada");
+		query.setHint("javax.persistence.cache.storeMode", "REFRESH");
+		query.setParameter("idPerfilUsuario", patron );
+		resultado = (List<CuentaCliente>) query.getResultList();
+		return resultado;
+	}
+	
+	//para corte agua
+	@SuppressWarnings("unchecked")
+	public List<CuentaCliente> getListaCuentaCortes(String patron){
+		List<CuentaCliente> resultado = new ArrayList<CuentaCliente>();
+		Query query = getEntityManager().createNamedQuery("CuentaCliente.buscaCuentasParaCorte");
+		query.setHint("javax.persistence.cache.storeMode", "REFRESH");
+		query.setParameter("patron", "%" + patron + "%");
+		resultado = (List<CuentaCliente>) query.getResultList();
+		return resultado;
+	}
+	//para corte
+	@SuppressWarnings("unchecked")
+	public List<CuentaCliente> getListaCuentaCortesPerfil(String patron){
+		List<CuentaCliente> resultado = new ArrayList<CuentaCliente>();
+		Query query = getEntityManager().createNamedQuery("CuentaCliente.buscarCuentasCortePerfil");
+		query.setHint("javax.persistence.cache.storeMode", "REFRESH");
+		query.setParameter("patron", "%" + patron + "%");
+		query.setParameter("idPerfilUsuario", Context.getInstance().getIdUsuario());
+		resultado = (List<CuentaCliente>) query.getResultList();
+		return resultado;
+	}
+	
+	//para corte ya asigando listado principal
+	@SuppressWarnings("unchecked")
+	public List<CuentaCliente> getListaCuentasCortes(String patron){
+		List<CuentaCliente> resultado = new ArrayList<CuentaCliente>();
+		Query query = getEntityManager().createNamedQuery("CuentaCliente.CuentasPendientesAdm");
+		query.setHint("javax.persistence.cache.storeMode", "REFRESH");
+		query.setParameter("patron", "%" + patron + "%");
+		resultado = (List<CuentaCliente>) query.getResultList();
+		return resultado;
+	}
+	
+	//para corte ya asignado
+	@SuppressWarnings("unchecked")
+	public List<CuentaCliente> getListaCuentasPendPefil(String patron){
+		List<CuentaCliente> resultado = new ArrayList<CuentaCliente>();
+		Query query = getEntityManager().createNamedQuery("CuentaCliente.cuentasCortePendientes");
+		query.setHint("javax.persistence.cache.storeMode", "REFRESH");
+		query.setParameter("patron", "%" + patron + "%");
+		query.setParameter("idPerfilUsuario", Context.getInstance().getIdUsuario());
+		resultado = (List<CuentaCliente>) query.getResultList();
+		return resultado;
+	}
 }

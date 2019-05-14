@@ -26,7 +26,7 @@ public abstract class Constantes {
 	public static int ID_USU_BODEGA = 8;
 	public static int ID_USU_RECAUDACIONES = 9;
 	public static int ID_USU_INSTALACIONES = 10;
-	
+	public static int ID_USU_CORTE_RECONEXIONES = 12;
 	
 	public static String EST_INSPECCION_REALIZADO = "REALIZADO";
 	public static String EST_INSPECCION_PENDIENTE = "PENDIENTE";

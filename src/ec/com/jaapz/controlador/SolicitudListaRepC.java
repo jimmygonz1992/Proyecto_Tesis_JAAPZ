@@ -6,7 +6,6 @@ import java.util.List;
 
 import ec.com.jaapz.modelo.SolInspeccionRep;
 import ec.com.jaapz.modelo.SolInspeccionRepDAO;
-import ec.com.jaapz.util.Constantes;
 import ec.com.jaapz.util.Context;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ChangeListener;
@@ -70,12 +69,12 @@ public class SolicitudListaRepC {
 			boolean bandera;
 			List<SolInspeccionRep> listaInspecciones;
 			List<SolInspeccionRep> listaAgregar = new ArrayList<SolInspeccionRep>();
-			if(Context.getInstance().getIdPerfil() == Constantes.ID_USU_ADMINISTRADOR) {
+			/*if(Context.getInstance().getIdPerfil() == Constantes.ID_USU_ADMINISTRADOR) {
 				listaInspecciones = reparacionDAO.getListaInspeccionPendiente(patron);
 			}else {
 				listaInspecciones = reparacionDAO.getListaInspeccionPerfilPendiente(patron);
-			}
-			
+			}*/
+			listaInspecciones = reparacionDAO.getListaInspeccionPendiente(patron);
 			/*for(SolInspeccionRep orden : listadoInspecciones) {
 				for(int i = 0 ; i < listaInspecciones.size() ; i ++) {
 					if(orden.getIdSolicitudRep() == listaInspecciones.get(i).getIdSolicitudRep()) {

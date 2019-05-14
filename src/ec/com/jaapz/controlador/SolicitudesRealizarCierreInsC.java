@@ -346,6 +346,7 @@ public class SolicitudesRealizarCierreInsC {
 					cuentaCliente.setCategoria(categoriaDAO.getCategoriaNombre(inspeccionSeleccionado.getUsoMedidor()));
 					cuentaCliente.setFechaIngreso(fecha);
 					cuentaCliente.setHoraIngreso(sqlTime);
+					cuentaCliente.setCortado(false);
 					cuentaCliente.setEstado(Constantes.ESTADO_ACTIVO);
 					
 					//aqui para agregar la factura del 60% del costo de instalacion

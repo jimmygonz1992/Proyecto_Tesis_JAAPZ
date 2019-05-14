@@ -49,7 +49,7 @@
                         <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1">
                            <children>
                               <TextField fx:id="txtidCuenta" prefHeight="25.0" prefWidth="87.0" />
-                              <Button fx:id="btnBuscar" mnemonicParsing="false" prefHeight="25.0" prefWidth="50.0" text="...">
+                              <Button fx:id="btnBuscar" mnemonicParsing="false" prefHeight="25.0" prefWidth="50.0" styleClass="botonBuscar">
                                  <HBox.margin>
                                     <Insets left="3.0" />
                                  </HBox.margin></Button>
@@ -121,12 +121,7 @@
             </HBox>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" style="-fx-border-color: #bbc8d0; -fx-border-width: 1px; -fx-background-radius: 6; -fx-max-height: 600; -fx-max-width: 1500; -fx-min-height: 10; -fx-min-width: 10" GridPane.columnIndex="1" GridPane.columnSpan="4" GridPane.halignment="CENTER" GridPane.rowIndex="5" GridPane.valignment="CENTER">
                <children>
-                  <Button fx:id="btnVisualizar" mnemonicParsing="false" prefHeight="42.0" prefWidth="97.0" text="Visualizar" />
-                  <Button fx:id="btnImprimir" mnemonicParsing="false" prefHeight="42.0" prefWidth="97.0" text="Imprimir">
-                     <HBox.margin>
-                        <Insets left="20.0" />
-                     </HBox.margin>
-                  </Button>
+                  <Button fx:id="btnVisualizar" alignment="BOTTOM_CENTER" contentDisplay="TOP" mnemonicParsing="false" prefHeight="42.0" prefWidth="85.0" styleClass="botonImprimir" text="Visualizar" />
                </children>
             </HBox>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" style="-fx-border-color: #bbc8d0; -fx-border-width: 1px; -fx-background-radius: 6; -fx-max-height: 600; -fx-max-width: 1500; -fx-min-height: 10; -fx-min-width: 10" GridPane.columnIndex="1" GridPane.columnSpan="4" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER">

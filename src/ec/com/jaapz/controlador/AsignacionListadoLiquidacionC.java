@@ -62,12 +62,12 @@ public class AsignacionListadoLiquidacionC {
 			tvDatos.getColumns().clear();
 			List<LiquidacionOrden> listado;
 			
-			if(Context.getInstance().getIdPerfil() == Constantes.ID_USU_ADMINISTRADOR) {
+			/*if(Context.getInstance().getIdPerfil() == Constantes.ID_USU_ADMINISTRADOR) {
 				listado = liquidacionOrdenDao.getListaLiquidacionOrden(patron);
 			}else {
 				listado = liquidacionOrdenDao.getListaLiquidacionOrdenPerfil(patron);
-			}
-			
+			}*/
+			listado = liquidacionOrdenDao.getListaLiquidacionOrden(patron);
 			for(LiquidacionOrden orden : listadoLiquidaciones) {
 				for(int i = 0 ; i < listado.size() ; i ++) {
 					if(orden.getIdLiquidacion() == listado.get(i).getIdLiquidacion()) {

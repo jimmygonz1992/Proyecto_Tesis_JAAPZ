@@ -117,7 +117,6 @@
                </children>
             </HBox>
             <Button fx:id="btnVisualizar" alignment="BOTTOM_CENTER" contentDisplay="TOP" mnemonicParsing="false" onAction="#visualizarReporte" prefHeight="66.0" prefWidth="92.0" styleClass="botonImprimir" text="Visualizar" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
-            <Button fx:id="btnImprimir" mnemonicParsing="false" onAction="#imprimirReporte" prefHeight="66.0" prefWidth="92.0" text="Imprimir" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
          </children>
       </GridPane>
    </children>

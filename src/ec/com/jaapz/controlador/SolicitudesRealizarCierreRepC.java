@@ -44,7 +44,6 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.util.Callback;
 
-
 public class SolicitudesRealizarCierreRepC {
 	@FXML private TextField txtCodigo;
 	@FXML private TextField txtCodigoMedidor;
@@ -316,6 +315,7 @@ public class SolicitudesRealizarCierreRepC {
 
 				helper.mostrarAlertaInformacion("Datos Grabados Correctamente", Context.getInstance().getStage());
 				nuevo();
+				Context.getInstance().getStageModalSolicitud().close();
 			}
 		}catch(Exception ex) {
 			reparacionDao.getEntityManager().getTransaction().rollback();
@@ -368,13 +368,6 @@ public class SolicitudesRealizarCierreRepC {
 				tvDatosDetalle.requestFocus();
 				return false;
 			}
-			/*
-				//valida si esq hay un ciclo en proceso
-				if(aperturaDAO.validarApertura() == false) {
-					helper.mostrarAlertaAdvertencia("No existe un ciclo iniciado.. por lo que no se puede procesar el pago", Context.getInstance().getStage());
-					return false;
-				}
-			 */
 			return true;
 		}catch(Exception ex) {
 			System.out.println(ex.getMessage());

@@ -15,14 +15,40 @@ import java.util.List;
 @Table(name="cuenta_cliente")
 @NamedQueries({
 	@NamedQuery(name="CuentaCliente.findAll", query="SELECT c FROM CuentaCliente c where "
-			+ "(lower(c.cliente.nombre) like lower(:patron) or lower(c.cliente.apellido) like lower(:patron) or lower(c.cliente.cedula) like lower(:patron)) and c.estado='A' order by c.idCuenta asc"),
+		+ "(lower(c.cliente.nombre) like lower(:patron) or lower(c.cliente.apellido) like lower(:patron) or lower(c.cliente.cedula) like lower(:patron)) and c.estado='A' order by c.idCuenta asc"),
 	@NamedQuery(name="CuentaCliente.bucarTodos", query="SELECT c FROM CuentaCliente c where c.estado = 'A' order by c.idCuenta"),
 	@NamedQuery(name="CuentaCliente.buscarCuentaClientePerfil", query="SELECT c FROM CuentaCliente c "
-			+ "where (lower(c.cliente.apellido) like :patron or lower(c.cliente.nombre) like :patron "
-			+ "or lower(c.cliente.cedula) like :patron)"
-			+ "and c.usuarioCrea = :idPerfilUsuario and c.estado='A' order by c.idCuenta asc"),
+		+ "where (lower(c.cliente.apellido) like :patron or lower(c.cliente.nombre) like :patron "
+		+ "or lower(c.cliente.cedula) like :patron)"
+		+ "and c.usuarioCrea = :idPerfilUsuario and c.estado='A' order by c.idCuenta asc"),
 	@NamedQuery(name="CuentaCliente.existeCuenta", query="SELECT c FROM CuentaCliente c where (c.idCuenta = (:cuenta) and c.estado = 'A')"),
-	@NamedQuery(name="CuentaCliente.existeCuentaMedidor", query="SELECT c FROM CuentaCliente c where (c.medidor.codigo = (:medidor) and c.estado = 'A')")
+	@NamedQuery(name="CuentaCliente.existeCuentaMedidor", query="SELECT c FROM CuentaCliente c where (c.medidor.codigo = (:medidor) and c.estado = 'A')"),
+
+	//para corte
+	@NamedQuery(name="CuentaCliente.buscarCuentaAsignada", query="SELECT c FROM CuentaCliente c "
+		+ "where c.idUsuCorteEncargado = :idPerfilUsuario and c.estado = 'A' order by c.idCuenta desc"),
+	
+	//para corte
+	@NamedQuery(name="CuentaCliente.buscaCuentasParaCorte", query="SELECT c FROM CuentaCliente c "
+		+ "where (lower(c.cliente.apellido) like :patron or lower(c.cliente.nombre) like :patron or lower(c.cliente.cedula) like :patron) "
+		+ "and c.cortado = 'false' and c.idUsuCorteEncargado = null and c.estado = 'A' order by c.idCuenta desc"),
+	
+	//para corte
+	@NamedQuery(name="CuentaCliente.buscarCuentasCortePerfil", query="SELECT c FROM CuentaCliente c "
+		+ "where (lower(c.cliente.apellido) like :patron or lower(c.cliente.nombre) like :patron or lower(c.cliente.cedula) like :patron) "
+		+ " and c.idUsuCorteEncargado = :idPerfilUsuario and c.idUsuCorteEncargado = null "
+		+ " and c.cortado = 'false' and c.estado = 'A' order by c.idCuenta desc"),
+	
+	//para ver cortes pendientes ya asignados
+	@NamedQuery(name="CuentaCliente.cuentasCortePendientes", query="SELECT c FROM CuentaCliente c "
+			+ "where (lower(c.cliente.nombre) like lower(:patron) or lower(c.cliente.apellido) like lower(:patron) or lower(c.cliente.cedula) like lower(:patron)) "
+			+ " and c.idUsuCorteEncargado = :idPerfilUsuario and c.cortado = 'false' and c.estado = 'A' order by c.idCuenta desc"),
+	
+	//para cortes asignados admin
+	@NamedQuery(name="CuentaCliente.CuentasPendientesAdm", query="SELECT c FROM CuentaCliente c where "
+			+ "(lower(c.cliente.nombre) like lower(:patron) or lower(c.cliente.apellido) like lower(:patron) or lower(c.cliente.cedula) like lower(:patron))"
+			+ " and c.estado='A' and c.cortado = 'false' order by c.idCuenta asc")
+	
 })
 public class CuentaCliente implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -56,6 +82,9 @@ public class CuentaCliente implements Serializable {
 
 	@Column(name="usuario_crea")
 	private Integer usuarioCrea;
+	
+	@Column(name="id_usuario_corte")
+	private Integer idUsuCorteEncargado;
 
 	//bi-directional many-to-one association to Convenio
 	@OneToMany(mappedBy="cuentaCliente", cascade = CascadeType.ALL)
@@ -160,6 +189,12 @@ public class CuentaCliente implements Serializable {
 		this.idCuenta = idCuenta;
 	}
 
+	public Integer getIdUsuCorteEncargado() {
+		return idUsuCorteEncargado;
+	}
+	public void setIdUsuCorteEncargado(Integer idUsuCorteEncargado) {
+		this.idUsuCorteEncargado = idUsuCorteEncargado;
+	}
 	public String getDireccion() {
 		return this.direccion;
 	}

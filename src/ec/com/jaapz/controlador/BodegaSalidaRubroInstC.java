@@ -58,7 +58,7 @@ public class BodegaSalidaRubroInstC {
 	
 	@FXML private Button btnBuscarLiquidCuenta;
 	@FXML private Button btnBuscarLiquidacion;
-	@FXML private Button btnEliminar;
+	//@FXML private Button btnEliminar;
 	@FXML private Button btnGrabar;
 	@FXML private Button btnNuevo;
 	
@@ -114,7 +114,7 @@ public class BodegaSalidaRubroInstC {
 			
 			btnBuscarLiquidacion.setStyle("-fx-cursor: hand;");
 			btnBuscarLiquidCuenta.setStyle("-fx-cursor: hand;");
-			btnEliminar.setStyle("-fx-cursor: hand;");
+			//btnEliminar.setStyle("-fx-cursor: hand;");
 			btnGrabar.setStyle("-fx-cursor: hand;");
 			btnNuevo.setStyle("-fx-cursor: hand;");
 		}catch(Exception ex) {
@@ -307,7 +307,7 @@ public class BodegaSalidaRubroInstC {
 		}
 	}
 	
-	public void eliminar() {
+	/*public void eliminar() {
 		try {
 			InstalacionDetalle detalleSeleccionado = tvDatos.getSelectionModel().getSelectedItem();
 			tvDatos.getItems().remove(detalleSeleccionado);
@@ -315,7 +315,7 @@ public class BodegaSalidaRubroInstC {
 		}catch(Exception ex) {
 			System.out.println(ex.getMessage());
 		}
-	}
+	}*/
 	
 	boolean validarDatos() {
 		try {

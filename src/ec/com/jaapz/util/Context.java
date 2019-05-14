@@ -60,6 +60,7 @@ public class Context {
 	private Categoria categoria;
 	private Barrio barrio;
 	private List<SolInspeccionIn> listaInspecciones;
+	private List<CuentaCliente> listaCortes;
 	private List<Instalacion> listaInstalaciones;
 	private List<LiquidacionOrden> listaLiquidaciones;
 	private List<Reparacion> listaReparaciones;
@@ -148,6 +149,16 @@ public class Context {
 	public void setListaInspecciones(List<SolInspeccionIn> listaInspecciones) {
 		this.listaInspecciones = listaInspecciones;
 	}
+	
+	//para corte
+	public List<CuentaCliente> getListaCortes() {
+		return listaCortes;
+	}
+
+	public void setListaCortes(List<CuentaCliente> listaCortes) {
+		this.listaCortes = listaCortes;
+	}
+	
 	
 	public List<Instalacion> getListaInstalaciones() {
 		return listaInstalaciones;

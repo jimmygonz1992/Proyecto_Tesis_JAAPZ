@@ -76,6 +76,23 @@ public class SegUsuarioDAO extends ClaseDAO{
 		return usuarioInspeccion;
 	}
 	
+	//para corte // se usa la misma consulta anterior xq solo es un select
+	@SuppressWarnings("unchecked")
+	public List<SegUsuario> getListaUsuariosCorte(){
+		List<SegUsuario> resultado;
+		List<SegUsuario> usuarioCorte = new ArrayList<SegUsuario>();
+		Query query = getEntityManager().createNamedQuery("SegUsuario.buscarTodosUsuarios");
+		query.setHint("javax.persistence.cache.storeMode", "REFRESH");
+		resultado = (List<SegUsuario>) query.getResultList();
+		for(SegUsuario usuario : resultado) {
+			for(SegUsuarioPerfil perfil : usuario.getSegUsuarioPerfils()) {
+				if(perfil.getSegPerfil().getIdPerfil() == Constantes.ID_USU_CORTE_RECONEXIONES && perfil.getEstado().equals(Constantes.ESTADO_ACTIVO))
+					usuarioCorte.add(usuario);
+			}
+		}
+		return usuarioCorte;
+	}
+	
 	//para asigancion de trabajos de reparacion
 	@SuppressWarnings("unchecked")
 	public List<SegUsuario> getListaUsuariosReparacion(){
