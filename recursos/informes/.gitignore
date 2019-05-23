@@ -45,3 +45,6 @@
 /VerOrdLiquidacion.jasper
 /deudaPorCliente.jasper
 /lista_cliente.jasper
+/listadoClientesConvenio.jasper
+/listadoInstalacionRealizadas.jasper
+/listadoReparacionRealizadas.jasper

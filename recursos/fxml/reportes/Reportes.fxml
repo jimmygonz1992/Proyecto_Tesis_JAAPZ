@@ -82,7 +82,20 @@
                      <content>
                         <AnchorPane fx:id="apMateriales" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
                      </content>
-                  </TitledPane>             
+                  </TitledPane>  
+          
+                  <TitledPane animated="false" text="Clientes con convenios de pago">
+                     <content>
+                        <AnchorPane fx:id="apClientesConvenio" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                     </content>
+                  </TitledPane>
+                  
+                  <TitledPane animated="false" text="Instalaciones y reparaciones realizadas">
+                     <content>
+                        <AnchorPane fx:id="apInstaRepa" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                     </content>
+                  </TitledPane>                    
+                             
                   <TitledPane animated="false" text="Cierre de Caja">
                      <content>
                         <AnchorPane fx:id="apDineroCaja" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />

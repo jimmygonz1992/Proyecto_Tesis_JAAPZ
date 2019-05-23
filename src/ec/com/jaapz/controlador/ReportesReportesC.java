@@ -18,6 +18,8 @@ public class ReportesReportesC {
 	@FXML private AnchorPane apUsuariosCortados;	
 	@FXML private AnchorPane apSolicitudesNoAtendidas;
 	@FXML private AnchorPane apInconsistenciaMarcaciones;
+	@FXML private AnchorPane apClientesConvenio;
+	@FXML private AnchorPane apInstaRepa;
 	
 	ControllerHelper helper = new ControllerHelper();
 	public void initialize() {
@@ -33,6 +35,8 @@ public class ReportesReportesC {
 			helper.mostrarVentanaContenedor("/reportes/DineroCaja.fxml", apDineroCaja);
 			helper.mostrarVentanaContenedor("/reportes/ReporteInconsistencia.fxml", apInconsistenciaMarcaciones);
 			helper.mostrarVentanaContenedor("/reportes/ReporteSolicitudNoAtendida.fxml", apSolicitudesNoAtendidas);
+			helper.mostrarVentanaContenedor("/reportes/ClientesConvenio.fxml", apClientesConvenio);
+			helper.mostrarVentanaContenedor("/reportes/InstalaReparac.fxml", apInstaRepa);
 		}catch(Exception ex) {
 			System.out.println(ex.getMessage());
 		}
