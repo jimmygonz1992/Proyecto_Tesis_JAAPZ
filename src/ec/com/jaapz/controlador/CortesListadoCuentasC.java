@@ -58,11 +58,12 @@ public class CortesListadoCuentasC {
 			tvDatos.getColumns().clear();
 			numCorte = empresaDao.getEmpresa().get(0).getCorte();
 			List<CuentaCliente> listaCuentas;
-			if(Context.getInstance().getIdPerfil() == Constantes.ID_USU_ADMINISTRADOR) {
+			/*if(Context.getInstance().getIdPerfil() == Constantes.ID_USU_ADMINISTRADOR) {
 				listaCuentas = cuentaClienteDao.getListaCuentaCortes(patron);
 			}else {
 				listaCuentas = cuentaClienteDao.getListaCuentaCortesPerfil(patron);
-			}
+			}*/
+			listaCuentas = cuentaClienteDao.getListaCuentaCortes(patron);
 			ObservableList<CuentaCliente> datosCuenta = FXCollections.observableArrayList();
 			
 			for(CuentaCliente cuenta : listaCuentas) {

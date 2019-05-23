@@ -35,16 +35,17 @@ public class SeguridadPerfilesC {
 	@FXML CheckBox chkEstado;
 	@FXML Button btnAceptar;
 	@FXML Button btnNuevo;
-	
+
 	ControllerHelper helper = new ControllerHelper();
 	SegPerfilDAO segPerfilDAO = new SegPerfilDAO();
 	SegPermisoDAO permisoDAO = new SegPermisoDAO();
 	SegMenuDAO menuDAO = new SegMenuDAO();
-	
+
 	public void initialize(){
 		btnAceptar.setStyle("-fx-cursor: hand;");
 		btnNuevo.setStyle("-fx-cursor: hand;");
-		
+		txtCodigo.setEditable(false);
+		txtCodigo.setVisible(false);
 		limpiar();
 		llenarDatos();
 		//solo letras mayusculas
@@ -56,7 +57,7 @@ public class SeguridadPerfilesC {
 				txtDescripcion.setText(cadena);
 			}
 		});
-		
+
 		txtNombre.textProperty().addListener(new ChangeListener<String>() {
 			@Override
 			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
@@ -65,7 +66,25 @@ public class SeguridadPerfilesC {
 				txtNombre.setText(cadena);
 			}
 		});
-		
+
+		//validar solo letras.... igual se va con puntuaciones
+		txtDescripcion.textProperty().addListener(new ChangeListener<String>() {
+			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+				if (!newValue.matches("\\D*")) {
+					txtDescripcion.setText(newValue.replaceAll("[^\\D]", ""));
+				}
+			}
+		});
+
+		//validar solo letras.... igual se va con puntuaciones
+		txtNombre.textProperty().addListener(new ChangeListener<String>() {
+			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+				if (!newValue.matches("\\D*")) {
+					txtNombre.setText(newValue.replaceAll("[^\\D]", ""));
+				}
+			}
+		});
+
 		tvDatos.setOnMouseClicked(new EventHandler<Event>() {
 			@Override
 			public void handle(Event event) {
@@ -73,20 +92,20 @@ public class SeguridadPerfilesC {
 			}
 		});
 	}
-	
+
 	void limpiar(){
 		txtCodigo.setText("0");
 		txtNombre.setText("");
 		txtDescripcion.setText("");
 		chkEstado.setSelected(true);
 	}
-	
+
 	public void recuperarDatos(int codigo){
 		try{
 			List<SegPerfil> listaPerfil = new ArrayList<SegPerfil>();
 			listaPerfil = segPerfilDAO.getPerfil(codigo);
 			for(int i = 0 ; i < listaPerfil.size() ; i ++) {
-				
+
 				txtCodigo.setText(String.valueOf(listaPerfil.get(i).getIdPerfil()));
 				txtNombre.setText(listaPerfil.get(i).getNombre());
 				txtDescripcion.setText(listaPerfil.get(i).getDescripcion());
@@ -99,7 +118,7 @@ public class SeguridadPerfilesC {
 			e.printStackTrace();
 		}
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	void llenarDatos(){
 		try {
@@ -112,13 +131,13 @@ public class SeguridadPerfilesC {
 
 			//llenar los datos en la tabla
 			TableColumn<SegPerfil, String> idColum = new TableColumn<>("Codigo");
-			idColum.setMinWidth(90);
+			idColum.setMinWidth(100);
 			idColum.setCellValueFactory(new PropertyValueFactory<SegPerfil, String>("idPerfil"));
 			TableColumn<SegPerfil, String> descripcionColum = new TableColumn<>("Nombre");
-			descripcionColum.setMinWidth(200);
+			descripcionColum.setMinWidth(420);
 			descripcionColum.setCellValueFactory(new PropertyValueFactory<SegPerfil, String>("nombre"));
 			TableColumn<SegPerfil, String> estadoColum = new TableColumn<>("Estado");
-			estadoColum.setMinWidth(50);
+			estadoColum.setMinWidth(100);
 			estadoColum.setCellValueFactory(new PropertyValueFactory<SegPerfil, String>("estado"));
 			tvDatos.getColumns().addAll(idColum, descripcionColum,estadoColum);
 			tvDatos.setItems(datos);
@@ -126,7 +145,7 @@ public class SeguridadPerfilesC {
 			System.out.println(ex.getMessage());
 		}
 	}
-	
+
 	public void nuevo(){
 		limpiar();
 	}
@@ -144,7 +163,7 @@ public class SeguridadPerfilesC {
 			return false;
 		}
 	}
-	
+
 	public void grabar(){
 		try{
 			if(validarDatos() == false)
@@ -171,13 +190,13 @@ public class SeguridadPerfilesC {
 					segPerfilDAO.getEntityManager().merge(perfil);
 				}
 				segPerfilDAO.getEntityManager().getTransaction().commit();
-				
+
 				if (band == true){
 					List<SegPerfil> ultimoPerfil = new ArrayList<SegPerfil>();
 					List<SegMenu> listaMenuPadre = menuDAO.getMenuPadre();
 					ultimoPerfil = segPerfilDAO.getUltimoPerfil();
 					permisoDAO.getEntityManager().getTransaction().begin();
-					
+
 					for(int i = 0 ; i < listaMenuPadre.size() ; i ++) {
 						SegPermiso accesoAnadir = new SegPermiso();
 						accesoAnadir.setSegMenu(listaMenuPadre.get(i));

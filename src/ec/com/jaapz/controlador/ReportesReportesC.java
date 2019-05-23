@@ -24,8 +24,6 @@ public class ReportesReportesC {
 		try {
 			helper.mostrarVentanaContenedor("/reportes/ReporteConsolidado.fxml", apConsolidado);
 			helper.mostrarVentanaContenedor("/reportes/UsuariosAlDia.fxml", apUsuariosDia);
-			helper.mostrarVentanaContenedor("/reportes/UsuariosOrdenCorte.fxml", apUsuariosOrden);
-			helper.mostrarVentanaContenedor("/reportes/UsuariosCortados.fxml", apUsuariosCortados);
 			helper.mostrarVentanaContenedor("/reportes/ReporteHistorialUsuario.fxml", apHistorial);
 			helper.mostrarVentanaContenedor("/recaudaciones/RecaudacionesDeudaGeneral.fxml", apDeudas);
 			helper.mostrarVentanaContenedor("/reportes/ReporteNominas.fxml", apNomina);

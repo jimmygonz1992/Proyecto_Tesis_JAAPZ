@@ -46,9 +46,6 @@
                <children>
                   <GridPane alignment="CENTER" hgap="1.0" vgap="1.0" HBox.hgrow="ALWAYS">
                      <children>
-                        <Label text="Código:">
-                           <font><Font name="Arial Bold" size="12.0" /></font>
-                        </Label>
                         <Label text="Ruc:" GridPane.rowIndex="1">
                            <font><Font name="Arial Bold" size="12.0" /></font>
                         </Label>

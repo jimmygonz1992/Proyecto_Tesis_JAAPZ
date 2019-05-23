@@ -90,7 +90,7 @@ public class CuentaClienteDAO extends ClaseDAO{
 		return resultado;
 	}
 	
-	//para corte ya asigando listado principal
+	//para corte ya asignado listado principal
 	@SuppressWarnings("unchecked")
 	public List<CuentaCliente> getListaCuentasCortes(String patron){
 		List<CuentaCliente> resultado = new ArrayList<CuentaCliente>();

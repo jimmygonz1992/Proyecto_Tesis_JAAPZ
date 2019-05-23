@@ -122,12 +122,12 @@ public class SeguridadAccesosC {
 				//llenar los datos en la tabla
 				TableColumn<SegMenu, String> idColum = new TableColumn<>("Código");
 				idColum.setMinWidth(10);
-				idColum.setPrefWidth(72);
+				idColum.setPrefWidth(70);
 				idColum.setCellValueFactory(new PropertyValueFactory<SegMenu, String>("idMenu"));
 
 				TableColumn<SegMenu, String> nombreColum = new TableColumn<>("Nombre del Menu");
 				nombreColum.setMinWidth(10);
-				nombreColum.setPrefWidth(280);
+				nombreColum.setPrefWidth(400);
 				nombreColum.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<SegMenu,String>, ObservableValue<String>>() {
 					@Override
 					public ObservableValue<String> call(CellDataFeatures<SegMenu, String> param) {
@@ -160,12 +160,12 @@ public class SeguridadAccesosC {
 				datos.setAll(listaPermisos);
 				TableColumn<SegPermiso, String> idColum = new TableColumn<>("Código");
 				idColum.setMinWidth(10);
-				idColum.setPrefWidth(72);
+				idColum.setPrefWidth(70);
 				idColum.setCellValueFactory(new PropertyValueFactory<SegPermiso, String>("idPermiso"));
 
 				TableColumn<SegPermiso, String> nombreColum = new TableColumn<>("Nombre del Menu");
 				nombreColum.setMinWidth(10);
-				nombreColum.setPrefWidth(280);
+				nombreColum.setPrefWidth(400);
 				nombreColum.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<SegPermiso,String>, ObservableValue<String>>() {
 					@Override
 					public ObservableValue<String> call(CellDataFeatures<SegPermiso, String> param) {
@@ -210,12 +210,12 @@ public class SeguridadAccesosC {
 
 					TableColumn<SegPermiso, String> idColum = new TableColumn<>("Código");
 					idColum.setMinWidth(10);
-					idColum.setPrefWidth(72);
+					idColum.setPrefWidth(70);
 					idColum.setCellValueFactory(new PropertyValueFactory<SegPermiso, String>("idPermiso"));
 
 					TableColumn<SegPermiso, String> nombreColum = new TableColumn<>("Nombre del Menu");
 					nombreColum.setMinWidth(10);
-					nombreColum.setPrefWidth(280);
+					nombreColum.setPrefWidth(400);
 					nombreColum.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<SegPermiso,String>, ObservableValue<String>>() {
 						@Override
 						public ObservableValue<String> call(CellDataFeatures<SegPermiso, String> param) {
@@ -265,7 +265,7 @@ public class SeguridadAccesosC {
 				
 				TableColumn<SegPermiso, String> idColum = new TableColumn<>("Código");
 				idColum.setMinWidth(10);
-				idColum.setPrefWidth(72);
+				idColum.setPrefWidth(65);
 				idColum.setCellValueFactory(new PropertyValueFactory<SegPermiso, String>("idPermiso"));
 				
 				TableColumn<SegPermiso, String> idMenuColum = new TableColumn<>("IdMenu");
@@ -280,7 +280,7 @@ public class SeguridadAccesosC {
 
 				TableColumn<SegPermiso, String> nombreColum = new TableColumn<>("Nombre del Menu");
 				nombreColum.setMinWidth(10);
-				nombreColum.setPrefWidth(280);
+				nombreColum.setPrefWidth(400);
 				nombreColum.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<SegPermiso,String>, ObservableValue<String>>() {
 					@Override
 					public ObservableValue<String> call(CellDataFeatures<SegPermiso, String> param) {
@@ -328,7 +328,7 @@ public class SeguridadAccesosC {
 
 					TableColumn<SegMenu, String> nombreColum = new TableColumn<>("Nombre del Formulario");
 					nombreColum.setMinWidth(10);
-					nombreColum.setPrefWidth(280);
+					nombreColum.setPrefWidth(400);
 					nombreColum.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<SegMenu,String>, ObservableValue<String>>() {
 						@Override
 						public ObservableValue<String> call(CellDataFeatures<SegMenu, String> param) {
@@ -420,7 +420,7 @@ public class SeguridadAccesosC {
 
 			TableColumn<SegMenu, String> nombreColum = new TableColumn<>("Nombre del Formulario");
 			nombreColum.setMinWidth(10);
-			nombreColum.setPrefWidth(280);
+			nombreColum.setPrefWidth(400);
 			nombreColum.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<SegMenu,String>, ObservableValue<String>>() {
 				@Override
 				public ObservableValue<String> call(CellDataFeatures<SegMenu, String> param) {
@@ -433,7 +433,7 @@ public class SeguridadAccesosC {
 					}
 					return new SimpleObjectProperty<String>(dato);
 				}
-			});			
+			});
 			tvMenu.getColumns().addAll(idColum,nombreColum);
 			tvMenu.setItems(datos);
 		}catch(Exception ex){

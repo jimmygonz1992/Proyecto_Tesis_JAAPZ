@@ -22,33 +22,7 @@ import java.util.List;
 		+ "or lower(c.cliente.cedula) like :patron)"
 		+ "and c.usuarioCrea = :idPerfilUsuario and c.estado='A' order by c.idCuenta asc"),
 	@NamedQuery(name="CuentaCliente.existeCuenta", query="SELECT c FROM CuentaCliente c where (c.idCuenta = (:cuenta) and c.estado = 'A')"),
-	@NamedQuery(name="CuentaCliente.existeCuentaMedidor", query="SELECT c FROM CuentaCliente c where (c.medidor.codigo = (:medidor) and c.estado = 'A')"),
-
-	//para corte
-	@NamedQuery(name="CuentaCliente.buscarCuentaAsignada", query="SELECT c FROM CuentaCliente c "
-		+ "where c.idUsuCorteEncargado = :idPerfilUsuario and c.estado = 'A' order by c.idCuenta desc"),
-	
-	//para corte
-	@NamedQuery(name="CuentaCliente.buscaCuentasParaCorte", query="SELECT c FROM CuentaCliente c "
-		+ "where (lower(c.cliente.apellido) like :patron or lower(c.cliente.nombre) like :patron or lower(c.cliente.cedula) like :patron) "
-		+ "and c.cortado = 'false' and c.idUsuCorteEncargado = null and c.estado = 'A' order by c.idCuenta desc"),
-	
-	//para corte
-	@NamedQuery(name="CuentaCliente.buscarCuentasCortePerfil", query="SELECT c FROM CuentaCliente c "
-		+ "where (lower(c.cliente.apellido) like :patron or lower(c.cliente.nombre) like :patron or lower(c.cliente.cedula) like :patron) "
-		+ " and c.idUsuCorteEncargado = :idPerfilUsuario and c.idUsuCorteEncargado = null "
-		+ " and c.cortado = 'false' and c.estado = 'A' order by c.idCuenta desc"),
-	
-	//para ver cortes pendientes ya asignados
-	@NamedQuery(name="CuentaCliente.cuentasCortePendientes", query="SELECT c FROM CuentaCliente c "
-			+ "where (lower(c.cliente.nombre) like lower(:patron) or lower(c.cliente.apellido) like lower(:patron) or lower(c.cliente.cedula) like lower(:patron)) "
-			+ " and c.idUsuCorteEncargado = :idPerfilUsuario and c.cortado = 'false' and c.estado = 'A' order by c.idCuenta desc"),
-	
-	//para cortes asignados admin
-	@NamedQuery(name="CuentaCliente.CuentasPendientesAdm", query="SELECT c FROM CuentaCliente c where "
-			+ "(lower(c.cliente.nombre) like lower(:patron) or lower(c.cliente.apellido) like lower(:patron) or lower(c.cliente.cedula) like lower(:patron))"
-			+ " and c.estado='A' and c.cortado = 'false' order by c.idCuenta asc")
-	
+	@NamedQuery(name="CuentaCliente.existeCuentaMedidor", query="SELECT c FROM CuentaCliente c where (c.medidor.codigo = (:medidor) and c.estado = 'A')")	
 })
 public class CuentaCliente implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -77,63 +51,13 @@ public class CuentaCliente implements Serializable {
 
 	private String observacion;
 
-	@Column(nullable = false, columnDefinition = "bit")
-	private Boolean cortado;
-
 	@Column(name="usuario_crea")
 	private Integer usuarioCrea;
-	
-	@Column(name="id_usuario_corte")
-	private Integer idUsuCorteEncargado;
 
 	//bi-directional many-to-one association to Convenio
 	@OneToMany(mappedBy="cuentaCliente", cascade = CascadeType.ALL)
 	private List<Convenio> convenios;
 
-	//bi-directional many-to-one association to Reconexion
-	@OneToMany(mappedBy="cuentaCliente", cascade = CascadeType.ALL)
-	private List<Reconexion> reconexions;
-	public List<Reconexion> getReconexions() {
-		return reconexions;
-	}
-	public void setReconexions(List<Reconexion> reconexions) {
-		this.reconexions = reconexions;
-	}
-	public Reconexion addReconexion(Reconexion reconexion) {
-		getReconexions().add(reconexion);
-		reconexion.setCuentaCliente(this);
-		return reconexion;
-	}
-
-	public Reconexion removeReconexion(Reconexion reconexion) {
-		getReconexions().remove(reconexion);
-		reconexion.setCuentaCliente(null);
-
-		return reconexion;
-	}
-
-
-	//bi-directional many-to-one association to Reconexion
-	@OneToMany(mappedBy="cuentaCliente", cascade = CascadeType.ALL)
-	private List<Corte> cortes;
-	public List<Corte> getCortes() {
-		return cortes;
-	}
-	public void setCortes(List<Corte> cortes) {
-		this.cortes = cortes;
-	}
-	public Corte addCorte(Corte corte) {
-		getCortes().add(corte);
-		corte.setCuentaCliente(this);
-		return corte;
-	}
-
-	public Corte removeCorte(Corte corte) {
-		getCortes().remove(corte);
-		corte.setCuentaCliente(null);
-
-		return corte;
-	}
 	//bi-directional many-to-one association to Barrio
 	@ManyToOne
 	@JoinColumn(name="id_barrio")
@@ -189,12 +113,6 @@ public class CuentaCliente implements Serializable {
 		this.idCuenta = idCuenta;
 	}
 
-	public Integer getIdUsuCorteEncargado() {
-		return idUsuCorteEncargado;
-	}
-	public void setIdUsuCorteEncargado(Integer idUsuCorteEncargado) {
-		this.idUsuCorteEncargado = idUsuCorteEncargado;
-	}
 	public String getDireccion() {
 		return this.direccion;
 	}
@@ -213,14 +131,6 @@ public class CuentaCliente implements Serializable {
 
 	public String getEstado() {
 		return this.estado;
-	}	
-
-	public Boolean getCortado() {
-		return cortado;
-	}
-
-	public void setCortado(Boolean cortado) {
-		this.cortado = cortado;
 	}
 
 	public void setEstado(String estado) {

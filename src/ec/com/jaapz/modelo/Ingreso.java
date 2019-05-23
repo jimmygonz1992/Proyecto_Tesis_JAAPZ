@@ -41,6 +41,8 @@ public class Ingreso implements Serializable {
 	private String numeroIngreso;
 
 	private double subtotal;
+	
+	private double iva;
 
 	private double total;
 
@@ -114,6 +116,14 @@ public class Ingreso implements Serializable {
 
 	public void setSubtotal(double subtotal) {
 		this.subtotal = subtotal;
+	}
+
+	public double getIva() {
+		return iva;
+	}
+
+	public void setIva(double iva) {
+		this.iva = iva;
 	}
 
 	public double getTotal() {

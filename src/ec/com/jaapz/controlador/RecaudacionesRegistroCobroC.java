@@ -268,7 +268,7 @@ public class RecaudacionesRegistroCobroC {
 
 			TableColumn<PlanillaDetalle, String> cantidadColum = new TableColumn<>("Cantidad");
 			cantidadColum.setMinWidth(10);
-			cantidadColum.setPrefWidth(50);
+			cantidadColum.setPrefWidth(110);
 			cantidadColum.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<PlanillaDetalle, String>, ObservableValue<String>>() {
 				@Override
 				public ObservableValue<String> call(CellDataFeatures<PlanillaDetalle, String> param) {
@@ -278,7 +278,7 @@ public class RecaudacionesRegistroCobroC {
 
 			TableColumn<PlanillaDetalle, String> descripcionColum = new TableColumn<>("Descripción");
 			descripcionColum.setMinWidth(10);
-			descripcionColum.setPrefWidth(400);
+			descripcionColum.setPrefWidth(430);
 			descripcionColum.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<PlanillaDetalle, String>, ObservableValue<String>>() {
 				@Override
 				public ObservableValue<String> call(CellDataFeatures<PlanillaDetalle, String> param) {
@@ -288,7 +288,7 @@ public class RecaudacionesRegistroCobroC {
 
 			TableColumn<PlanillaDetalle, String> subtotalColum = new TableColumn<>("Subtotal");
 			subtotalColum.setMinWidth(10);
-			subtotalColum.setPrefWidth(100);
+			subtotalColum.setPrefWidth(140);
 			subtotalColum.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<PlanillaDetalle, String>, ObservableValue<String>>() {
 				@Override
 				public ObservableValue<String> call(CellDataFeatures<PlanillaDetalle, String> param) {
@@ -296,7 +296,7 @@ public class RecaudacionesRegistroCobroC {
 				}
 			});
 
-			tvDetalle.getColumns().addAll(idColum, cantidadColum, descripcionColum, subtotalColum);
+			tvDetalle.getColumns().addAll(cantidadColum, descripcionColum, subtotalColum);
 			tvDetalle.setItems(datos);
 		}catch(Exception ex) {
 			System.out.println(ex.getMessage());
@@ -375,7 +375,7 @@ public class RecaudacionesRegistroCobroC {
 
 				TableColumn<Planilla, String> descripcionColum = new TableColumn<>("Descripción");
 				descripcionColum.setMinWidth(10);
-				descripcionColum.setPrefWidth(80);
+				descripcionColum.setPrefWidth(110);
 				descripcionColum.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Planilla, String>, ObservableValue<String>>() {
 					@Override
 					public ObservableValue<String> call(CellDataFeatures<Planilla, String> param) {
@@ -385,7 +385,7 @@ public class RecaudacionesRegistroCobroC {
 
 				TableColumn<Planilla, String> lecturaAnteriorColum = new TableColumn<>("Lectura Anterior");
 				lecturaAnteriorColum.setMinWidth(10);
-				lecturaAnteriorColum.setPrefWidth(80);
+				lecturaAnteriorColum.setPrefWidth(165);
 				lecturaAnteriorColum.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Planilla, String>, ObservableValue<String>>() {
 					@Override
 					public ObservableValue<String> call(CellDataFeatures<Planilla, String> param) {
@@ -395,7 +395,7 @@ public class RecaudacionesRegistroCobroC {
 
 				TableColumn<Planilla, String> lecturaActualColum = new TableColumn<>("Lectura Actual");
 				lecturaActualColum.setMinWidth(10);
-				lecturaActualColum.setPrefWidth(80);
+				lecturaActualColum.setPrefWidth(165);
 				lecturaActualColum.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Planilla, String>, ObservableValue<String>>() {
 					@Override
 					public ObservableValue<String> call(CellDataFeatures<Planilla, String> param) {
@@ -405,7 +405,7 @@ public class RecaudacionesRegistroCobroC {
 
 				TableColumn<Planilla, String> consumoColum = new TableColumn<>("Consumo");
 				consumoColum.setMinWidth(10);
-				consumoColum.setPrefWidth(80);
+				consumoColum.setPrefWidth(165);
 				consumoColum.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Planilla, String>, ObservableValue<String>>() {
 					@Override
 					public ObservableValue<String> call(CellDataFeatures<Planilla, String> param) {
@@ -415,7 +415,7 @@ public class RecaudacionesRegistroCobroC {
 
 				TableColumn<Planilla, String> valorPagoColum = new TableColumn<>("Valor a pagar");
 				valorPagoColum.setMinWidth(10);
-				valorPagoColum.setPrefWidth(80);
+				valorPagoColum.setPrefWidth(165);
 				valorPagoColum.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Planilla, String>, ObservableValue<String>>() {
 					@Override
 					public ObservableValue<String> call(CellDataFeatures<Planilla, String> param) {
@@ -427,7 +427,7 @@ public class RecaudacionesRegistroCobroC {
 					}
 				});
 
-				tvDatos.getColumns().addAll(idColum, lecturaAnteriorColum, lecturaActualColum, consumoColum, valorPagoColum);
+				tvDatos.getColumns().addAll(lecturaAnteriorColum, lecturaActualColum, consumoColum, valorPagoColum);
 				tvDatos.setItems(planillas);
 				sumarDatos();
 				noEditable();

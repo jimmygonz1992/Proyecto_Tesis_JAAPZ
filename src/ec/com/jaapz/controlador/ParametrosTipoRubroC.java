@@ -33,6 +33,8 @@ public class ParametrosTipoRubroC {
 	public void initialize() {
 		btnNuevo.setStyle("-fx-cursor: hand;");
 		btnAceptar.setStyle("-fx-cursor: hand;");
+		txtCodigo.setEditable(false);
+		txtCodigo.setVisible(false);
 		
 		limpiar();
 		llenarDatos();
@@ -54,14 +56,14 @@ public class ParametrosTipoRubroC {
 			datos.setAll(listaTipoRubro);
 
 			//llenar los datos en la tabla
-			TableColumn<TipoRubro, String> idColum = new TableColumn<>("Codigo");
-			idColum.setMinWidth(90);
+			TableColumn<TipoRubro, String> idColum = new TableColumn<>("Ítem");
+			idColum.setMinWidth(125);
 			idColum.setCellValueFactory(new PropertyValueFactory<TipoRubro, String>("idTipo"));
 			TableColumn<TipoRubro, String> descripcionColum = new TableColumn<>("Descripción");
-			descripcionColum.setMinWidth(200);
+			descripcionColum.setMinWidth(400);
 			descripcionColum.setCellValueFactory(new PropertyValueFactory<TipoRubro, String>("descripcion"));
 			TableColumn<TipoRubro, String> estadoColum = new TableColumn<>("Estado");
-			estadoColum.setMinWidth(50);
+			estadoColum.setMinWidth(83);
 			estadoColum.setCellValueFactory(new PropertyValueFactory<TipoRubro, String>("estado"));
 
 			tvDatos.getColumns().addAll(idColum, descripcionColum,estadoColum);

@@ -2,10 +2,9 @@
 <!-- Created with Jaspersoft Studio version 6.5.1.final using JasperReports Library version 6.5.1  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="listado_materiales" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="88fefb3e-0d94-46e1-8312-656d6470f53d">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
-	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="conectionBDJAAPZ"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="jaapz_conection"/>
 	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="373"/>
 	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="619"/>
-	<parameter name="FECHA" class="java.lang.String"/>
 	<queryString language="SQL">
 		<![CDATA[SELECT rubro.codigo,
 	rubro.descripcion,
@@ -73,21 +72,21 @@ ORDER BY rubro.id_rubro ASC]]>
 				</textElement>
 				<text><![CDATA[Materiales Disponibles]]></text>
 			</staticText>
-			<textField>
-				<reportElement x="410" y="80" width="145" height="13" uuid="4d65261e-c163-4f9a-9233-3f938347dacc"/>
-				<textFieldExpression><![CDATA[$P{FECHA}]]></textFieldExpression>
-			</textField>
 			<staticText>
-				<reportElement x="336" y="78" width="66" height="16" uuid="8ff361f3-3633-42c5-ae70-b01cb8292627"/>
+				<reportElement x="300" y="78" width="130" height="16" uuid="8ff361f3-3633-42c5-ae70-b01cb8292627"/>
 				<textElement textAlignment="Center">
 					<font fontName="Arial" size="12" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Fecha:]]></text>
+				<text><![CDATA[Fecha impresión:]]></text>
 			</staticText>
 			<image>
 				<reportElement x="12" y="0" width="72" height="44" uuid="af1c03b5-d57c-42eb-87e3-04e0baa78004"/>
 				<imageExpression><![CDATA["recursos/img/logo_jaapz.png"]]></imageExpression>
 			</image>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="434" y="80" width="121" height="13" uuid="11f8f01f-6aaf-4099-ada3-c36390cb4cf7"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
 		</band>
 	</title>
 	<columnHeader>

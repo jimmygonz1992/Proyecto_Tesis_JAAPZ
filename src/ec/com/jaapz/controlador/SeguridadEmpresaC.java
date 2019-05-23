@@ -49,6 +49,7 @@ public class SeguridadEmpresaC {
 	ControllerHelper helper = new ControllerHelper();
 	SeguridadEmpresaDAO empresaDao = new SeguridadEmpresaDAO();
 	String rutaCarpeta = String.valueOf(System.getProperty("user.dir")) + "\\app_movil";
+
 	public void initialize() {
 		btnExaminar.setStyle("-fx-cursor: hand;");
 		btnGrabar.setStyle("-fx-cursor: hand;");
@@ -56,6 +57,7 @@ public class SeguridadEmpresaC {
 
 		txtCodigo.setText("0");
 		txtCodigo.setEditable(false);
+		txtCodigo.setVisible(false);
 		int maxLength = 13;
 		int maxLengthTelf = 10;
 		recuperarDatos();
@@ -142,6 +144,15 @@ public class SeguridadEmpresaC {
 				// TODO Auto-generated method stub
 				String cadena = txtRepresentante.getText().toUpperCase();
 				txtRepresentante.setText(cadena);
+			}
+		});
+
+		//validar solo letras.... igual se va con puntuaciones
+		txtRepresentante.textProperty().addListener(new ChangeListener<String>() {
+			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+				if (!newValue.matches("\\D*")) {
+					txtRepresentante.setText(newValue.replaceAll("[^\\D]", ""));
+				}
 			}
 		});
 
@@ -351,12 +362,12 @@ public class SeguridadEmpresaC {
 	public void descargar() {
 		try {
 			DirectoryChooser fileChooser = new DirectoryChooser(); 
-		    fileChooser.setTitle("Open Folder"); 
-		    File file = fileChooser.showDialog(Context.getInstance().getStage());
+			fileChooser.setTitle("Open Folder"); 
+			File file = fileChooser.showDialog(Context.getInstance().getStage());
 			if(file != null) {
-		        System.out.println(file.getAbsolutePath());
-		        copiarArchivo(rutaCarpeta + "\\app_jaapz.apk",file.getAbsolutePath() + "\\app_jaapz.apk");
-		        helper.mostrarAlertaInformacion("Archivo copiado a la ruta seleccionada", Context.getInstance().getStage());
+				System.out.println(file.getAbsolutePath());
+				copiarArchivo(rutaCarpeta + "\\app_jaapz.apk",file.getAbsolutePath() + "\\app_jaapz.apk");
+				helper.mostrarAlertaInformacion("Archivo copiado a la ruta seleccionada", Context.getInstance().getStage());
 			}
 		} catch (Exception ex) {
 			ex.printStackTrace();

@@ -138,16 +138,7 @@ ORDER BY cliente asc]]>
 				<reportElement x="0" y="0" width="557" height="30" uuid="92a5c9f1-c51a-4ec8-9b3c-16ccfb6f3324"/>
 			</rectangle>
 			<staticText>
-				<reportElement x="0" y="0" width="20" height="30" uuid="61a35c0a-6c32-4b8b-9fe2-c504ef9ea504">
-					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="e91b1239-3232-46ef-9164-165c2694e815"/>
-				</reportElement>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font isBold="true"/>
-				</textElement>
-				<text><![CDATA[Nº]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="27" y="3" width="56" height="25" uuid="a3d7d0f5-e72b-4c19-a217-77f8da003b92">
+				<reportElement x="5" y="3" width="56" height="25" uuid="a3d7d0f5-e72b-4c19-a217-77f8da003b92">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="8ca02d61-2cde-405b-be75-2b4c51529c80"/>
 				</reportElement>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
@@ -156,7 +147,7 @@ ORDER BY cliente asc]]>
 				<text><![CDATA[Nº Comprobante]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="96" y="0" width="41" height="13" uuid="387952d7-b4f4-497b-aba6-e32556346106">
+				<reportElement x="75" y="8" width="41" height="13" uuid="387952d7-b4f4-497b-aba6-e32556346106">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="f7db8489-9f52-4191-a726-6f0e66203d23"/>
 				</reportElement>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
@@ -165,7 +156,7 @@ ORDER BY cliente asc]]>
 				<text><![CDATA[Fecha]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="318" y="0" width="100" height="13" uuid="bb282070-8e1c-45e7-b1d2-f5926b54a668">
+				<reportElement x="350" y="9" width="100" height="13" uuid="bb282070-8e1c-45e7-b1d2-f5926b54a668">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="97d6e7bf-ce0e-4d29-9113-bc53f259fd86"/>
 				</reportElement>
 				<textElement textAlignment="Center">
@@ -174,7 +165,7 @@ ORDER BY cliente asc]]>
 				<text><![CDATA[Dirección]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="157" y="0" width="90" height="13" uuid="cc4647ce-2d51-448a-9212-23ca16fa02fc">
+				<reportElement x="175" y="7" width="90" height="13" uuid="cc4647ce-2d51-448a-9212-23ca16fa02fc">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="76b9ee61-8f45-4ea3-a7de-59fee4a6f6b7"/>
 				</reportElement>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
@@ -183,7 +174,7 @@ ORDER BY cliente asc]]>
 				<text><![CDATA[Cliente]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="489" y="0" width="63" height="13" uuid="f875a35b-99b5-4ba5-b6f3-f652ffdc165a">
+				<reportElement x="489" y="8" width="63" height="13" uuid="f875a35b-99b5-4ba5-b6f3-f652ffdc165a">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="d6648154-d3ad-49eb-849f-0a7f1e0a2605"/>
 				</reportElement>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
@@ -192,19 +183,16 @@ ORDER BY cliente asc]]>
 				<text><![CDATA[Total Factura]]></text>
 			</staticText>
 			<line>
-				<reportElement x="481" y="0" width="1" height="30" uuid="9e08ac1e-c451-43c7-899d-75ed938e3b08"/>
+				<reportElement x="484" y="0" width="1" height="30" uuid="9e08ac1e-c451-43c7-899d-75ed938e3b08"/>
 			</line>
 			<line>
 				<reportElement x="312" y="0" width="1" height="30" uuid="db329f9d-7b91-42c4-8862-0b9a87ccf650"/>
 			</line>
 			<line>
-				<reportElement x="144" y="0" width="1" height="30" uuid="226abe34-4a87-45cd-877c-018223bfa746"/>
+				<reportElement x="125" y="0" width="1" height="30" uuid="226abe34-4a87-45cd-877c-018223bfa746"/>
 			</line>
 			<line>
-				<reportElement x="90" y="0" width="1" height="30" uuid="b57bd387-0dc7-40f5-a7db-fd956f56ab9c"/>
-			</line>
-			<line>
-				<reportElement x="22" y="0" width="1" height="30" uuid="301a23eb-0607-49f6-b3cc-fe17d39f7f64"/>
+				<reportElement x="68" y="0" width="1" height="30" uuid="b57bd387-0dc7-40f5-a7db-fd956f56ab9c"/>
 			</line>
 		</band>
 	</columnHeader>
@@ -214,7 +202,7 @@ ORDER BY cliente asc]]>
 				<reportElement x="0" y="0" width="557" height="15" uuid="de04beea-0eb1-4a37-92e5-88d9690be5f1"/>
 			</rectangle>
 			<textField>
-				<reportElement x="25" y="0" width="63" height="12" uuid="e89bed00-45a9-4e27-a968-e5f8e7d157fa">
+				<reportElement x="5" y="0" width="60" height="12" uuid="e89bed00-45a9-4e27-a968-e5f8e7d157fa">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="8ca02d61-2cde-405b-be75-2b4c51529c80"/>
 				</reportElement>
 				<textElement>
@@ -222,8 +210,8 @@ ORDER BY cliente asc]]>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{num_factura}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="93" y="1" width="47" height="12" uuid="bea97312-36ab-41b1-9d18-ddbac16560e0">
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="73" y="1" width="47" height="12" uuid="bea97312-36ab-41b1-9d18-ddbac16560e0">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="f7db8489-9f52-4191-a726-6f0e66203d23"/>
 				</reportElement>
 				<textElement>
@@ -232,7 +220,7 @@ ORDER BY cliente asc]]>
 				<textFieldExpression><![CDATA[$F{fecha}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="316" y="1" width="159" height="12" uuid="5fe1b795-64ac-40dd-93d6-335f4bb2164d">
+				<reportElement x="316" y="1" width="164" height="12" uuid="5fe1b795-64ac-40dd-93d6-335f4bb2164d">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="97d6e7bf-ce0e-4d29-9113-bc53f259fd86"/>
 				</reportElement>
 				<textElement>
@@ -241,7 +229,7 @@ ORDER BY cliente asc]]>
 				<textFieldExpression><![CDATA[$F{direccion}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="148" y="1" width="160" height="12" uuid="ac1de564-e597-4480-9c6a-2424dd2614c2">
+				<reportElement x="130" y="1" width="179" height="12" uuid="ac1de564-e597-4480-9c6a-2424dd2614c2">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="76b9ee61-8f45-4ea3-a7de-59fee4a6f6b7"/>
 				</reportElement>
 				<textElement>
@@ -259,27 +247,17 @@ ORDER BY cliente asc]]>
 				<textFieldExpression><![CDATA[$F{total_factura}]]></textFieldExpression>
 			</textField>
 			<line>
-				<reportElement x="481" y="0" width="1" height="15" uuid="3cbcf776-4fdb-4fb7-923d-cb114a958536"/>
+				<reportElement x="484" y="0" width="1" height="15" uuid="3cbcf776-4fdb-4fb7-923d-cb114a958536"/>
 			</line>
 			<line>
 				<reportElement x="312" y="0" width="1" height="15" uuid="6f033496-d9d9-487c-9c79-c56e09378c1e"/>
 			</line>
 			<line>
-				<reportElement x="144" y="0" width="1" height="15" uuid="bd83c95e-bd19-4ae0-b56d-26bf86680834"/>
+				<reportElement x="125" y="0" width="1" height="15" uuid="bd83c95e-bd19-4ae0-b56d-26bf86680834"/>
 			</line>
 			<line>
-				<reportElement x="90" y="0" width="1" height="15" uuid="2ac8b737-6136-4073-8d09-4a080940f98f"/>
+				<reportElement x="68" y="0" width="1" height="15" uuid="2ac8b737-6136-4073-8d09-4a080940f98f"/>
 			</line>
-			<line>
-				<reportElement x="22" y="0" width="1" height="15" uuid="58b08e2f-f413-4289-aac2-2b4557b4890f"/>
-			</line>
-			<textField>
-				<reportElement x="0" y="0" width="20" height="13" uuid="386d532e-d71a-4456-b1e6-bcb1f6274d38"/>
-				<textElement>
-					<font size="9"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
-			</textField>
 		</band>
 	</detail>
 	<columnFooter>

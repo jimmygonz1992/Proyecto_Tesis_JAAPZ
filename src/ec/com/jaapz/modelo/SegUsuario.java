@@ -63,8 +63,6 @@ public class SegUsuario implements Serializable {
 	@OneToMany(mappedBy="segUsuario", cascade = CascadeType.ALL)
 	private List<ResponsableLectura> responsableLecturas;
 
-
-
 	//bi-directional many-to-one association to SegUsuario
 	@OneToMany(mappedBy="segUsuario", cascade = CascadeType.ALL)
 	private List<SegUsuarioPerfil> segUsuarioPerfils;
@@ -89,54 +87,6 @@ public class SegUsuario implements Serializable {
 		segUsuarioPerfils.setSegUsuario(null);
 
 		return segUsuarioPerfils;
-	}
-
-
-
-
-
-	//bi-directional many-to-one association to Reconexion
-	@OneToMany(mappedBy="segUsuario", cascade = CascadeType.ALL)
-	private List<Reconexion> reconexions;
-	public List<Reconexion> getReconexions() {
-		return reconexions;
-	}
-	public void setReconexions(List<Reconexion> reconexions) {
-		this.reconexions = reconexions;
-	}
-	public Reconexion addReconexion(Reconexion reconexion) {
-		getReconexions().add(reconexion);
-		reconexion.setSegUsuario(this);
-		return reconexion;
-	}
-	public Reconexion removeReconexion(Reconexion reconexion) {
-		getReconexions().remove(reconexion);
-		reconexion.setSegUsuario(null);
-
-		return reconexion;
-	}
-
-
-
-	//bi-directional many-to-one association to Reconexion
-	@OneToMany(mappedBy="segUsuario", cascade = CascadeType.ALL)
-	private List<Corte> cortes;
-	public List<Corte> getCortes() {
-		return cortes;
-	}
-	public void setCortes(List<Corte> cortes) {
-		this.cortes = cortes;
-	}
-	public Corte addCorte(Corte corte) {
-		getCortes().add(corte);
-		corte.setSegUsuario(this);
-		return corte;
-	}
-	public Corte removeCorte(Corte corte) {
-		getCortes().remove(corte);
-		corte.setSegUsuario(null);
-
-		return corte;
 	}
 
 	public SegUsuario() {

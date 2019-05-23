@@ -25,9 +25,9 @@
             <RowConstraints maxHeight="100.0" minHeight="10.0" prefHeight="14.0" vgrow="NEVER" />
           <RowConstraints maxHeight="63.0" minHeight="0.0" prefHeight="0.0" vgrow="NEVER" />
           <RowConstraints maxHeight="185.0" minHeight="7.0" prefHeight="23.0" vgrow="NEVER" />
-            <RowConstraints maxHeight="224.0" minHeight="10.0" prefHeight="208.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="275.0" minHeight="10.0" prefHeight="208.0" vgrow="ALWAYS" />
             <RowConstraints maxHeight="28.0" minHeight="4.0" prefHeight="4.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="77.0" minHeight="10.0" prefHeight="74.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="100.0" minHeight="10.0" prefHeight="74.0" vgrow="ALWAYS" />
             <RowConstraints maxHeight="45.0" minHeight="8.0" prefHeight="8.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
@@ -65,11 +65,6 @@
                <children>
                   <GridPane alignment="CENTER" hgap="1.0" vgap="1.0" HBox.hgrow="ALWAYS">
                      <children>
-                        <Label text="Código:" GridPane.columnIndex="1">
-                           <font>
-                              <Font name="Arial Bold" size="12.0" />
-                           </font>
-                        </Label>
                         <Label text="Nombre:" GridPane.columnIndex="1" GridPane.rowIndex="1">
                            <font>
                               <Font name="Arial Bold" size="12.0" />
@@ -80,7 +75,6 @@
                               <Font name="Arial Bold" size="12.0" />
                            </font>
                         </Label>
-                        <TextField fx:id="txtCodigo" GridPane.columnIndex="2" />
                         <TextField fx:id="txtNombre" GridPane.columnIndex="2" GridPane.rowIndex="1" />
                         <TextField fx:id="txtDescripcion" GridPane.columnIndex="2" GridPane.rowIndex="2" />
                         <Label text="Estado:" GridPane.columnIndex="1" GridPane.rowIndex="4">
@@ -97,16 +91,17 @@
                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="105.0" minWidth="0.0" prefWidth="9.0" />
                      </columnConstraints>
                      <rowConstraints>
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="35.0" minHeight="10.0" prefHeight="11.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="70.0" minHeight="10.0" prefHeight="49.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="67.0" minHeight="10.0" prefHeight="67.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="27.0" vgrow="SOMETIMES" />
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                      </rowConstraints>
                   </GridPane>
                </children>
             </HBox>
             <Separator valignment="TOP" GridPane.columnSpan="7" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS" />
+            <TextField fx:id="txtCodigo" GridPane.columnIndex="5" />
          </children>
       </GridPane>
    </children>
