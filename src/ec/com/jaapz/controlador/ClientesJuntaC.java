@@ -11,6 +11,8 @@ import ec.com.jaapz.modelo.CuentaClienteDAO;
 import ec.com.jaapz.modelo.Genero;
 import ec.com.jaapz.util.Context;
 import ec.com.jaapz.util.ControllerHelper;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -53,7 +55,7 @@ public class ClientesJuntaC {
 	SimpleDateFormat formateador = new SimpleDateFormat("dd/MM/yyyy");
 	Genero[] genero = Genero.values();
 	Cliente clienteSeleccionado;
-	
+
 	CuentaClienteDAO cuentaDAO = new CuentaClienteDAO();
 	public void initialize() {
 		btnBuscarBarrio.setStyle("-fx-cursor: hand;");
@@ -61,23 +63,46 @@ public class ClientesJuntaC {
 		btnGrabar.setStyle("-fx-cursor: hand;");
 		btnSalir.setStyle("-fx-cursor: hand;");
 		cboGenero.setStyle("-fx-cursor: hand;");
-		
-		
+
+
 		cuentaSeleccionada = Context.getInstance().getCuentaCliente();
 		clienteSeleccionado = cuentaSeleccionada.getCliente();
 		Context.getInstance().setCuentaCliente(null);
+
+		//validar solo 10 valores
+		txtCedula.textProperty().addListener(new ChangeListener<String>() {
+			@Override
+			public void changed(final ObservableValue<? extends String> ov, final String oldValue, final String newValue) {
+				if (txtCedula.getText().length() > 10) {
+					String s = txtCedula.getText().substring(0, 10);
+					txtCedula.setText(s);
+				}
+			}
+		});
+		
+		txtCedula.textProperty().addListener(new ChangeListener<String>() {
+			@Override
+			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+				if (newValue.matches("\\d*")) {
+					//int value = Integer.parseInt(newValue);
+				} else {
+					txtCedula.setText(oldValue);
+				}
+			}
+		});
+
 		llenarCombos();
 		recuperarDatos(cuentaSeleccionada);
 	}
 	private void llenarCombos() {
-    	try {
+		try {
 			ObservableList<Genero> listaGenero = FXCollections.observableArrayList(Genero.values());
 			cboGenero.setItems(listaGenero);
 			cboGenero.setPromptText("Seleccione Genero");
-    	}catch(Exception ex) {
-    		System.out.println(ex.getMessage());
-    	}
-    }
+		}catch(Exception ex) {
+			System.out.println(ex.getMessage());
+		}
+	}
 	private void recuperarDatos(CuentaCliente cuentaCliente) {
 		try {
 			//datos del cliente
@@ -94,7 +119,7 @@ public class ClientesJuntaC {
 				}
 			}
 			//clienteRecuperado = listaCliente.get(0);
-			
+
 			//datos de la cuenta
 			txtCodigoCuenta.setText(String.valueOf(cuentaCliente.getIdCuenta()));
 			if(cuentaCliente.getFechaIngreso() != null)
@@ -133,10 +158,16 @@ public class ClientesJuntaC {
 				txtCodigoMedidor.setText("");
 				txtDetallesMedidor.setText("");
 			}
-			
+
 			//otros datos
-			txtLatitud.setText(String.valueOf(cuentaCliente.getLatitud()));
-			txtLongitud.setText(String.valueOf(cuentaCliente.getLongitud()));
+			if(cuentaCliente.getLatitud() != null)
+				txtLatitud.setText(String.valueOf(cuentaCliente.getLatitud()));
+			else
+				txtLatitud.setText("");
+			if(cuentaCliente.getLongitud() != null)
+				txtLongitud.setText(String.valueOf(cuentaCliente.getLongitud()));
+			else
+				txtLongitud.setText("");
 			//otrosss
 			txtDireccionDomicilio.setText(cuentaCliente.getDireccion());
 		}catch(Exception ex) {
@@ -149,7 +180,7 @@ public class ClientesJuntaC {
 				helper.mostrarAlertaError("Debe Seleccionar Cuenta de Cliente", Context.getInstance().getStage());
 				return;
 			}
-			
+
 			Optional<ButtonType> result = helper.mostrarAlertaConfirmacion("Desea Grabar los Datos?",Context.getInstance().getStage());
 			if(result.get() == ButtonType.OK){
 				//actualizar los datos personales tbn
@@ -175,14 +206,14 @@ public class ClientesJuntaC {
 					cuentaSeleccionada.setLatitud(Double.parseDouble(txtLatitud.getText()));
 				if(!txtLongitud.getText().isEmpty())
 					cuentaSeleccionada.setLongitud(Double.parseDouble(txtLongitud.getText()));
-				
+
 				cuentaDAO.getEntityManager().getTransaction().begin();
 				cuentaDAO.getEntityManager().merge(cuentaSeleccionada);
 				cuentaDAO.getEntityManager().merge(clienteSeleccionado);
 				cuentaDAO.getEntityManager().getTransaction().commit();
 				helper.mostrarAlertaInformacion("Datos Grabados con Exito", Context.getInstance().getStage());
 			}
-			
+
 		}catch(Exception ex) {
 			cuentaDAO.getEntityManager().getTransaction().rollback();
 			System.out.println(ex.getMessage());
@@ -191,7 +222,7 @@ public class ClientesJuntaC {
 	public void salir() {
 		Context.getInstance().getStageModal().close();
 	}
-	
+
 	public void buscarCategoria() {
 		try{
 			helper.abrirPantallaModal("/clientes/ClientesListaCategoria.fxml","Listado de Categorías", Context.getInstance().getStage());

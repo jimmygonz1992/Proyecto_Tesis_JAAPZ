@@ -72,7 +72,7 @@
                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
-                        <TextField fx:id="txtIdCliente" maxWidth="150.0" minWidth="20.0" prefWidth="150.0" />
+                        <TextField fx:id="txtIdCliente" editable="false" maxWidth="150.0" minWidth="20.0" prefWidth="150.0" />
                      </children>
                   </GridPane>
                   <ComboBox fx:id="cboGenero" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="4" />
@@ -98,8 +98,8 @@
                   <Label text="Dirección:" GridPane.rowIndex="10" />
                   <Label text="Fecha Ingreso:" GridPane.columnIndex="3" GridPane.halignment="CENTER" />
                   <TextField fx:id="txtDireccionDomicilio" GridPane.columnIndex="1" GridPane.columnSpan="4" GridPane.rowIndex="10" />
-                  <TextField fx:id="txtCodigoCuenta" GridPane.columnIndex="1" />
-                  <TextField fx:id="txtFechaIngreso" GridPane.columnIndex="4" />
+                  <TextField fx:id="txtCodigoCuenta" editable="false" GridPane.columnIndex="1" />
+                  <TextField fx:id="txtFechaIngreso" editable="false" GridPane.columnIndex="4" />
                   <Label text="--------------- CATEGORÍA ---------------" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
                   <Label text="--------------- BARRIO ---------------" GridPane.columnIndex="3" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
                   <GridPane GridPane.columnSpan="2" GridPane.rowIndex="2" GridPane.rowSpan="3">
@@ -115,11 +115,11 @@
                     </rowConstraints>
                      <children>
                         <Label text="Id Categoría:" />
-                        <TextField fx:id="txtIdCategoria" GridPane.columnIndex="1" />
+                        <TextField fx:id="txtIdCategoria" editable="false" GridPane.columnIndex="1" />
                         <Label text="Descripción:" GridPane.rowIndex="1" />
-                        <TextField fx:id="txtDescripcionCategoria" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="1" />
+                        <TextField fx:id="txtDescripcionCategoria" editable="false" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="1" />
                         <Label text="Valor m3:" GridPane.rowIndex="2" />
-                        <TextField fx:id="txtValorm3" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <TextField fx:id="txtValorm3" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                         <Button fx:id="btnBuscarCategoria" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#buscarCategoria" styleClass="botonBuscar" GridPane.columnIndex="2">
                            <GridPane.margin>
                               <Insets left="30.0" />
@@ -130,11 +130,11 @@
                   <GridPane GridPane.columnIndex="3" GridPane.columnSpan="2" GridPane.rowIndex="2" GridPane.rowSpan="3">
                      <children>
                         <Label text="Id Barrio:" />
-                        <TextField fx:id="txtIdBarrio" GridPane.columnIndex="1" />
+                        <TextField fx:id="txtIdBarrio" editable="false" GridPane.columnIndex="1" />
                         <Label text="Nombre:" GridPane.rowIndex="1" />
-                        <TextField fx:id="txtNombreBarrio" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="1" />
+                        <TextField fx:id="txtNombreBarrio" editable="false" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="1" />
                         <Label text="Descripción:" GridPane.rowIndex="2" />
-                        <TextField fx:id="txtDescripcionBarrio" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="2" />
+                        <TextField fx:id="txtDescripcionBarrio" editable="false" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="2" />
                         <Button fx:id="btnBuscarBarrio" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#buscarBarrio" styleClass="botonBuscar" GridPane.columnIndex="2">
                            <GridPane.margin>
                               <Insets left="30.0" />
@@ -157,11 +157,11 @@
                   <GridPane GridPane.columnSpan="2" GridPane.rowIndex="6" GridPane.rowSpan="3">
                      <children>
                         <Label text="Id Medidor:" />
-                        <TextField fx:id="txtIdMedidor" GridPane.columnIndex="1" />
+                        <TextField fx:id="txtIdMedidor" editable="false" GridPane.columnIndex="1" />
                         <Label text="Código:" GridPane.rowIndex="1" />
-                        <TextField fx:id="txtCodigoMedidor" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="1" />
+                        <TextField fx:id="txtCodigoMedidor" editable="false" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="1" />
                         <Label text="Detalles:" GridPane.rowIndex="2" />
-                        <TextField fx:id="txtDetallesMedidor" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="2" />
+                        <TextField fx:id="txtDetallesMedidor" editable="false" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="2" />
                      </children>
                      <columnConstraints>
                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="90.0" minWidth="90.0" prefWidth="90.0" />

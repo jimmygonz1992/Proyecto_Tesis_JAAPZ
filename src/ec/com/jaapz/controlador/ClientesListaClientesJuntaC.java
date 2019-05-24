@@ -77,13 +77,13 @@ public class ClientesListaClientesJuntaC {
 			datos.setAll(listaClientes);
 
 			//llenar los datos en la tabla
-			TableColumn<CuentaCliente, String> idColum = new TableColumn<>("Código");
+			TableColumn<CuentaCliente, String> idColum = new TableColumn<>("Cédula");
 			idColum.setMinWidth(10);
 			idColum.setPrefWidth(90);
 			idColum.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<CuentaCliente,String>, ObservableValue<String>>() {
 				@Override
 				public ObservableValue<String> call(CellDataFeatures<CuentaCliente, String> param) {
-					return new SimpleObjectProperty<String>(param.getValue().getIdCuenta().toString());
+					return new SimpleObjectProperty<String>(param.getValue().getCliente().getCedula().toString());
 				}
 			});
 			TableColumn<CuentaCliente, String> nombresColum = new TableColumn<>("Nombres y Apellidos");
