@@ -60,6 +60,7 @@ public class RecaudacionesConvenioC {
 	ConvenioDAO convenioDAO = new ConvenioDAO();
 	PlanillaDAO planillaDAO = new PlanillaDAO();
 	EmpresaDAO empresaDao = new EmpresaDAO();
+	
 	public void initialize() {
 		try {
 			bloquear();
@@ -174,7 +175,7 @@ public class RecaudacionesConvenioC {
 
 				TableColumn<Planilla, String> descripcionColum = new TableColumn<>("Descripción");
 				descripcionColum.setMinWidth(10);
-				descripcionColum.setPrefWidth(210);
+				descripcionColum.setPrefWidth(365);
 				descripcionColum.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Planilla, String>, ObservableValue<String>>() {
 					@Override
 					public ObservableValue<String> call(CellDataFeatures<Planilla, String> param) {
@@ -193,7 +194,7 @@ public class RecaudacionesConvenioC {
 
 				TableColumn<Planilla, String> consumoColum = new TableColumn<>("Consumo");
 				consumoColum.setMinWidth(10);
-				consumoColum.setPrefWidth(80);
+				consumoColum.setPrefWidth(150);
 				consumoColum.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Planilla, String>, ObservableValue<String>>() {
 					@Override
 					public ObservableValue<String> call(CellDataFeatures<Planilla, String> param) {
@@ -203,7 +204,7 @@ public class RecaudacionesConvenioC {
 
 				TableColumn<Planilla, String> valorPagoColum = new TableColumn<>("Valor a pagar");
 				valorPagoColum.setMinWidth(10);
-				valorPagoColum.setPrefWidth(80);
+				valorPagoColum.setPrefWidth(150);
 				valorPagoColum.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Planilla, String>, ObservableValue<String>>() {
 					@Override
 					public ObservableValue<String> call(CellDataFeatures<Planilla, String> param) {
@@ -215,7 +216,7 @@ public class RecaudacionesConvenioC {
 					}
 				});
 
-				tvPlanillasImpagas.getColumns().addAll(idColum, descripcionColum, consumoColum, valorPagoColum);
+				tvPlanillasImpagas.getColumns().addAll(descripcionColum, consumoColum, valorPagoColum);
 				tvPlanillasImpagas.setItems(planillas);
 				sumarTotal();
 			}
@@ -251,7 +252,7 @@ public class RecaudacionesConvenioC {
 	public void generarDetalleConvenio() {
 		try {			
 			if(Integer.parseInt(String.valueOf(txtNumMeses.getText())) <= 0 || txtNumMeses.getText().toString() == "") {
-				helper.mostrarAlertaAdvertencia("El número de meses debe se mayor a cero", Context.getInstance().getStage());
+				helper.mostrarAlertaAdvertencia("El número de meses debe se mayor a cero..!!", Context.getInstance().getStage());
 				txtNumMeses.requestFocus();
 				return;
 			}
@@ -262,19 +263,19 @@ public class RecaudacionesConvenioC {
 			if(result.get() == ButtonType.OK){	
 				ObservableList<ConvenioDetalle> convenioDetalle = FXCollections.observableArrayList();
 				ConvenioDetalle detalle;
-				Double cuota = Double.parseDouble(String.valueOf(txtTotalDeuda.getText())) / Double.parseDouble(String.valueOf(txtNumMeses.getText()));
+				Double cuota =  Double.parseDouble(String.valueOf(txtTotalDeuda.getText())) / Double.parseDouble(String.valueOf(txtNumMeses.getText()));
 				for(int i = 0 ; i < Integer.parseInt(txtNumMeses.getText()) ; i++){
 					detalle = new ConvenioDetalle();
 					detalle.setEstado(Constantes.ESTADO_ACTIVO);
 					detalle.setIdConvenioDet(null);
 					detalle.setNumLetra(i + 1);
-					detalle.setValor(cuota);
-					detalle.setDescripcion("Convenio No. " + (i + 1) + " con valor: " + cuota);
+					detalle.setValor(Double.valueOf(cuota));
+					detalle.setDescripcion("Convenio Cuota No. " + (i + 1) + " con valor: " + cuota);
 					convenioDetalle.add(detalle);
 				}
 				TableColumn<ConvenioDetalle, String> numColum = new TableColumn<>("No.");
 				numColum.setMinWidth(10);
-				numColum.setPrefWidth(80);
+				numColum.setPrefWidth(120);
 				numColum.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<ConvenioDetalle, String>, ObservableValue<String>>() {
 					@Override
 					public ObservableValue<String> call(CellDataFeatures<ConvenioDetalle, String> param) {
@@ -283,7 +284,7 @@ public class RecaudacionesConvenioC {
 				});
 				TableColumn<ConvenioDetalle, String> descripcionColum = new TableColumn<>("Descripción");
 				descripcionColum.setMinWidth(10);
-				descripcionColum.setPrefWidth(200);
+				descripcionColum.setPrefWidth(350);
 				descripcionColum.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<ConvenioDetalle, String>, ObservableValue<String>>() {
 					@Override
 					public ObservableValue<String> call(CellDataFeatures<ConvenioDetalle, String> param) {
@@ -292,7 +293,7 @@ public class RecaudacionesConvenioC {
 				});
 				TableColumn<ConvenioDetalle, String> valorColum = new TableColumn<>("Valor");
 				valorColum.setMinWidth(10);
-				valorColum.setPrefWidth(100);
+				valorColum.setPrefWidth(150);
 				valorColum.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<ConvenioDetalle, String>, ObservableValue<String>>() {
 					@Override
 					public ObservableValue<String> call(CellDataFeatures<ConvenioDetalle, String> param) {

@@ -94,7 +94,7 @@
                <children>
                   <GridPane prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
                      <children>
-                        <Label text="Fecha:" GridPane.columnIndex="1">
+                        <Label text="Fecha inspección:" GridPane.columnIndex="1">
                            <font>
                               <Font name="System Bold Italic" size="12.0" />
                            </font>

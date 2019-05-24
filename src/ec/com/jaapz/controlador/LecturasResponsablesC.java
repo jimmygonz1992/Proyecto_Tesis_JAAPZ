@@ -51,7 +51,6 @@ public class LecturasResponsablesC {
     @FXML private Tab tpRealizadas;
     @FXML private Button btnAsignar;
     @FXML private Tab tpNuevas;
-    @FXML private Button btnImprimirAsig;
     
     SegUsuarioDAO usuarioDAO = new SegUsuarioDAO();
     ControllerHelper helper = new ControllerHelper();
@@ -62,7 +61,6 @@ public class LecturasResponsablesC {
     		btnAsignar.setStyle("-fx-cursor: hand;");
     		btnBuscarApertura.setStyle("-fx-cursor: hand;");
     		btnGrabarAsig.setStyle("-fx-cursor: hand;");
-    		btnImprimirAsig.setStyle("-fx-cursor: hand;");
     		btnQuitarAsig.setStyle("-fx-cursor: hand;");
     		
 			Context.getInstance().setBarrio(null);
@@ -83,7 +81,6 @@ public class LecturasResponsablesC {
 			});
 			if(tpRealizadas.isSelected()) {
 				btnAsignar.setDisable(true);
-				btnImprimirAsig.setDisable(true);
 				tpNuevas.setDisable(true);
 				btnGrabarAsig.setDisable(true);
 				btnQuitarAsig.setDisable(true);
@@ -93,7 +90,6 @@ public class LecturasResponsablesC {
 				public void handle(Event arg0) {
 					if(tpNuevas.isSelected()) {
 						btnAsignar.setDisable(false);
-						btnImprimirAsig.setDisable(true);
 						listaResponsableEliminar.clear();
 						if(aperturaSeleccionada != null) {
 							recuperarAsignacionesResponsables(aperturaSeleccionada,tvPersonalLectura.getSelectionModel().getSelectedItem());// recupera los datos de los responsables que se ebcuebtran en esa apertura	
@@ -110,7 +106,6 @@ public class LecturasResponsablesC {
 				public void handle(Event arg0) {
 					if(tpRealizadas.isSelected()) {
 						btnAsignar.setDisable(true);
-						btnImprimirAsig.setDisable(false);
 					}
 				}
 			});
@@ -193,7 +188,6 @@ public class LecturasResponsablesC {
 				tpNuevas.setDisable(true);
 				
 			}else {
-				btnImprimirAsig.setDisable(false);
 				btnGrabarAsig.setDisable(false);
 				btnQuitarAsig.setDisable(false);
 				tpNuevas.setDisable(false);
@@ -410,10 +404,4 @@ public class LecturasResponsablesC {
 			responsableDAO.getEntityManager().getTransaction().rollback();
 		}
 	}
-
-	public void imprimirAsignaciones() {
-
-	}
-
-
 }

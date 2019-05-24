@@ -17,9 +17,9 @@ import java.util.List;
 	@NamedQuery(name="SolInspeccionRep.findAll", query="SELECT r FROM SolInspeccionRep r"),
 	//para cierre de inspeccion
 	@NamedQuery(name="SolInspeccionRep.buscarInspeccionPerfilPendiente", query="SELECT r FROM SolInspeccionRep r "
-		+ "where (lower(r.cuentaCliente.cliente.apellido) like :patron  or lower(r.cuentaCliente.cliente.nombre) like :patron) "
+		+ "where (lower(r.cuentaCliente.cliente.nombre) like lower(:patron) or lower(r.cuentaCliente.cliente.apellido) like lower(:patron) or lower(r.cuentaCliente.cliente.cedula) like lower(:patron)) "
 		+ " and r.idUsuEncargado = :idPerfilUsuario and r.estadoInspecRep = 'PENDIENTE' and r.estado = 'A' order by r.idSolicitudRep desc"),
-	//para cierre de inspeccion
+	//para asignar
 	@NamedQuery(name="SolInspeccionRep.findAllPendiente", query="SELECT r FROM SolInspeccionRep r "
 		+ "where (lower(r.cuentaCliente.cliente.apellido) like :patron  or lower(r.cuentaCliente.cliente.nombre) like :patron) "
 		+ "and r.estadoInspecRep = 'PENDIENTE' and r.idUsuEncargado = null and r.estado = 'A' order by r.idSolicitudRep desc"),
@@ -27,13 +27,13 @@ import java.util.List;
 	@NamedQuery(name="SolInspeccionRep.buscarInspeccionAsignada", query="SELECT r FROM SolInspeccionRep r "
 		+ "where r.idUsuEncargado = :idPerfilUsuario and r.estado = 'A' order by r.idSolicitudRep desc"),
 	
-	//para asignar
+	//para cierre de inspeccion
 	@NamedQuery(name="SolInspeccionRep.buscarListaRep", query="SELECT r FROM SolInspeccionRep r "
-		+ "where (lower(r.cuentaCliente.cliente.apellido) like :patron  or lower(r.cuentaCliente.cliente.nombre) like :patron) "
-		+ "and r.estadoInspecRep = 'PENDIENTE' and r.idUsuEncargado = null and r.estado = 'A' order by r.idSolicitudRep desc"),
+		+ "where (lower(r.cuentaCliente.cliente.nombre) like lower(:patron) or lower(r.cuentaCliente.cliente.apellido) like lower(:patron) or lower(r.cuentaCliente.cliente.cedula) like lower(:patron)) "
+		+ "and r.estadoInspecRep = 'PENDIENTE' and r.estado = 'A' order by r.idSolicitudRep desc"),
 	//para asignar
 	@NamedQuery(name="SolInspeccionRep.buscarListaRepPerfil", query="SELECT r FROM SolInspeccionRep r "
-			+ "where (lower(r.cuentaCliente.cliente.apellido) like :patron  or lower(r.cuentaCliente.cliente.nombre) like :patron) "
+			+ "where (lower(r.cuentaCliente.cliente.apellido) like :patron or lower(r.cuentaCliente.cliente.nombre) like :patron) "
 			+ " and r.idUsuEncargado = :idPerfilUsuario and r.idUsuEncargado = null and r.estadoInspecRep = 'PENDIENTE' and r.estado = 'A' order by r.idSolicitudRep desc"),
 	@NamedQuery(name="SolInspeccionRep.buscarSolicitudesNoAtendidas", query="SELECT r FROM SolInspeccionRep r "
 			+ "where r.estado = 'A' and r.estadoSolicitud = 'PENDIENTE' order by r.idSolicitudRep desc"),

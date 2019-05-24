@@ -54,10 +54,19 @@ public class RecaudacionesDeudaGeneralC {
 	}
 	
 	public void cargarDatos() {
-		try {
+		try {			
 			dateInicio = Date.from(dtpFechaInicio.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
 			dateFin = Date.from(dtpFechaFin.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
-			llenarDatos(dateInicio, dateFin);
+			int result = dateFin.compareTo(dateInicio);
+			
+			if(result < 0) {
+				helper.mostrarAlertaAdvertencia("Fecha final debe ser superior a fecha inicial", Context.getInstance().getStage());
+				tvDatos.getItems().clear();
+				tvDatos.getColumns().clear();
+				txtTotalDeuda.setText("");
+			}else {
+				llenarDatos(dateInicio, dateFin);
+			}
 		}catch(Exception ex) {
 			System.out.println(ex.getMessage());
 		}
@@ -182,14 +191,20 @@ public class RecaudacionesDeudaGeneralC {
 	}
 	
 	public void verReporte() {
-	try {
-			PrintReport pr = new PrintReport();
-			Map<String, Object> param = new HashMap<String, Object>();
-			param.put("fecha_inicio", dateInicio);
-			param.put("fecha_fin", dateFin);
-			param.put("usuario_crea", Encriptado.Desencriptar(Context.getInstance().getUsuariosC().getUsuario()));
-			pr.crearReporte("/recursos/informes/deuda_general.jasper", planillaDao, param);
-			pr.showReport("Deuda de Clientes");
+		try {
+			int result = dateFin.compareTo(dateInicio);
+			if(result < 0) {
+				helper.mostrarAlertaAdvertencia("Fecha final debe ser superior a fecha inicial", Context.getInstance().getStage());
+				return;
+			}else {
+				PrintReport pr = new PrintReport();
+				Map<String, Object> param = new HashMap<String, Object>();
+				param.put("fecha_inicio", dateInicio);
+				param.put("fecha_fin", dateFin);
+				param.put("usuario_crea", Encriptado.Desencriptar(Context.getInstance().getUsuariosC().getUsuario()));
+				pr.crearReporte("/recursos/informes/deuda_general.jasper", planillaDao, param);
+				pr.showReport("Deuda de Clientes");
+			}
 		}catch(Exception ex) {
 			System.out.println(ex.getMessage());
 		}

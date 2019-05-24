@@ -4,6 +4,7 @@ import java.util.List;
 
 import ec.com.jaapz.modelo.CuentaCliente;
 import ec.com.jaapz.modelo.CuentaClienteDAO;
+import ec.com.jaapz.modelo.EmpresaDAO;
 import ec.com.jaapz.modelo.Planilla;
 import ec.com.jaapz.util.Constantes;
 import ec.com.jaapz.util.Context;
@@ -26,6 +27,7 @@ public class ConvenioListadoPlanillasC {
 	
 	//PlanillaDAO planillaDao = new PlanillaDAO();
 	CuentaClienteDAO cuentaClienteDao = new CuentaClienteDAO();
+	EmpresaDAO empresaDao = new EmpresaDAO();
 	
 	public void initialize(){
 		try {			
@@ -56,7 +58,9 @@ public class ConvenioListadoPlanillasC {
 		try{
 			tvDatos.getColumns().clear();
 			List<CuentaCliente> listaCuentas;
-			if(Context.getInstance().getIdPerfil() == 1) {
+			int numCorte = empresaDao.getEmpresa().get(0).getCorte();
+			System.out.println("Corte: " + numCorte);
+			if(Context.getInstance().getIdPerfil() == Constantes.ID_USU_ADMINISTRADOR) {
 				listaCuentas = cuentaClienteDao.getListaCuentaClientes(patron);
 			}else {
 				listaCuentas = cuentaClienteDao.getListaCuentaClientePerfil(patron);
@@ -71,7 +75,7 @@ public class ConvenioListadoPlanillasC {
 							cont = cont + 1;
 				}
 				if(cont > 0) {
-					if(cont >= 3)
+					if(cont >= numCorte)
 						datosCuenta.add(cuenta);
 				}
 					

@@ -6,6 +6,7 @@ import java.util.Map;
 
 import ec.com.jaapz.modelo.CuentaCliente;
 import ec.com.jaapz.modelo.CuentaClienteDAO;
+import ec.com.jaapz.modelo.EmpresaDAO;
 import ec.com.jaapz.modelo.Planilla;
 import ec.com.jaapz.modelo.PlanillaDAO;
 import ec.com.jaapz.util.Constantes;
@@ -28,6 +29,8 @@ public class ReportesUsuariosOrdenCorteC {
 	private @FXML TableView<CuentaCliente> tvDatos;
 	CuentaClienteDAO cuentaClienteDao = new CuentaClienteDAO();
 	PlanillaDAO planillaDao = new PlanillaDAO();
+	EmpresaDAO empresaDao = new EmpresaDAO();
+	int numCorte;
 	
 	public void initialize(){
 		btnReporte.setStyle("-fx-cursor: hand;");
@@ -38,8 +41,10 @@ public class ReportesUsuariosOrdenCorteC {
 	void llenarDatos(String patron) {
 		try{
 			tvDatos.getColumns().clear();
+			numCorte = empresaDao.getEmpresa().get(0).getCorte();
+			System.out.println("Corte: " + numCorte);
 			List<CuentaCliente> listaCuentas;
-			if(Context.getInstance().getIdPerfil() == 1) {
+			if(Context.getInstance().getIdPerfil() == Constantes.ID_USU_ADMINISTRADOR) {
 				listaCuentas = cuentaClienteDao.getListaCuentaClientes(patron);
 			}else {
 				listaCuentas = cuentaClienteDao.getListaCuentaClientePerfil(patron);
@@ -53,7 +58,7 @@ public class ReportesUsuariosOrdenCorteC {
 						if(planilla.getCancelado().equals(Constantes.EST_FAC_PENDIENTE))
 							cont = cont + 1;
 				}
-				if(cont >= 3)
+				if(cont >= numCorte)
 					datosCuenta.add(cuenta);
 			}
 
@@ -141,6 +146,7 @@ public class ReportesUsuariosOrdenCorteC {
 			PrintReport pr = new PrintReport();
 			Map<String, Object> param = new HashMap<String, Object>();
 			param.put("usuarioCrea", Encriptado.Desencriptar(Context.getInstance().getUsuariosC().getUsuario()));
+			param.put("numCorte", numCorte);
 			pr.crearReporte("/recursos/informes/clientes_orden_corte.jasper", cuentaClienteDao, param);
 			pr.showReport("Clientes con Orden de Corte");
 		}catch(Exception ex) {

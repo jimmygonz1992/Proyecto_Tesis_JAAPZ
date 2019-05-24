@@ -9,6 +9,7 @@
 		<class>ec.com.jaapz.modelo.Convenio</class>
 		<class>ec.com.jaapz.modelo.ConvenioDetalle</class>
 		<class>ec.com.jaapz.modelo.ConvenioPlanilla</class>
+		<class>ec.com.jaapz.modelo.Corte</class>
 		<class>ec.com.jaapz.modelo.CuentaCliente</class>
 		<class>ec.com.jaapz.modelo.Empresa</class>
 		<class>ec.com.jaapz.modelo.EstadoMedidor</class>
@@ -26,6 +27,7 @@
 		<class>ec.com.jaapz.modelo.Planilla</class>
 		<class>ec.com.jaapz.modelo.PlanillaDetalle</class>
 		<class>ec.com.jaapz.modelo.PrecioUnitario</class>
+		<class>ec.com.jaapz.modelo.Reconexion</class>
 		<class>ec.com.jaapz.modelo.RegistroFoto</class>
 		<class>ec.com.jaapz.modelo.Reparacion</class>
 		<class>ec.com.jaapz.modelo.ReparacionDetalle</class>

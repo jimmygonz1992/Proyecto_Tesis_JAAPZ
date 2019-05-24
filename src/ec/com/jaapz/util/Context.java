@@ -28,16 +28,16 @@ import javafx.stage.Stage;
 
 public class Context {
 	private final static Context instance = new Context();
-	
+
 	Connection conexion = null;
 	private String usuario;
 	private String perfil;
 	private int idUsuario;
 	private int idPerfil;
-	
-	
+
+
 	private boolean mensajeEnviado;
-	
+
 	private Stage stage;
 	private Stage stageModal;
 	private Stage stageModalSolicitud;
@@ -46,12 +46,12 @@ public class Context {
 	private SegUsuario usuarios;
 	private SegUsuario usuariosC;
 	private Empresa empresaC;
-	
+
 	private Rubro rubro;
 	private Rubro rubros;
 	private LiquidacionOrden liquidaciones;
 	private Reparacion reparaciones;
-	
+
 	private Planilla planillas;
 	private Cliente cliente;
 	private Medidor medidor;
@@ -60,6 +60,7 @@ public class Context {
 	private Categoria categoria;
 	private Barrio barrio;
 	private List<SolInspeccionIn> listaInspecciones;
+	private List<CuentaCliente> listaCortes;
 	private List<Instalacion> listaInstalaciones;
 	private List<LiquidacionOrden> listaLiquidaciones;
 	private List<Reparacion> listaReparaciones;
@@ -67,21 +68,21 @@ public class Context {
 	private List<Barrio> listaBarrios;
 	private List<SegUsuarioPerfil> listaPerfiles;
 	private SegPerfil perfilSeleccionado;
-	
+
 	private AperturaLectura apertura;
 	private SolInspeccionIn inspeccion;
 	private Instalacion instalacion;
 	private SolInspeccionRep reparacion;
-	
+
 	private IngresoDetalle detalleMedidor;
 	private Ingreso ingresoSeleccionado;
-	
+
 	List<LiquidacionOrden> listadoAsignados;
-	
+
 	public static Context getInstance() {
 		return instance;
 	}
-	
+
 	public Connection getConexion() {
 		return conexion;
 	}
@@ -118,7 +119,7 @@ public class Context {
 	public void setUsuarios(SegUsuario usuarios) {
 		this.usuarios = usuarios;
 	}
-	
+
 	public int getIdUsuario() {
 		return idUsuario;
 	}
@@ -148,7 +149,16 @@ public class Context {
 	public void setListaInspecciones(List<SolInspeccionIn> listaInspecciones) {
 		this.listaInspecciones = listaInspecciones;
 	}
-	
+
+	//para corte
+	public List<CuentaCliente> getListaCortes() {
+		return listaCortes;
+	}
+
+	public void setListaCortes(List<CuentaCliente> listaCortes) {
+		this.listaCortes = listaCortes;
+	}
+
 	public List<Instalacion> getListaInstalaciones() {
 		return listaInstalaciones;
 	}
@@ -156,7 +166,7 @@ public class Context {
 	public void setListaInstalaciones(List<Instalacion> listaInstalaciones) {
 		this.listaInstalaciones = listaInstalaciones;
 	}
-	
+
 	public List<LiquidacionOrden> getListaLiquidaciones() {
 		return listaLiquidaciones;
 	}
@@ -164,7 +174,7 @@ public class Context {
 	public void setListaLiquidaciones(List<LiquidacionOrden> listaLiquidaciones) {
 		this.listaLiquidaciones = listaLiquidaciones;
 	}
-	
+
 	//para las asignaciones de reparaciones
 	public List<Reparacion> getListaReparaciones() {
 		return listaReparaciones;
@@ -174,7 +184,7 @@ public class Context {
 	public void setListaReparaciones(List<Reparacion> listaReparaciones) {
 		this.listaReparaciones = listaReparaciones;
 	}
-	
+
 	public List<SolInspeccionRep> getListaInspeccionesRep() {
 		return listaInspeccionesRep;
 	}
@@ -190,7 +200,7 @@ public class Context {
 	public void setInspeccion(SolInspeccionIn inspeccion) {
 		this.inspeccion = inspeccion;
 	}
-	
+
 	public Instalacion getInstalacion() {
 		return instalacion;
 	}
@@ -198,7 +208,7 @@ public class Context {
 	public void setInstalacion(Instalacion instalacion) {
 		this.instalacion = instalacion;
 	}
-	
+
 	public SolInspeccionRep getReparacion() {
 		return reparacion;
 	}
@@ -222,7 +232,7 @@ public class Context {
 	public void setCuentaCliente(CuentaCliente cuentaCliente) {
 		this.cuentaCliente = cuentaCliente;
 	}
-	
+
 	public Factura getFactura() {
 		return factura;
 	}
@@ -230,7 +240,7 @@ public class Context {
 	public void setFactura(Factura factura) {
 		this.factura = factura;
 	}
-	
+
 	public Categoria getCategoria() {
 		return categoria;
 	}
@@ -254,7 +264,7 @@ public class Context {
 	public void setUsuariosC(SegUsuario usuariosC) {
 		this.usuariosC = usuariosC;
 	}
-	
+
 	public Empresa getEmpresaC() {
 		return empresaC;
 	}
@@ -262,7 +272,7 @@ public class Context {
 	public void setEmpresaC(Empresa empresaC) {
 		this.empresaC = empresaC;
 	}
-	
+
 	public Rubro getRubros() {
 		return rubros;
 	}
@@ -298,7 +308,7 @@ public class Context {
 	public void setMedidor(Medidor medidor) {
 		this.medidor = medidor;
 	}
-	
+
 	public LiquidacionOrden getLiquidaciones() {
 		return liquidaciones;
 	}
@@ -306,7 +316,7 @@ public class Context {
 	public void setLiquidaciones(LiquidacionOrden liquidaciones) {
 		this.liquidaciones = liquidaciones;
 	}
-	
+
 	public Reparacion getReparaciones() {
 		return reparaciones;
 	}
@@ -386,5 +396,5 @@ public class Context {
 	public void setApInicioSesion(AnchorPane apInicioSesion) {
 		this.apInicioSesion = apInicioSesion;
 	}
-	
+
 }

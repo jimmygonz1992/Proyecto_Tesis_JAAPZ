@@ -54,7 +54,16 @@ public class RecaudacionesVerReporteC {
 		try {
 			dateInicio = Date.from(dtpFechaInicio.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
 			dateFin = Date.from(dtpFechaFin.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
-			llenarDatos(dateInicio, dateFin);
+			int result = dateFin.compareTo(dateInicio);
+
+			if(result < 0) {
+				helper.mostrarAlertaAdvertencia("Fecha final debe ser superior a fecha inicial", Context.getInstance().getStage());
+				tvDatos.getItems().clear();
+				tvDatos.getColumns().clear();
+				txtTotalRec.setText("");
+			}else {
+				llenarDatos(dateInicio, dateFin);
+			}
 		}catch(Exception ex) {
 			System.out.println(ex.getMessage());
 		}
@@ -84,7 +93,7 @@ public class RecaudacionesVerReporteC {
 			
 			TableColumn<Factura, String> numComprobColum = new TableColumn<>("Nº Comprobante");
 			numComprobColum.setMinWidth(10);
-			numComprobColum.setPrefWidth(100);
+			numComprobColum.setPrefWidth(150);
 			numComprobColum.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Factura, String>, ObservableValue<String>>() {
 				@Override
 				public ObservableValue<String> call(CellDataFeatures<Factura, String> param) {
@@ -104,7 +113,7 @@ public class RecaudacionesVerReporteC {
 			
 			TableColumn<Factura, String> clienteColum = new TableColumn<>("Cliente");
 			clienteColum.setMinWidth(10);
-			clienteColum.setPrefWidth(250);
+			clienteColum.setPrefWidth(325);
 			clienteColum.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Factura, String>, ObservableValue<String>>() {
 				@Override
 				public ObservableValue<String> call(CellDataFeatures<Factura, String> param) {
@@ -124,7 +133,7 @@ public class RecaudacionesVerReporteC {
 			
 			TableColumn<Factura, String> direccionColum = new TableColumn<>("Dirección");
 			direccionColum.setMinWidth(10);
-			direccionColum.setPrefWidth(300);
+			direccionColum.setPrefWidth(325);
 			direccionColum.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Factura, String>, ObservableValue<String>>() {
 				@Override
 				public ObservableValue<String> call(CellDataFeatures<Factura, String> param) {
@@ -134,7 +143,7 @@ public class RecaudacionesVerReporteC {
 			
 			TableColumn<Factura, String> totalColum = new TableColumn<>("Total");
 			totalColum.setMinWidth(10);
-			totalColum.setPrefWidth(100);
+			totalColum.setPrefWidth(150);
 			totalColum.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Factura, String>, ObservableValue<String>>() {
 				@Override
 				public ObservableValue<String> call(CellDataFeatures<Factura, String> param) {
@@ -142,7 +151,7 @@ public class RecaudacionesVerReporteC {
 				}
 			});
 			
-			tvDatos.getColumns().addAll(idColum, numComprobColum, fechaColum, clienteColum, direccionColum, totalColum);
+			tvDatos.getColumns().addAll(numComprobColum, fechaColum, clienteColum, direccionColum, totalColum);
 			tvDatos.setItems(datos);
 			sumarDatos();
 		}catch(Exception ex){
@@ -168,15 +177,24 @@ public class RecaudacionesVerReporteC {
 	}
 	
 	public void verReporte() {
-		dateInicio = Date.from(dtpFechaInicio.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
-		dateFin = Date.from(dtpFechaFin.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
-
-		PrintReport pr = new PrintReport();
-		Map<String, Object> param = new HashMap<String, Object>();
-		param.put("fechaInicio", dateInicio);
-		param.put("fechaFin", dateFin);
-		param.put("usuarioCrea", Encriptado.Desencriptar(Context.getInstance().getUsuariosC().getUsuario()));
-		pr.crearReporte("/recursos/informes/ver_recaudaciones.jasper", facturaDao, param);
-		pr.showReport("Recaudaciones");
+		try {
+			dateInicio = Date.from(dtpFechaInicio.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
+			dateFin = Date.from(dtpFechaFin.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
+			int result = dateFin.compareTo(dateInicio);
+			if(result < 0) {
+				helper.mostrarAlertaAdvertencia("Fecha final debe ser superior a fecha inicial", Context.getInstance().getStage());
+				return;
+			}else {
+				PrintReport pr = new PrintReport();
+				Map<String, Object> param = new HashMap<String, Object>();
+				param.put("fechaInicio", dateInicio);
+				param.put("fechaFin", dateFin);
+				param.put("usuarioCrea", Encriptado.Desencriptar(Context.getInstance().getUsuariosC().getUsuario()));
+				pr.crearReporte("/recursos/informes/ver_recaudaciones.jasper", facturaDao, param);
+				pr.showReport("Recaudaciones");
+			}
+		}catch(Exception ex) {
+			System.out.println(ex.getMessage());
+		}
 	}
 }

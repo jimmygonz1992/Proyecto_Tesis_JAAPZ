@@ -7,6 +7,8 @@ import ec.com.jaapz.modelo.TipoPago;
 import ec.com.jaapz.modelo.TipoPagoDAO;
 import ec.com.jaapz.util.Context;
 import ec.com.jaapz.util.ControllerHelper;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.Event;
@@ -29,13 +31,25 @@ public class ParametrosTipoPagoC {
 	private @FXML Button btnNuevo;
 	TipoPagoDAO tipoPagoDAO = new TipoPagoDAO();
 	ControllerHelper helper = new ControllerHelper();
-	
+
 	public void initialize() {
 		btnAceptar.setStyle("-fx-cursor: hand;");
 		btnNuevo.setStyle("-fx-cursor: hand;");
-		
+		txtCodigo.setEditable(false);
+		txtCodigo.setVisible(false);
+
 		limpiar();
 		llenarDatos();
+		//solo letras mayusculas
+		txtDescripcion.textProperty().addListener(new ChangeListener<String>() {
+			@Override
+			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+				// TODO Auto-generated method stub
+				String cadena = txtDescripcion.getText().toUpperCase();
+				txtDescripcion.setText(cadena);
+			}
+		});
+		
 		tvDatos.setOnMouseClicked(new EventHandler<Event>() {
 			@Override
 			public void handle(Event event) {
@@ -43,7 +57,7 @@ public class ParametrosTipoPagoC {
 			}
 		});
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	void llenarDatos(){
 		try{
@@ -54,14 +68,14 @@ public class ParametrosTipoPagoC {
 			datos.setAll(listaTipoPago);
 
 			//llenar los datos en la tabla
-			TableColumn<TipoPago, String> idColum = new TableColumn<>("Codigo");
-			idColum.setMinWidth(90);
+			TableColumn<TipoPago, String> idColum = new TableColumn<>("Ítem");
+			idColum.setMinWidth(125);
 			idColum.setCellValueFactory(new PropertyValueFactory<TipoPago, String>("idTipoPago"));
 			TableColumn<TipoPago, String> descripcionColum = new TableColumn<>("Descripción");
-			descripcionColum.setMinWidth(200);
+			descripcionColum.setMinWidth(400);
 			descripcionColum.setCellValueFactory(new PropertyValueFactory<TipoPago, String>("descrpcion"));
 			TableColumn<TipoPago, String> estadoColum = new TableColumn<>("Estado");
-			estadoColum.setMinWidth(50);
+			estadoColum.setMinWidth(85);
 			estadoColum.setCellValueFactory(new PropertyValueFactory<TipoPago, String>("estado"));
 
 			tvDatos.getColumns().addAll(idColum, descripcionColum,estadoColum);
@@ -70,7 +84,7 @@ public class ParametrosTipoPagoC {
 			System.out.println(ex.getMessage());
 		}
 	}
-	
+
 	public void recuperarDatos(TipoPago datos){
 		try{
 			txtCodigo.setText(String.valueOf(datos.getIdTipoPago()));
@@ -83,13 +97,13 @@ public class ParametrosTipoPagoC {
 			e.printStackTrace();
 		}
 	}
-	
+
 	void limpiar(){
 		txtCodigo.setText("0");
 		txtDescripcion.setText("");
 		chkEstado.setSelected(true);
 	}
-	
+
 	public void grabar() {
 		try {
 			TipoPago tipoPago = new TipoPago();
@@ -120,7 +134,7 @@ public class ParametrosTipoPagoC {
 			System.out.println(ex.getMessage());
 		}
 	}
-	
+
 	public void nuevo() {
 		limpiar();
 	}

@@ -1,6 +1,5 @@
 package ec.com.jaapz.controlador;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -11,6 +10,7 @@ import ec.com.jaapz.util.Context;
 import ec.com.jaapz.util.ControllerHelper;
 import ec.com.jaapz.util.Encriptado;
 import javafx.animation.FadeTransition;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
@@ -20,6 +20,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.util.Duration;
 
@@ -56,6 +58,26 @@ public class InicioFormInicioC {
 		
 		txtUsuario.setText("sa");
 		txtClave.setText("sa");
+		
+		//para anadir a la grilla con enter
+		txtUsuario.setOnKeyPressed(new EventHandler<KeyEvent>(){
+			@Override
+			public void handle(KeyEvent ke){
+				if (ke.getCode().equals(KeyCode.ENTER)){
+					aceptar();
+				}
+			}
+		});
+
+		//para anadir a la grilla con enter
+		txtClave.setOnKeyPressed(new EventHandler<KeyEvent>(){
+			@Override
+			public void handle(KeyEvent ke){
+				if (ke.getCode().equals(KeyCode.ENTER)){
+					aceptar();
+				}
+			}
+		});
     }
     
     boolean validarDatos() {
@@ -74,39 +96,43 @@ public class InicioFormInicioC {
 		return bandera;
 	}
     
-    public void aceptar() throws IOException {
-    	if(validarDatos() == false)
-			return;
-		
-		List<SegUsuario> usuario;
-		usuario = usuarioDAO.getUsuario(Encriptado.Encriptar(txtUsuario.getText()),Encriptado.Encriptar(txtClave.getText()));
-		if(usuario.size() == 1){
-			Context.getInstance().setUsuariosC(usuario.get(0));
-			
-			Context.getInstance().setUsuario(Encriptado.Desencriptar(usuario.get(0).getUsuario()));
-			Context.getInstance().setIdUsuario(usuario.get(0).getIdUsuario());
-			
+    public void aceptar(){
+    	try {
+    		if(validarDatos() == false)
+    			return;
+    		
+    		List<SegUsuario> usuario;
+    		usuario = usuarioDAO.getUsuario(Encriptado.Encriptar(txtUsuario.getText()),Encriptado.Encriptar(txtClave.getText()));
+    		if(usuario.size() == 1){
+    			Context.getInstance().setUsuariosC(usuario.get(0));
+    			
+    			Context.getInstance().setUsuario(Encriptado.Desencriptar(usuario.get(0).getUsuario()));
+    			Context.getInstance().setIdUsuario(usuario.get(0).getIdUsuario());
+    			
 
-			Context.getInstance().getApInicioSesion().getChildren().removeAll();
-			FXMLLoader loader = new FXMLLoader(LaunchSystem.class.getResource("/principal/FrmSeleccionPerfil.fxml"));
-			AnchorPane page=(AnchorPane) loader.load();
+    			Context.getInstance().getApInicioSesion().getChildren().removeAll();
+    			FXMLLoader loader = new FXMLLoader(LaunchSystem.class.getResource("/principal/FrmSeleccionPerfil.fxml"));
+    			AnchorPane page=(AnchorPane) loader.load();
 
-			FadeTransition ft = new FadeTransition(Duration.millis(1000));
-			ft.setNode(page);
-			ft.setFromValue(0.1);
-			ft.setToValue(1);
-			ft.setCycleCount(1);
-			ft.setAutoReverse(false);
-			ft.play();
-			AnchorPane.setBottomAnchor(page, 00.0);
-			AnchorPane.setLeftAnchor(page, 00.0);
-			AnchorPane.setTopAnchor(page, 00.0);
-			AnchorPane.setRightAnchor(page, 00.0);
-			Context.getInstance().getApInicioSesion().getChildren().setAll(page);
-		}
-		else{
-			helper.mostrarAlertaError("Clave o Usuario Incorrecto!!!",Context.getInstance().getStagePrincipal());
-		}
+    			FadeTransition ft = new FadeTransition(Duration.millis(1000));
+    			ft.setNode(page);
+    			ft.setFromValue(0.1);
+    			ft.setToValue(1);
+    			ft.setCycleCount(1);
+    			ft.setAutoReverse(false);
+    			ft.play();
+    			AnchorPane.setBottomAnchor(page, 00.0);
+    			AnchorPane.setLeftAnchor(page, 00.0);
+    			AnchorPane.setTopAnchor(page, 00.0);
+    			AnchorPane.setRightAnchor(page, 00.0);
+    			Context.getInstance().getApInicioSesion().getChildren().setAll(page);
+    		}
+    		else{
+    			helper.mostrarAlertaError("Clave o Usuario Incorrecto!!!",Context.getInstance().getStagePrincipal());
+    		}
+    	}catch(Exception ex) {
+    		System.out.println(ex.getMessage());
+    	}
     }
 
     public void cancelar() {

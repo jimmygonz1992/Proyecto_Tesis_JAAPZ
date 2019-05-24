@@ -23,7 +23,7 @@ import java.util.List;
 			+ "and i.estado = 'A' order by i.estadoInspeccion asc"),
 	
 	@NamedQuery(name="SolInspeccionIn.findAllPendiente", query="SELECT i FROM SolInspeccionIn i "
-			+ "where (lower(i.cliente.apellido) like :patron  or lower(i.cliente.nombre) like :patron) "
+			+ "where (lower(i.cliente.apellido) like :patron or lower(i.cliente.nombre) like :patron) "
 			+ "and i.estadoInspeccion = 'PENDIENTE' and i.idUsuEncargado = null and i.estado = 'A' order by i.idSolInspeccion desc"),
 	
 	@NamedQuery(name="SolInspeccionIn.buscarInspeccionPerfil", query="SELECT i FROM SolInspeccionIn i "
@@ -31,7 +31,7 @@ import java.util.List;
 			+ " and i.idUsuEncargado = :idPerfilUsuario and i.estado = 'A' and i.estadoInspeccion = 'PENDIENTE' order by i.idSolInspeccion desc"),
 	
 	@NamedQuery(name="SolInspeccionIn.buscarInspeccionPerfilPendiente", query="SELECT i FROM SolInspeccionIn i "
-			+ "where lower(i.cliente.apellido) like :patron  or lower(i.cliente.nombre) like :patron "
+			+ "where lower(i.cliente.apellido) like :patron or lower(i.cliente.nombre) like :patron "
 			+ " and i.idUsuEncargado = :idPerfilUsuario and i.idUsuEncargado = null "
 			+ " and i.estadoInspeccion = 'PENDIENTE' and i.estado = 'A' order by i.idSolInspeccion desc"),
 	

@@ -38,6 +38,8 @@ public class ParametrosCategoriaC {
 	public void initialize() {
 		btnAceptar.setStyle("-fx-cursor: hand;");
 		btnNuevo.setStyle("-fx-cursor: hand;");
+		txtCodigo.setEditable(false);
+		txtCodigo.setVisible(false);
 		
 		limpiar();
 		llenarDatos();
@@ -100,25 +102,25 @@ public class ParametrosCategoriaC {
 			ObservableList<Categoria> datos = FXCollections.observableArrayList();
 			datos.addAll(categoria);
 			//llenar los datos en la tabla
-			TableColumn<Categoria, String> idColum = new TableColumn<>("Codigo");
-			idColum.setMinWidth(70);
+			TableColumn<Categoria, String> idColum = new TableColumn<>("Ítem");
+			idColum.setMinWidth(80);
 			idColum.setCellValueFactory(new PropertyValueFactory<Categoria, String>("idCategoria"));
 			TableColumn<Categoria, String> descripcionColum = new TableColumn<>("Descripción");
-			descripcionColum.setMinWidth(200);
+			descripcionColum.setMinWidth(380);
 			descripcionColum.setCellValueFactory(new PropertyValueFactory<Categoria, String>("descripcion"));
 			TableColumn<Categoria, String> valorm3Colum = new TableColumn<>("Valor m3");
-			valorm3Colum.setMinWidth(70);
+			valorm3Colum.setMinWidth(60);
 			valorm3Colum.setCellValueFactory(new PropertyValueFactory<Categoria, String>("valorM3"));
 			TableColumn<Categoria, String> estadoColum = new TableColumn<>("Estado");
-			estadoColum.setMinWidth(40);
+			estadoColum.setMinWidth(70);
 			estadoColum.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Categoria,String>, ObservableValue<String>>() {
 				@Override
 				public ObservableValue<String> call(CellDataFeatures<Categoria, String> param) {
 					String estado = "";
 					if(param.getValue().getEstado().equals("A"))
-						estado = "Activo";
+						estado = "A";
 					else if(param.getValue().getEstado().equals("I"))
-						estado = "Inactivo";
+						estado = "I";
 						
 					return new SimpleObjectProperty<String>(estado);
 				}

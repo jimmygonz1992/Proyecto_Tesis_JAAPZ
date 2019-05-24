@@ -2,8 +2,7 @@
 <!-- Created with Jaspersoft Studio version 6.5.1.final using JasperReports Library version 6.5.1  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="materiales_agotados" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="8eb1b247-ab68-465c-8668-0ce1375a1e3b">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
-	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="conectionBDJAAPZ"/>
-	<parameter name="FECHA" class="java.lang.String"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="jaapz_conection"/>
 	<queryString language="SQL">
 		<![CDATA[SELECT rubro.codigo,
 	rubro.descripcion,
@@ -41,7 +40,7 @@ ORDER BY rubro.id_rubro ASC]]>
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="84" splitType="Stretch">
+		<band height="81" splitType="Stretch">
 			<staticText>
 				<reportElement x="120" y="0" width="340" height="13" uuid="de41107a-14fc-4b19-98d5-45c8216a84dc"/>
 				<textElement textAlignment="Center">
@@ -80,17 +79,17 @@ ORDER BY rubro.id_rubro ASC]]>
 				</textElement>
 				<text><![CDATA[RUC: 2490016034001]]></text>
 			</staticText>
-			<textField>
-				<reportElement x="432" y="68" width="117" height="13" uuid="4ee18d6c-461a-447a-b095-6d5066d04499"/>
-				<textFieldExpression><![CDATA[$P{FECHA}]]></textFieldExpression>
-			</textField>
 			<staticText>
-				<reportElement x="365" y="68" width="60" height="13" uuid="6ae8f343-24f8-478c-876f-6d6eead85de3"/>
+				<reportElement x="340" y="68" width="85" height="13" uuid="6ae8f343-24f8-478c-876f-6d6eead85de3"/>
 				<textElement textAlignment="Center">
 					<font isBold="true"/>
 				</textElement>
-				<text><![CDATA[Fecha:]]></text>
+				<text><![CDATA[Fecha impresión:]]></text>
 			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="432" y="68" width="112" height="13" uuid="48b0b6c8-9d74-4658-8c79-38661072b835"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
 		</band>
 	</title>
 	<columnHeader>

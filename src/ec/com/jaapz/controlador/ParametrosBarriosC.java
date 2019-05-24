@@ -34,6 +34,8 @@ public class ParametrosBarriosC {
 	public void initialize() {
 		btnAceptar.setStyle("-fx-cursor: hand;");
 		btnNuevo.setStyle("-fx-cursor: hand;");
+		txtCodigo.setEditable(false);
+		txtCodigo.setVisible(false);
 		
 		limpiar();
 		llenarDatos();
@@ -75,14 +77,14 @@ public class ParametrosBarriosC {
 			datos.setAll(listaBarrios);
 
 			//llenar los datos en la tabla
-			TableColumn<Barrio, String> idColum = new TableColumn<>("Codigo");
-			idColum.setMinWidth(90);
+			TableColumn<Barrio, String> idColum = new TableColumn<>("Ítem");
+			idColum.setMinWidth(100);
 			idColum.setCellValueFactory(new PropertyValueFactory<Barrio, String>("idBarrio"));
 			TableColumn<Barrio, String> descripcionColum = new TableColumn<>("Nombre");
-			descripcionColum.setMinWidth(200);
+			descripcionColum.setMinWidth(400);
 			descripcionColum.setCellValueFactory(new PropertyValueFactory<Barrio, String>("nombre"));
 			TableColumn<Barrio, String> estadoColum = new TableColumn<>("Estado");
-			estadoColum.setMinWidth(50);
+			estadoColum.setMinWidth(90);
 			estadoColum.setCellValueFactory(new PropertyValueFactory<Barrio, String>("estado"));
 
 			tvDatos.getColumns().addAll(idColum, descripcionColum,estadoColum);

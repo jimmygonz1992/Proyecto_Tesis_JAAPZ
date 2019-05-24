@@ -27,15 +27,12 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 
 public class SolicitudInstalacionC {
 	@FXML private Button btnGrabarIns;
@@ -78,7 +75,9 @@ public class SolicitudInstalacionC {
     		
     		dtpFechaIns.setValue(LocalDate.now());
     		llenarCombos();
-    		txtCedula.setOnKeyPressed(new EventHandler<KeyEvent>(){
+    		
+    		//comentado xq muestra dos veces el mensaje
+    		/*txtCedula.setOnKeyPressed(new EventHandler<KeyEvent>(){
     			@Override
     			public void handle(KeyEvent ke){
     				if (ke.getCode().equals(KeyCode.ENTER)){
@@ -97,7 +96,7 @@ public class SolicitudInstalacionC {
     					}
     				}
     			}
-    		});
+    		});*/
     		
     		
     		txtCedula.focusedProperty().addListener(new ChangeListener<Boolean>(){

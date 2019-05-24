@@ -10,7 +10,7 @@
 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="411.0" prefWidth="741.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ec.com.jaapz.controlador.ParametrosTipoPagoC">
   <!-- TODO Add Nodes -->
   <children>
-    <GridPane hgap="1.0" minHeight="0.0" minWidth="0.0" prefHeight="331.0" prefWidth="699.0" vgap="1.0" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="22.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="50.0">
+    <GridPane hgap="1.0" minHeight="0.0" minWidth="0.0" prefHeight="331.0" prefWidth="699.0" vgap="1.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="22.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
       <children>
         <Label alignment="CENTER" prefHeight="42.0" prefWidth="317.0" text="TIPO DE PAGO" GridPane.columnSpan="7" GridPane.halignment="CENTER">
           <font><Font name="Arial Bold" size="30.0" /></font>
@@ -24,10 +24,10 @@
         </Label>
         <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" style="-fx-border-color: #bbc8d0; -fx-border-width: 1px; -fx-spacing: 8; -fx-background-radius: 6.0; -fx-max-height: 300" GridPane.columnIndex="4" GridPane.columnSpan="2" GridPane.rowIndex="5">
           <children>
-            <Button fx:id="btnAceptar" alignment="BOTTOM_CENTER" contentDisplay="TOP" graphicTextGap="0.0" mnemonicParsing="false" onAction="#grabar" prefHeight="49.0" prefWidth="72.0" styleClass="botonGrabar" text="Grabar">
+            <Button fx:id="btnAceptar" alignment="BOTTOM_CENTER" contentDisplay="TOP" graphicTextGap="0.0" mnemonicParsing="false" onAction="#grabar" prefHeight="55.0" prefWidth="75.0" styleClass="botonGrabar" text="Grabar">
             	<font><Font name="Arial Bold" size="12.0" /></font>
             </Button>
-            <Button fx:id="btnNuevo" alignment="BOTTOM_CENTER" contentDisplay="TOP" graphicTextGap="0.0" mnemonicParsing="false" onAction="#nuevo" prefHeight="49.0" prefWidth="72.0" styleClass="botonNuevo" text="Nuevo">
+            <Button fx:id="btnNuevo" alignment="BOTTOM_CENTER" contentDisplay="TOP" graphicTextGap="0.0" mnemonicParsing="false" onAction="#nuevo" prefHeight="55.0" prefWidth="75.0" styleClass="botonNuevo" text="Nuevo">
               <HBox.margin><Insets left="20.0" /></HBox.margin>
               <font><Font name="Arial Bold" size="12.0" /></font>
             </Button>
@@ -37,13 +37,9 @@
                <children>
               <GridPane alignment="CENTER" hgap="1.0" styleClass="BordesGrid" vgap="1.0" HBox.hgrow="ALWAYS">
                 <children>
-                  <Label text="Código:">
-                  	<font><Font name="Arial Bold" size="12.0" /></font>
-                  </Label>
                   <Label text="Descripción:" GridPane.rowIndex="2">
                   	<font><Font name="Arial Bold" size="12.0" /></font>
                   </Label>
-                  <TextField fx:id="txtCodigo" GridPane.columnIndex="1" />
                   <TextField fx:id="txtDescripcion" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                   <Label text="Estado:" GridPane.rowIndex="4">
                   	<font><Font name="Arial Bold" size="12.0" /></font>
@@ -67,6 +63,7 @@
               </GridPane>
                </children>
             </HBox>
+      <TextField fx:id="txtCodigo" GridPane.columnIndex="5" />
       </children>
       <columnConstraints>
         <ColumnConstraints hgrow="SOMETIMES" maxWidth="95.0" minWidth="0.0" prefWidth="10.0" />
@@ -78,13 +75,13 @@
         <ColumnConstraints hgrow="SOMETIMES" maxWidth="95.0" minWidth="0.0" prefWidth="10.0" />
       </columnConstraints>
       <rowConstraints>
-        <RowConstraints maxHeight="100.0" minHeight="10.0" prefHeight="19.0" vgrow="SOMETIMES" />
-        <RowConstraints maxHeight="63.0" minHeight="0.0" prefHeight="0.0" vgrow="SOMETIMES" />
-        <RowConstraints maxHeight="185.0" minHeight="7.0" prefHeight="12.0" vgrow="SOMETIMES" />
-        <RowConstraints maxHeight="224.0" minHeight="10.0" prefHeight="197.0" vgrow="SOMETIMES" />
-        <RowConstraints maxHeight="28.0" minHeight="4.0" prefHeight="4.0" vgrow="SOMETIMES" />
-        <RowConstraints maxHeight="57.0" minHeight="10.0" prefHeight="46.0" vgrow="SOMETIMES" />
-        <RowConstraints maxHeight="47.0" minHeight="10.0" prefHeight="47.0" vgrow="SOMETIMES" />
+        <RowConstraints maxHeight="45.0" minHeight="10.0" prefHeight="35.0" vgrow="SOMETIMES" />
+        <RowConstraints maxHeight="65.0" minHeight="0.0" prefHeight="25.0" vgrow="SOMETIMES" />
+        <RowConstraints maxHeight="35.0" minHeight="7.0" prefHeight="25.0" vgrow="SOMETIMES" />
+        <RowConstraints maxHeight="350.0" minHeight="10.0" prefHeight="200.0" vgrow="SOMETIMES" />
+        <RowConstraints maxHeight="20.0" minHeight="4.0" prefHeight="15.0" vgrow="SOMETIMES" />
+        <RowConstraints maxHeight="85.0" minHeight="10.0" prefHeight="75.0" vgrow="SOMETIMES" />
+        <RowConstraints maxHeight="20.0" minHeight="10.0" prefHeight="18.0" vgrow="SOMETIMES" />
       </rowConstraints>
     </GridPane>
   </children>

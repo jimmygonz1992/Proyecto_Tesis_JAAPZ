@@ -30,6 +30,17 @@ public class SolInspeccionRepDAO extends ClaseDAO{
 		return resultado;
 	}
 	
+	//similar a la anterior pero me sirve para ver en modo administrador
+	@SuppressWarnings("unchecked")
+	public List<SolInspeccionRep> getListaInspeccionRepPendiente(String patron){
+		List<SolInspeccionRep> resultado = new ArrayList<SolInspeccionRep>();
+		Query query = getEntityManager().createNamedQuery("SolInspeccionRep.buscarListaRep");
+		query.setHint("javax.persistence.cache.storeMode", "REFRESH");
+		query.setParameter("patron", "%" + patron + "%");
+		resultado = (List<SolInspeccionRep>) query.getResultList();
+		return resultado;
+	}
+	
 	@SuppressWarnings("unchecked")
 	public List<SolInspeccionRep> getListaInspeccionAsignada(Integer patron){
 		List<SolInspeccionRep> resultado = new ArrayList<SolInspeccionRep>();

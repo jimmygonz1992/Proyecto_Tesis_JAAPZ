@@ -13,9 +13,9 @@
 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="630.0" prefWidth="708.0" stylesheets="/estilo.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ec.com.jaapz.controlador.ParametrosPreciosUnitariosC">
    <children>
       
-            <GridPane alignment="TOP_CENTER" layoutX="5.0" layoutY="26.0" prefHeight="590.0" prefWidth="655.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="20.0">
+            <GridPane alignment="TOP_CENTER" layoutX="5.0" layoutY="26.0" prefHeight="590.0" prefWidth="750.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="20.0">
         <columnConstraints>
-            <ColumnConstraints maxWidth="311.0" minWidth="10.0" prefWidth="176.0" />
+            <ColumnConstraints maxWidth="311.0" minWidth="10.0" prefWidth="200.0" />
             <ColumnConstraints maxWidth="423.0" minWidth="10.0" prefWidth="259.0" />
             <ColumnConstraints maxWidth="423.0" minWidth="10.0" prefWidth="175.0" />
           <ColumnConstraints maxWidth="427.0" minWidth="7.0" prefWidth="11.0" />
@@ -24,12 +24,12 @@
             <ColumnConstraints maxWidth="0.0" minWidth="0.0" prefWidth="0.0" />
         </columnConstraints>
         <rowConstraints>
-          <RowConstraints maxHeight="109.0" minHeight="10.0" prefHeight="44.0" vgrow="SOMETIMES" />
-          <RowConstraints maxHeight="213.0" minHeight="10.0" prefHeight="86.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="157.0" minHeight="10.0" prefHeight="20.0" vgrow="SOMETIMES" />
-          <RowConstraints maxHeight="430.0" minHeight="10.0" prefHeight="315.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="365.0" minHeight="10.0" prefHeight="55.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="90.0" minHeight="10.0" prefHeight="73.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="75.0" minHeight="10.0" prefHeight="44.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="100.0" minHeight="10.0" prefHeight="86.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="35.0" minHeight="10.0" prefHeight="20.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="364.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="30.0" minHeight="6.0" prefHeight="15.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="80.0" minHeight="10.0" prefHeight="73.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
             
@@ -87,7 +87,7 @@
             
                    <TableView fx:id="tvDatos" GridPane.columnSpan="3" GridPane.rowIndex="3" />
             
-                  <VBox alignment="CENTER" prefHeight="315.0" prefWidth="56.0" style="-fx-border-color: #bbc8d0; -fx-border-width: 1px; -fx-spacing: 8; -fx-background-radius: 6.0; -fx-max-height: 300" GridPane.columnIndex="4" GridPane.rowIndex="3">
+                  <VBox alignment="CENTER" prefWidth="73.0" style="-fx-border-color: #bbc8d0; -fx-border-width: 1px; -fx-spacing: 8; -fx-background-radius: 6.0;" GridPane.columnIndex="4" GridPane.rowIndex="3" GridPane.valignment="CENTER">
                <children>
                   <Button fx:id="btnAgregar" alignment="BOTTOM_CENTER" contentDisplay="TOP" mnemonicParsing="false" onAction="#agregarPrecioUnitario" prefHeight="54.0" prefWidth="66.0" styleClass="botonAgregar" text="Agregar">
                      <VBox.margin>
@@ -111,7 +111,7 @@
             </Label>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" style="-fx-border-color: #bbc8d0; -fx-border-width: 1px; -fx-spacing: 8; -fx-background-radius: 6.0; -fx-max-height: 300" GridPane.columnSpan="5" GridPane.rowIndex="5">
                <children>
-                  <Button fx:id="btnGrabar" alignment="BOTTOM_CENTER" contentDisplay="TOP" graphicTextGap="0.0" mnemonicParsing="false" onAction="#grabar" prefHeight="49.0" prefWidth="72.0" styleClass="botonGrabar" text="Grabar">
+                  <Button fx:id="btnGrabar" alignment="BOTTOM_CENTER" contentDisplay="TOP" graphicTextGap="0.0" mnemonicParsing="false" onAction="#grabar" prefHeight="55.0" prefWidth="75.0" styleClass="botonGrabar" text="Grabar">
                      <font>
                         <Font name="Arial Bold" size="12.0" />
                      </font>

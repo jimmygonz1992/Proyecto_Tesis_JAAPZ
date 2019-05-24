@@ -8,219 +8,220 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="587.0" prefWidth="685.0" stylesheets="/estilo.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ec.com.jaapz.controlador.SeguridadUsuarioC">
+<AnchorPane prefHeight="587.0" prefWidth="841.0" stylesheets="/estilo.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ec.com.jaapz.controlador.SeguridadUsuarioC">
    <children>
-      <HBox alignment="CENTER" layoutX="30.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="5.0">
+      <GridPane alignment="CENTER" layoutX="131.0" layoutY="14.0" maxWidth="500.0" minWidth="0.0" prefWidth="400.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="0.0">
+        <columnConstraints>
+            <ColumnConstraints fillWidth="false" />
+          <ColumnConstraints hgrow="ALWAYS" maxWidth="450.0" minWidth="10.0" prefWidth="424.0" />
+            <ColumnConstraints hgrow="ALWAYS" maxWidth="450.0" minWidth="10.0" prefWidth="417.0" />
+            <ColumnConstraints fillWidth="false" hgrow="NEVER" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints maxHeight="30.0" minHeight="8.0" prefHeight="30.0" />
+            <RowConstraints maxHeight="28.0" minHeight="5.0" prefHeight="15.0" />
+            <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="28.0" />
+          <RowConstraints maxHeight="650.0" minHeight="10.0" prefHeight="438.0" vgrow="ALWAYS" />
+            <RowConstraints maxHeight="26.0" minHeight="0.0" prefHeight="11.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="75.0" minHeight="10.0" prefHeight="65.0" vgrow="SOMETIMES" />
+        </rowConstraints>
          <children>
-            <GridPane alignment="CENTER" HBox.hgrow="ALWAYS">
-              <columnConstraints>
-                  <ColumnConstraints fillWidth="false" />
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="653.0" minWidth="10.0" prefWidth="603.0" />
-                  <ColumnConstraints fillWidth="false" hgrow="NEVER" />
-              </columnConstraints>
-              <rowConstraints>
-                <RowConstraints maxHeight="30.0" minHeight="8.0" prefHeight="30.0" />
-                  <RowConstraints maxHeight="28.0" minHeight="5.0" prefHeight="28.0" vgrow="NEVER" />
-                  <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="32.0" />
-                <RowConstraints maxHeight="488.0" minHeight="10.0" prefHeight="410.0" vgrow="SOMETIMES" />
-                  <RowConstraints maxHeight="25.0" minHeight="10.0" prefHeight="19.0" vgrow="SOMETIMES" />
-                <RowConstraints maxHeight="75.0" minHeight="10.0" prefHeight="71.0" vgrow="SOMETIMES" />
-              </rowConstraints>
+            <HBox alignment="CENTER" prefHeight="41.0" prefWidth="667.0" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.hgrow="ALWAYS">
                <children>
-                  <HBox alignment="CENTER" prefHeight="41.0" prefWidth="667.0" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS">
+                  <Label text="USUARIOS">
+                     <font>
+                        <Font name="Arial Bold" size="30.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+
+                  <HBox alignment="CENTER" style="-fx-border-color: #bbc8d0; -fx-border-width: 1px; -fx-background-radius: 6; -fx-max-height: 600; -fx-max-width: 1500; -fx-min-height: 10; -fx-min-width: 10" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER">
+               <children>
+                  <GridPane alignment="CENTER" HBox.hgrow="ALWAYS">
                      <children>
-                        <Label text="USUARIOS">
+                        <Label id="lb" fx:id="lbCodigo" text="Código:" GridPane.rowIndex="10">
                            <font>
-                              <Font name="Arial Bold" size="30.0" />
+                              <Font name="Arial Bold" size="12.0" />
                            </font>
                         </Label>
-                     </children>
-                  </HBox>
-      
-                  <HBox alignment="CENTER" style="-fx-border-color: #bbc8d0; -fx-border-width: 1px; -fx-background-radius: 6; -fx-max-height: 600; -fx-max-width: 1500; -fx-min-height: 10; -fx-min-width: 10" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3" GridPane.valignment="CENTER">
-                     <children>
-                        <GridPane alignment="CENTER" HBox.hgrow="ALWAYS">
+                        <Label text="Nombres:" GridPane.rowIndex="2">
+                           <font>
+                              <Font name="Arial Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <Label text="Apellidos:" GridPane.rowIndex="3">
+                           <font>
+                              <Font name="Arial Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <Label text="Usuario:" GridPane.rowIndex="8">
+                           <font>
+                              <Font name="Arial Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <Label text="Teléfono:" GridPane.rowIndex="6">
+                           <font>
+                              <Font name="Arial Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <Label text="Dirección:" GridPane.rowIndex="7">
+                           <font>
+                              <Font name="Arial Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <Label text="Cédula:" GridPane.halignment="LEFT" GridPane.rowIndex="1">
+                           <font>
+                              <Font name="Arial Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <Label text="Cargo:" GridPane.halignment="LEFT" GridPane.rowIndex="4">
+                           <font>
+                              <Font name="Arial Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <Label text="Clave:" GridPane.halignment="LEFT" GridPane.rowIndex="9">
+                           <font>
+                              <Font name="Arial Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <Label text="Estado:" GridPane.columnIndex="2" GridPane.halignment="CENTER">
+                           <font>
+                              <Font name="Arial Bold" size="12.0" />
+                           </font>
+                           <GridPane.margin>
+                              <Insets left="10.0" />
+                           </GridPane.margin>
+                        </Label>
+                        <TextField fx:id="txtCedula" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <TextField fx:id="txtNombres" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="2" />
+                        <TextField fx:id="txtApellidos" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="3" />
+                        <TextField fx:id="txtCargo" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="4" />
+                        <TextField fx:id="txtTelefono" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="6" />
+                        <TextField fx:id="txtDireccion" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="7" />
+                        <TextField fx:id="txtUsuario" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+                        <PasswordField fx:id="txtClave" GridPane.columnIndex="1" GridPane.rowIndex="9" />
+                        <CheckBox fx:id="chkEstado" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" GridPane.columnIndex="2" GridPane.halignment="RIGHT">
+                           <GridPane.margin>
+                              <Insets />
+                           </GridPane.margin>
+                        </CheckBox>
+                        <Label text="Foto" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.valignment="TOP">
+                           <font>
+                              <Font name="Arial Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER">
                            <children>
-                              <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="8">
+                              <Button fx:id="btnExaminar" alignment="BOTTOM_CENTER" contentDisplay="TOP" mnemonicParsing="false" onAction="#examinar" prefHeight="37.0" prefWidth="71.0" styleClass="botonAgregar" text="Examinar">
+                                 <font>
+                                    <Font name="Arial Bold" size="12.0" />
+                                 </font>
+                              </Button>
+                              <Button fx:id="btnQuitar" alignment="BOTTOM_CENTER" contentDisplay="TOP" mnemonicParsing="false" onAction="#quitar" prefHeight="37.0" prefWidth="71.0" styleClass="botonQuitarR" text="Quitar">
+                                 <font>
+                                    <Font name="Arial Bold" size="12.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets left="10.0" />
+                                 </HBox.margin>
+                              </Button>
+                           </children>
+                        </HBox>
+                        <Label id="lb" contentDisplay="CENTER" prefHeight="17.0" prefWidth="93.0" text="Buscar Usuario:">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                           <GridPane.margin>
+                              <Insets left="3.0" />
+                           </GridPane.margin>
+                        </Label>
+                        <Button fx:id="btnBuscar" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#buscar" prefHeight="37.0" prefWidth="47.0" styleClass="botonBuscar" GridPane.columnIndex="1">
+                           <GridPane.margin>
+                              <Insets left="50.0" />
+                           </GridPane.margin>
+                        </Button>
+                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.rowSpan="3" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                           <children>
+                              <ImageView fx:id="ivFoto" fitHeight="123.0" fitWidth="145.0" pickOnBounds="true" preserveRatio="true" styleClass="Bordes" HBox.hgrow="ALWAYS" />
+                           </children>
+                        </HBox>
+                        <VBox alignment="CENTER" GridPane.columnIndex="4" GridPane.rowIndex="6" GridPane.rowSpan="6">
+                           <children>
+                              <Label alignment="CENTER" contentDisplay="CENTER" text="Perfiles" textAlignment="CENTER">
+                                 <font>
+                                    <Font name="Arial Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                              <TableView fx:id="tvPerfiles" prefHeight="250.0" prefWidth="243.0" />
+                              <HBox alignment="CENTER" prefHeight="70.0" prefWidth="372.0" VBox.vgrow="ALWAYS">
                                  <children>
-                                    <TextField fx:id="txtCodigo" prefHeight="25.0" prefWidth="81.0" />
-                                 </children>
-                              </HBox>
-                              <Label id="lb" fx:id="lbCodigo" text="Código:" GridPane.columnIndex="1" GridPane.rowIndex="8">
-                                 <font>
-                                    <Font name="Arial Bold" size="12.0" />
-                                 </font>
-                              </Label>
-                              <Label text="Nombres:" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                                 <font>
-                                    <Font name="Arial Bold" size="12.0" />
-                                 </font>
-                              </Label>
-                              <Label text="Apellidos:" GridPane.columnIndex="1" GridPane.rowIndex="2">
-                                 <font>
-                                    <Font name="Arial Bold" size="12.0" />
-                                 </font>
-                              </Label>
-                              <Label text="Usuario:" GridPane.columnIndex="1" GridPane.rowIndex="6">
-                                 <font>
-                                    <Font name="Arial Bold" size="12.0" />
-                                 </font>
-                              </Label>
-                              <Label text="Teléfono:" GridPane.columnIndex="1" GridPane.rowIndex="4">
-                                 <font>
-                                    <Font name="Arial Bold" size="12.0" />
-                                 </font>
-                              </Label>
-                              <Label text="Dirección:" GridPane.columnIndex="1" GridPane.rowIndex="5">
-                                 <font>
-                                    <Font name="Arial Bold" size="12.0" />
-                                 </font>
-                              </Label>
-                              <Label text="Cédula:" GridPane.columnIndex="1" GridPane.halignment="LEFT">
-                                 <font>
-                                    <Font name="Arial Bold" size="12.0" />
-                                 </font>
-                              </Label>
-                              <Label text="Cargo:" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="3">
-                                 <font>
-                                    <Font name="Arial Bold" size="12.0" />
-                                 </font>
-                              </Label>
-                              <Label text="Clave:" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="7">
-                                 <font>
-                                    <Font name="Arial Bold" size="12.0" />
-                                 </font>
-                              </Label>
-                              <Label text="Estado:" GridPane.columnIndex="3" GridPane.halignment="CENTER">
-                                 <font>
-                                    <Font name="Arial Bold" size="12.0" />
-                                 </font>
-                                 <GridPane.margin>
-                                    <Insets left="70.0" />
-                                 </GridPane.margin>
-                              </Label>
-                              <TextField fx:id="txtCedula" GridPane.columnIndex="2" />
-                              <TextField fx:id="txtNombres" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.rowIndex="1" />
-                              <TextField fx:id="txtApellidos" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.rowIndex="2" />
-                              <TextField fx:id="txtCargo" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.rowIndex="3" />
-                              <TextField fx:id="txtTelefono" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.rowIndex="4" />
-                              <TextField fx:id="txtDireccion" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.rowIndex="5" />
-                              <TextField fx:id="txtUsuario" GridPane.columnIndex="2" GridPane.rowIndex="6" />
-                              <PasswordField fx:id="txtClave" GridPane.columnIndex="2" GridPane.rowIndex="7" />
-                              <CheckBox fx:id="chkEstado" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" GridPane.columnIndex="3" GridPane.halignment="RIGHT">
-                                 <GridPane.margin>
-                                    <Insets />
-                                 </GridPane.margin></CheckBox>
-                              <Label text="Foto" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.valignment="TOP">
-                                 <font>
-                                    <Font name="Arial Bold" size="12.0" />
-                                 </font>
-                              </Label>
-                              <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER">
-                                 <children>
-                                    <Button fx:id="btnExaminar" alignment="BOTTOM_CENTER" contentDisplay="TOP" mnemonicParsing="false" onAction="#examinar" prefHeight="37.0" prefWidth="71.0" styleClass="botonAgregar" text="Examinar">
-                                       <font>
-                                          <Font name="Arial Bold" size="12.0" />
-                                       </font>
-                                    </Button>
-                                    <Button fx:id="btnQuitar" alignment="BOTTOM_CENTER" contentDisplay="TOP" mnemonicParsing="false" onAction="#quitar" prefHeight="37.0" prefWidth="71.0" styleClass="botonQuitarR" text="Quitar">
-                                       <font>
-                                          <Font name="Arial Bold" size="12.0" />
-                                       </font>
+                                    <Button fx:id="btnAgregarPerfil" alignment="BOTTOM_CENTER" contentDisplay="TOP" mnemonicParsing="false" onAction="#agregarPerfil" prefHeight="46.0" prefWidth="80.0" styleClass="botonAgregar" text="Agregar" />
+                                    <Button fx:id="btnQuitarPerfil" alignment="BOTTOM_CENTER" contentDisplay="TOP" mnemonicParsing="false" onAction="#quitarPerfil" prefHeight="45.0" prefWidth="80.0" styleClass="botonQuitarR" text="Quitar">
                                        <HBox.margin>
-                                          <Insets left="10.0" />
+                                          <Insets left="15.0" />
                                        </HBox.margin>
                                     </Button>
                                  </children>
                               </HBox>
-                              <Label id="lb" contentDisplay="CENTER" prefHeight="17.0" prefWidth="75.0" text="Buscar:" GridPane.columnIndex="3">
-                                 <font>
-                                    <Font name="System Bold" size="12.0" />
-                                 </font>
-                                 <GridPane.margin>
-                                    <Insets left="3.0" />
-                                 </GridPane.margin>
-                              </Label>
-                              <Button fx:id="btnBuscar" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#buscar" styleClass="botonBuscar" GridPane.columnIndex="3">
-                                 <GridPane.margin>
-                                    <Insets left="45.0" />
-                                 </GridPane.margin>
-                              </Button>
-                              <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.rowSpan="3" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
-                                 <children>
-                                    <ImageView fx:id="ivFoto" fitHeight="123.0" fitWidth="145.0" pickOnBounds="true" preserveRatio="true" styleClass="Bordes" HBox.hgrow="ALWAYS" />
-                                 </children>
-                              </HBox>
-                              <VBox alignment="CENTER" prefHeight="156.0" prefWidth="243.0" GridPane.columnIndex="5" GridPane.rowIndex="5" GridPane.rowSpan="4">
-                                 <children>
-                                    <Label alignment="CENTER" contentDisplay="CENTER" text="Perfiles" textAlignment="CENTER">
-                                       <font>
-                                          <Font name="Arial Bold" size="12.0" />
-                                       </font>
-                                    </Label>
-                                    <TableView fx:id="tvPerfiles" prefHeight="121.0" prefWidth="243.0" />
-                                    <HBox alignment="CENTER" prefHeight="0.0" prefWidth="243.0" VBox.vgrow="ALWAYS">
-                                       <children>
-                                          <Button fx:id="btnAgregarPerfil" alignment="BOTTOM_CENTER" contentDisplay="TOP" mnemonicParsing="false" onAction="#agregarPerfil" prefHeight="46.0" prefWidth="59.0" styleClass="botonAgregar" text="Agregar" />
-                                          <Button fx:id="btnQuitarPerfil" alignment="BOTTOM_CENTER" contentDisplay="TOP" mnemonicParsing="false" onAction="#quitarPerfil" prefHeight="45.0" prefWidth="59.0" styleClass="botonQuitarR" text="Quitar">
-                                             <HBox.margin>
-                                                <Insets left="15.0" />
-                                             </HBox.margin>
-                                          </Button>
-                                       </children>
-                                    </HBox>
-                                 </children>
-                              </VBox>
                            </children>
-                           <columnConstraints>
-                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="115.0" minWidth="1.0" prefWidth="11.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="159.0" minWidth="28.0" prefWidth="68.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="196.0" minWidth="10.0" prefWidth="140.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="198.0" minWidth="10.0" prefWidth="153.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="59.0" minWidth="5.0" prefWidth="22.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="243.0" minWidth="10.0" prefWidth="221.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="204.0" minWidth="10.0" prefWidth="14.0" />
-                           </columnConstraints>
-                           <rowConstraints>
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints maxHeight="44.0" minHeight="10.0" prefHeight="44.0" vgrow="SOMETIMES" />
-                              <RowConstraints maxHeight="54.0" minHeight="10.0" prefHeight="44.0" vgrow="SOMETIMES" />
-                              <RowConstraints maxHeight="39.0" minHeight="10.0" prefHeight="34.0" vgrow="SOMETIMES" />
-                              <RowConstraints maxHeight="61.0" minHeight="10.0" prefHeight="55.0" vgrow="SOMETIMES" />
-                              <RowConstraints maxHeight="68.0" minHeight="10.0" prefHeight="51.0" vgrow="SOMETIMES" />
-                              <RowConstraints maxHeight="57.0" minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
-                              <RowConstraints maxHeight="41.0" minHeight="10.0" prefHeight="36.0" vgrow="SOMETIMES" />
-                              <RowConstraints maxHeight="62.0" minHeight="9.0" prefHeight="62.0" vgrow="SOMETIMES" />
-                           </rowConstraints>
-                        </GridPane>
+                        </VBox>
+                        <TextField fx:id="txtCodigo" prefHeight="25.0" prefWidth="81.0" GridPane.columnIndex="1" GridPane.rowIndex="10" />
                      </children>
-                  </HBox>
-                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" style="-fx-border-color: #bbc8d0; -fx-border-width: 1px; -fx-background-radius: 6; -fx-max-height: 600; -fx-max-width: 1500; -fx-min-height: 10; -fx-min-width: 10" GridPane.columnIndex="1" GridPane.rowIndex="5">
-                     <children>
-                        <Button fx:id="btnGrabar" alignment="BOTTOM_CENTER" contentDisplay="TOP" graphicTextGap="0.0" maxHeight="50.0" minHeight="50.0" mnemonicParsing="false" onAction="#grabar" prefHeight="50.0" prefWidth="72.0" styleClass="botonGrabar" text="Grabar">
-                           <font>
-                              <Font name="Arial Bold" size="12.0" />
-                           </font>
-                        </Button>
-                        <Button fx:id="btnNuevo" alignment="BOTTOM_CENTER" contentDisplay="TOP" graphicTextGap="0.0" maxHeight="50.0" minHeight="50.0" mnemonicParsing="false" onAction="#nuevo" prefHeight="50.0" prefWidth="72.0" styleClass="botonNuevo" text="Nuevo">
-                           <font>
-                              <Font name="Arial Bold" size="12.0" />
-                           </font>
-                           <HBox.margin>
-                              <Insets left="20.0" />
-                           </HBox.margin>
-                        </Button>
-                     </children>
-                  </HBox>
-                  <Label alignment="BASELINE_LEFT" contentDisplay="BOTTOM" text="INGRESO DE DATOS" GridPane.columnIndex="1" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
-                     <font>
-                        <Font name="Arial Bold" size="14.0" />
-                     </font>
-                  </Label>
-                  <Separator prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="159.0" minWidth="28.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="221.0" minWidth="10.0" prefWidth="153.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="198.0" minWidth="10.0" prefWidth="164.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="59.0" minWidth="0.0" prefWidth="10.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="384.0" minWidth="10.0" prefWidth="340.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="45.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="45.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="45.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="45.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="45.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="5.0" minHeight="3.0" prefHeight="3.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="45.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="45.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="45.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="50.0" minHeight="9.0" prefHeight="45.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="90.0" minHeight="10.0" prefHeight="22.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="90.0" minHeight="10.0" prefHeight="12.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                     <padding>
+                        <Insets left="5.0" right="5.0" />
+                     </padding>
+                  </GridPane>
                </children>
-            </GridPane>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" style="-fx-border-color: #bbc8d0; -fx-border-width: 1px; -fx-background-radius: 6; -fx-max-height: 600; -fx-max-width: 1500; -fx-min-height: 10; -fx-min-width: 10" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="5">
+               <children>
+                  <Button fx:id="btnGrabar" alignment="BOTTOM_CENTER" contentDisplay="TOP" graphicTextGap="0.0" maxHeight="50.0" minHeight="50.0" mnemonicParsing="false" onAction="#grabar" prefHeight="50.0" prefWidth="72.0" styleClass="botonGrabar" text="Grabar">
+                     <font>
+                        <Font name="Arial Bold" size="12.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="btnNuevo" alignment="BOTTOM_CENTER" contentDisplay="TOP" graphicTextGap="0.0" maxHeight="50.0" minHeight="50.0" mnemonicParsing="false" onAction="#nuevo" prefHeight="50.0" prefWidth="72.0" styleClass="botonNuevo" text="Nuevo">
+                     <font>
+                        <Font name="Arial Bold" size="12.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="20.0" />
+                     </HBox.margin>
+                  </Button>
+               </children>
+            </HBox>
+            <Label alignment="BASELINE_LEFT" contentDisplay="BOTTOM" text="INGRESO DE DATOS" GridPane.columnIndex="1" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
+               <font>
+                  <Font name="Arial Bold" size="14.0" />
+               </font>
+               <GridPane.margin>
+                  <Insets left="5.0" />
+               </GridPane.margin>
+            </Label>
+            <Separator prefWidth="200.0" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="1" />
          </children>
-      </HBox>
+      </GridPane>
    </children>
 </AnchorPane>

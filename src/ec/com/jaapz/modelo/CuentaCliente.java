@@ -15,14 +15,14 @@ import java.util.List;
 @Table(name="cuenta_cliente")
 @NamedQueries({
 	@NamedQuery(name="CuentaCliente.findAll", query="SELECT c FROM CuentaCliente c where "
-			+ "(lower(c.cliente.nombre) like lower(:patron) or lower(c.cliente.apellido) like lower(:patron) or lower(c.cliente.cedula) like lower(:patron)) and c.estado='A' order by c.idCuenta asc"),
+		+ "(lower(c.cliente.nombre) like lower(:patron) or lower(c.cliente.apellido) like lower(:patron) or lower(c.cliente.cedula) like lower(:patron)) and c.estado='A' order by c.idCuenta asc"),
 	@NamedQuery(name="CuentaCliente.bucarTodos", query="SELECT c FROM CuentaCliente c where c.estado = 'A' order by c.idCuenta"),
 	@NamedQuery(name="CuentaCliente.buscarCuentaClientePerfil", query="SELECT c FROM CuentaCliente c "
-			+ "where (lower(c.cliente.apellido) like :patron or lower(c.cliente.nombre) like :patron "
-			+ "or lower(c.cliente.cedula) like :patron)"
-			+ "and c.usuarioCrea = :idPerfilUsuario and c.estado='A' order by c.idCuenta asc"),
+		+ "where (lower(c.cliente.apellido) like :patron or lower(c.cliente.nombre) like :patron "
+		+ "or lower(c.cliente.cedula) like :patron)"
+		+ "and c.usuarioCrea = :idPerfilUsuario and c.estado='A' order by c.idCuenta asc"),
 	@NamedQuery(name="CuentaCliente.existeCuenta", query="SELECT c FROM CuentaCliente c where (c.idCuenta = (:cuenta) and c.estado = 'A')"),
-	@NamedQuery(name="CuentaCliente.existeCuentaMedidor", query="SELECT c FROM CuentaCliente c where (c.medidor.codigo = (:medidor) and c.estado = 'A')")
+	@NamedQuery(name="CuentaCliente.existeCuentaMedidor", query="SELECT c FROM CuentaCliente c where (c.medidor.codigo = (:medidor) and c.estado = 'A')")	
 })
 public class CuentaCliente implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -51,9 +51,6 @@ public class CuentaCliente implements Serializable {
 
 	private String observacion;
 
-	@Column(nullable = false, columnDefinition = "bit")
-	private Boolean cortado;
-
 	@Column(name="usuario_crea")
 	private Integer usuarioCrea;
 
@@ -61,50 +58,6 @@ public class CuentaCliente implements Serializable {
 	@OneToMany(mappedBy="cuentaCliente", cascade = CascadeType.ALL)
 	private List<Convenio> convenios;
 
-	//bi-directional many-to-one association to Reconexion
-	@OneToMany(mappedBy="cuentaCliente", cascade = CascadeType.ALL)
-	private List<Reconexion> reconexions;
-	public List<Reconexion> getReconexions() {
-		return reconexions;
-	}
-	public void setReconexions(List<Reconexion> reconexions) {
-		this.reconexions = reconexions;
-	}
-	public Reconexion addReconexion(Reconexion reconexion) {
-		getReconexions().add(reconexion);
-		reconexion.setCuentaCliente(this);
-		return reconexion;
-	}
-
-	public Reconexion removeReconexion(Reconexion reconexion) {
-		getReconexions().remove(reconexion);
-		reconexion.setCuentaCliente(null);
-
-		return reconexion;
-	}
-
-
-	//bi-directional many-to-one association to Reconexion
-	@OneToMany(mappedBy="cuentaCliente", cascade = CascadeType.ALL)
-	private List<Corte> cortes;
-	public List<Corte> getCortes() {
-		return cortes;
-	}
-	public void setCortes(List<Corte> cortes) {
-		this.cortes = cortes;
-	}
-	public Corte addCorte(Corte corte) {
-		getCortes().add(corte);
-		corte.setCuentaCliente(this);
-		return corte;
-	}
-
-	public Corte removeCorte(Corte corte) {
-		getCortes().remove(corte);
-		corte.setCuentaCliente(null);
-
-		return corte;
-	}
 	//bi-directional many-to-one association to Barrio
 	@ManyToOne
 	@JoinColumn(name="id_barrio")
@@ -178,14 +131,6 @@ public class CuentaCliente implements Serializable {
 
 	public String getEstado() {
 		return this.estado;
-	}	
-
-	public Boolean getCortado() {
-		return cortado;
-	}
-
-	public void setCortado(Boolean cortado) {
-		this.cortado = cortado;
 	}
 
 	public void setEstado(String estado) {

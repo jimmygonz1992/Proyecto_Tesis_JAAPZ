@@ -30,7 +30,6 @@ public class ClientesListaClientesJuntaC {
 	@FXML private TableView<CuentaCliente> tvDatos;
 	@FXML private TextField txtBuscar;
 	@FXML private Button btnEditar;
-	@FXML private Button btnImprimir;
 	@FXML private Button btnEliminar;
 	CuentaClienteDAO cuentaDAO = new CuentaClienteDAO();
 	ControllerHelper helper = new ControllerHelper();
@@ -40,10 +39,8 @@ public class ClientesListaClientesJuntaC {
 		try {
 			btnEditar.setStyle("-fx-cursor: hand;");
 			btnEliminar.setStyle("-fx-cursor: hand;");
-			btnImprimir.setStyle("-fx-cursor: hand;");
 			
 			btnEditar.setStyle("-fx-graphic: url('/editar.png');-fx-cursor: hand;");
-			btnImprimir.setStyle("-fx-graphic: url('/imprimir.png');-fx-cursor: hand;");
 			btnEliminar.setStyle("-fx-graphic: url('/eliminar.png');-fx-cursor: hand;");
 			llenarDatos("");
 			txtBuscar.textProperty().addListener(new ChangeListener<String>() {
@@ -217,15 +214,6 @@ public class ClientesListaClientesJuntaC {
 			}else {
 				helper.mostrarAlertaError("Debe Seleccionar un Cliente a Dar de Baja", Context.getInstance().getStage());
 			}
-		}catch(Exception ex) {
-			System.out.println(ex.getMessage());
-		}
-	}
-
-	@FXML
-	void imprimirListado(ActionEvent event) {
-		try {
-
 		}catch(Exception ex) {
 			System.out.println(ex.getMessage());
 		}

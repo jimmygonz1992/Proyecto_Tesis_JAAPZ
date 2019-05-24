@@ -62,12 +62,12 @@ public class SeguridadUsuarioC {
 	@FXML private TableView<SegUsuarioPerfil> tvPerfiles;
 	@FXML private Button btnAgregarPerfil;
 	@FXML private Button btnQuitarPerfil;
-	
+
 	ControllerHelper helper = new ControllerHelper();
 	SegUsuarioDAO segUsuarioDAO = new SegUsuarioDAO();
 	SegPerfilDAO perfilDAO = new SegPerfilDAO();
 	SegUsuario usuarioSeleccionado;
-	
+
 	public void initialize(){
 		btnAgregarPerfil.setStyle("-fx-cursor: hand;");
 		btnBuscar.setStyle("-fx-cursor: hand;");
@@ -76,7 +76,7 @@ public class SeguridadUsuarioC {
 		btnNuevo.setStyle("-fx-cursor: hand;");
 		btnQuitar.setStyle("-fx-cursor: hand;");
 		btnQuitarPerfil.setStyle("-fx-cursor: hand;");
-		
+
 		int maxLength = 10;
 		limpiar();
 		Context.getInstance().setUsuarios(null);
@@ -85,19 +85,19 @@ public class SeguridadUsuarioC {
 			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
 				if (!newValue.matches("\\D*")) {
 					txtNombres.setText(newValue.replaceAll("[^\\D]", ""));
-		        }
-		    }
+				}
+			}
 		});
-		
+
 		//validar solo letras.... igual se va con puntuaciones
 		txtApellidos.textProperty().addListener(new ChangeListener<String>() {
 			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
 				if (!newValue.matches("\\D*")) {
 					txtApellidos.setText(newValue.replaceAll("[^\\D]", ""));
-			    }
-		   }
+				}
+			}
 		});
-		
+
 		//solo letras mayusculas
 		txtNombres.textProperty().addListener(new ChangeListener<String>() {
 			@Override
@@ -115,12 +115,22 @@ public class SeguridadUsuarioC {
 				txtDireccion.setText(cadena);
 			}
 		});
+
 		txtCargo.textProperty().addListener(new ChangeListener<String>() {
 			@Override
 			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
 				// TODO Auto-generated method stub
 				String cadena = txtCargo.getText().toUpperCase();
 				txtCargo.setText(cadena);
+			}
+		});
+
+		//validar solo letras.... igual se va con puntuaciones
+		txtCargo.textProperty().addListener(new ChangeListener<String>() {
+			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+				if (!newValue.matches("\\D*")) {
+					txtCargo.setText(newValue.replaceAll("[^\\D]", ""));
+				}
 			}
 		});
 		txtApellidos.textProperty().addListener(new ChangeListener<String>() {
@@ -179,9 +189,11 @@ public class SeguridadUsuarioC {
 					if (validarCedula(txtCedula.getText()) == false){
 						helper.mostrarAlertaError("El número de cedula es incorrecto!", Context.getInstance().getStage());
 						limpiar();
+						txtCedula.setText("");
+						txtCedula.requestFocus();
 					}else
 						recuperarDatos(txtCedula.getText());
-						//txtNombres.requestFocus();
+					//txtNombres.requestFocus();
 				}
 			}
 		});
@@ -208,22 +220,24 @@ public class SeguridadUsuarioC {
 			}
 		});
 		txtCedula.focusedProperty().addListener(new ChangeListener<Boolean>(){
-		    @Override
-		    public void changed(ObservableValue<? extends Boolean> arg0, Boolean oldPropertyValue, Boolean newPropertyValue){
-		        if (newPropertyValue){
-		            //System.out.println("Textfield on focus");
-		        }
-		        else{
-		        	if (validarCedula(txtCedula.getText()) == false){
+			@Override
+			public void changed(ObservableValue<? extends Boolean> arg0, Boolean oldPropertyValue, Boolean newPropertyValue){
+				if (newPropertyValue){
+					//System.out.println("Textfield on focus");
+				}
+				else{
+					if (validarCedula(txtCedula.getText()) == false){
 						helper.mostrarAlertaError("El número de cedula es incorrecto!", Context.getInstance().getStage());
 						limpiar();
+						txtCedula.setText("");
+						txtCedula.requestFocus();
 					}else {
 						limpiar();
 						recuperarDatos(txtCedula.getText());
 					}
-						//txtNombres.requestFocus();
-		        }
-		    }
+					//txtNombres.requestFocus();
+				}
+			}
 		});
 		txtUsuario.setEditable(false);
 		txtClave.setEditable(false);
@@ -260,12 +274,12 @@ public class SeguridadUsuarioC {
 					Image img = new Image("/usuario.jpg");
 					ivFoto.setImage(img);
 				}
-				
+
 				if(listaUsuario.get(i).getEstado().equals(Constantes.ESTADO_ACTIVO))
 					chkEstado.setSelected(true);
 				else
 					chkEstado.setSelected(false);
-				
+
 				//recuperar los perfiles del usuario en la tabla
 				tvPerfiles.getItems().clear();
 				tvPerfiles.getColumns().clear();
@@ -274,11 +288,11 @@ public class SeguridadUsuarioC {
 					if(perfil.getEstado().equals(Constantes.ESTADO_ACTIVO))
 						datos.add(perfil);
 				}
-				
+
 				//llenar los datos en la tabla
 				TableColumn<SegUsuarioPerfil, String> idColum = new TableColumn<>("Código");
 				idColum.setMinWidth(10);
-				idColum.setPrefWidth(70);
+				idColum.setPrefWidth(90);
 				idColum.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<SegUsuarioPerfil,String>, ObservableValue<String>>() {
 					@Override
 					public ObservableValue<String> call(CellDataFeatures<SegUsuarioPerfil, String> param) {
@@ -287,7 +301,7 @@ public class SeguridadUsuarioC {
 				});
 				TableColumn<SegUsuarioPerfil, String> descripcionColum = new TableColumn<>("Descripción");
 				descripcionColum.setMinWidth(10);
-				descripcionColum.setPrefWidth(150);
+				descripcionColum.setPrefWidth(275);
 				descripcionColum.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<SegUsuarioPerfil,String>, ObservableValue<String>>() {
 					@Override
 					public ObservableValue<String> call(CellDataFeatures<SegUsuarioPerfil, String> param) {
@@ -301,7 +315,7 @@ public class SeguridadUsuarioC {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void grabar(){
 		try {
 			String estado;
@@ -311,7 +325,7 @@ public class SeguridadUsuarioC {
 				estado = "A";
 			else
 				estado = "I";
-			
+
 			if(usuarioSeleccionado == null)
 				usuarioSeleccionado = new SegUsuario();
 			usuarioSeleccionado.setEstado(estado);
@@ -477,7 +491,7 @@ public class SeguridadUsuarioC {
 		try {
 			usuarioSeleccionado = datoSeleccionado;
 			listaEliminar.clear();
-			
+
 			txtCodigo.setText(String.valueOf(datoSeleccionado.getIdUsuario()));
 			if(datoSeleccionado.getCedula() == null)
 				txtCedula.setText("");
@@ -534,11 +548,11 @@ public class SeguridadUsuarioC {
 				if(perfil.getEstado().equals(Constantes.ESTADO_ACTIVO))
 					datos.add(perfil);
 			}
-				
+
 			//llenar los datos en la tabla
 			TableColumn<SegUsuarioPerfil, String> idColum = new TableColumn<>("Código");
 			idColum.setMinWidth(10);
-			idColum.setPrefWidth(70);
+			idColum.setPrefWidth(90);
 			idColum.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<SegUsuarioPerfil,String>, ObservableValue<String>>() {
 				@Override
 				public ObservableValue<String> call(CellDataFeatures<SegUsuarioPerfil, String> param) {
@@ -547,7 +561,7 @@ public class SeguridadUsuarioC {
 			});
 			TableColumn<SegUsuarioPerfil, String> descripcionColum = new TableColumn<>("Descripción");
 			descripcionColum.setMinWidth(10);
-			descripcionColum.setPrefWidth(150);
+			descripcionColum.setPrefWidth(275);
 			descripcionColum.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<SegUsuarioPerfil,String>, ObservableValue<String>>() {
 				@Override
 				public ObservableValue<String> call(CellDataFeatures<SegUsuarioPerfil, String> param) {
@@ -630,7 +644,7 @@ public class SeguridadUsuarioC {
 				SegPerfil perfilAgregar = Context.getInstance().getPerfilSeleccionado();
 				agregarPerfil(perfilAgregar);
 				Context.getInstance().setPerfilSeleccionado(null);
-				
+
 			}
 			Context.getInstance().setListaPerfiles(null);
 		}catch(Exception ex) {
@@ -652,7 +666,7 @@ public class SeguridadUsuarioC {
 			//llenar los datos en la tabla
 			TableColumn<SegUsuarioPerfil, String> idColum = new TableColumn<>("Código");
 			idColum.setMinWidth(10);
-			idColum.setPrefWidth(70);
+			idColum.setPrefWidth(90);
 			idColum.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<SegUsuarioPerfil,String>, ObservableValue<String>>() {
 				@Override
 				public ObservableValue<String> call(CellDataFeatures<SegUsuarioPerfil, String> param) {
@@ -661,7 +675,7 @@ public class SeguridadUsuarioC {
 			});
 			TableColumn<SegUsuarioPerfil, String> descripcionColum = new TableColumn<>("Descripción");
 			descripcionColum.setMinWidth(10);
-			descripcionColum.setPrefWidth(150);
+			descripcionColum.setPrefWidth(275);
 			descripcionColum.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<SegUsuarioPerfil,String>, ObservableValue<String>>() {
 				@Override
 				public ObservableValue<String> call(CellDataFeatures<SegUsuarioPerfil, String> param) {

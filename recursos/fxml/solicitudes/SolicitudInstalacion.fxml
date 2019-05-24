@@ -90,7 +90,7 @@
                <children>
                   <GridPane HBox.hgrow="ALWAYS">
                      <children>
-                        <Label text="Fecha:">
+                        <Label text="Fecha inspección:">
                            <font>
                               <Font name="System Bold Italic" size="12.0" />
                            </font>

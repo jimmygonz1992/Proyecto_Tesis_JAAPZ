@@ -53,6 +53,7 @@ public class BodegaIngresoRubrosC {
 	@FXML private TextField txtCodigoProv;
 	@FXML private TextField txtUsuario;
 	@FXML private TextField txtSubtotal;
+	@FXML private TextField txtIva;
 	@FXML private TextField txtDescuento;
 	@FXML private TextField txtTotal;
 	@FXML private Button btnAñadir;
@@ -89,12 +90,13 @@ public class BodegaIngresoRubrosC {
 
 	public void initialize(){
 		try {
+			txtRuc.requestFocus();
 			btnAñadir.setStyle("-fx-cursor: hand;");
 			btnBuscarRubro.setStyle("-fx-cursor: hand;");
 			btnEliminar.setStyle("-fx-cursor: hand;");
 			btnGrabar.setStyle("-fx-cursor: hand;");
 			btnNuevo.setStyle("-fx-cursor: hand;");
-			
+
 			int maxLength = 10;
 			nuevo();
 			usuarioLogueado = Context.getInstance().getUsuariosC();
@@ -103,7 +105,6 @@ public class BodegaIngresoRubrosC {
 			txtDescripcionMat.setEditable(false);
 			txtStockMat.setEditable(false);
 			dtpFecha.setValue(LocalDate.now());
-			txtRuc.requestFocus();
 			txtCodigo.setVisible(false);
 			txtCodigoProv.setVisible(false);
 
@@ -168,7 +169,7 @@ public class BodegaIngresoRubrosC {
 					}
 				}
 			});			
-			
+
 			//recuperar Proveedor
 			txtRuc.setOnKeyPressed(new EventHandler<KeyEvent>(){
 				@Override
@@ -181,11 +182,38 @@ public class BodegaIngresoRubrosC {
 						}else {
 							if (validarProveedorExiste() == false) {
 								helper.mostrarAlertaAdvertencia("RUC no existente.. Debe llenar todos los datos!", Context.getInstance().getStage());
+								txtNombresPro.requestFocus();
 							}else {
 								recuperarDatos(txtRuc.getText());
 								txtNumero.requestFocus();
 							}
 						}
+					}
+				}
+			});
+
+			txtRuc.focusedProperty().addListener(new ChangeListener<Boolean>(){
+				@Override
+				public void changed(ObservableValue<? extends Boolean> arg0, Boolean oldPropertyValue, Boolean newPropertyValue){
+					if (newPropertyValue){
+						//System.out.println("Textfield on focus");
+					}
+					else{
+						if (validarRucPersonaNatural(txtRuc.getText()) == false){
+							helper.mostrarAlertaError("El número de RUC es incorrecto!", Context.getInstance().getStage());
+							limpiar();
+							txtRuc.setText("");
+							txtRuc.requestFocus();
+						}else {
+							if (validarProveedorExiste() == false) {
+								helper.mostrarAlertaAdvertencia("RUC no existente.. Debe llenar todos los datos!", Context.getInstance().getStage());
+								txtProveedor.requestFocus();
+							}else {
+								recuperarDatos(txtRuc.getText());
+								txtNumero.requestFocus();
+							}
+						}
+						//txtNombres.requestFocus();
 					}
 				}
 			});
@@ -206,6 +234,16 @@ public class BodegaIngresoRubrosC {
 				public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
 					if (!newValue.matches("\\d*(\\.\\d*)?")) {
 						txtSubtotal.setText(oldValue);
+					}
+				}
+			});
+
+			//numeros con decimales
+			txtIva.textProperty().addListener(new ChangeListener<String>() {
+				@Override
+				public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+					if (!newValue.matches("\\d*(\\.\\d*)?")) {
+						txtIva.setText(oldValue);
 					}
 				}
 			});
@@ -255,7 +293,7 @@ public class BodegaIngresoRubrosC {
 					txtProveedor.setText(cadena);
 				}
 			});
-			
+
 			//solo letras mayusculas
 			txtObservaciones.textProperty().addListener(new ChangeListener<String>() {
 				@Override
@@ -465,6 +503,7 @@ public class BodegaIngresoRubrosC {
 				//txtNumero.setText(listaIngreso.get(i).getNumeroIngreso());
 				dtpFecha.setValue(date);	
 				txtSubtotal.setText(Double.toString(listaIngreso.get(i).getSubtotal()));
+				txtIva.setText(Double.toString(listaIngreso.get(i).getIva()));
 				//txtDescuento.setText(Double.toString(listaIngreso.get(i).getTotal()));
 				txtTotal.setText(Double.toString(listaIngreso.get(i).getTotal()));		
 				ingreso = listaIngreso.get(i);
@@ -671,6 +710,7 @@ public class BodegaIngresoRubrosC {
 			if (tvDatos.getItems().isEmpty()) {
 				txtSubtotal.setText("0.0");
 				txtDescuento.setText("0.0");
+				txtIva.setText("0.0");
 				txtTotal.setText("0.0");
 			}else {
 				double subtotal = 0;
@@ -678,10 +718,11 @@ public class BodegaIngresoRubrosC {
 					Double valorSubt = new Double(tvDatos.getItems().get(i).getCantidad()*tvDatos.getItems().get(i).getPrecio());
 					subtotal += valorSubt;
 					txtSubtotal.setText(String.valueOf(Double.valueOf(subtotal)));
+					txtIva.setText(String.valueOf(subtotal*0.12));
 					if (txtDescuento.getText().isEmpty()) {
 						txtDescuento.setText("0.0");
 					}
-					double total = Double.valueOf(txtSubtotal.getText()) - Double.valueOf(txtDescuento.getText());
+					double total = ((Double.valueOf(txtSubtotal.getText()) + Double.valueOf(txtIva.getText())) - Double.valueOf(txtDescuento.getText()));
 					txtTotal.setText(String.valueOf(Double.valueOf(total)));
 				}
 			}
@@ -741,6 +782,7 @@ public class BodegaIngresoRubrosC {
 			ingreso.setUsuarioCrea(Context.getInstance().getUsuariosC().getIdUsuario());
 			ingreso.setHora(sqlTime);
 			ingreso.setSubtotal(Double.parseDouble(txtSubtotal.getText()));
+			ingreso.setIva(Double.parseDouble(txtIva.getText()));
 			ingreso.setTotal(Double.parseDouble(txtTotal.getText()));
 			ingreso.setObservaciones(txtObservaciones.getText());
 			ingreso.setEstado(Constantes.ESTADO_ACTIVO);
@@ -786,16 +828,16 @@ public class BodegaIngresoRubrosC {
 						proveedorSeleccionado.addIngresos(ingreso);
 						//ingreso.setProveedor(proveedorSeleccionado);
 					}
-						
-					
+
+
 					//grabar el ingreso
 					ingresoDao.getEntityManager().getTransaction().begin();
-					
+
 					if(proveedorSeleccionado.getIdProveedor() == null) 
 						ingresoDao.getEntityManager().persist(proveedorSeleccionado);
 					else
 						ingresoDao.getEntityManager().merge(proveedorSeleccionado);
-					
+
 					//ingresoDao.getEntityManager().persist(ingreso);
 					for (Kardex kar : listaProductos) ingresoDao.getEntityManager().persist(kar);
 					ingresoDao.getEntityManager().getTransaction().commit();
@@ -809,7 +851,7 @@ public class BodegaIngresoRubrosC {
 						ingresoDao.getEntityManager().merge(proveedorSeleccionado);
 					}		
 					ingresoDao.getEntityManager().getTransaction().commit();
-					*/
+					 */
 					Integer ultimaFactura = 0;
 					Ingreso ing = ingresoDao.getUltimoRegistro();
 					EstadoMedidor estadoM = estadoMedidorDAO.getEstadoBueno();
@@ -846,18 +888,19 @@ public class BodegaIngresoRubrosC {
 					txtNumero.setText("");
 					txtObservaciones.setText("");
 					txtSubtotal.setText("");
+					txtIva.setText("");
 					txtDescuento.setText("");
 					txtTotal.setText("");
 					tvDatos.getColumns().clear();
 					tvDatos.getItems().clear();
-					
+
 				}else {//es una modificacion ************************************************************************************************
 					List<Integer> integer = new ArrayList<Integer>();//un arreglo para guardar los id del detalle q han sido registrado
 					for (IngresoDetalle detalle : tvDatos.getItems()) {
 						if (detalle.getIdIngresoDet() != null)//guardo los id de los registros ya grabados en la BD
 							integer.add(detalle.getIdIngresoDet());
 					}
-					
+
 					for(IngresoDetalle det : tvDatos.getItems()) {
 						if(det.getIdIngresoDet() == null) {//cuando el id es null.. es un nuevo registro de detalle
 							det.setIdIngresoDet(null);
@@ -898,7 +941,7 @@ public class BodegaIngresoRubrosC {
 							}
 						}
 					}
-					
+
 					//elimina material resta stock
 					if(tvDatos != null) {
 						List<Integer> idActual = new ArrayList<Integer>();
@@ -924,7 +967,7 @@ public class BodegaIngresoRubrosC {
 							}
 						}
 					}
-					
+
 					//sumar
 					if(tvDatos != null) {
 						List<Rubro> listaAgregadaRubros = new ArrayList<Rubro>();
@@ -955,6 +998,7 @@ public class BodegaIngresoRubrosC {
 					txtNumero.setText("");
 					txtObservaciones.setText("");
 					txtSubtotal.setText("");
+					txtIva.setText("");
 					txtDescuento.setText("");
 					txtTotal.setText("");
 					tvDatos.getColumns().clear();
@@ -1059,6 +1103,7 @@ public class BodegaIngresoRubrosC {
 		txtCodigo.setText("0");
 		txtNumero.setText("");
 		txtSubtotal.setText("");
+		txtIva.setText("");
 		txtDescuento.setText("");
 		txtTotal.setText("");
 		tvDatos.getColumns().clear();
@@ -1132,6 +1177,7 @@ public class BodegaIngresoRubrosC {
 		dtpFecha.setAccessibleText(null);
 		//txtNumero.setText("");
 		txtSubtotal.setText("");
+		txtIva.setText("");
 		txtDescuento.setText("");
 		txtTotal.setText("");
 		tvDatos.getColumns().clear();
@@ -1147,31 +1193,11 @@ public class BodegaIngresoRubrosC {
 			validarCedula(numero.substring(0, 9));
 		} catch (Exception ex) {
 			limpiarProveedor();
-			System.out.println(ex.getMessage());
 			return false; 
 		}
 
 		return true;
 	}
-
-	/*protected boolean validarInicial(String numero, int caracteres){   
-		if(txtRuc.getText().equals("")) {
-			helper.mostrarAlertaAdvertencia("Ingresar RUC", Context.getInstance().getStage());
-			limpiarProveedor();
-			txtRuc.requestFocus();
-			return false;
-		}
-
-		if (numero.length() != caracteres) {
-			helper.mostrarAlertaAdvertencia("Valor debe tener " + caracteres + " caracteres", Context.getInstance().getStage());
-			limpiarProveedor();
-			txtRuc.setText("");
-			txtRuc.requestFocus();
-			return false;
-		}
-
-		return true;
-	}*/
 
 	protected boolean validarCodigoProvincia(String numero){
 		if (Integer.parseInt(numero) < 0 || Integer.parseInt(numero) > 24) {
@@ -1186,7 +1212,6 @@ public class BodegaIngresoRubrosC {
 
 	protected boolean validarCodigoEstablecimiento(String numero){
 		if (Integer.parseInt(numero) < 1) {
-			//helper.mostrarAlertaAdvertencia("RUC Inválido", Context.getInstance().getStage());
 			limpiarProveedor();
 			txtRuc.setText("");
 			txtRuc.requestFocus();

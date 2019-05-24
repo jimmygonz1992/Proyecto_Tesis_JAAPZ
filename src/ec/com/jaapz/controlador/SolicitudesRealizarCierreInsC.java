@@ -85,34 +85,39 @@ public class SolicitudesRealizarCierreInsC {
 	CategoriaDAO categoriaDAO = new CategoriaDAO();
 	
 	public void initialize() {
-		//solo letras mayusculas
-		txtObservacion.textProperty().addListener(new ChangeListener<String>() {
-			@Override
-			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-				// TODO Auto-generated method stub
-				String cadena = txtObservacion.getText().toUpperCase();
-				txtObservacion.setText(cadena);
-			}
-		});
+		try {
+			//solo letras mayusculas
+			txtObservacion.textProperty().addListener(new ChangeListener<String>() {
+				@Override
+				public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+					// TODO Auto-generated method stub
+					String cadena = txtObservacion.getText().toUpperCase();
+					txtObservacion.setText(cadena);
+				}
+			});
 
-		btnAgregar.setStyle("-fx-cursor: hand;");
-		btnBuscarMedidor.setStyle("-fx-cursor: hand;");
-		btnBuscarRubro.setStyle("-fx-cursor: hand;");
-		btnQuitar.setStyle("-fx-cursor: hand;");
-		btnGrabar.setStyle("-fx-cursor: hand;");
-		cboFactible.setStyle("-fx-cursor: hand;");
+			btnAgregar.setStyle("-fx-cursor: hand;");
+			btnBuscarMedidor.setStyle("-fx-cursor: hand;");
+			btnBuscarRubro.setStyle("-fx-cursor: hand;");
+			btnQuitar.setStyle("-fx-cursor: hand;");
+			btnGrabar.setStyle("-fx-cursor: hand;");
+			cboFactible.setStyle("-fx-cursor: hand;");
 
-		txtObservacion.setDisable(true);
-		bloquear();
-		llenarCombo();	
-		bloquearResultados();
-		cboFactible.getSelectionModel().select(Factible.NO_FACTIBLE);
-		cboFactible.setDisable(true);
-		txtObservacion.setText("");
-		//cargar dato recuperado
-		recuperarDatos(Context.getInstance().getInspeccion());
-		inspeccionSeleccionado = Context.getInstance().getInspeccion();
+			txtObservacion.setDisable(true);
+			bloquear();
+			llenarCombo();	
+			bloquearResultados();
+			cboFactible.getSelectionModel().select(Factible.NO_FACTIBLE);
+			cboFactible.setDisable(true);
+			txtObservacion.setText("");
+			//cargar dato recuperado
+			recuperarDatos(Context.getInstance().getInspeccion());
+			inspeccionSeleccionado = Context.getInstance().getInspeccion();
+		}catch(Exception ex) {
+			System.out.println(ex.getMessage());
+		}
 	}
+	
 	@SuppressWarnings("unchecked")
 	void recuperarDatos(SolInspeccionIn inspeccion) {
 		try {

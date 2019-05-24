@@ -13,6 +13,7 @@ import ec.com.jaapz.util.ControllerHelper;
 import ec.com.jaapz.util.Encriptado;
 import ec.com.jaapz.util.PrintReport;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -37,9 +38,18 @@ public class SolicitudesCierreReparacionC {
 	
 	public void initialize() {
 		try {
+			llenarTablaInspecciones("");
 			btnRealizarCierre.setStyle("-fx-graphic: url('/editar.png');-fx-cursor: hand;");
 			btnImprimirFicha.setStyle("-fx-graphic: url('/imprimir.png');-fx-cursor: hand;");
-			llenarTablaInspecciones("");
+			//solo letras mayusculas
+			txtBuscar.textProperty().addListener(new ChangeListener<String>() {
+				@Override
+				public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+					// TODO Auto-generated method stub
+					String cadena = txtBuscar.getText().toUpperCase();
+					txtBuscar.setText(cadena);
+				}
+			});
 		}catch(Exception ex) {
 			System.out.println(ex.getMessage());
 		}
@@ -97,13 +107,17 @@ public class SolicitudesCierreReparacionC {
 		}
 	}
 	
+	public void buscarCliente() {
+		llenarTablaInspecciones(txtBuscar.getText());
+	}	
+	
 	@SuppressWarnings("unchecked")
 	void llenarTablaInspecciones(String patron) {
 		try{
 			tvDatos.getColumns().clear();
 			List<SolInspeccionRep> listaInspecciones;
-			if(Context.getInstance().getIdPerfil() == 1) {
-				listaInspecciones = reparacionDAO.getListaInspeccionPendiente(patron);
+			if(Context.getInstance().getIdPerfil() == Constantes.ID_USU_ADMINISTRADOR) {
+				listaInspecciones = reparacionDAO.getListaInspeccionRepPendiente(patron);
 			}else {
 				listaInspecciones = reparacionDAO.getListaInspeccionPerfilPendiente(patron);
 			}

@@ -25,11 +25,6 @@ public class ReportesMaterialesC {
 			@Override
 			public void handle(Event event) {
 				Map<String, Object> param = new HashMap<String, Object>();
-				SimpleDateFormat formateador = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss", new Locale("MX"));
-				Date fechaDate = new Date();
-				String fechaSistema = formateador.format(fechaDate);
-				String fecha = dateFormatter("yyyy-MM-dd hh:mm:ss","d 'de' MMMM 'del' yyyy", fechaSistema);
-				param.put("FECHA", fecha);
 				PrintReport reporte = new PrintReport();
 				reporte.crearReporte("/recursos/informes/listado_materiales.jasper", rubroDao, param);
 				reporte.showReport("Materiales Disponibles");
