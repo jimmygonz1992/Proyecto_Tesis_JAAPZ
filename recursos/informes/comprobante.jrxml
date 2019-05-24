@@ -5,8 +5,8 @@
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="176"/>
 	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="816"/>
-	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w1" value="825"/>
-	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w2" value="161"/>
+	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w1" value="577"/>
+	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w2" value="413"/>
 	<property name="com.jaspersoft.studio.unit." value="pixel"/>
 	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
 	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
@@ -18,6 +18,8 @@
 	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
 	<parameter name="numComprobante" class="java.lang.String"/>
 	<parameter name="cedula" class="java.lang.Integer"/>
+	<parameter name="saldoTotal" class="java.lang.Double"/>
+	<parameter name="usuario" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[SELECT c.cedula, c.nombre, c.apellido,
 	f.fecha, f.num_factura, f.total_factura, f.usuario_crea,
@@ -161,7 +163,7 @@ group by c.cedula, c.nombre, c.apellido, f.fecha, f.num_factura, f.total_factura
 	<title>
 		<band height="90" splitType="Stretch">
 			<rectangle>
-				<reportElement x="2" y="-1" width="550" height="91" uuid="43a66c98-41e4-4b62-a803-f90db0246ef4"/>
+				<reportElement x="2" y="1" width="550" height="87" uuid="43a66c98-41e4-4b62-a803-f90db0246ef4"/>
 			</rectangle>
 			<image>
 				<reportElement x="44" y="5" width="76" height="47" uuid="7f8cede0-ed74-4474-95dd-115c24c9393e"/>
@@ -182,21 +184,21 @@ group by c.cedula, c.nombre, c.apellido, f.fecha, f.num_factura, f.total_factura
 				<text><![CDATA[RUC: 2490016034001]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="183" y="3" width="50" height="17" uuid="93db7a75-6360-4699-901f-c34639e50563"/>
+				<reportElement x="183" y="6" width="50" height="17" uuid="93db7a75-6360-4699-901f-c34639e50563"/>
 				<textElement>
 					<font size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Cédula:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="183" y="22" width="50" height="17" uuid="49c0d8a0-7884-4e0e-85f6-ffdd092b538a"/>
+				<reportElement x="183" y="25" width="50" height="17" uuid="49c0d8a0-7884-4e0e-85f6-ffdd092b538a"/>
 				<textElement>
 					<font size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Cliente:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="183" y="41" width="50" height="17" uuid="18bfd471-b49b-4e33-b0b2-ec8a6014aa88"/>
+				<reportElement x="183" y="44" width="50" height="17" uuid="18bfd471-b49b-4e33-b0b2-ec8a6014aa88"/>
 				<textElement>
 					<font size="9" isBold="true"/>
 				</textElement>
@@ -217,28 +219,28 @@ group by c.cedula, c.nombre, c.apellido, f.fecha, f.num_factura, f.total_factura
 				<text><![CDATA[Valor Cancelado:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="246" y="3" width="100" height="17" uuid="d0f6fc8d-2ac4-438f-a5a3-49962bb650fc"/>
+				<reportElement x="246" y="6" width="100" height="17" uuid="d0f6fc8d-2ac4-438f-a5a3-49962bb650fc"/>
 				<textElement>
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{cedula}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="247" y="22" width="129" height="18" uuid="912c5abb-d54d-423f-9d55-eff797b18cee"/>
+				<reportElement x="247" y="25" width="129" height="18" uuid="912c5abb-d54d-423f-9d55-eff797b18cee"/>
 				<textElement>
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{nombre}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="245" y="41" width="140" height="19" uuid="630eae7b-cafe-481d-a661-996c2f42603a"/>
+				<reportElement x="245" y="44" width="140" height="19" uuid="630eae7b-cafe-481d-a661-996c2f42603a"/>
 				<textElement>
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{fecha}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="381" y="20" width="141" height="20" uuid="599568d1-45dd-4348-adb9-ba5027a3c0e6"/>
+				<reportElement x="381" y="23" width="141" height="20" uuid="599568d1-45dd-4348-adb9-ba5027a3c0e6"/>
 				<textElement>
 					<font size="9"/>
 				</textElement>
@@ -259,26 +261,26 @@ group by c.cedula, c.nombre, c.apellido, f.fecha, f.num_factura, f.total_factura
 				<textFieldExpression><![CDATA[$P{numComprobante}]]></textFieldExpression>
 			</textField>
 			<line>
-				<reportElement x="174" y="-1" width="1" height="90" uuid="b6b490de-c4fc-4fec-81ad-5343a459abe3"/>
+				<reportElement x="174" y="1" width="1" height="87" uuid="b6b490de-c4fc-4fec-81ad-5343a459abe3"/>
 			</line>
 			<line>
 				<reportElement x="174" y="64" width="378" height="1" uuid="939c9cd0-409b-4584-94fc-6482894a6925"/>
 			</line>
 			<line>
-				<reportElement x="240" y="-1" width="1" height="65" uuid="1a5bae36-a28b-4fd4-b374-1a1a011e7162"/>
+				<reportElement x="240" y="1" width="1" height="62" uuid="1a5bae36-a28b-4fd4-b374-1a1a011e7162"/>
 			</line>
 			<line>
 				<reportElement x="392" y="64" width="1" height="26" uuid="b7408d46-6778-484d-92d1-247809b78664"/>
 			</line>
 			<textField>
-				<reportElement x="460" y="43" width="88" height="18" uuid="0c1461cb-91a7-4e41-9bc2-0a654ddc61da"/>
+				<reportElement x="460" y="46" width="88" height="18" uuid="0c1461cb-91a7-4e41-9bc2-0a654ddc61da"/>
 				<textElement>
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{codigo}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="392" y="45" width="61" height="14" uuid="65d7cc41-a9c0-4405-b69c-7a8cf160f24e"/>
+				<reportElement x="392" y="48" width="61" height="14" uuid="65d7cc41-a9c0-4405-b69c-7a8cf160f24e"/>
 				<textElement>
 					<font size="9" isBold="true"/>
 				</textElement>
@@ -289,7 +291,7 @@ group by c.cedula, c.nombre, c.apellido, f.fecha, f.num_factura, f.total_factura
 	<pageHeader>
 		<band height="19" splitType="Stretch">
 			<rectangle>
-				<reportElement x="2" y="-1" width="550" height="20" uuid="ce253455-2ad7-40a2-9d5f-383a376b1de1"/>
+				<reportElement x="2" y="0" width="550" height="19" uuid="ce253455-2ad7-40a2-9d5f-383a376b1de1"/>
 			</rectangle>
 			<staticText>
 				<reportElement x="227" y="2" width="100" height="17" uuid="7276f54c-5f60-4df4-a929-34f77c7ba5fc"/>
@@ -403,29 +405,18 @@ group by c.cedula, c.nombre, c.apellido, f.fecha, f.num_factura, f.total_factura
 		</band>
 	</detail>
 	<summary>
-		<band height="105" splitType="Stretch">
+		<band height="95" splitType="Stretch">
 			<property name="com.jaspersoft.studio.layout"/>
 			<staticText>
-				<reportElement x="303" y="3" width="137" height="13" uuid="cdd3cc7f-d9e5-4d2d-8fe1-96c28ff8dd31"/>
+				<reportElement x="303" y="8" width="137" height="13" uuid="cdd3cc7f-d9e5-4d2d-8fe1-96c28ff8dd31"/>
 				<textElement textAlignment="Left">
 					<font size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Valor total de la Factura:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="451" y="3" width="100" height="13" uuid="300c2279-ee60-4cfc-96e7-c9df5b2f62e8"/>
+				<reportElement x="451" y="8" width="100" height="13" uuid="300c2279-ee60-4cfc-96e7-c9df5b2f62e8"/>
 				<textFieldExpression><![CDATA[$V{subtfac2}]]></textFieldExpression>
-			</textField>
-			<staticText>
-				<reportElement x="303" y="17" width="100" height="13" uuid="da001ab4-1ea0-46f0-874e-965aa28edd32"/>
-				<textElement textAlignment="Left" verticalAlignment="Top">
-					<font size="9" isBold="true"/>
-				</textElement>
-				<text><![CDATA[Total Deuda:]]></text>
-			</staticText>
-			<textField>
-				<reportElement x="451" y="20" width="100" height="13" uuid="4625c6ff-542d-48b9-bfa4-7b356328378b"/>
-				<textFieldExpression><![CDATA[$F{deuda}]]></textFieldExpression>
 			</textField>
 			<rectangle>
 				<reportElement stretchType="ContainerHeight" x="2" y="37" width="550" height="58" uuid="60260834-3c34-4a60-bfeb-ca49bcef464f"/>
@@ -454,10 +445,6 @@ group by c.cedula, c.nombre, c.apellido, f.fecha, f.num_factura, f.total_factura
 				</textElement>
 				<text><![CDATA[Meses y/o Facturas Pendientes:]]></text>
 			</staticText>
-			<textField>
-				<reportElement x="8" y="82" width="100" height="13" uuid="8bf498ca-8d33-43b1-83f9-610c86796ee0"/>
-				<textFieldExpression><![CDATA[$F{usuario_crea}]]></textFieldExpression>
-			</textField>
 			<staticText>
 				<reportElement x="321" y="67" width="85" height="13" uuid="ac156883-eb0c-4621-acef-e3d387f132c9"/>
 				<textElement>
@@ -466,8 +453,12 @@ group by c.cedula, c.nombre, c.apellido, f.fecha, f.num_factura, f.total_factura
 				<text><![CDATA[Saldo Pendiente:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="431" y="67" width="100" height="13" uuid="b9d8ff18-d7db-40f7-898f-ced36f62dfa7"/>
-				<textFieldExpression><![CDATA[$F{deuda}]]></textFieldExpression>
+				<reportElement x="414" y="67" width="100" height="13" uuid="64627808-ce84-414e-ad39-520de90fe0f1"/>
+				<textFieldExpression><![CDATA[$P{saldoTotal}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="86" y="80" width="204" height="13" uuid="08f1b9f7-7926-46d6-bc83-2e6a0012796c"/>
+				<textFieldExpression><![CDATA[$P{usuario}]]></textFieldExpression>
 			</textField>
 		</band>
 	</summary>

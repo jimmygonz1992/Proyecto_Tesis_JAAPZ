@@ -574,7 +574,10 @@ public class RecaudacionesRegistroCobroC {
 					Map<String, Object> param = new HashMap<String, Object>();
 					param.put("numComprobante", txtNumComp.getText());
 					param.put("cedula", cuentaSeleccionada.getIdCuenta());
+					param.put("saldoTotal", Double.valueOf(txtTotal.getText())-Double.valueOf(txtTotalPago.getText()));
+					param.put("usuario", Context.getInstance().getUsuariosC().getNombre() + ' ' + Context.getInstance().getUsuariosC().getApellido());
 					pr.crearReporte("/recursos/informes/comprobante.jasper", facturaDao, param);
+					pr.imprimirReporte();
 					pr.showReport("Comprobante de Pago");
 				}
 				limpiar();
