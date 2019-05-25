@@ -67,5 +67,11 @@ public class SegUsuarioPerfil implements Serializable{
 	public void setSegUsuario(SegUsuario segUsuario) {
 		this.segUsuario = segUsuario;
 	}
+
+	@Override
+	public String toString() {
+		return "SegUsuarioPerfil [idUsuarioPerfil=" + idUsuarioPerfil + ", estado=" + estado + ", segPerfil="
+				+ segPerfil + ", segUsuario=" + segUsuario + "]";
+	}
 	
 }

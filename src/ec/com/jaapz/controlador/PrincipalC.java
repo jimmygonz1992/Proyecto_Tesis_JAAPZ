@@ -19,14 +19,17 @@ import ec.com.jaapz.util.Context;
 import ec.com.jaapz.util.ControllerHelper;
 import javafx.animation.FadeTransition;
 import javafx.animation.Interpolator;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.geometry.Orientation;
 import javafx.scene.control.Accordion;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
+import javafx.scene.control.ScrollBar;
 import javafx.scene.control.SplitPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -44,8 +47,9 @@ public class PrincipalC {
 	private @FXML AnchorPane ap_derecha;
 	private @FXML AnchorPane ap_izquierda;
 	private @FXML Accordion acd_menu;
-	@FXML private ImageView ivLogo;
-	private @FXML VBox vBoxMenu;
+	private @FXML ImageView ivLogo;
+	//private @FXML VBox vBoxMenu;
+	private @FXML AnchorPane contMenu;
 
 
 	Calendar fecha = new GregorianCalendar();
@@ -53,10 +57,12 @@ public class PrincipalC {
 	SegPermisoDAO permisoDAO = new SegPermisoDAO();
 	SegMenuDAO menuDAO = new SegMenuDAO();
 	Map<VBox,VBox> map = new HashMap<VBox,VBox>();
-
+	final ScrollBar sc = new ScrollBar();
+	final VBox vBoxMenu = new VBox();
+	
 	int contador = 0,mayor = 0;
 	public void initialize(){
-		
+
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		Calendar fecha = new GregorianCalendar();
 		int anio,mes,dia;
@@ -73,12 +79,24 @@ public class PrincipalC {
 		mes = fecha.get(Calendar.MONTH);
 		dia = fecha.get(Calendar.DAY_OF_MONTH);
 		lblFecha.setText("" + dia + "/" + (mes + 1) + "/" + anio);
-		llenarMenu();
 		
-		ScrollPane scrollPane = new ScrollPane(vBoxMenu);
-	    scrollPane.setFitToHeight(true);
+		contMenu.getChildren().addAll(vBoxMenu, sc);
+		llenarMenu();
+
+		//sc.setLayoutX(contMenu.getWidth()-sc.getWidth());
+		sc.setMin(0);
+        sc.setOrientation(Orientation.VERTICAL);
+        sc.setPrefHeight(180);
+        sc.setMax(360);
+		
+		sc.valueProperty().addListener(new ChangeListener<Number>() {
+			public void changed(ObservableValue<? extends Number> ov,
+					Number old_val, Number new_val) {
+				vBoxMenu.setLayoutY(-new_val.doubleValue());
+			}
+		});
 	}
-	
+
 	void llenarMenu() {
 		try {
 			int dimesionIcono = 40;
@@ -88,14 +106,14 @@ public class PrincipalC {
 			List<SegPermiso> listaAcceso = permisoDAO.getPermisoPerfil(Context.getInstance().getIdPerfil());
 			List<SegMenu> menuListTitle = new ArrayList<SegMenu>();
 			List<SegMenu> menuListCont = new ArrayList<SegMenu>();
-			
+
 			for(int i = 0 ; i < listaAcceso.size() ; i ++) {
 				if(listaAcceso.get(i).getSegMenu().getIdMenuPadre() != 0) {
 					//menuListTitle.add(listaAcceso.get(i).getSegMenu());
 					menuListCont.add(listaAcceso.get(i).getSegMenu());
 				}
 			}
-			
+
 			boolean bandera = false;
 			for(int i = 0 ; i < listaAcceso.size() ; i ++) {
 				bandera = false;
@@ -123,7 +141,7 @@ public class PrincipalC {
 			menuSalir.setPosicion(15);
 			menuListTitle.add(menuSalir);
 			for(int i = 0 ; i < menuListTitle.size() ; i ++) {
-				
+
 				if(menuListTitle.get(i).getIdMenuPadre() == 0 && menuListTitle.get(i).getEstado().equals("A")) {//se pregunta si el menu es padre
 					VBox vbMenu = new VBox();
 					menuList = new ArrayList<SegMenu>();
@@ -175,7 +193,7 @@ public class PrincipalC {
 						}
 					}
 					vbMenu.getChildren().add(vbSubMenu);
-					
+
 					vBoxMenu.getChildren().add(vbMenu);
 					map.put(vbMenu,vbSubMenu);
 
@@ -192,7 +210,7 @@ public class PrincipalC {
 							}
 						}
 					});
-					
+
 				}
 
 			}

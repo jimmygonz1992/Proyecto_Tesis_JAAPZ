@@ -38,8 +38,13 @@ public class InicioSeleccionPerfilC {
 	
 	public void initialize() {
 		Image image1 = new Image("login.png");
+		btnAceptar.setStyle("-fx-cursor: hand;");
+		btnCancelar.setStyle("-fx-cursor: hand;");
+		btnAtras.setStyle("-fx-cursor: hand;");
+		cboPerfil.setStyle("-fx-cursor: hand;");
+		
 		ivLogin.setImage(image1);
-		btnAtras.setStyle("-fx-graphic: url('/atras.png');-fx-cursor: hand;-fx-background-color: transparent");
+		btnAtras.setStyle("-fx-graphic: url('/atras.png');-fx-background-color: transparent");
 		buscarPerfilUsuario();
 		btnAtras.setOnMouseClicked(new EventHandler<Event>() {
 			@Override

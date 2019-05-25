@@ -187,9 +187,8 @@ public class SeguridadUsuarioC {
 			public void handle(KeyEvent ke){
 				if (ke.getCode().equals(KeyCode.ENTER)){
 					if (validarCedula(txtCedula.getText()) == false){
-						helper.mostrarAlertaError("El número de cedula es incorrecto!", Context.getInstance().getStage());
+						//helper.mostrarAlertaError("El número de cedula es incorrecto!", Context.getInstance().getStage());
 						limpiar();
-						txtCedula.setText("");
 						txtCedula.requestFocus();
 					}else
 						recuperarDatos(txtCedula.getText());
@@ -227,9 +226,8 @@ public class SeguridadUsuarioC {
 				}
 				else{
 					if (validarCedula(txtCedula.getText()) == false){
-						helper.mostrarAlertaError("El número de cedula es incorrecto!", Context.getInstance().getStage());
+						//helper.mostrarAlertaError("El número de cedula es incorrecto!", Context.getInstance().getStage());
 						limpiar();
-						txtCedula.setText("");
 						txtCedula.requestFocus();
 					}else {
 						limpiar();
@@ -341,30 +339,43 @@ public class SeguridadUsuarioC {
 			usuarioSeleccionado.setClave(Encriptado.Encriptar(txtClave.getText()));
 			usuarioSeleccionado.setFoto(helper.encodeFileToBase64Binary(ivFoto.getImage()).getBytes());
 			//quitar los eliminados
+			System.out.println("listado a eliminar: " + listaEliminar.size());
 			if(listaEliminar.size() > 0) {//tiene elementos eliminados
 				for(SegUsuarioPerfil perfiles : listaEliminar) {
-					for(int i = 0 ; i < usuarioSeleccionado.getSegUsuarioPerfils().size() ; i++) {
-						if(perfiles.getIdUsuarioPerfil() != null)//pregunto si el id esta en nulo.. xq tbn se pueden eliminar elementos sin id
-							if(perfiles.getIdUsuarioPerfil() == usuarioSeleccionado.getSegUsuarioPerfils().get(i).getIdUsuarioPerfil())
-								usuarioSeleccionado.getSegUsuarioPerfils().get(i).setEstado(Constantes.ESTADO_INACTIVO);
-					}	
-				}
-			}
-			//agregar los nuevos
-			List<SegUsuarioPerfil> perfilesUsuarios = new ArrayList<SegUsuarioPerfil>();
-			for(SegUsuarioPerfil usuPer : tvPerfiles.getItems()) {
-				if(usuPer.getIdUsuarioPerfil() == null) {//si es nulo es una nueva asignacion de perfil
-					usuPer.setEstado(Constantes.ESTADO_ACTIVO);
-					if(usuarioSeleccionado.getSegUsuarioPerfils() != null) {
-						usuPer.setSegUsuario(usuarioSeleccionado);
-						usuarioSeleccionado.getSegUsuarioPerfils().add(usuPer);
-					}else {
-						usuPer.setSegUsuario(usuarioSeleccionado);
-						perfilesUsuarios.add(usuPer);
+					System.out.println(perfiles.toString());
+					for(SegUsuarioPerfil perfilesUsuario : usuarioSeleccionado.getSegUsuarioPerfils()) {
+						if(perfiles.getIdUsuarioPerfil() != null) {//pregunto si el id esta en nulo.. xq tbn se pueden eliminar elementos sin id
+							if(perfiles.getIdUsuarioPerfil() == perfilesUsuario.getIdUsuarioPerfil())
+								perfilesUsuario.setEstado(Constantes.ESTADO_INACTIVO);
+						}
 					}
 				}
 			}
-			usuarioSeleccionado.setSegUsuarioPerfils(perfilesUsuarios);
+			//primero preguntar si existen nuevas asignaciones
+			boolean siExisteNuevos = false;
+			for(SegUsuarioPerfil usuPer : tvPerfiles.getItems()) {
+				if(usuPer.getIdUsuarioPerfil() == null) {//si es nulo es una nueva asignacion de perfil
+					siExisteNuevos = true;
+				}
+			}
+			if(siExisteNuevos == true) {//existen nuevos perfiles asignados
+				List<SegUsuarioPerfil> perfilesUsuarios = new ArrayList<SegUsuarioPerfil>();
+				for(SegUsuarioPerfil usuPer : tvPerfiles.getItems()) {
+					if(usuPer.getIdUsuarioPerfil() == null) {
+						usuPer.setEstado(Constantes.ESTADO_ACTIVO);
+						if(usuarioSeleccionado.getSegUsuarioPerfils() != null) {
+							usuPer.setSegUsuario(usuarioSeleccionado);
+							usuarioSeleccionado.getSegUsuarioPerfils().add(usuPer);
+						}else {
+							usuPer.setSegUsuario(usuarioSeleccionado);
+							perfilesUsuarios.add(usuPer);
+						}
+					}
+				}
+				if(usuarioSeleccionado.getSegUsuarioPerfils() == null) 
+					usuarioSeleccionado.setSegUsuarioPerfils(perfilesUsuarios);
+			}
+			
 			Optional<ButtonType> result = helper.mostrarAlertaConfirmacion("Desea Grabar los Datos?",Context.getInstance().getStage());
 			if(result.get() == ButtonType.OK){
 				usuarioSeleccionado.setEstado(estado);
