@@ -176,12 +176,12 @@ public class BodegaIngresoRubrosC {
 				public void handle(KeyEvent ke){
 					if (ke.getCode().equals(KeyCode.ENTER)){
 						if (validarRucPersonaNatural(txtRuc.getText()) == false){
-							helper.mostrarAlertaAdvertencia("El número de RUC es incorrecto!", Context.getInstance().getStage());
+							//helper.mostrarAlertaAdvertencia("El número de RUC es incorrecto!", Context.getInstance().getStage());
 							txtRuc.setText("");
 							txtRuc.requestFocus();	
 						}else {
 							if (validarProveedorExiste() == false) {
-								helper.mostrarAlertaAdvertencia("Proveedor no existente.. Debe llenar todos los datos!", Context.getInstance().getStage());
+								//helper.mostrarAlertaAdvertencia("Proveedor no existente.. Debe llenar todos los datos!", Context.getInstance().getStage());
 								txtNombresPro.requestFocus();
 							}else {
 								recuperarDatos(txtRuc.getText());
@@ -200,13 +200,13 @@ public class BodegaIngresoRubrosC {
 					}
 					else{
 						if (validarRucPersonaNatural(txtRuc.getText()) == false){
-							helper.mostrarAlertaError("El número de RUC es incorrecto!", Context.getInstance().getStage());
+							//helper.mostrarAlertaError("El número de RUC es incorrecto!", Context.getInstance().getStage());
 							limpiar();
 							txtRuc.setText("");
 							txtRuc.requestFocus();
 						}else {
 							if (validarProveedorExiste() == false) {
-								helper.mostrarAlertaAdvertencia("Proveedor.. Debe llenar todos los datos!", Context.getInstance().getStage());
+								//helper.mostrarAlertaAdvertencia("Proveedor.. Debe llenar todos los datos!", Context.getInstance().getStage());
 								txtProveedor.requestFocus();
 							}else {
 								recuperarDatos(txtRuc.getText());

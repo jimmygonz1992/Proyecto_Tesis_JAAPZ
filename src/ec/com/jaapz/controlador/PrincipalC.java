@@ -2,6 +2,7 @@ package ec.com.jaapz.controlador;
 
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
@@ -19,22 +20,21 @@ import ec.com.jaapz.util.Context;
 import ec.com.jaapz.util.ControllerHelper;
 import javafx.animation.FadeTransition;
 import javafx.animation.Interpolator;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.geometry.Orientation;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.Accordion;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
-import javafx.scene.control.ScrollBar;
 import javafx.scene.control.SplitPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 
 public class PrincipalC {
@@ -49,7 +49,7 @@ public class PrincipalC {
 	private @FXML Accordion acd_menu;
 	private @FXML ImageView ivLogo;
 	//private @FXML VBox vBoxMenu;
-	private @FXML AnchorPane contMenu;
+	private @FXML VBox contMenu;
 
 
 	Calendar fecha = new GregorianCalendar();
@@ -57,7 +57,6 @@ public class PrincipalC {
 	SegPermisoDAO permisoDAO = new SegPermisoDAO();
 	SegMenuDAO menuDAO = new SegMenuDAO();
 	Map<VBox,VBox> map = new HashMap<VBox,VBox>();
-	final ScrollBar sc = new ScrollBar();
 	final VBox vBoxMenu = new VBox();
 	
 	int contador = 0,mayor = 0;
@@ -80,21 +79,10 @@ public class PrincipalC {
 		dia = fecha.get(Calendar.DAY_OF_MONTH);
 		lblFecha.setText("" + dia + "/" + (mes + 1) + "/" + anio);
 		
-		contMenu.getChildren().addAll(vBoxMenu, sc);
+		contMenu.getChildren().addAll(vBoxMenu);
+		
 		llenarMenu();
 
-		//sc.setLayoutX(contMenu.getWidth()-sc.getWidth());
-		sc.setMin(0);
-        sc.setOrientation(Orientation.VERTICAL);
-        sc.setPrefHeight(180);
-        sc.setMax(360);
-		
-		sc.valueProperty().addListener(new ChangeListener<Number>() {
-			public void changed(ObservableValue<? extends Number> ov,
-					Number old_val, Number new_val) {
-				vBoxMenu.setLayoutY(-new_val.doubleValue());
-			}
-		});
 	}
 
 	void llenarMenu() {
@@ -133,7 +121,7 @@ public class PrincipalC {
 			}
 			//agregar el boton salir
 			SegMenu menuSalir = new SegMenu();
-			menuSalir.setDescripcion("Salir");
+			menuSalir.setDescripcion("Cerrar sesión");
 			menuSalir.setEstado("A");
 			menuSalir.setIcono("/salir.png");
 			menuSalir.setIdMenu(200);
@@ -203,10 +191,30 @@ public class PrincipalC {
 							String evento = event.getSource().toString(); String[] arr = evento.split("'");
 							toolsSlider(vbMenu,vbSubMenu);
 							removeOtherMenus(vbMenu);
-							if(arr[1].toString().equals("Salir")) {
+							if(arr[1].toString().equals("Cerrar sesión")) {
 								Optional<ButtonType> result = helper.mostrarAlertaConfirmacion("Desea salir del sistema?",Context.getInstance().getStage());
-								if(result.get() == ButtonType.OK)
-									System.exit(0);
+								if(result.get() == ButtonType.OK) {
+									try {
+										
+										//Stage nuevo = new Stage();
+										FXMLLoader root = new FXMLLoader();
+										root.setLocation(getClass().getResource("/principal/InicioSesion.fxml"));
+										AnchorPane page;
+										page = (AnchorPane) root.load();
+										Scene scene = new Scene(page);
+										Context.getInstance().getStagePrincipal().getIcons().add(new Image("/logo_jaapz.png"));
+										Context.getInstance().getStagePrincipal().setScene(scene);
+										Context.getInstance().getStagePrincipal().setMaximized(true);
+										Context.getInstance().getStagePrincipal().setTitle("Inicio de Sesion");
+										Context.getInstance().getStagePrincipal().show();
+										Context.getInstance().getStage().close();
+									} catch (IOException e) {
+										// TODO Auto-generated catch block
+										e.printStackTrace();
+									}
+									
+									
+								}
 							}
 						}
 					});
