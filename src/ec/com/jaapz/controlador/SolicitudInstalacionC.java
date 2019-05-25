@@ -107,8 +107,10 @@ public class SolicitudInstalacionC {
     		        }
     		        else{
     		        	if (validarCedula(txtCedula.getText()) == false){
-    						helper.mostrarAlertaError("El número de cedula es incorrecto!", Context.getInstance().getStage());
+    						//helper.mostrarAlertaError("El número de cedula es incorrecto!", Context.getInstance().getStage());
     						limpiar();
+    						txtCedula.setText("");
+    						txtCedula.requestFocus();
     					}else {
     						recuperarDatos(txtCedula.getText());
     						
@@ -196,6 +198,15 @@ public class SolicitudInstalacionC {
 					txtNombres.setText(cadena);
 				}
 			});
+			//validar solo letras.... igual se va con puntuaciones
+			txtNombres.textProperty().addListener(new ChangeListener<String>() {
+				public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+					if (!newValue.matches("\\D*")) {
+						txtNombres.setText(newValue.replaceAll("[^\\D]", ""));
+					}
+				}
+			});
+			
 			txtApellidos.textProperty().addListener(new ChangeListener<String>() {
 				@Override
 				public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
@@ -204,6 +215,16 @@ public class SolicitudInstalacionC {
 					txtApellidos.setText(cadena);
 				}
 			});
+			
+			//validar solo letras.... igual se va con puntuaciones
+			txtApellidos.textProperty().addListener(new ChangeListener<String>() {
+				public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+					if (!newValue.matches("\\D*")) {
+						txtApellidos.setText(newValue.replaceAll("[^\\D]", ""));
+					}
+				}
+			});
+			
 			txtDireccion.textProperty().addListener(new ChangeListener<String>() {
 				@Override
 				public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
@@ -283,36 +304,53 @@ public class SolicitudInstalacionC {
     public void grabar() {
     	try {
     		if(txtCedula.getText().toString().equals("")) {
-				helper.mostrarAlertaAdvertencia("Debe seleccionar un cliente", Context.getInstance().getStage());
+				helper.mostrarAlertaAdvertencia("Ingresar cédula del cliente", Context.getInstance().getStage());
 				txtCedula.requestFocus();
 				return;
 			}
+    		
+    		if(txtNombres.getText().toString().equals("")) {
+				helper.mostrarAlertaAdvertencia("Ingrese nombre del cliente", Context.getInstance().getStage());
+				txtNombres.requestFocus();
+				return;
+			}
+    		
+    		if(txtApellidos.getText().toString().equals("")) {
+				helper.mostrarAlertaAdvertencia("Ingrese apellido del cliente", Context.getInstance().getStage());
+				txtApellidos.requestFocus();
+				return;
+			}
+    		
+    		if(txtDireccion.getText().toString().equals("")) {
+				helper.mostrarAlertaAdvertencia("Dirección actual del cliente obligatorio", Context.getInstance().getStage());
+				txtDireccion.requestFocus();
+				return;
+			}
+    		
     		if(cboGenero.getSelectionModel().getSelectedIndex() == -1) {
 				helper.mostrarAlertaAdvertencia("Debe seleccionar género del cliente", Context.getInstance().getStage());
 				return;
 			}
+    		
 			if(dtpFechaIns.getValue() == null) {
 				helper.mostrarAlertaAdvertencia("Debe registrar fecha de la inspección", Context.getInstance().getStage());
 				return;
 			}
+			
 			if(cboUsoMedidor.getSelectionModel().getSelectedIndex() == -1) {
 				helper.mostrarAlertaAdvertencia("Debe seleccionar el uso del medidor", Context.getInstance().getStage());
 				return;
 			}
+			
 			if(txtReferenciaIns.getText().toString().equals("")) {
 				helper.mostrarAlertaAdvertencia("Es necesario registrar referencia domiciliaria", Context.getInstance().getStage());
 				txtReferenciaIns.requestFocus();
 				return;
 			}
+			
 			if(txtContacto.getText().toString().equals("")) {
 				helper.mostrarAlertaAdvertencia("Es recesario registrar número de contacto", Context.getInstance().getStage());
 				txtContacto.requestFocus();
-				return;
-			}
-			
-			if(txtDireccion.getText().toString().equals("")) {
-				helper.mostrarAlertaAdvertencia("Dirección actual del cliente obligatorio", Context.getInstance().getStage());
-				txtDireccion.requestFocus();
 				return;
 			}
 			
