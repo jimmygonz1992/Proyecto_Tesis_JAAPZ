@@ -181,7 +181,7 @@ public class BodegaIngresoRubrosC {
 							txtRuc.requestFocus();	
 						}else {
 							if (validarProveedorExiste() == false) {
-								helper.mostrarAlertaAdvertencia("RUC no existente.. Debe llenar todos los datos!", Context.getInstance().getStage());
+								helper.mostrarAlertaAdvertencia("Proveedor no existente.. Debe llenar todos los datos!", Context.getInstance().getStage());
 								txtNombresPro.requestFocus();
 							}else {
 								recuperarDatos(txtRuc.getText());
@@ -206,7 +206,7 @@ public class BodegaIngresoRubrosC {
 							txtRuc.requestFocus();
 						}else {
 							if (validarProveedorExiste() == false) {
-								helper.mostrarAlertaAdvertencia("RUC no existente.. Debe llenar todos los datos!", Context.getInstance().getStage());
+								helper.mostrarAlertaAdvertencia("Proveedor.. Debe llenar todos los datos!", Context.getInstance().getStage());
 								txtProveedor.requestFocus();
 							}else {
 								recuperarDatos(txtRuc.getText());

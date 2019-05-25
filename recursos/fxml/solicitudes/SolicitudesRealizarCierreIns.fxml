@@ -65,7 +65,7 @@
 								<RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
 							</rowConstraints>
 							<children>
-								<Label text="Código:">
+								<Label text="N° Solicitud:">
 									<font>
 										<Font name="Arial Bold" size="12.0" />
 									</font>
