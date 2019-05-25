@@ -94,18 +94,16 @@
             
             <HBox prefHeight="100.0" prefWidth="200.0" style="-fx-border-color: #bbc8d0; -fx-border-width: 1px; -fx-background-radius: 6; -fx-max-height: 600; -fx-max-width: 1500; -fx-min-height: 10; -fx-min-width: 10" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="4">
                <children>
-                  <GridPane prefHeight="88.0" prefWidth="674.0" HBox.hgrow="ALWAYS">
+                  <GridPane prefHeight="65.0" prefWidth="690.0" HBox.hgrow="ALWAYS">
                     <columnConstraints>
                       <ColumnConstraints hgrow="SOMETIMES" maxWidth="330.0" minWidth="10.0" prefWidth="79.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="330.0" minWidth="10.0" prefWidth="122.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="330.0" minWidth="1.0" prefWidth="9.0" />
-                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="602.0" minWidth="10.0" prefWidth="71.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="602.0" minWidth="10.0" prefWidth="114.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="602.0" minWidth="10.0" prefWidth="81.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="602.0" minWidth="10.0" prefWidth="80.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="602.0" minWidth="1.0" prefWidth="6.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="602.0" minWidth="10.0" prefWidth="73.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="602.0" minWidth="10.0" prefWidth="110.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="330.0" minWidth="10.0" prefWidth="158.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="330.0" minWidth="1.0" prefWidth="19.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="602.0" minWidth="10.0" prefWidth="84.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="602.0" minWidth="10.0" prefWidth="130.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="602.0" minWidth="10.0" prefWidth="23.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="602.0" minWidth="10.0" prefWidth="101.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="602.0" minWidth="1.0" prefWidth="128.0" />
                     </columnConstraints>
                     <rowConstraints>
                       <RowConstraints maxHeight="53.0" minHeight="10.0" prefHeight="26.0" vgrow="SOMETIMES" />
@@ -117,16 +115,11 @@
                            <font><Font name="System Bold" size="12.0" /></font>
                         </Label>
                         <TextField fx:id="txtCedula" GridPane.columnIndex="1" />
-                        <TextField fx:id="txtCliente" prefHeight="25.0" prefWidth="347.0" GridPane.columnIndex="4" GridPane.columnSpan="3" />
-                        <TextField fx:id="txtUsuarioSolic" GridPane.columnIndex="9" />
+                        <TextField fx:id="txtCliente" prefHeight="25.0" GridPane.columnIndex="4" GridPane.columnSpan="4" />
                         <DatePicker fx:id="dtpFecha" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                         <TextField fx:id="txtUsuarioCreaInst" GridPane.columnIndex="4" GridPane.rowIndex="1" />
-                        <ComboBox fx:id="cboEstadoInstalacion" prefWidth="150.0" GridPane.columnIndex="9" GridPane.rowIndex="1" />
+                        <ComboBox fx:id="cboEstadoInstalacion" GridPane.columnIndex="7" GridPane.columnSpan="2" GridPane.rowIndex="1" />
                         <Label alignment="TOP_LEFT" contentDisplay="TOP" prefHeight="40.0" prefWidth="82.0" text="Fecha Instalación:" wrapText="true" GridPane.rowIndex="1">
-                           <font><Font name="System Bold" size="12.0" /></font>
-                        </Label>
-                       
-                        <Label prefHeight="20.0" prefWidth="83.0" text="Usuario:" GridPane.columnIndex="8">
                            <font><Font name="System Bold" size="12.0" /></font>
                         </Label>
                         <Label prefHeight="20.0" prefWidth="83.0" text="Cliente:" GridPane.columnIndex="3">
@@ -136,7 +129,7 @@
                         <Label alignment="TOP_LEFT" prefHeight="47.0" prefWidth="125.0" text="Usuario Instalación:" wrapText="true" GridPane.columnIndex="3" GridPane.rowIndex="1">
                            <font><Font name="System Bold" size="12.0" /></font>
                         </Label>
-                        <Label prefHeight="35.0" prefWidth="72.0" text="Estado Instalación:" wrapText="true" GridPane.columnIndex="8" GridPane.rowIndex="1">
+                        <Label prefHeight="35.0" prefWidth="72.0" text="Estado Instalación:" wrapText="true" GridPane.columnIndex="6" GridPane.rowIndex="1">
                            <font><Font name="System Bold" size="12.0" /></font>
                         </Label>
                         

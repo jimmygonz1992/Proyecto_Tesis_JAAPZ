@@ -377,10 +377,12 @@ public class BodegaSalidaRubroInstC {
 		try {
 			if(validarDatos() == false)
 				return;
+			
 			if(validarStockRubro() == false) {
 				helper.mostrarAlertaError("Stock insuficiente de materiales", Context.getInstance().getStage());
 				return;
 			}
+			
 			Optional<ButtonType> result = helper.mostrarAlertaConfirmacion("Desea Grabar los Datos?",Context.getInstance().getStage());
 			if(result.get() == ButtonType.OK){
 				Instalacion instalacion = new Instalacion();

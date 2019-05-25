@@ -16,7 +16,7 @@ import java.util.List;
 @NamedQueries({
 	//SI se está utilizando //ya utilizado //bodega Listado Liquidaciones
 	@NamedQuery(name="LiquidacionOrden.findAll", query="SELECT l FROM LiquidacionOrden l "
-		+ "where (lower(l.cuentaCliente.cliente.apellido) like :patron or lower(l.cuentaCliente.cliente.nombre) like :patron "
+		+ "where (lower(l.cuentaCliente.cliente.apellido) like lower(:patron) or lower(l.cuentaCliente.cliente.nombre) like lower(:patron) "
 		+ "or lower(l.cuentaCliente.cliente.cedula) like :patron) and l.solInspeccionIn.estadoInspeccion = 'REALIZADO' "
 		+ "and l.estadoInstalacion = 'PENDIENTE' and l.estadoOrden = 'PENDIENTE' "
 		+ "and l.estado = 'A' order by l.idLiquidacion asc"),	
