@@ -2,6 +2,7 @@ package ec.com.jaapz.controlador;
 
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
@@ -22,6 +23,8 @@ import javafx.animation.Interpolator;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.Accordion;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
@@ -31,6 +34,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 
 public class PrincipalC {
@@ -117,7 +121,7 @@ public class PrincipalC {
 			}
 			//agregar el boton salir
 			SegMenu menuSalir = new SegMenu();
-			menuSalir.setDescripcion("Salir");
+			menuSalir.setDescripcion("Cerrar sesión");
 			menuSalir.setEstado("A");
 			menuSalir.setIcono("/salir.png");
 			menuSalir.setIdMenu(200);
@@ -187,9 +191,28 @@ public class PrincipalC {
 							String evento = event.getSource().toString(); String[] arr = evento.split("'");
 							toolsSlider(vbMenu,vbSubMenu);
 							removeOtherMenus(vbMenu);
-							if(arr[1].toString().equals("Salir")) {
+							if(arr[1].toString().equals("Cerrar sesión")) {
 								Optional<ButtonType> result = helper.mostrarAlertaConfirmacion("Desea salir del sistema?",Context.getInstance().getStage());
 								if(result.get() == ButtonType.OK) {
+									try {
+										
+										//Stage nuevo = new Stage();
+										FXMLLoader root = new FXMLLoader();
+										root.setLocation(getClass().getResource("/principal/InicioSesion.fxml"));
+										AnchorPane page;
+										page = (AnchorPane) root.load();
+										Scene scene = new Scene(page);
+										Context.getInstance().getStagePrincipal().getIcons().add(new Image("/logo_jaapz.png"));
+										Context.getInstance().getStagePrincipal().setScene(scene);
+										Context.getInstance().getStagePrincipal().setMaximized(true);
+										Context.getInstance().getStagePrincipal().setTitle("Inicio de Sesion");
+										Context.getInstance().getStagePrincipal().show();
+										Context.getInstance().getStage().close();
+									} catch (IOException e) {
+										// TODO Auto-generated catch block
+										e.printStackTrace();
+									}
+									
 									
 								}
 							}

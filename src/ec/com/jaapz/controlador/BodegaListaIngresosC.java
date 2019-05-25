@@ -1,11 +1,14 @@
 package ec.com.jaapz.controlador;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 import ec.com.jaapz.modelo.Ingreso;
 import ec.com.jaapz.modelo.IngresoDAO;
 import ec.com.jaapz.modelo.IngresoDetalle;
+import ec.com.jaapz.modelo.Medidor;
+import ec.com.jaapz.modelo.MedidorDAO;
 import ec.com.jaapz.util.Constantes;
 import ec.com.jaapz.util.Context;
 import javafx.beans.property.SimpleObjectProperty;
@@ -26,6 +29,7 @@ import javafx.util.Callback;
 public class BodegaListaIngresosC {
 	@FXML private TableView<Ingreso> tvDatos;
 	@FXML private TextField txtBuscar;
+	MedidorDAO medidorDAO = new MedidorDAO();
 	
 	public void initialize() {
 		try {
@@ -64,8 +68,33 @@ public class BodegaListaIngresosC {
 			List<Ingreso> listaIngresos;
 			listaIngresos = ingresoDAO.getAllFacturaTodo(codigo);
 			ObservableList<Ingreso> datos = FXCollections.observableArrayList();
-			datos.setAll(listaIngresos);
 
+			//buscar solo las facturas con medidores
+			List<Ingreso> listaIngresoMedidores = new ArrayList<Ingreso>();
+			for(Ingreso ing : listaIngresos) {
+				int cantidad = 0;
+				
+				for(IngresoDetalle detalle : ing.getIngresoDetalles()) {
+					if(detalle.getRubro().getIdRubro() == Constantes.ID_MEDIDOR)
+						cantidad = detalle.getCantidad();
+				}
+				System.out.println("cantidad de medidores: " + cantidad);
+				if(cantidad > 0) {//tiene medidores.. hay q revisar si ya estan codificados
+					int cont = 0;
+					List<Medidor> listaMedidor = medidorDAO.getRecuperarMedidorFactura(ing.getIdIngreso());
+					for(Medidor med : listaMedidor) {
+						if(med.getCodigo() != null)
+							cont ++;
+					}
+					
+					System.out.println("Cantidad con codigo: " + cont);
+					System.out.println("Cantidad medidores recuperados: " + listaMedidor.size());
+					if(listaMedidor.size() > cont)
+						listaIngresoMedidores.add(ing);
+				}
+			}
+			datos.setAll(listaIngresoMedidores);
+			
 			//llenar los datos en la tabla
 			TableColumn<Ingreso, String> idColum = new TableColumn<>("Id");
 			idColum.setMinWidth(10);
@@ -131,7 +160,7 @@ public class BodegaListaIngresosC {
 				}
 			});
 			
-			tvDatos.getColumns().addAll(idColum, ingresoColum, fechaColum, proveedorColum,cantidadColum,totalColum);
+			tvDatos.getColumns().addAll(ingresoColum, fechaColum, proveedorColum,cantidadColum,totalColum);
 			tvDatos.setItems(datos);
 		}catch(Exception ex) {
 			System.out.println(ex.getMessage());

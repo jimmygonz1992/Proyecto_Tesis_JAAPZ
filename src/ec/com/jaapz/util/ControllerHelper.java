@@ -79,6 +79,7 @@ public class ControllerHelper {
 	}
 	public void abrirPantallaPrincipal(String titulo,String uriVista) {
 		try {
+			
 			Stage nuevo = new Stage();
 			FXMLLoader root = new FXMLLoader();
 			root.setLocation(getClass().getResource(uriVista));
@@ -100,7 +101,6 @@ public class ControllerHelper {
 					//System.exit(0);
 				}
 			});
-
 			Context.getInstance().setStage(nuevo);
 			Context.getInstance().getStagePrincipal().close();
 		} catch (Exception e) {
