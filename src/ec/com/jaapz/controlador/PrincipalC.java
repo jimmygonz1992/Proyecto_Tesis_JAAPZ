@@ -19,17 +19,13 @@ import ec.com.jaapz.util.Context;
 import ec.com.jaapz.util.ControllerHelper;
 import javafx.animation.FadeTransition;
 import javafx.animation.Interpolator;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.geometry.Orientation;
 import javafx.scene.control.Accordion;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
-import javafx.scene.control.ScrollBar;
 import javafx.scene.control.SplitPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -49,7 +45,7 @@ public class PrincipalC {
 	private @FXML Accordion acd_menu;
 	private @FXML ImageView ivLogo;
 	//private @FXML VBox vBoxMenu;
-	private @FXML AnchorPane contMenu;
+	private @FXML VBox contMenu;
 
 
 	Calendar fecha = new GregorianCalendar();
@@ -57,7 +53,6 @@ public class PrincipalC {
 	SegPermisoDAO permisoDAO = new SegPermisoDAO();
 	SegMenuDAO menuDAO = new SegMenuDAO();
 	Map<VBox,VBox> map = new HashMap<VBox,VBox>();
-	final ScrollBar sc = new ScrollBar();
 	final VBox vBoxMenu = new VBox();
 	
 	int contador = 0,mayor = 0;
@@ -80,21 +75,10 @@ public class PrincipalC {
 		dia = fecha.get(Calendar.DAY_OF_MONTH);
 		lblFecha.setText("" + dia + "/" + (mes + 1) + "/" + anio);
 		
-		contMenu.getChildren().addAll(vBoxMenu, sc);
+		contMenu.getChildren().addAll(vBoxMenu);
+		
 		llenarMenu();
 
-		//sc.setLayoutX(contMenu.getWidth()-sc.getWidth());
-		sc.setMin(0);
-        sc.setOrientation(Orientation.VERTICAL);
-        sc.setPrefHeight(180);
-        sc.setMax(360);
-		
-		sc.valueProperty().addListener(new ChangeListener<Number>() {
-			public void changed(ObservableValue<? extends Number> ov,
-					Number old_val, Number new_val) {
-				vBoxMenu.setLayoutY(-new_val.doubleValue());
-			}
-		});
 	}
 
 	void llenarMenu() {
@@ -205,8 +189,9 @@ public class PrincipalC {
 							removeOtherMenus(vbMenu);
 							if(arr[1].toString().equals("Salir")) {
 								Optional<ButtonType> result = helper.mostrarAlertaConfirmacion("Desea salir del sistema?",Context.getInstance().getStage());
-								if(result.get() == ButtonType.OK)
-									System.exit(0);
+								if(result.get() == ButtonType.OK) {
+									
+								}
 							}
 						}
 					});
