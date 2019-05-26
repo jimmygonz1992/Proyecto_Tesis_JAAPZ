@@ -38,51 +38,60 @@
                     <AnchorPane fx:id="apConsolidado" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
                   </content>
                 </TitledPane>
-                <TitledPane animated="false" text="Deudas">
-                  <content>
-                    <AnchorPane fx:id="apDeudas" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-                  </content>
-                </TitledPane>
+                
                 <TitledPane animated="false" text="Historial de usuario">
                   <content>
                     <AnchorPane fx:id="apHistorial" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
                   </content>
                 </TitledPane>
-                  <TitledPane animated="false" text="Nómina de consumidores">
-                     <content>
+                
+                <TitledPane animated="false" text="Nómina de consumidores">
+                	<content>
                         <AnchorPane fx:id="apNomina" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-                     </content>
-                  </TitledPane>
-                  <TitledPane animated="false" text="Recaudaciones">
-                     <content>
-                        <AnchorPane fx:id="apRecaudaciones" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-                     </content>
-                  </TitledPane>
-                  <TitledPane animated="false" text="Consumo mensual">
-                     <content>
-                        <AnchorPane fx:id="apConsumo" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-                     </content>
-                  </TitledPane>
-                  <TitledPane animated="false" text="Usuarios al dia">
-                     <content>
-                        <AnchorPane fx:id="apUsuariosDia" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-                     </content>
-                  </TitledPane>
-                  <TitledPane animated="false" text="Listado de solicitudes no atendidas">
-                     <content>
+                    </content>
+                </TitledPane>
+                
+                <TitledPane animated="false" text="Consumo mensual">
+                    <content>
+                    	<AnchorPane fx:id="apConsumo" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                	</content>
+                </TitledPane>
+                
+                <TitledPane animated="false" text="Listado de solicitudes no atendidas">
+                	<content>
                         <AnchorPane fx:id="apSolicitudesNoAtendidas" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-                     </content>
-                  </TitledPane>
-                  <TitledPane animated="false" text="Inconsistencia de marcaciones">
-                     <content>
+                    </content>
+                </TitledPane>
+                
+                <TitledPane animated="false" text="Inconsistencia de marcaciones">
+                    <content>
                         <AnchorPane fx:id="apInconsistenciaMarcaciones" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-                     </content>
-                  </TitledPane>
-                   <TitledPane animated="false" text="Materiales">
-                     <content>
-                        <AnchorPane fx:id="apMateriales" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-                     </content>
-                  </TitledPane>  
+                	</content>
+                </TitledPane>
+                
+                <TitledPane animated="false" text="Deudas">
+                  <content>
+                    <AnchorPane fx:id="apDeudas" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                  </content>
+                </TitledPane>
+                
+                <TitledPane animated="false" text="Recaudaciones">
+                	<content>
+                    	<AnchorPane fx:id="apRecaudaciones" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                    </content>
+                </TitledPane>
+                  
+                <TitledPane animated="false" text="Usuarios al dia">
+                	<content>
+                    	<AnchorPane fx:id="apUsuariosDia" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                    </content>
+                </TitledPane>
+                                  
+                <TitledPane animated="false" text="Materiales">
+                	<content>
+                    	<AnchorPane fx:id="apMateriales" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                    </content>
+                </TitledPane>  
           
                   <TitledPane animated="false" text="Clientes con convenios de pago">
                      <content>
