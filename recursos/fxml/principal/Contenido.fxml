@@ -16,7 +16,7 @@
          <children>
             <HBox alignment="CENTER_LEFT" maxHeight="120.0" minHeight="10.0" prefHeight="76.0" prefWidth="595.0" styleClass="fondbox">
 					<children>
-                  <ImageView fitHeight="69.0" fitWidth="106.0" pickOnBounds="true" preserveRatio="true" />
+                  <ImageView fx:id="ivLogoUpse" fitHeight="69.0" fitWidth="106.0" pickOnBounds="true" preserveRatio="true" />
                   <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS">
                      <children>
       						<Label styleClass="labelBanner" text="JUNTA ADMINISTRADORA DE AGUA POTABLE ZAPOTAL - JAAPZ" textFill="WHITE">
