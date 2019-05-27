@@ -1,80 +1,68 @@
 package ec.com.jaapz.controlador;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 import ec.com.jaapz.modelo.SolInspeccionIn;
 import ec.com.jaapz.modelo.SolInspeccionInDAO;
-import ec.com.jaapz.util.Constantes;
-import ec.com.jaapz.util.Context;
+import ec.com.jaapz.util.PrintReport;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableRow;
+import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.util.Callback;
 
-public class ClientesOrdePendienteC {
-	@FXML TextField txtBuscar;
-	@FXML TableView<SolInspeccionIn> tvDatos;
-	SolInspeccionInDAO inspeccionDAO = new SolInspeccionInDAO();
-	List<SolInspeccionIn> listadoInspecciones = new ArrayList<SolInspeccionIn>();
+public class SolicitudesNoFactiblesC {
+	@FXML private Button btnImprimir;
+	@FXML private TableView<SolInspeccionIn> tvDatos;
+	@FXML private TextField txtBuscar;
+	SolInspeccionInDAO inspeccionDAO = new SolInspeccionInDAO(); 
 	SimpleDateFormat formateador = new SimpleDateFormat("dd/MM/yyyy");
 	
 	public void initialize() {
-		listadoInspecciones = Context.getInstance().getListaInspecciones();
-		for(SolInspeccionIn sol : listadoInspecciones)
-			System.out.println(sol.toString());
-		//poner nuevamente a null
-		Context.getInstance().setListaInspecciones(null);
-		llenarTablaInspecciones("");
-		tvDatos.setRowFactory(tv -> {
-            TableRow<SolInspeccionIn> row = new TableRow<>();
-            row.setOnMouseClicked(event -> {
-                if (event.getClickCount() == 2 && (! row.isEmpty()) ) {
-                	if(tvDatos.getSelectionModel().getSelectedItem() != null){
-    					Context.getInstance().setInspeccion(tvDatos.getSelectionModel().getSelectedItem());
-    					Context.getInstance().getStageModal().close();
-    				}
-                }
-            });
-            return row ;
-        });
-	}
-	public void buscarCliente() {
-		llenarTablaInspecciones(txtBuscar.getText());
+		try {
+			btnImprimir.setStyle("-fx-graphic: url('/imprimir.png');-fx-cursor: hand;");
+			llenarDatos("");
+			
+			txtBuscar.setOnKeyPressed(new EventHandler<KeyEvent>() { 
+				@Override 
+				public void handle(KeyEvent ke) { 
+					if (ke.getCode().equals(KeyCode.ENTER)) { 
+						List<SolInspeccionIn> listaInspecciones = inspeccionDAO.getSolicitudesNoFactibles(txtBuscar.getText());
+						ObservableList<SolInspeccionIn> datos = FXCollections.observableArrayList();
+						datos.setAll(listaInspecciones);
+						tvDatos.setItems(datos);
+						tvDatos.refresh();
+					} 
+				} 
+			}); 
+		}catch(Exception ex) {
+			System.out.println(ex.getMessage());
+		}
 	}
 	@SuppressWarnings("unchecked")
-	void llenarTablaInspecciones(String patron) {
-		try{
+	private void llenarDatos(String patron) {
+		try {
 			tvDatos.getColumns().clear();
-			boolean bandera;
-			List<SolInspeccionIn> listaInspecciones;
-			List<SolInspeccionIn> listaAgregar = new ArrayList<SolInspeccionIn>();
-			if(Context.getInstance().getIdPerfil() == Constantes.ID_USU_ADMINISTRADOR) {
-				listaInspecciones = inspeccionDAO.getListaInspeccionPendiente(patron);
-			}else {
-				listaInspecciones = inspeccionDAO.getListaInspeccionPerfilPendiente(patron);
-			}
-			for(SolInspeccionIn inspeccionAdd : listaInspecciones) {
-				bandera = false;
-				for(SolInspeccionIn inspeccionLst : listadoInspecciones) {
-					if(inspeccionAdd.getIdSolInspeccion() == inspeccionLst.getIdSolInspeccion())
-						bandera = true;
-				}
-				if(bandera == false)
-					listaAgregar.add(inspeccionAdd);
-			}
+			tvDatos.getItems().clear();
+			List<SolInspeccionIn> listaInspecciones = inspeccionDAO.getSolicitudesNoFactibles(patron);
 			
 			ObservableList<SolInspeccionIn> datos = FXCollections.observableArrayList();
-			datos.setAll(listaAgregar);
+			datos.setAll(listaInspecciones);
 
 			//llenar los datos en la tabla
 			TableColumn<SolInspeccionIn, String> idColum = new TableColumn<>("No. Solicitud");
@@ -122,8 +110,37 @@ public class ClientesOrdePendienteC {
 
 			tvDatos.getColumns().addAll(idColum, fechaColum,clienteColum,referenciaColum,estadoColum);
 			tvDatos.setItems(datos);
-		}catch(Exception ex){
+		}catch(Exception ex) {
 			System.out.println(ex.getMessage());
 		}
+	}
+	public void imprimirListado() {
+		try {
+			Map<String, Object> param = new HashMap<String, Object>();
+			SimpleDateFormat formateador = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss", new Locale("MX"));
+			Date fechaDate = new Date();
+			String fechaSistema = formateador.format(fechaDate);
+			String fecha = dateFormatter("yyyy-MM-dd hh:mm:ss","d 'de' MMMM 'del' yyyy", fechaSistema);
+			param.put("FECHA", fecha);
+			PrintReport reporte = new PrintReport();
+			reporte.crearReporte("/recursos/informes/solicitudesNoFactibles.jasper", inspeccionDAO, param);
+			reporte.showReport("Solicitudes no factibles");
+		}catch(Exception ex) {
+			System.out.println(ex.getMessage());
+		}
+	}
+	public static final Locale LOCALE_MX = new Locale("es", "MX");
+	public static String dateFormatter(String inputFormat, String outputFormat, String inputDate){
+	      //Define formato default de entrada.   
+	      String input = inputFormat.isEmpty()? "yyyy-MM-dd hh:mm:ss" : inputFormat; 
+	      //Define formato default de salida.
+	      String output = outputFormat.isEmpty()? "d 'de' MMMM 'del' yyyy" : outputFormat;
+	    String outputDate = inputDate;
+	    try {
+	        outputDate = new SimpleDateFormat(output, LOCALE_MX).format(new SimpleDateFormat(input, LOCALE_MX).parse(inputDate));
+	    } catch (Exception e) {
+	        System.out.println("dateFormatter(): " + e.getMessage());           
+	    }
+	    return outputDate;
 	}
 }

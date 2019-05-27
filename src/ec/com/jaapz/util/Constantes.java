@@ -2,8 +2,8 @@ package ec.com.jaapz.util;
 
 public abstract class Constantes {
 	//para envio de correos
-	public static String CORREO_ORIGEN = "f3iOsp4oT3ZoNGwbEs6BQCKx3Ue8sRSGlbkfwuJtg1U=";
-	public static String CONTRASENIA_CORREO = "Y73I1I1gzY/belRAnrLbIw==";
+	public static String CORREO_ORIGEN = "+BA5Ade2O7n+w5je1mccSElQ52k/kx49vbLhtU0JAVc=";
+	public static String CONTRASENIA_CORREO = "HYp+hqbwITGaQsyO+a/09Q==";
 	/*---------------------------------------------------------------------------*/
 	public static String ORIGEN_MOVIL = "MOVIL";
 	public static String ORIGEN_ESCRITORIO = "ESCRITORIO";

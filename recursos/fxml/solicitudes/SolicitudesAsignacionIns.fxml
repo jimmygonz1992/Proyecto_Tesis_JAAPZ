@@ -28,7 +28,10 @@
 							<content>
 								<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
 									<children>
-										<TableView fx:id="tvAsignados" layoutY="-6.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+										<TableView fx:id="tvAsignados" layoutY="-6.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="20.0" />
+                              <RadioButton fx:id="rbTodos" layoutX="14.0" layoutY="6.0" mnemonicParsing="false" onAction="#seleccionTodos" text="TODOS" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="3.0" />
+                              <RadioButton fx:id="rbRealizado" layoutX="80.0" layoutY="3.0" mnemonicParsing="false" onAction="#seleccionRealizado" text="REALIZADO" AnchorPane.topAnchor="3.0" />
+                              <RadioButton fx:id="rbProceso" layoutX="172.0" layoutY="3.0" mnemonicParsing="false" onAction="#seleccionProceso" text="PENDIENTE" AnchorPane.topAnchor="3.0" />
 									</children>
 								</AnchorPane>
 							</content>
@@ -47,7 +50,7 @@
 				<GridPane GridPane.columnIndex="4" GridPane.columnSpan="2" GridPane.rowIndex="1">
 					<children>
 						<Button fx:id="btnImprimirAsig" alignment="BOTTOM_CENTER" contentDisplay="TOP" mnemonicParsing="false" onAction="#imprimirAsignacion" styleClass="botonImprimir" text="Imprimir" />
-						<HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1">
+						<HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="2">
 							<children>
 								<Button fx:id="btnAsignarAsig" alignment="BOTTOM_CENTER" contentDisplay="TOP" mnemonicParsing="false" onAction="#buscarOrdenEmitida" styleClass="botonAgregar" text="Asignar">
 									<HBox.margin>
@@ -57,10 +60,23 @@
 								<Button fx:id="btnQuitarAsig" alignment="BOTTOM_CENTER" contentDisplay="TOP" mnemonicParsing="false" onAction="#quitarAsignacion" styleClass="botonQuitarR" text="Quitar" />
 							</children>
 						</HBox>
+                  <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1">
+                     <children>
+                        <Label text="Totales">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="lblTodos" text="Todos: 0" />
+                        <Label fx:id="lblRealizados" text="Realizados: 0" />
+                        <Label fx:id="lblPendiente" text="Pendientes: 0" />
+                     </children>
+                  </VBox>
 					</children>
 					<columnConstraints>
-						<ColumnConstraints hgrow="SOMETIMES" maxWidth="138.0" minWidth="10.0" prefWidth="85.0" />
-						<ColumnConstraints hgrow="SOMETIMES" maxWidth="201.0" minWidth="10.0" prefWidth="201.0" />
+						<ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="85.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+						<ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
 					</columnConstraints>
 					<rowConstraints>
 						<RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />

@@ -26,9 +26,6 @@ import java.util.List;
 			+ "where (lower(i.cliente.apellido) like :patron or lower(i.cliente.nombre) like :patron) "
 			+ "and i.estadoInspeccion = 'PENDIENTE' and i.idUsuEncargado = null and i.estado = 'A' order by i.idSolInspeccion desc"),
 	
-	
-	
-	
 	@NamedQuery(name="SolInspeccionIn.buscarInspeccionPerfil", query="SELECT i FROM SolInspeccionIn i "
 			+ "where (lower(i.cliente.apellido) like :patron or lower(i.cliente.nombre) like :patron or lower(i.cliente.cedula) like :patron) "
 			+ " and i.idUsuEncargado = :idPerfilUsuario and i.estado = 'A' and i.estadoInspeccion = 'PENDIENTE' order by i.idSolInspeccion desc"),
@@ -39,13 +36,19 @@ import java.util.List;
 			+ " and i.estadoInspeccion = 'PENDIENTE' and i.estado = 'A' order by i.idSolInspeccion desc"),
 	
 	@NamedQuery(name="SolInspeccionIn.buscarInspeccionAsignada", query="SELECT i FROM SolInspeccionIn i "
-			+ "where i.idUsuEncargado = :idPerfilUsuario and i.estado = 'A' order by i.idSolInspeccion desc"),
+			+ "where i.idUsuEncargado = :idPerfilUsuario and i.estado = 'A' order by i.estadoInspeccion,i.idSolInspeccion"),
 	
 	@NamedQuery(name="SolInspeccionIn.buscarInspeccionCliente", query="SELECT i FROM SolInspeccionIn i "
 			+ "where i.cliente.idCliente = :idCliente and i.estado = 'A' order by i.idSolInspeccion desc"),
 	
 	@NamedQuery(name="SolInspeccionIn.buscarSolicitudesNoAtendidas", query="SELECT i FROM SolInspeccionIn i "
-			+ "where i.estado = 'A' and i.estadoSolicitud = 'PENDIENTE' order by i.idSolInspeccion desc")
+			+ "where i.estado = 'A' and i.estadoSolicitud = 'PENDIENTE' order by i.idSolInspeccion desc"),
+	
+	@NamedQuery(name="SolInspeccionIn.buscarNoAtendidas", query="SELECT i FROM SolInspeccionIn i "
+			+ "where i.estado = 'A' and i.estadoInspeccion = 'PENDIENTE' and (lower(i.cliente.apellido) like lower(:patron)  or lower(i.cliente.nombre) like lower(:patron)) order by i.idSolInspeccion desc"),
+	
+	@NamedQuery(name="SolInspeccionIn.buscarNoFactibles", query="SELECT i FROM SolInspeccionIn i "
+			+ "where i.estado = 'A' and i.estadoInspeccion = 'REALIZADO' and i.factibilidad = 'NO FACTIBLE' and (lower(i.cliente.apellido) like lower(:patron)  or lower(i.cliente.nombre) like lower(:patron)) order by i.idSolInspeccion")
 })
 public class SolInspeccionIn implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -317,6 +320,18 @@ public class SolInspeccionIn implements Serializable {
 
 	public void setEstadoSolicitud(String estadoSolicitud) {
 		this.estadoSolicitud = estadoSolicitud;
+	}
+
+	@Override
+	public String toString() {
+		return "SolInspeccionIn [idSolInspeccion=" + idSolInspeccion + ", estado=" + estado + ", estadoInspeccion="
+				+ estadoInspeccion + ", factibilidad=" + factibilidad + ", fechaAprobacion=" + fechaAprobacion
+				+ ", fechaIngreso=" + fechaIngreso + ", horaAprobacion=" + horaAprobacion + ", horaIngreso="
+				+ horaIngreso + ", idUsuEncargado=" + idUsuEncargado + ", estadoSolicitud=" + estadoSolicitud
+				+ ", observacion=" + observacion + ", referencia=" + referencia + ", direccion=" + direccion
+				+ ", telefonoContacto=" + telefonoContacto + ", usoMedidor=" + usoMedidor + ", usuarioCrea="
+				+ usuarioCrea + ", instalacions=" + instalacions + ", liquidacionOrdens=" + liquidacionOrdens
+				+ ", barrio=" + barrio + ", tipoSolicitud=" + tipoSolicitud + ", cliente=" + cliente + "]";
 	}
 	
 }

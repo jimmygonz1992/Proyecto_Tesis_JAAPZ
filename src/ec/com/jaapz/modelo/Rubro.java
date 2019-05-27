@@ -22,7 +22,8 @@ import java.util.List;
 	@NamedQuery(name="Rubro.validarMaterial", query="SELECT r FROM Rubro r "
 			+ "WHERE r.descripcion = (:descripcion) AND r.codigo = (:codigo) and r.estado = 'A'"),
 	@NamedQuery(name="Rubro.findPatron", query="SELECT r FROM Rubro r WHERE r.idRubro = (:idRubro)"),
-	@NamedQuery(name="Rubro.recuperaRubro", query="SELECT r FROM Rubro r WHERE r.codigo = (:codigo) and r.estado = 'A'")
+	@NamedQuery(name="Rubro.recuperaRubro", query="SELECT r FROM Rubro r WHERE r.codigo = (:codigo) and r.estado = 'A'"),
+	@NamedQuery(name="Rubro.rubroById", query="SELECT r FROM Rubro r WHERE r.idRubro = (:idRubro) and r.estado = 'A'")
 })
 public class Rubro implements Serializable {
 	private static final long serialVersionUID = 1L;

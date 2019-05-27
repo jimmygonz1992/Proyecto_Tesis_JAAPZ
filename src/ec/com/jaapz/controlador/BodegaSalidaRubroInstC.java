@@ -378,7 +378,11 @@ public class BodegaSalidaRubroInstC {
 			if(validarDatos() == false)
 				return;
 			
+<<<<<<< HEAD
+			if(validarStockRubro() == true) {
+=======
 			if(validarStockRubro() == false) {
+>>>>>>> 02dadbb02ee53e853ef91227fbdaadcdb0d22c6a
 				helper.mostrarAlertaError("Stock insuficiente de materiales", Context.getInstance().getStage());
 				return;
 			}
@@ -453,20 +457,14 @@ public class BodegaSalidaRubroInstC {
 	}
 	private boolean validarStockRubro() {
 		try {
+			//retorna verdadero cuand
 			boolean bandera = false;
 			if(tvDatos != null) {
-				List<Rubro> listaSalidaRubros = new ArrayList<Rubro>();
-				for(InstalacionDetalle detalle: tvDatos.getItems())
-					listaSalidaRubros.add(detalle.getRubro());
-				
-				for(Rubro rubro : listaSalidaRubros) {
-					if(rubro.getIdRubro() != Constantes.ID_MEDIDOR || rubro.getIdRubro() != Constantes.ID_TASA_CONEXION) {
-						for(InstalacionDetalle detalle : tvDatos.getItems()) {
-							if(rubro.getIdRubro() == detalle.getRubro().getIdRubro()) { 
-								if(rubro.getStock() >= detalle.getCantidad())//si es mayor o igual q permita grabar
-									bandera = true;
-							}
-						}	
+				for(InstalacionDetalle detalle : tvDatos.getItems()) {
+					if(detalle.getRubro().getIdRubro() != Constantes.ID_MEDIDOR || detalle.getRubro().getIdRubro() != Constantes.ID_TASA_CONEXION) {
+						Rubro rubro = rubroDAO.getRubroById(detalle.getRubro().getIdRubro());
+						if(detalle.getCantidad() > rubro.getStock())
+							bandera = true;
 					}
 				}
 			}
