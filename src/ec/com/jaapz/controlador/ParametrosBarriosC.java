@@ -7,6 +7,8 @@ import ec.com.jaapz.modelo.Barrio;
 import ec.com.jaapz.modelo.BarrioDAO;
 import ec.com.jaapz.util.Context;
 import ec.com.jaapz.util.ControllerHelper;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.Event;
@@ -36,7 +38,7 @@ public class ParametrosBarriosC {
 		btnNuevo.setStyle("-fx-cursor: hand;");
 		txtCodigo.setEditable(false);
 		txtCodigo.setVisible(false);
-		
+
 		limpiar();
 		llenarDatos();
 		tvDatos.setOnMouseClicked(new EventHandler<Event>() {
@@ -44,6 +46,26 @@ public class ParametrosBarriosC {
 			public void handle(Event event) {
 				recuperarDatos(tvDatos.getSelectionModel().getSelectedItem());
 
+			}
+		});
+
+		//solo letras mayusculas
+		txtDescripcion.textProperty().addListener(new ChangeListener<String>() {
+			@Override
+			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+				// TODO Auto-generated method stub
+				String cadena = txtDescripcion.getText().toUpperCase();
+				txtDescripcion.setText(cadena);
+			}
+		});
+
+		//solo letras mayusculas
+		txtNombre.textProperty().addListener(new ChangeListener<String>() {
+			@Override
+			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+				// TODO Auto-generated method stub
+				String cadena = txtNombre.getText().toUpperCase();
+				txtNombre.setText(cadena);
 			}
 		});
 	}

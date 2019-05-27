@@ -7,6 +7,8 @@ import ec.com.jaapz.modelo.TipoRubro;
 import ec.com.jaapz.modelo.TipoRubroDAO;
 import ec.com.jaapz.util.Context;
 import ec.com.jaapz.util.ControllerHelper;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.Event;
@@ -29,13 +31,13 @@ public class ParametrosTipoRubroC {
 	private @FXML Button btnNuevo;
 	TipoRubroDAO tipoRubroDAO = new TipoRubroDAO();
 	ControllerHelper helper = new ControllerHelper();
-	
+
 	public void initialize() {
 		btnNuevo.setStyle("-fx-cursor: hand;");
 		btnAceptar.setStyle("-fx-cursor: hand;");
 		txtCodigo.setEditable(false);
 		txtCodigo.setVisible(false);
-		
+
 		limpiar();
 		llenarDatos();
 		tvDatos.setOnMouseClicked(new EventHandler<Event>() {
@@ -44,8 +46,18 @@ public class ParametrosTipoRubroC {
 				recuperarDatos(tvDatos.getSelectionModel().getSelectedItem());
 			}
 		});
+
+		//solo letras mayusculas
+		txtDescripcion.textProperty().addListener(new ChangeListener<String>() {
+			@Override
+			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+				// TODO Auto-generated method stub
+				String cadena = txtDescripcion.getText().toUpperCase();
+				txtDescripcion.setText(cadena);
+			}
+		});
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	void llenarDatos(){
 		try{
@@ -72,7 +84,7 @@ public class ParametrosTipoRubroC {
 			System.out.println(ex.getMessage());
 		}
 	}
-	
+
 	public void recuperarDatos(TipoRubro datos){
 		try{
 			txtCodigo.setText(String.valueOf(datos.getIdTipo()));
@@ -86,13 +98,13 @@ public class ParametrosTipoRubroC {
 			e.printStackTrace();
 		}
 	}
-	
+
 	void limpiar(){
 		txtCodigo.setText("0");
 		txtDescripcion.setText("");
 		chkEstado.setSelected(true);
 	}
-	
+
 	public void grabar() {
 		try {
 			TipoRubro tipoRubro = new TipoRubro();
@@ -100,7 +112,7 @@ public class ParametrosTipoRubroC {
 				tipoRubro.setEstado("A");
 			else
 				tipoRubro.setEstado("I");
-				tipoRubro.setDescripcion(txtDescripcion.getText());
+			tipoRubro.setDescripcion(txtDescripcion.getText());
 
 			Optional<ButtonType> result = helper.mostrarAlertaConfirmacion("Desea Grabar los Datos?",Context.getInstance().getStage());
 			if(result.get() == ButtonType.OK){
@@ -123,7 +135,7 @@ public class ParametrosTipoRubroC {
 			System.out.println(ex.getMessage());
 		}
 	}
-	
+
 	public void nuevo() {
 		limpiar();
 	}

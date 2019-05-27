@@ -486,18 +486,11 @@ public class BodegaSalidaRubroRepC {
 		try {
 			boolean bandera = false;
 			if(tvDatos != null) {
-				List<Rubro> listaSalidaRubros = new ArrayList<Rubro>();
-				for(ReparacionDetalle detalle: tvDatos.getItems())
-					listaSalidaRubros.add(detalle.getRubro());
-				
-				for(Rubro rubro : listaSalidaRubros) {
-					if(rubro.getIdRubro() != Constantes.ID_MEDIDOR || rubro.getIdRubro() != Constantes.ID_TASA_CONEXION) {
-						for(ReparacionDetalle detalle : tvDatos.getItems()) {
-							if(rubro.getIdRubro() == detalle.getRubro().getIdRubro()) { 
-								if(rubro.getStock() >= detalle.getCantidad())//si es mayor o igual q permita grabar
-									bandera = true;
-							}
-						}	
+				for(ReparacionDetalle detalle : tvDatos.getItems()) {
+					if(detalle.getRubro().getIdRubro() != Constantes.ID_MEDIDOR || detalle.getRubro().getIdRubro() != Constantes.ID_TASA_CONEXION) {
+						Rubro rubro = rubroDAO.getRubroById(detalle.getRubro().getIdRubro());
+						if(detalle.getCantidad() > rubro.getStock())
+							bandera = true;
 					}
 				}
 			}

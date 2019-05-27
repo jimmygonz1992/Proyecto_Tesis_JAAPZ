@@ -75,9 +75,9 @@ public class SolicitudesCierreInspeccionC {
 			datos.setAll(listaInspecciones);
 
 			//llenar los datos en la tabla
-			TableColumn<SolInspeccionIn, String> idColum = new TableColumn<>("Código");
+			TableColumn<SolInspeccionIn, String> idColum = new TableColumn<>("N° Solicitud");
 			idColum.setMinWidth(10);
-			idColum.setPrefWidth(50);
+			idColum.setPrefWidth(100);
 			idColum.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<SolInspeccionIn,String>, ObservableValue<String>>() {
 				@Override
 				public ObservableValue<String> call(CellDataFeatures<SolInspeccionIn, String> param) {
@@ -101,7 +101,7 @@ public class SolicitudesCierreInspeccionC {
 
 			TableColumn<SolInspeccionIn, String> clienteColum = new TableColumn<>("Cliente");
 			clienteColum.setMinWidth(10);
-			clienteColum.setPrefWidth(250);
+			clienteColum.setPrefWidth(350);
 			clienteColum.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<SolInspeccionIn,String>, ObservableValue<String>>() {
 				@Override
 				public ObservableValue<String> call(CellDataFeatures<SolInspeccionIn, String> param) {
@@ -113,7 +113,7 @@ public class SolicitudesCierreInspeccionC {
 			
 			TableColumn<SolInspeccionIn, String> referenciaColum = new TableColumn<>("Referencia");
 			referenciaColum.setMinWidth(10);
-			referenciaColum.setPrefWidth(350);
+			referenciaColum.setPrefWidth(450);
 			referenciaColum.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<SolInspeccionIn,String>, ObservableValue<String>>() {
 				@Override
 				public ObservableValue<String> call(CellDataFeatures<SolInspeccionIn, String> param) {

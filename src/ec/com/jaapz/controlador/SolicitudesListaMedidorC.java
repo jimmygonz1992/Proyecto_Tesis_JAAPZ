@@ -48,7 +48,7 @@ public class SolicitudesListaMedidorC {
 			//llenar los datos en la tabla
 			TableColumn<Medidor, String> idColum = new TableColumn<>("Código");
 			idColum.setMinWidth(10);
-			idColum.setPrefWidth(90);
+			idColum.setPrefWidth(150);
 			idColum.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Medidor,String>, ObservableValue<String>>() {
 				@Override
 				public ObservableValue<String> call(CellDataFeatures<Medidor, String> param) {
@@ -58,7 +58,7 @@ public class SolicitudesListaMedidorC {
 			
 			TableColumn<Medidor, String> nombresColum = new TableColumn<>("Marca");
 			nombresColum.setMinWidth(10);
-			nombresColum.setPrefWidth(200);
+			nombresColum.setPrefWidth(250);
 			nombresColum.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Medidor,String>, ObservableValue<String>>() {
 				@Override
 				public ObservableValue<String> call(CellDataFeatures<Medidor, String> param) {
@@ -68,7 +68,7 @@ public class SolicitudesListaMedidorC {
 			
 			TableColumn<Medidor, String> apellidosColum = new TableColumn<>("Modelo");
 			apellidosColum.setMinWidth(10);
-			apellidosColum.setPrefWidth(200);
+			apellidosColum.setPrefWidth(250);
 			apellidosColum.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Medidor,String>, ObservableValue<String>>() {
 				@Override
 				public ObservableValue<String> call(CellDataFeatures<Medidor, String> param) {
@@ -78,7 +78,7 @@ public class SolicitudesListaMedidorC {
 			
 			TableColumn<Medidor, String> generoColum = new TableColumn<>("Estado");
 			generoColum.setMinWidth(10);
-			generoColum.setPrefWidth(150);
+			generoColum.setPrefWidth(100);
 			generoColum.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Medidor,String>, ObservableValue<String>>() {
 				@Override
 				public ObservableValue<String> call(CellDataFeatures<Medidor, String> param) {
