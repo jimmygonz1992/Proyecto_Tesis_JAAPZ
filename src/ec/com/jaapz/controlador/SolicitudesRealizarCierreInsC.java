@@ -656,7 +656,7 @@ public class SolicitudesRealizarCierreInsC {
 				destinatario = cuenta.getCliente().getEmail();
 				destinatarios = destinatario.split(";");
 				servidor = 0;
-				mensaje = "Estimado cliente: " + cuenta.getCliente().getNombre() + " " + cuenta.getCliente().getApellido() + "\n\\n\\n"
+				mensaje = "Estimado cliente: " + cuenta.getCliente().getNombre() + " " + cuenta.getCliente().getApellido() + "\n\n\n"
 						+ "Nos contactamos con usted a fin de informar, lo siguente: \n\n"
 						+ "Se ha generado planilla por solicitud de nuevo medidor por la cantidad de " + totalPagar + ".\n"
 						+ "Es obligación del cliente cancelar al menos el 60% del total a pagar, para que se puede efectuar la instalación del \n"
