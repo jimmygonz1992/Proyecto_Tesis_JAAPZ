@@ -7,8 +7,10 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import ec.com.jaapz.modelo.SegUsuarioDAO;
 import ec.com.jaapz.modelo.SolInspeccionIn;
 import ec.com.jaapz.modelo.SolInspeccionInDAO;
+import ec.com.jaapz.util.Encriptado;
 import ec.com.jaapz.util.PrintReport;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ObservableValue;
@@ -32,6 +34,7 @@ public class SolicitudesNoFactiblesC {
 	@FXML private TextField txtBuscar;
 	SolInspeccionInDAO inspeccionDAO = new SolInspeccionInDAO(); 
 	SimpleDateFormat formateador = new SimpleDateFormat("dd/MM/yyyy");
+	SegUsuarioDAO usuarioDAO = new SegUsuarioDAO();
 	
 	public void initialize() {
 		try {
@@ -65,6 +68,18 @@ public class SolicitudesNoFactiblesC {
 			datos.setAll(listaInspecciones);
 
 			//llenar los datos en la tabla
+			TableColumn<SolInspeccionIn, String> usuarioColum = new TableColumn<>("Usuario Responsable");
+			usuarioColum.setMinWidth(10);
+			usuarioColum.setPrefWidth(120);
+			usuarioColum.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<SolInspeccionIn,String>, ObservableValue<String>>() {
+				@Override
+				public ObservableValue<String> call(CellDataFeatures<SolInspeccionIn, String> param) {
+					String usuario = usuarioDAO.getUsuarioById(param.getValue().getIdUsuEncargado()).getUsuario();
+					return new SimpleObjectProperty<String>(Encriptado.Desencriptar(usuario));
+				}
+			});
+			
+			
 			TableColumn<SolInspeccionIn, String> idColum = new TableColumn<>("No. Solicitud");
 			idColum.setMinWidth(10);
 			idColum.setPrefWidth(100);
@@ -108,7 +123,7 @@ public class SolicitudesNoFactiblesC {
 			estadoColum.setCellValueFactory(new PropertyValueFactory<SolInspeccionIn, String>("estadoInspeccion"));
 
 
-			tvDatos.getColumns().addAll(idColum, fechaColum,clienteColum,referenciaColum,estadoColum);
+			tvDatos.getColumns().addAll(usuarioColum,idColum, fechaColum,clienteColum,referenciaColum,estadoColum);
 			tvDatos.setItems(datos);
 		}catch(Exception ex) {
 			System.out.println(ex.getMessage());
