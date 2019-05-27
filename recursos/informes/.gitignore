@@ -48,3 +48,5 @@
 /listadoClientesConvenio.jasper
 /listadoInstalacionRealizadas.jasper
 /listadoReparacionRealizadas.jasper
+/listadoSolicitudesPendientes.jasper
+/solicitudesNoFactibles.jasper

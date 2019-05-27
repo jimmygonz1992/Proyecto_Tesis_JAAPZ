@@ -1,12 +1,14 @@
 package ec.com.jaapz.controlador;
 
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import ec.com.jaapz.modelo.PrecioUnitario;
 import ec.com.jaapz.modelo.PrecioUnitarioDAO;
 import ec.com.jaapz.modelo.Rubro;
+import ec.com.jaapz.util.Constantes;
 import ec.com.jaapz.util.Context;
 import ec.com.jaapz.util.ControllerHelper;
 import javafx.beans.property.SimpleObjectProperty;
@@ -40,7 +42,7 @@ public class ParametrosPreciosUnitariosC {
 	PrecioUnitarioDAO preciosDAO = new PrecioUnitarioDAO();
 	DecimalFormat decimales = new DecimalFormat("#0.00");
 	ControllerHelper helper = new ControllerHelper();
-
+	List<PrecioUnitario> listaEliminado;
 	public void initialize() {
 		try {
 			btnAgregar.setStyle("-fx-cursor: hand;");
@@ -50,6 +52,8 @@ public class ParametrosPreciosUnitariosC {
 			
 			recuperarDatos();
 			tvDatos.setEditable(true);
+			listaEliminado = new ArrayList<PrecioUnitario>();
+			
 		}catch(Exception ex) {
 			System.out.println(ex.getMessage());
 		}
@@ -149,8 +153,19 @@ public class ParametrosPreciosUnitariosC {
 						preciosDAO.getEntityManager().merge(datos);
 					}
 				}
+				
+				//quitar los eliminados
+				for(PrecioUnitario eliminado : listaEliminado) {
+					if(eliminado.getIdPrecio() != null) {
+						eliminado.setEstado(Constantes.ESTADO_INACTIVO);
+						preciosDAO.getEntityManager().merge(eliminado);
+					}
+				}
 				preciosDAO.getEntityManager().getTransaction().commit();
 				helper.mostrarAlertaInformacion("Datos Grabados con exito", Context.getInstance().getStage());
+				recuperarDatos();
+				listaEliminado = null;
+				listaEliminado = new ArrayList<PrecioUnitario>();
 			}
 		}catch(Exception ex) {
 			preciosDAO.getEntityManager().getTransaction().rollback();
@@ -256,6 +271,7 @@ public class ParametrosPreciosUnitariosC {
 	public void quitarPrecioUnitario() {
 		try {
 			PrecioUnitario precioUnitarioSeleccionado = tvDatos.getSelectionModel().getSelectedItem();
+			listaEliminado.add(precioUnitarioSeleccionado);
 			tvDatos.getItems().remove(precioUnitarioSeleccionado);
 		}catch(Exception ex) {
 			System.out.println(ex.getMessage());

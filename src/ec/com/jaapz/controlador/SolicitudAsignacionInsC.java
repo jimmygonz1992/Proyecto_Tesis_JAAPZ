@@ -25,11 +25,15 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.Label;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
+import javafx.scene.paint.Color;
 import javafx.util.Callback;
 
 public class SolicitudAsignacionInsC {
@@ -43,12 +47,22 @@ public class SolicitudAsignacionInsC {
 	@FXML private Button btnImprimirAsig;
 	@FXML private Button btnGrabarAsig;
 	@FXML private Button btnAsignarAsig;
+	
+	@FXML private RadioButton rbTodos;
+	@FXML private RadioButton rbRealizado;
+	@FXML private RadioButton rbProceso;
+	
+	@FXML private Label lblTodos;
+	@FXML private Label lblRealizados;
+	@FXML private Label lblPendiente;
+	
 	SegUsuarioDAO usuarioDAO = new SegUsuarioDAO();
 	SolInspeccionInDAO inspeccionDAO = new SolInspeccionInDAO();
 	List<SolInspeccionIn> listaInspeccionesEliminar = new ArrayList<SolInspeccionIn>();
 	
 	SimpleDateFormat formateador = new SimpleDateFormat("dd/MM/yyyy");
-
+	List<SolInspeccionIn> listadoInspeccionesUsuario;
+	
 	ControllerHelper helper = new ControllerHelper();
 	public void initialize() {
 		try {
@@ -82,7 +96,30 @@ public class SolicitudAsignacionInsC {
 			tvPersonalAsig.setOnMouseClicked(new EventHandler<Event>() {
 				@Override
 				public void handle(Event arg0) {
+					lblTodos.setText("Todos: 0");
+					lblRealizados.setText("Realizados: 0");
+					lblPendiente.setText("Pendientes: 0");
+					
+					rbTodos.setSelected(true);
+					rbProceso.setSelected(false);
+					rbRealizado.setSelected(false);
+					listadoInspeccionesUsuario = null;
 					recuperarPersonalInspeccion(tvPersonalAsig.getSelectionModel().getSelectedItem());
+					listadoInspeccionesUsuario = new ArrayList<SolInspeccionIn>();
+					listadoInspeccionesUsuario = tvAsignados.getItems();
+					lblTodos.setText("Todos: " + tvAsignados.getItems().size());
+					int contador = 0;
+					for(SolInspeccionIn in : tvAsignados.getItems()) {
+						if(in.getEstadoInspeccion().equals("REALIZADO"))
+							contador ++;
+					}
+					lblRealizados.setText("Realizados: " + contador);
+					contador = 0;
+					for(SolInspeccionIn in : tvAsignados.getItems()) {
+						if(in.getEstadoInspeccion().equals("PENDIENTE"))
+							contador ++;
+					}
+					lblPendiente.setText("Pendientes: " + contador);
 				}
 			});
 			tvAsignados.setOnMouseClicked(new EventHandler<Event>() {
@@ -94,6 +131,7 @@ public class SolicitudAsignacionInsC {
 						btnQuitarAsig.setDisable(false);
 				}
 			});
+			rbTodos.setSelected(true);
 		}catch(Exception ex) {
 			System.out.println(ex.getMessage());
 		}
@@ -118,44 +156,35 @@ public class SolicitudAsignacionInsC {
 			datos.setAll(listaClientes);
 
 			//llenar los datos en la tabla
-			TableColumn<SegUsuario, String> idColum = new TableColumn<>("Código");
+			TableColumn<SegUsuario, String> idColum = new TableColumn<>("Cédula");
 			idColum.setMinWidth(10);
 			idColum.setPrefWidth(90);
 			idColum.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<SegUsuario,String>, ObservableValue<String>>() {
 				@Override
 				public ObservableValue<String> call(CellDataFeatures<SegUsuario, String> param) {
-					return new SimpleObjectProperty<String>(String.valueOf(param.getValue().getIdUsuario()));
+					return new SimpleObjectProperty<String>(String.valueOf(param.getValue().getCedula()));
 				}
 			});
 			TableColumn<SegUsuario, String> nombresColum = new TableColumn<>("Nombres");
 			nombresColum.setMinWidth(10);
-			nombresColum.setPrefWidth(200);
+			nombresColum.setPrefWidth(150);
 			nombresColum.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<SegUsuario,String>, ObservableValue<String>>() {
 				@Override
 				public ObservableValue<String> call(CellDataFeatures<SegUsuario, String> param) {
-					return new SimpleObjectProperty<String>(String.valueOf(param.getValue().getNombre()));
-				}
-			});
-			TableColumn<SegUsuario, String> apellidosColum = new TableColumn<>("Apellidos");
-			apellidosColum.setMinWidth(10);
-			apellidosColum.setPrefWidth(200);
-			apellidosColum.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<SegUsuario,String>, ObservableValue<String>>() {
-				@Override
-				public ObservableValue<String> call(CellDataFeatures<SegUsuario, String> param) {
-					return new SimpleObjectProperty<String>(String.valueOf(param.getValue().getApellido()));
+					return new SimpleObjectProperty<String>(String.valueOf(param.getValue().getNombre() + " " + param.getValue().getApellido()));
 				}
 			});
 
 			TableColumn<SegUsuario, String> fechColum = new TableColumn<>("Telefono");
 			fechColum.setMinWidth(10);
-			fechColum.setPrefWidth(100);
+			fechColum.setPrefWidth(80);
 			fechColum.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<SegUsuario,String>, ObservableValue<String>>() {
 				@Override
 				public ObservableValue<String> call(CellDataFeatures<SegUsuario, String> param) {
 					return new SimpleObjectProperty<String>(String.valueOf(param.getValue().getTelefono()));
 				}
 			});
-			tvPersonalAsig.getColumns().addAll(idColum, nombresColum,apellidosColum,fechColum);
+			tvPersonalAsig.getColumns().addAll(idColum, nombresColum,fechColum);
 			tvPersonalAsig.setItems(datos);
 		}catch(Exception ex){
 			System.out.println(ex.getMessage());
@@ -163,9 +192,6 @@ public class SolicitudAsignacionInsC {
 	}
 	public void grabarAsig() {
 		try {
-			/*if(validarDatos() == false)
-				return;
-*/
 			Optional<ButtonType> result = helper.mostrarAlertaConfirmacion("Desea Grabar los Datos?",Context.getInstance().getStage());
 			if(result.get() == ButtonType.OK){
 				if(tpRealizadas.isSelected()) {
@@ -199,21 +225,6 @@ public class SolicitudAsignacionInsC {
 			inspeccionDAO.getEntityManager().getTransaction().rollback();
 		}
 	}
-	
-	/*boolean validarDatos() {
-		try {
-			if(tvNuevosAsig.getItems().size() <= 0) {
-				helper.mostrarAlertaAdvertencia("No existen solicitudes agregadas", Context.getInstance().getStage());
-				tvNuevosAsig.requestFocus();
-				return false;
-			}
-		
-			return true;
-		}catch(Exception ex) {
-			System.out.println(ex.getMessage());
-			return false;
-		}
-	}*/
 
 	public void imprimirAsignacion() {
 		try {
@@ -335,7 +346,7 @@ public class SolicitudAsignacionInsC {
 
 			TableColumn<SolInspeccionIn, String> referenciaColum = new TableColumn<>("Referencia");
 			referenciaColum.setMinWidth(10);
-			referenciaColum.setPrefWidth(350);
+			referenciaColum.setPrefWidth(250);
 			referenciaColum.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<SolInspeccionIn,String>, ObservableValue<String>>() {
 				@Override
 				public ObservableValue<String> call(CellDataFeatures<SolInspeccionIn, String> param) {
@@ -404,21 +415,78 @@ public class SolicitudAsignacionInsC {
 			System.out.println(ex.getMessage());
 		}
 	}
+	
+	public void seleccionTodos() {
+		try {
+			rbTodos.setSelected(true);
+			rbRealizado.setSelected(false);
+			rbProceso.setSelected(false);
+			if(tvAsignados.getItems().size() > 0) {
+				ObservableList<SolInspeccionIn> datos = FXCollections.observableArrayList();
+				datos.setAll(listadoInspeccionesUsuario);
+				tvAsignados.setItems(datos);
+				tvAsignados.refresh();
+			}
+		}catch(Exception ex) {
+			System.out.println(ex.getMessage());
+		}
+	}
+	public void seleccionRealizado() {
+		try {
+			rbTodos.setSelected(false);
+			rbRealizado.setSelected(true);
+			rbProceso.setSelected(false);
+			if(tvAsignados.getItems().size() > 0) {
+				List<SolInspeccionIn> lista = new ArrayList<SolInspeccionIn>();
+				for(SolInspeccionIn sol : listadoInspeccionesUsuario) {
+					if(sol.getEstadoInspeccion().equals("REALIZADO"))
+						lista.add(sol);
+				}
+				ObservableList<SolInspeccionIn> datos = FXCollections.observableArrayList();
+				datos.setAll(lista);
+				tvAsignados.setItems(datos);
+				tvAsignados.refresh();
+			}
+		}catch(Exception ex) {
+			System.out.println(ex.getMessage());
+		}
+	}
+	public void seleccionProceso() {
+		try {
+			rbTodos.setSelected(false);
+			rbRealizado.setSelected(false);
+			rbProceso.setSelected(true);
+			if(tvAsignados.getItems().size() > 0) {
+				List<SolInspeccionIn> lista = new ArrayList<SolInspeccionIn>();
+				for(SolInspeccionIn sol : listadoInspeccionesUsuario) {
+					if(sol.getEstadoInspeccion().equals("PENDIENTE"))
+						lista.add(sol);
+				}
+				ObservableList<SolInspeccionIn> datos = FXCollections.observableArrayList();
+				datos.setAll(lista);
+				tvAsignados.setItems(datos);
+				tvAsignados.refresh();
+			}
+		}catch(Exception ex) {
+			System.out.println(ex.getMessage());
+		}
+	}
 	/*
 	 * Recupera el listado de las inspecciones realizadas y sin realizar pero asignadas al usuario
 	 */
 	@SuppressWarnings("unchecked")
 	private void recuperarPersonalInspeccion(SegUsuario personalInspeccion) {
 		try {
+			String color = "#F3F781";
 			List<SolInspeccionIn> listadoInspecciones = inspeccionDAO.getListaInspeccionAsignada(personalInspeccion.getIdUsuario());
 			tvAsignados.getItems().clear();
 			tvAsignados.getColumns().clear();
 			ObservableList<SolInspeccionIn> datos = FXCollections.observableArrayList();
 			datos.setAll(listadoInspecciones);
 			//llenar los datos en la tabla
-			TableColumn<SolInspeccionIn, String> idColum = new TableColumn<>("Código");
+			TableColumn<SolInspeccionIn, String> idColum = new TableColumn<>("No. Solicitud");
 			idColum.setMinWidth(10);
-			idColum.setPrefWidth(50);
+			idColum.setPrefWidth(80);
 			idColum.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<SolInspeccionIn,String>, ObservableValue<String>>() {
 				@Override
 				public ObservableValue<String> call(CellDataFeatures<SolInspeccionIn, String> param) {
@@ -427,10 +495,34 @@ public class SolicitudAsignacionInsC {
 					return new SimpleObjectProperty<String>(dato);
 				}
 			});
+			idColum.setCellFactory(column -> {
+			    return new TableCell<SolInspeccionIn, String>() {
+			        @Override
+			        protected void updateItem(String item, boolean empty) {
+			            super.updateItem(item, empty); //This is mandatory
 
+			            if (item == null || empty) { //If the cell is empty
+			                setText(null);
+			                setStyle("");
+			            } else { //If the cell is not empty
+
+			                setText(item); //Put the String data in the cell
+
+			                //We get here all the info of the Person of this row
+			                SolInspeccionIn auxPerson = getTableView().getItems().get(getIndex());
+
+			                // Style all persons wich name is "Edgard"
+			                if (auxPerson.getEstadoInspeccion().equals("REALIZADO")) {
+			                    setTextFill(Color.BLACK); //The text in red
+			                    setStyle("-fx-background-color: " + color); //The background of the cell in yellow
+			                } 
+			            }
+			        }
+			    };
+			});
 			TableColumn<SolInspeccionIn, String> fechaColum = new TableColumn<>("Fecha");
 			fechaColum.setMinWidth(10);
-			fechaColum.setPrefWidth(150);
+			fechaColum.setPrefWidth(80);
 			fechaColum.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<SolInspeccionIn,String>, ObservableValue<String>>() {
 				@Override
 				public ObservableValue<String> call(CellDataFeatures<SolInspeccionIn, String> param) {
@@ -439,7 +531,31 @@ public class SolicitudAsignacionInsC {
 					return new SimpleObjectProperty<String>(dato);
 				}
 			});
-			
+			fechaColum.setCellFactory(column -> {
+			    return new TableCell<SolInspeccionIn, String>() {
+			        @Override
+			        protected void updateItem(String item, boolean empty) {
+			            super.updateItem(item, empty); //This is mandatory
+
+			            if (item == null || empty) { //If the cell is empty
+			                setText(null);
+			                setStyle("");
+			            } else { //If the cell is not empty
+
+			                setText(item); //Put the String data in the cell
+
+			                //We get here all the info of the Person of this row
+			                SolInspeccionIn auxPerson = getTableView().getItems().get(getIndex());
+
+			                // Style all persons wich name is "Edgard"
+			                if (auxPerson.getEstadoInspeccion().equals("REALIZADO")) {
+			                    setTextFill(Color.BLACK); //The text in red
+			                    setStyle("-fx-background-color: " + color); //The background of the cell in yellow
+			                } 
+			            }
+			        }
+			    };
+			});
 
 			TableColumn<SolInspeccionIn, String> clienteColum = new TableColumn<>("Cliente");
 			clienteColum.setMinWidth(10);
@@ -452,7 +568,31 @@ public class SolicitudAsignacionInsC {
 					return new SimpleObjectProperty<String>(cliente);
 				}
 			});
+			clienteColum.setCellFactory(column -> {
+			    return new TableCell<SolInspeccionIn, String>() {
+			        @Override
+			        protected void updateItem(String item, boolean empty) {
+			            super.updateItem(item, empty); //This is mandatory
 
+			            if (item == null || empty) { //If the cell is empty
+			                setText(null);
+			                setStyle("");
+			            } else { //If the cell is not empty
+
+			                setText(item); //Put the String data in the cell
+
+			                //We get here all the info of the Person of this row
+			                SolInspeccionIn auxPerson = getTableView().getItems().get(getIndex());
+
+			                // Style all persons wich name is "Edgard"
+			                if (auxPerson.getEstadoInspeccion().equals("REALIZADO")) {
+			                    setTextFill(Color.BLACK); //The text in red
+			                    setStyle("-fx-background-color: " + color); //The background of the cell in yellow
+			                } 
+			            }
+			        }
+			    };
+			});
 			TableColumn<SolInspeccionIn, String> referenciaColum = new TableColumn<>("Referencia");
 			referenciaColum.setMinWidth(10);
 			referenciaColum.setPrefWidth(350);
@@ -464,7 +604,31 @@ public class SolicitudAsignacionInsC {
 					return new SimpleObjectProperty<String>(dato);
 				}
 			});
+			referenciaColum.setCellFactory(column -> {
+			    return new TableCell<SolInspeccionIn, String>() {
+			        @Override
+			        protected void updateItem(String item, boolean empty) {
+			            super.updateItem(item, empty); //This is mandatory
 
+			            if (item == null || empty) { //If the cell is empty
+			                setText(null);
+			                setStyle("");
+			            } else { //If the cell is not empty
+
+			                setText(item); //Put the String data in the cell
+
+			                //We get here all the info of the Person of this row
+			                SolInspeccionIn auxPerson = getTableView().getItems().get(getIndex());
+
+			                // Style all persons wich name is "Edgard"
+			                if (auxPerson.getEstadoInspeccion().equals("REALIZADO")) {
+			                    setTextFill(Color.BLACK); //The text in red
+			                    setStyle("-fx-background-color: " + color); //The background of the cell in yellow
+			                } 
+			            }
+			        }
+			    };
+			});
 			TableColumn<SolInspeccionIn, String> estadoColum = new TableColumn<>("Estado");
 			estadoColum.setMinWidth(10);
 			estadoColum.setPrefWidth(90);
@@ -477,6 +641,31 @@ public class SolicitudAsignacionInsC {
 				}
 			});
 
+			estadoColum.setCellFactory(column -> {
+			    return new TableCell<SolInspeccionIn, String>() {
+			        @Override
+			        protected void updateItem(String item, boolean empty) {
+			            super.updateItem(item, empty); //This is mandatory
+
+			            if (item == null || empty) { //If the cell is empty
+			                setText(null);
+			                setStyle("");
+			            } else { //If the cell is not empty
+
+			                setText(item); //Put the String data in the cell
+
+			                //We get here all the info of the Person of this row
+			                SolInspeccionIn auxPerson = getTableView().getItems().get(getIndex());
+
+			                // Style all persons wich name is "Edgard"
+			                if (auxPerson.getEstadoInspeccion().equals("REALIZADO")) {
+			                    setTextFill(Color.BLACK); //The text in red
+			                    setStyle("-fx-background-color: " + color); //The background of the cell in yellow
+			                } 
+			            }
+			        }
+			    };
+			});
 			tvAsignados.getColumns().addAll(idColum, fechaColum,clienteColum,referenciaColum,estadoColum);
 			tvAsignados.setItems(datos);
 

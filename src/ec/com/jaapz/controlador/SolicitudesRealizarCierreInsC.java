@@ -91,8 +91,10 @@ public class SolicitudesRealizarCierreInsC {
 				@Override
 				public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
 					// TODO Auto-generated method stub
-					String cadena = txtObservacion.getText().toUpperCase();
-					txtObservacion.setText(cadena);
+					if(txtObservacion.getText() != null) {
+						String cadena = txtObservacion.getText().toUpperCase();
+						txtObservacion.setText(cadena);
+					}
 				}
 			});
 

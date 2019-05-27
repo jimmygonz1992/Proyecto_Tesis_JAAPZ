@@ -84,4 +84,24 @@ public class SolInspeccionInDAO extends ClaseDAO{
 		resultado = (List<SolInspeccionIn>) query.getResultList();
 		return resultado;
 	}
+	
+	@SuppressWarnings("unchecked")
+	public List<SolInspeccionIn> getSolicitudesPendientes(String patron){
+		List<SolInspeccionIn> resultado = new ArrayList<SolInspeccionIn>();
+		Query query = getEntityManager().createNamedQuery("SolInspeccionIn.buscarNoAtendidas");
+		query.setHint("javax.persistence.cache.storeMode", "REFRESH");
+		query.setParameter("patron", "%" + patron + "%");
+		resultado = (List<SolInspeccionIn>) query.getResultList();
+		return resultado;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<SolInspeccionIn> getSolicitudesNoFactibles(String patron){
+		List<SolInspeccionIn> resultado = new ArrayList<SolInspeccionIn>();
+		Query query = getEntityManager().createNamedQuery("SolInspeccionIn.buscarNoFactibles");
+		query.setHint("javax.persistence.cache.storeMode", "REFRESH");
+		query.setParameter("patron", "%" + patron + "%");
+		resultado = (List<SolInspeccionIn>) query.getResultList();
+		return resultado;
+	}
 }
