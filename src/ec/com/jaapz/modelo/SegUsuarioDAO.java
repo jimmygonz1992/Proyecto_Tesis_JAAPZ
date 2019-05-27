@@ -17,7 +17,7 @@ public class SegUsuarioDAO extends ClaseDAO{
 		resultado = (List<SegUsuario>) query.getResultList();
 		return resultado;
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	public List<SegUsuario> getUsuario(String usuario,String clave) {
 		List<SegUsuario> resultado; 
@@ -28,7 +28,7 @@ public class SegUsuarioDAO extends ClaseDAO{
 		resultado = (List<SegUsuario>) query.getResultList();
 		return resultado;
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	public List<SegUsuario> getValidarUsuario(String usuario,int idUsuario) {
 		List<SegUsuario> resultado; 
@@ -39,7 +39,7 @@ public class SegUsuarioDAO extends ClaseDAO{
 		resultado = (List<SegUsuario>) query.getResultList();
 		return resultado;
 	}
-	
+
 	//para recuperar usuario
 	@SuppressWarnings("unchecked")
 	public List<SegUsuario> getRecuperaUsuario(String cedula){
@@ -50,7 +50,7 @@ public class SegUsuarioDAO extends ClaseDAO{
 		resultado = (List<SegUsuario>) query.getResultList();
 		return resultado;
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	public List<SegUsuario> getListaUsuarios(){
 		List<SegUsuario> resultado = new ArrayList<SegUsuario>();
@@ -59,7 +59,7 @@ public class SegUsuarioDAO extends ClaseDAO{
 		resultado = (List<SegUsuario>) query.getResultList();
 		return resultado;
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	public List<SegUsuario> getListaUsuariosInspeccion(){
 		List<SegUsuario> resultado;
@@ -75,7 +75,7 @@ public class SegUsuarioDAO extends ClaseDAO{
 		}
 		return usuarioInspeccion;
 	}
-	
+
 	//para corte // se usa la misma consulta anterior xq solo es un select
 	@SuppressWarnings("unchecked")
 	public List<SegUsuario> getListaUsuariosCorte(){
@@ -92,7 +92,7 @@ public class SegUsuarioDAO extends ClaseDAO{
 		}
 		return usuarioCorte;
 	}
-	
+
 	//para asigancion de trabajos de reparacion
 	@SuppressWarnings("unchecked")
 	public List<SegUsuario> getListaUsuariosReparacion(){
@@ -109,7 +109,7 @@ public class SegUsuarioDAO extends ClaseDAO{
 		}
 		return usuarioInspeccion;
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	public List<SegUsuario> getListaUsuariosLectura(){
 		List<SegUsuario> resultado;
@@ -125,7 +125,7 @@ public class SegUsuarioDAO extends ClaseDAO{
 		}
 		return usuarioInspeccion;
 	}
-	
+
 	//para cambio de contrasenia
 	@SuppressWarnings("unchecked")
 	public List<SegUsuario> getRecuperaUsuario(String clave, String usuario){
@@ -137,7 +137,7 @@ public class SegUsuarioDAO extends ClaseDAO{
 		resultado = (List<SegUsuario>) query.getResultList();
 		return resultado;
 	}
-	
+
 	//para asigancion de instalaciones
 	@SuppressWarnings("unchecked")
 	public List<SegUsuario> getListaUsuariosInstalacion(){
@@ -153,5 +153,17 @@ public class SegUsuarioDAO extends ClaseDAO{
 			}
 		}
 		return usuarioInspeccion;
+	}
+
+	//para asigancion de instalaciones
+	@SuppressWarnings("unchecked")
+	public SegUsuario getUsuarioById(Integer idUsuario){
+		SegUsuario resultado;
+		Query query = getEntityManager().createNamedQuery("SegUsuario.buscarPorId");
+		query.setHint("javax.persistence.cache.storeMode", "REFRESH");
+		query.setParameter("idUsuario", idUsuario);
+		resultado = (SegUsuario) query.getSingleResult();
+		
+		return resultado;
 	}
 }
