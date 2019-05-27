@@ -652,13 +652,17 @@ public class SolicitudesRealizarCierreInsC {
 				String mensaje;
 				int servidor;
 				String[] destinatarios;
-				asunto = "Planilla generada por solicitud de instalación de nuevo medidor";
+				asunto = "Deuda por solicitud de instalación de nuevo medidor";
 				destinatario = cuenta.getCliente().getEmail();
 				destinatarios = destinatario.split(";");
 				servidor = 0;
-				mensaje = "Se ha generado planilla por solicitud de nuevo medidor por la cantidad de " + totalPagar + ".\n"
+				mensaje = "Estimado cliente: " + cuenta.getCliente().getNombre() + " " + cuenta.getCliente().getApellido() + "\n\\n\\n"
+						+ "Nos contactamos con usted a fin de informar, lo siguente: \n\n"
+						+ "Se ha generado planilla por solicitud de nuevo medidor por la cantidad de " + totalPagar + ".\n"
 						+ "Es obligación del cliente cancelar al menos el 60% del total a pagar, para que se puede efectuar la instalación del \n"
-						+ "medidor en el domicilio.. muchas gracias!!!";
+						+ "medidor en el domicilio.\n\n\n"
+						+ "Atentamente\n\n\n_____________\nLa directiva JAAPZ\nJunta Administradora de agua potable Zapotal\n"
+						+ "jaapz.zapotal.2001@gmail.com";
 				
 				Hilo2 miHilo = new Hilo2(adjunto, adjuntos, destinatarios, servidor, destinatario, asunto, mensaje);
 				miHilo.enviarCorreoSolicitud();	

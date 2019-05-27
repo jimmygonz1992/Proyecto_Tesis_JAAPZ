@@ -40,7 +40,6 @@ public class SolicitudesNoFactiblesC {
 		try {
 			btnImprimir.setStyle("-fx-graphic: url('/imprimir.png');-fx-cursor: hand;");
 			llenarDatos("");
-			
 			txtBuscar.setOnKeyPressed(new EventHandler<KeyEvent>() { 
 				@Override 
 				public void handle(KeyEvent ke) { 
