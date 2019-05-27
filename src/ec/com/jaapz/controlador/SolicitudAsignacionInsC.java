@@ -421,7 +421,8 @@ public class SolicitudAsignacionInsC {
 			rbTodos.setSelected(true);
 			rbRealizado.setSelected(false);
 			rbProceso.setSelected(false);
-			if(tvAsignados.getItems().size() > 0) {
+			
+			if(listadoInspeccionesUsuario.size() > 0) {
 				ObservableList<SolInspeccionIn> datos = FXCollections.observableArrayList();
 				datos.setAll(listadoInspeccionesUsuario);
 				tvAsignados.setItems(datos);
@@ -436,7 +437,7 @@ public class SolicitudAsignacionInsC {
 			rbTodos.setSelected(false);
 			rbRealizado.setSelected(true);
 			rbProceso.setSelected(false);
-			if(tvAsignados.getItems().size() > 0) {
+			if(listadoInspeccionesUsuario.size() > 0) {
 				List<SolInspeccionIn> lista = new ArrayList<SolInspeccionIn>();
 				for(SolInspeccionIn sol : listadoInspeccionesUsuario) {
 					if(sol.getEstadoInspeccion().equals("REALIZADO"))
@@ -456,7 +457,7 @@ public class SolicitudAsignacionInsC {
 			rbTodos.setSelected(false);
 			rbRealizado.setSelected(false);
 			rbProceso.setSelected(true);
-			if(tvAsignados.getItems().size() > 0) {
+			if(listadoInspeccionesUsuario.size() > 0) {
 				List<SolInspeccionIn> lista = new ArrayList<SolInspeccionIn>();
 				for(SolInspeccionIn sol : listadoInspeccionesUsuario) {
 					if(sol.getEstadoInspeccion().equals("PENDIENTE"))
