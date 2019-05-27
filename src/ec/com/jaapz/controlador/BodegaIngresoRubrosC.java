@@ -1,5 +1,6 @@
 package ec.com.jaapz.controlador;
 
+import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
@@ -37,7 +38,6 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
-import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -87,6 +87,7 @@ public class BodegaIngresoRubrosC {
 	EstadoMedidorDAO estadoMedidorDAO = new EstadoMedidorDAO();
 	KardexDAO kardexDAO = new KardexDAO();
 	Ingreso ingreso;
+	DecimalFormat decimales = new DecimalFormat("#0.00");
 
 	public void initialize(){
 		try {
@@ -416,7 +417,8 @@ public class BodegaIngresoRubrosC {
 				}
 			});
 			//para realizar modificaciones en los medidores
-			tvDatos.setRowFactory(tv -> {
+			//no se va a utilizar
+			/*tvDatos.setRowFactory(tv -> {
 				TableRow<IngresoDetalle> row = new TableRow<>();
 				row.setOnMouseClicked(event -> {
 					if (event.getClickCount() == 2 && (! row.isEmpty()) ) {
@@ -432,7 +434,7 @@ public class BodegaIngresoRubrosC {
 					}
 				});
 				return row ;
-			});
+			});*/
 		}catch(Exception ex) {
 			System.out.println(ex.getMessage());
 		}
@@ -689,7 +691,10 @@ public class BodegaIngresoRubrosC {
 	public void eliminar() {
 		try {
 			if(tvDatos.getSelectionModel().getSelectedItem() != null){
-				if(tvDatos.getSelectionModel().getSelectedItem().getRubro().getIdRubro() == Constantes.ID_MEDIDOR) {
+				IngresoDetalle detalleSeleccionado = tvDatos.getSelectionModel().getSelectedItem();
+				tvDatos.getItems().remove(detalleSeleccionado);
+				
+				/*if(tvDatos.getSelectionModel().getSelectedItem().getRubro().getIdRubro() == Constantes.ID_MEDIDOR) {
 					Context.getInstance().setDetalleMedidor(tvDatos.getSelectionModel().getSelectedItem());
 					helper.abrirPantallaModal("/bodega/BodegaModificarMedidor.fxml","Listado de Medidores", Context.getInstance().getStage());
 					//falta de actualizar la lista cuando se sale de la ventana modal
@@ -697,14 +702,14 @@ public class BodegaIngresoRubrosC {
 				}else {
 					IngresoDetalle detalleSeleccionado = tvDatos.getSelectionModel().getSelectedItem();
 					tvDatos.getItems().remove(detalleSeleccionado);	
-				}
+				}*/
 			}
 			sumarDatos();
 		}catch(Exception ex) {
 			System.out.println(ex.getMessage());
 		}
 	}
-
+	//String.valueOf(decimales.format(param.getValue().getRubro().getPrecio()))
 	public void sumarDatos() {
 		try {
 			if (tvDatos.getItems().isEmpty()) {
@@ -718,7 +723,7 @@ public class BodegaIngresoRubrosC {
 					Double valorSubt = new Double(tvDatos.getItems().get(i).getCantidad()*tvDatos.getItems().get(i).getPrecio());
 					subtotal += valorSubt;
 					txtSubtotal.setText(String.valueOf(Double.valueOf(subtotal)));
-					txtIva.setText(String.valueOf(subtotal*0.12));
+					txtIva.setText(String.valueOf(Double.valueOf(subtotal*0.12)));
 					if (txtDescuento.getText().isEmpty()) {
 						txtDescuento.setText("0.0");
 					}

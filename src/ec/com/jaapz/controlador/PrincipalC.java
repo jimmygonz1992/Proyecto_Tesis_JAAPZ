@@ -34,7 +34,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 import javafx.util.Duration;
 
 public class PrincipalC {
@@ -48,6 +47,7 @@ public class PrincipalC {
 	private @FXML AnchorPane ap_izquierda;
 	private @FXML Accordion acd_menu;
 	private @FXML ImageView ivLogo;
+	private @FXML ImageView ivLogoUpse;
 	//private @FXML VBox vBoxMenu;
 	private @FXML VBox contMenu;
 
@@ -71,7 +71,9 @@ public class PrincipalC {
 		lblUsuario.setText(Context.getInstance().getUsuario());
 		lblPerfil.setText(Context.getInstance().getPerfil());
 		Image image = new Image("logo2.png", 220, 140, true, true);
+		Image image2 = new Image("Upse.png", 220, 140, true, true);
 		ivLogo.setImage(image);
+		ivLogoUpse.setImage(image2);
 		//ivLogo.setFitHeight(250);
 		//ivLogo.setFitHeight(250);
 		anio = fecha.get(Calendar.YEAR);
