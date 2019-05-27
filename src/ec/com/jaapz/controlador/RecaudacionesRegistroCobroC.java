@@ -114,6 +114,7 @@ public class RecaudacionesRegistroCobroC {
 					}
 				}
 			});
+			
 
 			//numeros con decimales
 			txtPagaCon.textProperty().addListener(new ChangeListener<String>() {

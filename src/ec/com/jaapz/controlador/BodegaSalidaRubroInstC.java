@@ -378,11 +378,7 @@ public class BodegaSalidaRubroInstC {
 			if(validarDatos() == false)
 				return;
 			
-<<<<<<< HEAD
 			if(validarStockRubro() == true) {
-=======
-			if(validarStockRubro() == false) {
->>>>>>> 02dadbb02ee53e853ef91227fbdaadcdb0d22c6a
 				helper.mostrarAlertaError("Stock insuficiente de materiales", Context.getInstance().getStage());
 				return;
 			}

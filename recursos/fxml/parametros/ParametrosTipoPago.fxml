@@ -37,25 +37,23 @@
                <children>
               <GridPane alignment="CENTER" hgap="1.0" styleClass="BordesGrid" vgap="1.0" HBox.hgrow="ALWAYS">
                 <children>
-                  <Label text="Descripción:" GridPane.rowIndex="2">
+                  <Label text="Descripción:">
                   	<font><Font name="Arial Bold" size="12.0" /></font>
                   </Label>
-                  <TextField fx:id="txtDescripcion" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                  <Label text="Estado:" GridPane.rowIndex="4">
+                  <TextField fx:id="txtDescripcion" GridPane.columnIndex="1" />
+                  <Label text="Estado:" GridPane.rowIndex="2">
                   	<font><Font name="Arial Bold" size="12.0" /></font>
                   </Label>
-                  <CheckBox fx:id="chkEstado" alignment="CENTER" mnemonicParsing="false" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
+                  <CheckBox fx:id="chkEstado" alignment="CENTER" mnemonicParsing="false" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
                 </children>
                 <columnConstraints>
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="82.0" prefWidth="82.0" />
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="274.0" />
                 </columnConstraints>
                 <rowConstraints>
-                  <RowConstraints maxHeight="71.0" minHeight="10.0" prefHeight="71.0" vgrow="SOMETIMES" />
-                  <RowConstraints maxHeight="32.0" minHeight="0.0" prefHeight="0.0" vgrow="SOMETIMES" />
-                  <RowConstraints maxHeight="64.0" minHeight="10.0" prefHeight="45.0" vgrow="SOMETIMES" />
-                  <RowConstraints maxHeight="33.0" minHeight="5.0" prefHeight="5.0" vgrow="SOMETIMES" />
-                  <RowConstraints maxHeight="71.0" minHeight="10.0" prefHeight="71.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="82.0" minHeight="10.0" prefHeight="82.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="33.0" minHeight="5.0" prefHeight="16.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="84.0" minHeight="10.0" prefHeight="84.0" vgrow="SOMETIMES" />
                 </rowConstraints>
                      <HBox.margin>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />

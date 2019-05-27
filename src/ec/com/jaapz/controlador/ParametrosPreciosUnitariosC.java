@@ -12,6 +12,7 @@ import ec.com.jaapz.util.Constantes;
 import ec.com.jaapz.util.Context;
 import ec.com.jaapz.util.ControllerHelper;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -23,6 +24,8 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.util.Callback;
@@ -49,6 +52,32 @@ public class ParametrosPreciosUnitariosC {
 			btnBuscarRubro.setStyle("-fx-cursor: hand;");
 			btnGrabar.setStyle("-fx-cursor: hand;");
 			btnQuitar.setStyle("-fx-cursor: hand;");
+			txtDescripcion.setEditable(false);
+			txtPrecio.setEditable(false);
+			txtTipoRubro.setEditable(false);
+			
+			//validar solo numeros
+			txtCantidad.textProperty().addListener(new ChangeListener<String>() {
+				@Override
+				public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+					if (newValue.matches("\\d*")) {
+						//int value = Integer.parseInt(newValue);
+					} else {
+						txtCantidad.setText(oldValue);
+					}
+				}
+			});
+			
+			//para anadir a la grilla con enter
+			txtCantidad.setOnKeyPressed(new EventHandler<KeyEvent>(){
+				@Override
+				public void handle(KeyEvent ke){
+					if (ke.getCode().equals(KeyCode.ENTER)){
+						agregarPrecioUnitario();
+						btnBuscarRubro.requestFocus();
+					}
+				}
+			});
 			
 			recuperarDatos();
 			tvDatos.setEditable(true);
@@ -295,6 +324,7 @@ public class ParametrosPreciosUnitariosC {
 			txtDescripcion.setText(rubroSeleccionado.getDescripcion());
 			txtPrecio.setText(String.valueOf(decimales.format(rubroSeleccionado.getPrecio())));
 			txtTipoRubro.setText(rubroSeleccionado.getTipoRubro().getDescripcion());
+			txtCantidad.requestFocus();
 		}catch(Exception ex) {
 			System.out.println(ex.getMessage());
 		}
