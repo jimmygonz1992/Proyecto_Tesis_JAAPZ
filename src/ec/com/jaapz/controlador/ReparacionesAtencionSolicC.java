@@ -208,6 +208,10 @@ public class ReparacionesAtencionSolicC {
 				txtIdCuenta.setText("");
 			else
 				txtIdCuenta.setText(String.valueOf(datoSeleccionado.getCuentaCliente().getIdCuenta()));
+			
+			if(datoSeleccionado.getEstadoEntrega().equals(Constantes.EST_INSPECCION_PENDIENTE)) {
+				btnGrabar.setDisable(true);
+			}
 						
 			recuperarDetalleReparacion(datoSeleccionado);
 		}catch(Exception ex) {

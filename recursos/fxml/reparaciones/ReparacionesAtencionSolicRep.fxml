@@ -84,7 +84,7 @@
                         <TextField fx:id="txtIdCuenta" GridPane.columnIndex="4" GridPane.rowIndex="1" />
                         <TextField fx:id="txtUsuarioCreaRep" GridPane.columnIndex="7" GridPane.rowIndex="1" />
                         <DatePicker fx:id="dtpFecha" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                        <ComboBox fx:id="cboEstadoReparacion" prefWidth="150.0" GridPane.columnIndex="4" GridPane.rowIndex="2" />
+                        <ComboBox fx:id="cboEstadoReparacion" GridPane.columnIndex="4" GridPane.columnSpan="3" GridPane.rowIndex="2" />
                         <Label alignment="TOP_LEFT" contentDisplay="TOP" prefHeight="40.0" prefWidth="82.0" text="Fecha Reparación:" wrapText="true" GridPane.rowIndex="2">
                            <font><Font name="System Bold" size="12.0" /></font>
                         </Label>
@@ -101,7 +101,7 @@
                            <font><Font name="Arial Bold" size="12.0" /></font>
                         </Label>
                         
-                        <Label text="Id Cuenta:" GridPane.columnIndex="3" GridPane.rowIndex="1">
+                        <Label text="N° Cuenta:" GridPane.columnIndex="3" GridPane.rowIndex="1">
                            <font><Font name="Arial Bold" size="12.0" /></font>
                         </Label>
                         
@@ -167,6 +167,11 @@
             <Label alignment="BOTTOM_LEFT" contentDisplay="BOTTOM" prefHeight="15.0" prefWidth="201.0" text="Descripción del trabajo realizado:" GridPane.columnIndex="1" GridPane.rowIndex="5" GridPane.valignment="BOTTOM">
                <font><Font name="Arial Bold Italic" size="12.0" /></font>
             </Label>
+            <Label text="Solicitar materiales en bodega para el trabajo de reparación y confirmación de la misma" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="7" GridPane.valignment="BOTTOM">
+               <font>
+                  <Font name="Arial Bold Italic" size="12.0" />
+               </font>
+            </Label>
          </children>
          <columnConstraints>
             <ColumnConstraints maxWidth="5.0" minWidth="1.0" prefWidth="5.0" />
@@ -181,9 +186,9 @@
             <RowConstraints maxHeight="486.0" minHeight="10.0" prefHeight="29.0" vgrow="SOMETIMES" />
             <RowConstraints maxHeight="486.0" minHeight="10.0" prefHeight="113.0" vgrow="SOMETIMES" />
             <RowConstraints maxHeight="486.0" minHeight="10.0" prefHeight="31.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="439.0" minHeight="10.0" prefHeight="200.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="439.0" minHeight="5.0" prefHeight="5.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="439.0" minHeight="10.0" prefHeight="70.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="439.0" minHeight="10.0" prefHeight="182.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="439.0" minHeight="5.0" prefHeight="29.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="439.0" minHeight="10.0" prefHeight="64.0" vgrow="SOMETIMES" />
          </rowConstraints>
       </GridPane>
    </children>

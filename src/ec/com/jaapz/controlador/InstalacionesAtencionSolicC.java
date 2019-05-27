@@ -49,7 +49,6 @@ public class InstalacionesAtencionSolicC {
 	
 	@FXML private TextField txtCedula;
 	@FXML private TextField txtCliente;
-	@FXML private TextField txtUsuarioSolic;
 	@FXML private DatePicker dtpFecha;
 	@FXML private TextField txtUsuarioCreaInst;
 	@FXML private ComboBox<Estado> cboEstadoInstalacion;
@@ -117,7 +116,6 @@ public class InstalacionesAtencionSolicC {
 		txtReferencia.setEditable(false);
 		txtCedula.setEditable(false);
 		txtCliente.setEditable(false);
-		txtUsuarioSolic.setEditable(false);
 		txtUsuarioCreaInst.setEditable(false);
 		txtCodigoMedidor.setEditable(false);
 		txtMarca.setEditable(false);
@@ -143,7 +141,6 @@ public class InstalacionesAtencionSolicC {
 		txtReferencia.setText("");
 		txtCedula.setText("");
 		txtCliente.setText("");
-		txtUsuarioSolic.setText("");
 		dtpFecha.setValue(LocalDate.now());
 		cboEstadoInstalacion.setPromptText("Seleccione Estado");
 		txtCodigoMedidor.setText("");
@@ -227,12 +224,6 @@ public class InstalacionesAtencionSolicC {
 				return false;
 			}
 			
-			if(txtUsuarioSolic.getText().equals("")) {
-				helper.mostrarAlertaAdvertencia("No existe usuario de registro de orden de liquidación", Context.getInstance().getStage());
-				txtUsuarioSolic.requestFocus();
-				return false;
-			}
-			
 			if(dtpFecha.getValue().equals(null)) {
 				helper.mostrarAlertaAdvertencia("Ingresar fecha de instalación", Context.getInstance().getStage());
 				dtpFecha.requestFocus();
@@ -248,12 +239,6 @@ public class InstalacionesAtencionSolicC {
 			if(txtCodigoMedidor.getText().equals("")) {
 				helper.mostrarAlertaAdvertencia("Medidor no asignado", Context.getInstance().getStage());
 				txtCodigoMedidor.requestFocus();
-				return false;
-			}
-			
-			if(txtObservaciones.getText().equals("")) {
-				helper.mostrarAlertaAdvertencia("Ingrese alguna observación o novedad", Context.getInstance().getStage());
-				txtObservaciones.requestFocus();
 				return false;
 			}
 			
@@ -290,7 +275,6 @@ public class InstalacionesAtencionSolicC {
 			txtReferencia.setText(instalacionSel.getSolInspeccionIn().getReferencia());
 			txtCedula.setText(instalacionSel.getCuentaCliente().getCliente().getCedula());
 			txtCliente.setText(instalacionSel.getCuentaCliente().getCliente().getNombre() + " " + instalacionSel.getCuentaCliente().getCliente().getApellido());
-			txtUsuarioSolic.setText(String.valueOf(instalacionSel.getUsuarioCrea()));
 			txtCodigoMedidor.setText(instalacionSel.getSolInspeccionIn().getLiquidacionOrdens().get(0).getMedidor().getCodigo());
 			txtMarca.setText(instalacionSel.getSolInspeccionIn().getLiquidacionOrdens().get(0).getMedidor().getMarca());
 			txtModelo.setText(instalacionSel.getSolInspeccionIn().getLiquidacionOrdens().get(0).getMedidor().getModelo());
