@@ -53,16 +53,18 @@ public class ReparacionesListadoCuentasC {
 			tvDatos.getColumns().clear();
 			tvDatos.getItems().clear();
 			List<CuentaCliente> listaCuentas;
-			
+			listaCuentas = cuentaClienteDao.getListaCuentaClientes(patron);
+			ObservableList<CuentaCliente> datosCuenta = FXCollections.observableArrayList();
 			/*if(Context.getInstance().getIdPerfil() == 1) {
 				listaCuentas = cuentaClienteDao.getListaCuentaClientes(patron);
 			}else {
 				listaCuentas = cuentaClienteDao.getListaCuentaClientePerfil(patron);
 			}*/
-			
-			ObservableList<CuentaCliente> datosCuenta = FXCollections.observableArrayList();
-			listaCuentas = cuentaClienteDao.getListaCuentaClientes(patron);
-			datosCuenta.setAll(listaCuentas);
+			for(CuentaCliente cuenta : listaCuentas) {
+				if(cuenta.getMedidor() != null) {
+					datosCuenta.setAll(cuenta);
+				}
+			}
 
 			//llenar los datos en la tabla
 			TableColumn<CuentaCliente, String> idColum = new TableColumn<>("Id");

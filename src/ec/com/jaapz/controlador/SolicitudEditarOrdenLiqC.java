@@ -48,8 +48,6 @@ public class SolicitudEditarOrdenLiqC {
 	@FXML private TextField txtPrecioMat;
 	@FXML private TextField	txtCantidadMat;
 	@FXML private TextArea	txtObservaciones;
-	@FXML private TextField	txtSubtotal;
-	@FXML private TextField txtDescuento;
 	@FXML private TextField	txtTotal;
 	
 	@FXML private Button btnBuscarOrdenLiqEmitida;
@@ -196,8 +194,6 @@ public class SolicitudEditarOrdenLiqC {
 		txtDescripcionMat.setEditable(false);
 		txtStockMat.setEditable(false);
 		txtPrecioMat.setEditable(false);
-		txtSubtotal.setEditable(false);
-		txtDescuento.setEditable(false);
 		txtTotal.setEditable(false);
 	}
 	
@@ -322,20 +318,13 @@ public class SolicitudEditarOrdenLiqC {
 	public void sumarDatos() {
 		try {
 			if (tvDatos.getItems().isEmpty()) {
-				txtSubtotal.setText("0.0");
-				txtDescuento.setText("0.0");
 				txtTotal.setText("0.0");
 			}else {
 				double subtotal = 0;
 				for(int i=0; i<tvDatos.getItems().size(); i++) {
 					Double valorSubt = new Double(tvDatos.getItems().get(i).getCantidad()*tvDatos.getItems().get(i).getPrecio());
 					subtotal += valorSubt;
-					txtSubtotal.setText(String.valueOf(Double.valueOf(subtotal)));
-					if (txtDescuento.getText().isEmpty()) {
-						txtDescuento.setText("0.0");
-					}
-					double total = Double.valueOf(txtSubtotal.getText()) - Double.valueOf(txtDescuento.getText());
-					txtTotal.setText(String.valueOf(Double.valueOf(total)));
+					txtTotal.setText(String.valueOf(Double.valueOf(subtotal)));
 				}
 			}
 		}catch(Exception ex) {
@@ -561,8 +550,6 @@ public class SolicitudEditarOrdenLiqC {
 		txtDireccion.setText("");
 		txtReferencia.setText("");
 		txtObservaciones.setText("");
-		txtSubtotal.setText("");
-		txtDescuento.setText("");
 		txtTotal.setText("");
 		limpiarMateriales();
 		rubroSeleccionado = null;
