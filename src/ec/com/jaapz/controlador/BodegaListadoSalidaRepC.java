@@ -52,12 +52,12 @@ public class BodegaListadoSalidaRepC {
 			tvDatos.getColumns().clear();
 			tvDatos.getItems().clear();
 			List<Reparacion> listaSalidaReparaciones;
-			if(Context.getInstance().getIdPerfil() == 1) {
+			/*if(Context.getInstance().getIdPerfil() == 1) {
 				listaSalidaReparaciones = reparacionDao.getListadoSalidaReparaciones(patron);
 			}else {
 				listaSalidaReparaciones = reparacionDao.getListaSalidaReparacionesPerfil(patron);
-			}
-			
+			}*/
+			listaSalidaReparaciones = reparacionDao.getListadoSalidaReparaciones(patron);
 			ObservableList<Reparacion> datosReq = FXCollections.observableArrayList();
 			datosReq.setAll(listaSalidaReparaciones);
 

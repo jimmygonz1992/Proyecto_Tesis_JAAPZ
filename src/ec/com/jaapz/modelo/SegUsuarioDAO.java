@@ -156,7 +156,6 @@ public class SegUsuarioDAO extends ClaseDAO{
 	}
 
 	//para asigancion de instalaciones
-	@SuppressWarnings("unchecked")
 	public SegUsuario getUsuarioById(Integer idUsuario){
 		SegUsuario resultado;
 		Query query = getEntityManager().createNamedQuery("SegUsuario.buscarPorId");

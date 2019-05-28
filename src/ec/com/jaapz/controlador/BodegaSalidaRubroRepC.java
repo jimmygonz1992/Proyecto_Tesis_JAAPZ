@@ -158,7 +158,7 @@ public class BodegaSalidaRubroRepC {
 			
 			for(int i = 0 ; i < listaReparacion.size() ; i ++) {
 				txtIdReparacion.setText(Integer.toString(listaReparacion.get(i).getIdReparacion()));
-				txtIdInspecc.setText(Integer.toString(listaReparacion.get(i).getIdReparacion()));
+				txtIdInspecc.setText(Integer.toString(listaReparacion.get(i).getSolInspeccionRep().getIdSolicitudRep()));
 				txtCedula.setText(listaReparacion.get(i).getCuentaCliente().getCliente().getCedula());
 				txtIdCuenta.setText(Integer.toString(listaReparacion.get(i).getCuentaCliente().getIdCuenta()));
 				txtNombres.setText(listaReparacion.get(i).getCuentaCliente().getCliente().getNombre());
@@ -167,7 +167,7 @@ public class BodegaSalidaRubroRepC {
 				txtReferencia.setText(listaReparacion.get(i).getReferencia());
 				txtTelefono.setText(listaReparacion.get(i).getCuentaCliente().getCliente().getTelefono());
 				txtCodigoMedidor.setText(listaReparacion.get(i).getCuentaCliente().getMedidor().getCodigo());
-				txtUsuarioInspeccion.setText(Integer.toString(listaReparacion.get(i).getSolInspeccionRep().getUsuarioCrea()));
+				txtUsuarioInspeccion.setText(Integer.toString(listaReparacion.get(i).getUsuarioReparacion()));
 				txtObservaciones.setText(listaReparacion.get(i).getObservcion());
 				txtTotal.setText(Double.toString(listaReparacion.get(i).getTotal()));
 			
@@ -333,7 +333,7 @@ public class BodegaSalidaRubroRepC {
 			if(validarDatos() == false)
 				return;
 			
-			if(validarStockRubro() == false) {
+			if(validarStockRubro() == true) {
 				helper.mostrarAlertaError("Stock insuficiente de materiales", Context.getInstance().getStage());
 				return;
 			}

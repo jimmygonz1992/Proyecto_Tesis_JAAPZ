@@ -87,7 +87,7 @@ public class BodegaIngresoRubrosC {
 	EstadoMedidorDAO estadoMedidorDAO = new EstadoMedidorDAO();
 	KardexDAO kardexDAO = new KardexDAO();
 	Ingreso ingreso;
-	DecimalFormat decimales = new DecimalFormat("#0.00");
+	DecimalFormat decimales = new DecimalFormat("#.00");
 
 	public void initialize(){
 		try {
@@ -649,10 +649,10 @@ public class BodegaIngresoRubrosC {
 			cantidadColum.setPrefWidth(90);
 			cantidadColum.setCellValueFactory(new PropertyValueFactory<IngresoDetalle, String>("cantidad"));
 
-			TableColumn<IngresoDetalle, String> precioColum = new TableColumn<>("Precio");
+			TableColumn<IngresoDetalle, Double> precioColum = new TableColumn<>("Precio");
 			precioColum.setMinWidth(10);
 			precioColum.setPrefWidth(90);
-			precioColum.setCellValueFactory(new PropertyValueFactory<IngresoDetalle, String>("precio"));
+			precioColum.setCellValueFactory(new PropertyValueFactory<IngresoDetalle, Double>("precio"));
 
 			TableColumn<IngresoDetalle, String> totalColum = new TableColumn<>("Total");
 			totalColum.setMinWidth(10);
