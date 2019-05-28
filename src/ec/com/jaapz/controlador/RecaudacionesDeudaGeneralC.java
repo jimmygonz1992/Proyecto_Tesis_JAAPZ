@@ -1,5 +1,6 @@
 package ec.com.jaapz.controlador;
 
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -38,6 +39,7 @@ public class RecaudacionesDeudaGeneralC {
 	
 	ControllerHelper helper = new ControllerHelper();
 	SimpleDateFormat formateador = new SimpleDateFormat("dd/MM/yyyy");
+	DecimalFormat df = new DecimalFormat("0.00");
 	
 	PlanillaDAO planillaDao = new PlanillaDAO();
 	Date dateInicio = new Date();
@@ -182,7 +184,7 @@ public class RecaudacionesDeudaGeneralC {
 							totalPagado = totalPagado + pa.getValor();
 						}
 					}
-					txtTotalDeuda.setText(String.valueOf(Double.valueOf(total - totalPagado)));
+					txtTotalDeuda.setText(df.format(total - totalPagado).replace(",", "."));
 				}
 			}
 		}catch(Exception ex) {

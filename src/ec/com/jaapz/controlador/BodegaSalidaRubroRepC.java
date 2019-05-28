@@ -70,7 +70,7 @@ public class BodegaSalidaRubroRepC {
 			dtpFecha.setValue(LocalDate.now());
 			txtUsuarioCrea.setText(Encriptado.Desencriptar(String.valueOf(Context.getInstance().getUsuariosC().getUsuario())));
 			bloquear();
-			
+			txtUsuarioInspeccion.setVisible(false);
 			btnBuscarInspCuenta.setStyle("-fx-cursor: hand;");
 			btnBuscarInspeccion.setStyle("-fx-cursor: hand;");
 			btnEliminar.setStyle("-fx-cursor: hand;");
@@ -167,7 +167,7 @@ public class BodegaSalidaRubroRepC {
 				txtReferencia.setText(listaReparacion.get(i).getReferencia());
 				txtTelefono.setText(listaReparacion.get(i).getCuentaCliente().getCliente().getTelefono());
 				txtCodigoMedidor.setText(listaReparacion.get(i).getCuentaCliente().getMedidor().getCodigo());
-				txtUsuarioInspeccion.setText(Integer.toString(listaReparacion.get(i).getUsuarioReparacion()));
+				//txtUsuarioInspeccion.setText(Integer.toString(listaReparacion.get(i).getUsuarioReparacion()));
 				txtObservaciones.setText(listaReparacion.get(i).getObservcion());
 				txtTotal.setText(Double.toString(listaReparacion.get(i).getTotal()));
 			

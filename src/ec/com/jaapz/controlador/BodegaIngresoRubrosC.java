@@ -41,7 +41,6 @@ import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.util.Callback;
@@ -87,7 +86,8 @@ public class BodegaIngresoRubrosC {
 	EstadoMedidorDAO estadoMedidorDAO = new EstadoMedidorDAO();
 	KardexDAO kardexDAO = new KardexDAO();
 	Ingreso ingreso;
-	DecimalFormat decimales = new DecimalFormat("#.00");
+	
+	DecimalFormat df = new DecimalFormat("0.00");
 
 	public void initialize(){
 		try {
@@ -639,20 +639,50 @@ public class BodegaIngresoRubrosC {
 			datos.add(datoAnadir);
 
 			//llenar los datos en la tabla			
+			/*TableColumn<IngresoDetalle, String> descipcionColum = new TableColumn<>("Descripción");
+			descipcionColum.setMinWidth(10);
+			descipcionColum.setPrefWidth(200);
+			descipcionColum.setCellValueFactory(new PropertyValueFactory<IngresoDetalle, String>("rubro"));*/
+			
 			TableColumn<IngresoDetalle, String> descipcionColum = new TableColumn<>("Descripción");
 			descipcionColum.setMinWidth(10);
 			descipcionColum.setPrefWidth(200);
-			descipcionColum.setCellValueFactory(new PropertyValueFactory<IngresoDetalle, String>("rubro"));
+			descipcionColum.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<IngresoDetalle, String>, ObservableValue<String>>() {
+				@Override
+				public ObservableValue<String> call(CellDataFeatures<IngresoDetalle, String> param) {
+					return new SimpleObjectProperty<String>(String.valueOf(param.getValue().getRubro().getDescripcion()));
+				}
+			});
 
+			/*TableColumn<IngresoDetalle, String> cantidadColum = new TableColumn<>("Cantidad");
+			cantidadColum.setMinWidth(10);
+			cantidadColum.setPrefWidth(90);
+			cantidadColum.setCellValueFactory(new PropertyValueFactory<IngresoDetalle, String>("cantidad"));*/
+			
 			TableColumn<IngresoDetalle, String> cantidadColum = new TableColumn<>("Cantidad");
 			cantidadColum.setMinWidth(10);
 			cantidadColum.setPrefWidth(90);
-			cantidadColum.setCellValueFactory(new PropertyValueFactory<IngresoDetalle, String>("cantidad"));
+			cantidadColum.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<IngresoDetalle, String>, ObservableValue<String>>() {
+				@Override
+				public ObservableValue<String> call(CellDataFeatures<IngresoDetalle, String> param) {
+					return new SimpleObjectProperty<String>(String.valueOf(param.getValue().getCantidad()));
+				}
+			});
 
-			TableColumn<IngresoDetalle, Double> precioColum = new TableColumn<>("Precio");
+			/*TableColumn<IngresoDetalle, Double> precioColum = new TableColumn<>("Precio");
 			precioColum.setMinWidth(10);
 			precioColum.setPrefWidth(90);
-			precioColum.setCellValueFactory(new PropertyValueFactory<IngresoDetalle, Double>("precio"));
+			precioColum.setCellValueFactory(new PropertyValueFactory<IngresoDetalle, Double>("precio"));*/
+			
+			TableColumn<IngresoDetalle, String> precioColum = new TableColumn<>("Precio");
+			precioColum.setMinWidth(10);
+			precioColum.setPrefWidth(90);
+			precioColum.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<IngresoDetalle, String>, ObservableValue<String>>() {
+				@Override
+				public ObservableValue<String> call(CellDataFeatures<IngresoDetalle, String> param) {
+					return new SimpleObjectProperty<String>(String.valueOf(param.getValue().getPrecio()));
+				}
+			});
 
 			TableColumn<IngresoDetalle, String> totalColum = new TableColumn<>("Total");
 			totalColum.setMinWidth(10);
@@ -660,7 +690,7 @@ public class BodegaIngresoRubrosC {
 			totalColum.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<IngresoDetalle, String>, ObservableValue<String>>() {
 				@Override
 				public ObservableValue<String> call(CellDataFeatures<IngresoDetalle, String> param) {
-					return new SimpleObjectProperty<String>(String.valueOf(param.getValue().getCantidad()*param.getValue().getPrecio()));
+					return new SimpleObjectProperty<String>(String.valueOf(String.format("%.2f", param.getValue().getCantidad()*param.getValue().getPrecio())));
 				}
 			});
 			tvDatos.getColumns().addAll(descipcionColum, cantidadColum, precioColum, totalColum);
@@ -722,13 +752,16 @@ public class BodegaIngresoRubrosC {
 				for(int i=0; i<tvDatos.getItems().size(); i++) {
 					Double valorSubt = new Double(tvDatos.getItems().get(i).getCantidad()*tvDatos.getItems().get(i).getPrecio());
 					subtotal += valorSubt;
-					txtSubtotal.setText(String.valueOf(Double.valueOf(subtotal)));
-					txtIva.setText(String.valueOf(Double.valueOf(subtotal*0.12)));
+					//txtSubtotal.setText(String.valueOf(Double.valueOf(subtotal)));
+					txtSubtotal.setText(df.format(subtotal).replace(",", "."));
+					//txtIva.setText(String.valueOf(Double.valueOf(subtotal*0.12)));
+					txtIva.setText(df.format(subtotal*0.12).replace(",", "."));
 					if (txtDescuento.getText().isEmpty()) {
 						txtDescuento.setText("0.0");
 					}
 					double total = ((Double.valueOf(txtSubtotal.getText()) + Double.valueOf(txtIva.getText())) - Double.valueOf(txtDescuento.getText()));
-					txtTotal.setText(String.valueOf(Double.valueOf(total)));
+					//txtTotal.setText(String.valueOf(Double.valueOf(total)));
+					txtTotal.setText(df.format(total).replace(",", "."));
 				}
 			}
 		}catch(Exception ex) {

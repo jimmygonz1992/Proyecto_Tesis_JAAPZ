@@ -1,5 +1,6 @@
 package ec.com.jaapz.controlador;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -60,6 +61,7 @@ public class RecaudacionesConvenioC {
 	ConvenioDAO convenioDAO = new ConvenioDAO();
 	PlanillaDAO planillaDAO = new PlanillaDAO();
 	EmpresaDAO empresaDao = new EmpresaDAO();
+	DecimalFormat df = new DecimalFormat("0.00"); 
 	
 	public void initialize() {
 		try {
@@ -212,7 +214,7 @@ public class RecaudacionesConvenioC {
 						for(Pago pa : param.getValue().getPagos()){
 							total = total + pa.getValor();
 						}
-						return new SimpleObjectProperty<String>(String.valueOf(param.getValue().getTotalPagar() - total));
+						return new SimpleObjectProperty<String>(String.valueOf(df.format(param.getValue().getTotalPagar() - total).replace(",", ".")));
 					}
 				});
 
@@ -230,18 +232,19 @@ public class RecaudacionesConvenioC {
 				//	txtTotal.setText("0.00");
 				//	txtSaldo.setText("0.00");
 			}else {
-				double total = 0;
+				double total = 0.00;
 				for(int i = 0 ; i < tvPlanillasImpagas.getItems().size(); i++) {
 					Double valorTotal = new Double(tvPlanillasImpagas.getItems().get(i).getTotalPagar());
 					total += valorTotal;
-					double totalPagado = 0.0;
+					double totalPagado = 0.00;
 					for(Planilla pla : tvPlanillasImpagas.getItems()) {
 						for(Pago pa : pla.getPagos()){
 							if(pa.getEstado().equals(Constantes.ESTADO_ACTIVO))
 								totalPagado = totalPagado + pa.getValor();
 						}
 					}
-					txtTotalDeuda.setText(String.valueOf(Double.valueOf(total - totalPagado)));
+					//txtTotalDeuda.setText(String.valueOf(Double.valueOf(total - totalPagado)));
+					txtTotalDeuda.setText(df.format(total - totalPagado).replace(",", "."));
 				}
 			}
 		}catch(Exception ex) {
@@ -263,14 +266,14 @@ public class RecaudacionesConvenioC {
 			if(result.get() == ButtonType.OK){	
 				ObservableList<ConvenioDetalle> convenioDetalle = FXCollections.observableArrayList();
 				ConvenioDetalle detalle;
-				Double cuota =  Double.parseDouble(String.valueOf(txtTotalDeuda.getText())) / Double.parseDouble(String.valueOf(txtNumMeses.getText()));
+				Double cuota =  Double.parseDouble(txtTotalDeuda.getText()) / Double.parseDouble(String.valueOf(txtNumMeses.getText()));
 				for(int i = 0 ; i < Integer.parseInt(txtNumMeses.getText()) ; i++){
 					detalle = new ConvenioDetalle();
 					detalle.setEstado(Constantes.ESTADO_ACTIVO);
 					detalle.setIdConvenioDet(null);
 					detalle.setNumLetra(i + 1);
 					detalle.setValor(Double.valueOf(cuota));
-					detalle.setDescripcion("Convenio Cuota No. " + (i + 1) + " con valor: " + cuota);
+					detalle.setDescripcion("Convenio Cuota No. " + (i + 1) + " con valor: " + df.format(cuota).replace(",", "."));
 					convenioDetalle.add(detalle);
 				}
 				TableColumn<ConvenioDetalle, String> numColum = new TableColumn<>("No.");
@@ -297,7 +300,7 @@ public class RecaudacionesConvenioC {
 				valorColum.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<ConvenioDetalle, String>, ObservableValue<String>>() {
 					@Override
 					public ObservableValue<String> call(CellDataFeatures<ConvenioDetalle, String> param) {
-						return new SimpleObjectProperty<String>(String.valueOf(param.getValue().getValor()));
+						return new SimpleObjectProperty<String>(df.format(param.getValue().getValor()));
 					}
 				});
 				tvDetalleConvenio.getColumns().addAll(numColum, descripcionColum, valorColum);
@@ -328,7 +331,7 @@ public class RecaudacionesConvenioC {
 				return;
 			Optional<ButtonType> result = helper.mostrarAlertaConfirmacion("Grabar el convenio.. revise los parámetros antes de continuar\nDesea continuar?",Context.getInstance().getStage());
 			if(result.get() == ButtonType.OK){	
-				Double cuota = 0.0;
+				Double cuota = 0.00;
 				Convenio convenio = new Convenio();
 				convenio.setEstado(Constantes.ESTADO_ACTIVO);
 				convenio.setFecha(new Date());
