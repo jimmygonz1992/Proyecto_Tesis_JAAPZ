@@ -98,7 +98,7 @@ public class ParametrosPreciosUnitariosC {
 			datos.setAll(listaPrecios);
 
 			//llenar los datos en la tabla
-			TableColumn<PrecioUnitario, String> idColum = new TableColumn<>("Id Material");
+			TableColumn<PrecioUnitario, String> idColum = new TableColumn<>("Cod. Material");
 			idColum.setMinWidth(10);
 			idColum.setPrefWidth(90);
 			idColum.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<PrecioUnitario,String>, ObservableValue<String>>() {

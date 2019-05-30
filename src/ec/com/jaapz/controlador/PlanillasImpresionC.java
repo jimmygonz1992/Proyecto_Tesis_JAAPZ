@@ -388,7 +388,11 @@ public class PlanillasImpresionC {
 								destinatario = pl.getCuentaCliente().getCliente().getEmail();
 								destinatarios = destinatario.split(";");
 								servidor = 0;
-								mensaje = "Estado de cuenta de: " + pl.getCuentaCliente().getCliente().getNombre();
+								mensaje = "Estimado cliente " + pl.getCuentaCliente().getCliente().getNombre() + " " + pl.getCuentaCliente().getCliente().getApellido() + " "
+										+ "\nA continuación se adjunta el Estado de Cuenta del medidor con código " + pl.getCuentaCliente().getMedidor().getCodigo()
+										+ "\nSi tiene algún tipo de inconvenietes, acercarse a la oficina de la Junta a presentar el debido reclamo."
+										+ "\n\nAtentamente\n\n\n_____________\nLa directiva JAAPZ\nJunta Administradora de agua potable Zapotal\n"  
+										+ "jaapz.zapotal.2001@gmail.com";
 								cliente = pl.getCuentaCliente().getCliente().getNombre();
 								if(pl.getCuentaCliente().getMedidor() != null)
 									medidor = pl.getCuentaCliente().getMedidor().getCodigo();
@@ -448,7 +452,11 @@ public class PlanillasImpresionC {
 								destinatario = pl.getCuentaCliente().getCliente().getEmail();
 								destinatarios = destinatario.split(";");
 								servidor = 0;
-								mensaje = "Estado de cuenta de: " + pl.getCuentaCliente().getCliente().getNombre();
+								mensaje = "Estimado cliente " + pl.getCuentaCliente().getCliente().getNombre() + " " + pl.getCuentaCliente().getCliente().getApellido() + " "
+										+ "\nA continuación se adjunta el Estado de Cuenta del medidor con código " + pl.getCuentaCliente().getMedidor().getCodigo()
+										+ "\nSi tiene algún tipo de inconvenietes, acercarse a la oficina de la Junta a presentar el debido reclamo."
+										+ "\n\nAtentamente\n\n\n_____________\nLa directiva JAAPZ\nJunta Administradora de agua potable Zapotal\n"  
+										+ "jaapz.zapotal.2001@gmail.com";
 								cliente = pl.getCuentaCliente().getCliente().getNombre();
 								if(pl.getCuentaCliente().getMedidor() != null)
 									medidor = pl.getCuentaCliente().getMedidor().getCodigo();
