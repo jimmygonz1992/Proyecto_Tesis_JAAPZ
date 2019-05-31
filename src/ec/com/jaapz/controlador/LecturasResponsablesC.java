@@ -125,10 +125,10 @@ public class LecturasResponsablesC {
 			datos.setAll(listaClientes);
 
 			//llenar los datos en la tabla
-			TableColumn<SegUsuario, String> idColum = new TableColumn<>("Código");
+			TableColumn<SegUsuario, String> idColum = new TableColumn<>("Cédula");
 			idColum.setMinWidth(10);
 			idColum.setPrefWidth(90);
-			idColum.setCellValueFactory(new PropertyValueFactory<SegUsuario, String>("idUsuario"));
+			idColum.setCellValueFactory(new PropertyValueFactory<SegUsuario, String>("cedula"));
 			TableColumn<SegUsuario, String> nombresColum = new TableColumn<>("Nombres");
 			nombresColum.setMinWidth(10);
 			nombresColum.setPrefWidth(200);

@@ -58,7 +58,7 @@ public class ClientesOrdePendienteC {
 			boolean bandera;
 			List<SolInspeccionIn> listaInspecciones;
 			List<SolInspeccionIn> listaAgregar = new ArrayList<SolInspeccionIn>();
-			if(Context.getInstance().getIdPerfil() == Constantes.ID_USU_ADMINISTRADOR) {
+			if(Context.getInstance().getIdPerfil() == Constantes.ID_USU_ADMINISTRADOR || Context.getInstance().getIdPerfil() == Constantes.ID_USU_PRESIDENTE) {
 				listaInspecciones = inspeccionDAO.getListaInspeccionPendiente(patron);
 			}else {
 				listaInspecciones = inspeccionDAO.getListaInspeccionPerfilPendiente(patron);

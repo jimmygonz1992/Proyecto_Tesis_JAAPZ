@@ -51,7 +51,7 @@
                     </content>
                 </TitledPane>
                 
-                <TitledPane animated="false" text="Consumo mensual">
+                <TitledPane animated="false" text="Consumo mensual comparativo">
                     <content>
                     	<AnchorPane fx:id="apConsumo" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
                 	</content>

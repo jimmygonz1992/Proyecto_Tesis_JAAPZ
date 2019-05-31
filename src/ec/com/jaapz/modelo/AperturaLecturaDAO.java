@@ -14,6 +14,17 @@ public class AperturaLecturaDAO extends ClaseDAO{
 		resultado = (List<AperturaLectura>) query.getResultList();
 		return resultado;
 	}
+	
+	@SuppressWarnings("unchecked")
+	public List<AperturaLectura> getListaAperturasByAnio(Integer idAnio){
+		List<AperturaLectura> resultado = new ArrayList<AperturaLectura>();
+		Query query = getEntityManager().createNamedQuery("AperturaLectura.buscarAnio");
+		query.setHint("javax.persistence.cache.storeMode", "REFRESH");
+		query.setParameter("idAnio", idAnio);
+		resultado = (List<AperturaLectura>) query.getResultList();
+		return resultado;
+	}
+	
 	@SuppressWarnings("unchecked")
 	public List<AperturaLectura> getListaAperturasByPatron(String patron){
 		List<AperturaLectura> resultado = new ArrayList<AperturaLectura>();
@@ -44,7 +55,7 @@ public class AperturaLecturaDAO extends ClaseDAO{
 	@SuppressWarnings("unchecked")
 	public List<AperturaLectura> getListaAperturasEnProceso(){
 		List<AperturaLectura> resultado = new ArrayList<AperturaLectura>();
-		Query query = getEntityManager().createNamedQuery("AperturaLectura.buscarCiclo");
+		Query query = getEntityManagerNuevo().createNamedQuery("AperturaLectura.buscarCiclo");
 		query.setHint("javax.persistence.cache.storeMode", "REFRESH");
 		resultado = (List<AperturaLectura>) query.getResultList();
 		return resultado;
