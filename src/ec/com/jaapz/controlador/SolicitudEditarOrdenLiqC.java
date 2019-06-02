@@ -335,6 +335,10 @@ public class SolicitudEditarOrdenLiqC {
 	public void eliminar(){
 		try {
 			LiquidacionDetalle detalleSeleccionado = tvDatos.getSelectionModel().getSelectedItem();
+			if(detalleSeleccionado == null) {
+				helper.mostrarAlertaError("Debe seleccionar material", Context.getInstance().getStage());
+				return;
+			}
 			tvDatos.getItems().remove(detalleSeleccionado);
 			sumarDatos();
 		}catch(Exception ex) {
