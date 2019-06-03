@@ -483,7 +483,8 @@ public class SolicitudEditarOrdenLiqC {
 					for(LiquidacionDetalle det : tvDatosAdicionales.getItems()) {
 						if(det.getIdDetalle() == null) {
 							det.setIdDetalle(null);
-							det.setEstado(Constantes.ESTADO_INACTIVO);
+							det.setEstadoDespacho(Constantes.EST_FAC_PENDIENTE);
+							det.setEstado(Constantes.ESTADO_ACTIVO);
 							det.setLiquidacionOrden(liquidacionSeleccionada);
 							liquidacionSeleccionada.getLiquidacionDetalles().add(det);
 						}else {
@@ -495,48 +496,6 @@ public class SolicitudEditarOrdenLiqC {
 						}
 					}
 						
-			/*		//elimina material resta stock
-					if(tvDatos != null) {
-						List<Integer> idActual = new ArrayList<Integer>();
-						for(LiquidacionDetalle detalle : tvDatos.getItems()) {
-							if(detalle.getIdDetalle() != null)
-								idActual.add(detalle.getIdDetalle());
-						}
-							
-						System.out.println("Ingresos actuales " + idActual.size());
-						System.out.println("Ingresos en la bd " + liquidacionSeleccionada.getLiquidacionDetalles().size());
-							
-						for (LiquidacionDetalle det : liquidacionSeleccionada.getLiquidacionDetalles()) {
-							if(det.getIdDetalle() != null) {
-								if(!idActual.contains(det.getIdDetalle())) {
-									System.out.println("Rubro a eliminar " + det.getRubro().getDescripcion());
-									Rubro rubroMod = det.getRubro();
-									rubroMod.setStock(rubroMod.getStock() - det.getCantidad());
-									System.out.println("Elimnia rubro " + rubroMod.getDescripcion());
-									rubroDAO.getEntityManager().getTransaction().begin();
-									rubroDAO.getEntityManager().merge(rubroMod);
-									rubroDAO.getEntityManager().getTransaction().commit();
-								}	
-							}
-						}
-					}*/
-					//sumar
-			/*		if(tvDatos != null) {
-						List<Rubro> listaAgregadaRubros = new ArrayList<Rubro>();
-						for(LiquidacionDetalle detalle: tvDatos.getItems()) {
-							if(detalle.getIdDetalle() == null)
-								listaAgregadaRubros.add(detalle.getRubro());
-						}
-						for (Rubro rubro : listaAgregadaRubros) {
-							for(LiquidacionDetalle detalle : tvDatos.getItems()) {
-								if(rubro.getIdRubro() == detalle.getRubro().getIdRubro())
-									rubro.setStock(rubro.getStock() + detalle.getCantidad());
-							}
-							rubroDAO.getEntityManager().getTransaction().begin();
-							rubroDAO.getEntityManager().merge(rubro);
-							rubroDAO.getEntityManager().getTransaction().commit();
-						}
-					}*/
 					liquidacionDao.getEntityManager().getTransaction().begin();
 					liquidacionDao.getEntityManager().merge(liquidacionSeleccionada);
 					liquidacionDao.getEntityManager().getTransaction().commit();

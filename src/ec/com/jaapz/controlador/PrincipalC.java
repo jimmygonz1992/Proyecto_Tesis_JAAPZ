@@ -60,6 +60,7 @@ public class PrincipalC {
 	final VBox vBoxMenu = new VBox();
 	
 	int contador = 0,mayor = 0;
+	
 	public void initialize(){
 
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();

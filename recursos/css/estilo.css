@@ -50,9 +50,9 @@
     linear-gradient(#A9BCF5 0%, #A9BCF5 25%, #A9BCF5 75%, #A9BCF5 100%),
     linear-gradient(#A9BCF5, #A9BCF5),
     linear-gradient(#A9BCF5 0%, #A9BCF5 20%, #A9BCF5 80%, #A9BCF5 100%);*/
-    -fx-background-image:url('gota_de_agua.png');
+    -fx-background-image:url('informatica.png');
     -fx-background-repeat: no-repeat;
-    -fx-background-size: 9% 20%;
+    -fx-background-size: 8% 13%;
     -fx-background-position: right bottom;
     /*-fx-background-color: #D5D8DC;*/
 	
