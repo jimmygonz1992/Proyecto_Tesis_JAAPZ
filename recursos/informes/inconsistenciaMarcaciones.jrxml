@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.6.0.final using JasperReports Library version 6.6.0  -->
+<!-- Created with Jaspersoft Studio version 6.8.0.final using JasperReports Library version 6.8.0-2ed8dfabb690ff337a5797129f2cd92902b0c87b  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="inconsistenciaMarcaciones" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="6bc206df-5284-4540-b1f7-e7e95503a4a3">
-	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Conexion bd_jaapz postgresql"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Conexion bd_jaapz"/>
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="0"/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="1000"/>
 	<parameter name="FECHA" class="java.lang.String"/>
 	<parameter name="CANTIDAD" class="java.lang.Integer"/>
 	<parameter name="ID_APERTURA" class="java.lang.Integer"/>
@@ -13,15 +15,18 @@ where r.id_usuario = u.id_usuario
 and b.id_barrio = r.id_barrio
 and r.estado = 'A' and u.estado = 'A'
 and b.estado = 'A'
-and r.id_apertura = $P{ID_APERTURA} 
+and r.id_apertura = $P{ID_APERTURA}
+
 union all
-select null,null,null,null,null,null,null
+
+select null as id_usuario,null as id_barrio,null as id_apertura,null as cedula,null as nombre_usuario,null as usuario_desencriptado,null as barrio
 where (select count(*) from responsable_lectura r,seg_usuario u,barrio b
 where r.id_usuario = u.id_usuario 
 and b.id_barrio = r.id_barrio
 and r.estado = 'A' and u.estado = 'A'
 and b.estado = 'A'
-and r.id_apertura = $P{ID_APERTURA} ) = 0]]>
+and r.id_apertura = $P{ID_APERTURA}) = 0
+order by cedula]]>
 	</queryString>
 	<field name="id_usuario" class="java.lang.Integer">
 		<property name="com.jaspersoft.studio.field.label" value="id_usuario"/>

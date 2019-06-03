@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.6.0.final using JasperReports Library version 6.6.0  -->
+<!-- Created with Jaspersoft Studio version 6.8.0.final using JasperReports Library version 6.8.0-2ed8dfabb690ff337a5797129f2cd92902b0c87b  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="inconsistenciaDetalle" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="0" bottomMargin="0" uuid="3eb44830-f1dc-477a-831b-6c3230547535">
-	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Conexion bd_jaapz postgresql"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Conexion bd_jaapz"/>
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.unit." value="pixel"/>
 	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
@@ -12,6 +12,8 @@
 	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
 	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
 	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="0"/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="1000"/>
 	<parameter name="ID_APERTURA" class="java.lang.Integer"/>
 	<parameter name="ID_BARRIO" class="java.lang.Integer"/>
 	<parameter name="CANTIDAD" class="java.lang.Integer"/>
@@ -35,9 +37,10 @@ cos(radians(cu.latitud)) * cos(radians(p.latitud)) *
 cos(radians(cu.longitud) - radians(p.longitud))) * 6378) * 1000) AS decimal(8,0)) end >=  $P{CANTIDAD} 
 
 union all
-select null,null,null,null
+
+select null as id_cuenta,null as codigo,null as cliente,null as distancia
 where (select(count(*)) from planilla pl,cuenta_cliente cue where pl.id_cuenta = cue.id_cuenta 
-	   and pl.id_apertura =  $P{ID_APERTURA}   and pl.estado = 'A'
+	   and pl.id_apertura = $P{ID_APERTURA} and pl.estado = 'A'
 	   and cue.id_barrio =  $P{ID_BARRIO}   and cue.estado = 'A'
 	   and pl.origen = 'MOVIL'
 	   and case when pl.latitud is null then CAST(9.5 AS decimal(8,2)) else
