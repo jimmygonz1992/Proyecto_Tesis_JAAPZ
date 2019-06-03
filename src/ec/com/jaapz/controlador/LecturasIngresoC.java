@@ -38,7 +38,7 @@ public class LecturasIngresoC {
 	@FXML private TextField txtFecha;
 	@FXML private Button btnBuscarApertura;
 	private AperturaLectura aperturaSeleccionada = new AperturaLectura();
-	AperturaLecturaDAO aperturaDAO = new AperturaLecturaDAO();
+	
 	MeDAO mesDAO = new MeDAO();
 	AnioDAO anioDAO = new AnioDAO();
 	AperturaLectura aperturaActual = new AperturaLectura();
@@ -55,6 +55,7 @@ public class LecturasIngresoC {
 			System.out.println(ex.getMessage());
 		}
 	}
+	
 	@SuppressWarnings("unchecked")
 	private void cargarClientes() {
 		try {
@@ -153,6 +154,7 @@ public class LecturasIngresoC {
 			System.out.println(ex.getMessage());
 		}
 	}
+	
 	public static boolean isNumeric(String cadena) {
 		boolean resultado;
 		try {
@@ -163,8 +165,10 @@ public class LecturasIngresoC {
 		}
 		return resultado;
 	}
+	
 	private void cargarCiclo() {
 		try {
+			AperturaLecturaDAO aperturaDAO = new AperturaLecturaDAO();
 			int numApertura = 0;
 			AperturaLectura apertura = new AperturaLectura();
 			numApertura = aperturaDAO.getListaAperturasEnProceso().size(); 
@@ -219,25 +223,28 @@ public class LecturasIngresoC {
 			ex.printStackTrace();
 		}
 	}
+	
 	public void grabarLecturas() {
+		AperturaLecturaDAO aperturaDAO = new AperturaLecturaDAO();
 		try {
 			Optional<ButtonType> result = helper.mostrarAlertaConfirmacion("Desea Grabar los Datos?",Context.getInstance().getStage());
 			if(result.get() == ButtonType.OK){
 				List<PlanillaDetalle> listaDetalle = tvDatosLecturas.getItems();
 				aperturaDAO.getEntityManager().getTransaction().begin();
 				for(PlanillaDetalle det : listaDetalle) {
+					
 					Double categoriaPrecio = det.getPlanilla().getCuentaCliente().getCategoria().getValorM3();
 					Integer lecturaActual = det.getPlanilla().getLecturaActual();
 					Integer lecturaAnterior = det.getPlanilla().getLecturaAnterior();
 					Integer consumo = lecturaActual - lecturaAnterior;
 					det.getPlanilla().setUsuarioCrea(Context.getInstance().getIdUsuario());
-					det.getPlanilla().setOrigen(Constantes.ORIGEN_ESCRITORIO);
 					det.setCantidad(consumo);
 					det.getPlanilla().setConsumo(consumo);
 					det.setUsuarioCrea(Context.getInstance().getIdUsuario());
 					det.getPlanilla().setConsumoMinimo(0);
 					det.setSubtotal(consumo * categoriaPrecio);
 					det.setEstado(Constantes.ESTADO_ACTIVO);
+					
 					aperturaDAO.getEntityManager().merge(det);
 				}
 				aperturaDAO.getEntityManager().getTransaction().commit();

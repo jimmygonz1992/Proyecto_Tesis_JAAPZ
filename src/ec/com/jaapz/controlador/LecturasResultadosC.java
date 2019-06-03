@@ -1,16 +1,26 @@
 package ec.com.jaapz.controlador;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 import ec.com.jaapz.modelo.AperturaLectura;
+import ec.com.jaapz.modelo.Empresa;
+import ec.com.jaapz.modelo.EmpresaDAO;
 import ec.com.jaapz.modelo.Planilla;
 import ec.com.jaapz.modelo.PlanillaDAO;
 import ec.com.jaapz.util.Context;
 import ec.com.jaapz.util.ControllerHelper;
+import ec.com.jaapz.util.PrintReport;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -25,7 +35,9 @@ public class LecturasResultadosC {
 	@FXML private Label lblApertura;
 	
 	PlanillaDAO planillaDAO = new PlanillaDAO();
-	AperturaLectura aperturaSeleccionada = new AperturaLectura(); 
+	AperturaLectura aperturaSeleccionada = new AperturaLectura();
+	EmpresaDAO empresaDAO = new EmpresaDAO();
+	
 	public void initialize() {
 		try {
 			btnVisualizarInforme.setStyle("-fx-cursor: hand;");
@@ -33,6 +45,33 @@ public class LecturasResultadosC {
 			lblApertura.setText("Apertura seleccionada: mes " + aperturaSeleccionada.getMe().getDescripcion() + " del año " + aperturaSeleccionada.getAnio().getDescripcion());
 			Context.getInstance().setApertura(null);
 			cargarClientes();
+			btnVisualizarInforme.setOnMouseClicked(new EventHandler<Event>() {
+				@Override
+				public void handle(Event event) {
+					// TODO Auto-generated method stub
+					try {
+						Integer cantidad = 0;
+						List<Empresa> listaEmpresa = empresaDAO.getEmpresa();
+						if(listaEmpresa.size() > 0) {
+							if(listaEmpresa.get(0).getInconsistencia() != null)
+								cantidad = listaEmpresa.get(0).getInconsistencia();
+						}
+						SimpleDateFormat formateador = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss", new Locale("MX"));
+						Date fechaDate = new Date();
+						String fechaSistema = formateador.format(fechaDate);
+						String fecha = dateFormatter("yyyy-MM-dd hh:mm:ss","d 'de' MMMM 'del' yyyy", fechaSistema);
+						Map<String, Object> param = new HashMap<String, Object>();
+						param.put("FECHA", fecha);
+						param.put("CANTIDAD", cantidad);
+						param.put("ID_APERTURA", aperturaSeleccionada.getIdApertura());
+						PrintReport reporte = new PrintReport();
+						reporte.crearReporte("/recursos/informes/inconsistenciaMarcaciones.jasper", empresaDAO, param);
+						reporte.showReport("Inconsistencia de marcaciones");
+					}catch(Exception ex) {
+						System.out.println(ex.getMessage());
+					}
+				}
+			});
 		}catch(Exception ex) {
 			System.out.println(ex.getMessage());
 		}
@@ -149,5 +188,20 @@ public class LecturasResultadosC {
 		}catch(Exception ex) {
 			System.out.println(ex.getMessage());
 		}
+	}
+	
+	public static final Locale LOCALE_MX = new Locale("es", "MX");
+	public static String dateFormatter(String inputFormat, String outputFormat, String inputDate){
+	      //Define formato default de entrada.   
+	      String input = inputFormat.isEmpty()? "yyyy-MM-dd hh:mm:ss" : inputFormat; 
+	      //Define formato default de salida.
+	      String output = outputFormat.isEmpty()? "d 'de' MMMM 'del' yyyy" : outputFormat;
+	    String outputDate = inputDate;
+	    try {
+	        outputDate = new SimpleDateFormat(output, LOCALE_MX).format(new SimpleDateFormat(input, LOCALE_MX).parse(inputDate));
+	    } catch (Exception e) {
+	        System.out.println("dateFormatter(): " + e.getMessage());           
+	    }
+	    return outputDate;
 	}
 }

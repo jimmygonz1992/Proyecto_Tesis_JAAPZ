@@ -12,7 +12,7 @@
    <children>
       <GridPane layoutX="164.0" layoutY="135.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <TableView fx:id="tvAperturas" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="5" GridPane.columnSpan="6" GridPane.rowIndex="2" GridPane.rowSpan="4" />
+            <TableView fx:id="tvAperturas" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="5" GridPane.columnSpan="6" GridPane.rowIndex="3" GridPane.rowSpan="4" />
             <Label text="Aperturas de ciclo realizadas" GridPane.columnIndex="5" GridPane.columnSpan="6" GridPane.halignment="CENTER" GridPane.rowIndex="1">
                <font>
                   <Font name="System Bold" size="14.0" />
@@ -98,6 +98,16 @@
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                      </rowConstraints>
                   </GridPane>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="6" GridPane.columnSpan="4" GridPane.rowIndex="2">
+               <children>
+                  <RadioButton fx:id="rbActual" mnemonicParsing="false" onAction="#accionarActual" text="Actual" />
+                  <RadioButton fx:id="rbTodos" mnemonicParsing="false" onAction="#accionarTodos" text="Todos">
+                     <HBox.margin>
+                        <Insets left="20.0" />
+                     </HBox.margin>
+                  </RadioButton>
                </children>
             </HBox>
          </children>

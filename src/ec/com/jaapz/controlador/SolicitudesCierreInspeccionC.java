@@ -64,12 +64,11 @@ public class SolicitudesCierreInspeccionC {
 			tvDatos.getColumns().clear();
 			List<SolInspeccionIn> listaInspecciones;
 			
-			if(Context.getInstance().getIdPerfil() == Constantes.ID_USU_ADMINISTRADOR) {
+			if(Context.getInstance().getIdPerfil() == Constantes.ID_USU_ADMINISTRADOR || Context.getInstance().getIdPerfil() == Constantes.ID_USU_PRESIDENTE) {
 				listaInspecciones = inspeccionDAO.getListaInspeccion(patron);
 			}else {
 				listaInspecciones = inspeccionDAO.getListaInspeccionPerfil(patron);
 			}
-			
 			
 			ObservableList<SolInspeccionIn> datos = FXCollections.observableArrayList();
 			datos.setAll(listaInspecciones);

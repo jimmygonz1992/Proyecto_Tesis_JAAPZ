@@ -11,13 +11,13 @@ public class ClaseDAO {
 
 	private static final String PERSISTENCE_UNIT_NAME = "Proyecto_Tesis_JAAPZ";
 	private static EntityManagerFactory emf = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
+	
+	
 
 	private EntityManager em;
+	private EntityManager emNuevo;
 
-	/**
-	 * Retorna el Entity Mananager, si no existe lo crea.
-	 * @return
-	 */
+	
 	public EntityManager getEntityManager() {
 		if (em == null){
 			em = emf.createEntityManager();
@@ -25,6 +25,14 @@ public class ClaseDAO {
 		return em; 
 	} 
 
+	public EntityManager getEntityManagerNuevo() {
+		EntityManagerFactory emfNuevo = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
+		if (emNuevo == null){
+			emNuevo = emfNuevo.createEntityManager();
+		}
+		return emNuevo; 
+	} 
+	
 
 	public Connection abreConexion() {
 		EntityManager entityManager; 

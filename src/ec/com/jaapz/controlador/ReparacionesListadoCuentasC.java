@@ -60,11 +60,8 @@ public class ReparacionesListadoCuentasC {
 			}else {
 				listaCuentas = cuentaClienteDao.getListaCuentaClientePerfil(patron);
 			}*/
-			for(CuentaCliente cuenta : listaCuentas) {
-				if(cuenta.getMedidor() != null) {
-					datosCuenta.setAll(cuenta);
-				}
-			}
+			
+			datosCuenta.setAll(listaCuentas);
 
 			//llenar los datos en la tabla
 			TableColumn<CuentaCliente, String> idColum = new TableColumn<>("Id");

@@ -13,7 +13,7 @@
 	<classpathentry kind="lib" path="lib/commons-logging-1.2.jar"/>
 	<classpathentry kind="lib" path="lib/controlsfx-8.40.14.jar"/>
 	<classpathentry kind="lib" path="lib/jasperreports-6.3.0.jar" sourcepath="C:/Users/Génesis Tigrero/.m2/repository/net/sf/jasperreports/jasperreports/6.3.0/jasperreports-6.3.0-sources.jar"/>
-	<classpathentry kind="lib" path="lib/javax.persistence-2.1.0.jar"/>
+	<classpathentry kind="lib" path="lib/javax.persistence-2.1.0.jar" sourcepath="C:/Users/ByronRR/.m2/repository/org/eclipse/persistence/javax.persistence/2.1.0/javax.persistence-2.1.0-sources.jar"/>
 	<classpathentry kind="lib" path="lib/jdom-1.1.2.jar"/>
 	<classpathentry kind="lib" path="lib/jfoenix-8.0.7.jar"/>
 	<classpathentry kind="lib" path="lib/org.eclipse.persistence.antlr-2.5.2.jar"/>

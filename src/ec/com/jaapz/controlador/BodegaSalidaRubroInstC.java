@@ -264,7 +264,7 @@ public class BodegaSalidaRubroInstC {
 		totalColum.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<InstalacionDetalle, String>, ObservableValue<String>>() {
 			@Override
 			public ObservableValue<String> call(CellDataFeatures<InstalacionDetalle, String> param) {
-				return new SimpleObjectProperty<String>(String.valueOf(param.getValue().getCantidad()*param.getValue().getPrecio()));
+				return new SimpleObjectProperty<String>(String.valueOf(String.format("%.2f", param.getValue().getCantidad()*param.getValue().getPrecio())));
 			}
 		});
 		

@@ -35,6 +35,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
@@ -73,6 +74,7 @@ public class BodegaIngresoRubrosC {
 	@FXML private TextField txtDireccionPro;
 	@FXML private TextField txtTelefonoPro;
 	@FXML private TextArea txtObservaciones;
+	@FXML private CheckBox chkDesactivar;
 
 	private @FXML TableView<IngresoDetalle> tvDatos;
 	ControllerHelper helper = new ControllerHelper();
@@ -86,6 +88,7 @@ public class BodegaIngresoRubrosC {
 	EstadoMedidorDAO estadoMedidorDAO = new EstadoMedidorDAO();
 	KardexDAO kardexDAO = new KardexDAO();
 	Ingreso ingreso;
+	int bandera = 0;
 	
 	DecimalFormat df = new DecimalFormat("0.00");
 
@@ -376,8 +379,7 @@ public class BodegaIngresoRubrosC {
 			//validar solo numeros
 			txtTelefonoPro.textProperty().addListener(new ChangeListener<String>() {
 				@Override
-				public void changed(ObservableValue<? extends String> observable, String oldValue, 
-						String newValue) {
+				public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
 					if (newValue.matches("\\d*")) {
 						//int value = Integer.parseInt(newValue);
 					} else {
@@ -695,7 +697,9 @@ public class BodegaIngresoRubrosC {
 			});
 			tvDatos.getColumns().addAll(descipcionColum, cantidadColum, precioColum, totalColum);
 			tvDatos.setItems(datos);
-			sumarDatos();
+			if(bandera == 0) {
+				sumarDatos();
+			}
 			rubroSeleccionado = null;
 			limpiar();
 		}catch(Exception ex) {
@@ -767,7 +771,22 @@ public class BodegaIngresoRubrosC {
 		}catch(Exception ex) {
 			System.out.println(ex.getMessage());
 		}
-	}	
+	}
+	
+	public void desactivar(){
+		try {
+			if (chkDesactivar.isSelected()) {
+				bloquear();
+				bandera = 1;
+			}
+			else {
+				desbloquear();
+				bandera = 0;
+			}
+		}catch(Exception ex) {
+			System.out.println(ex.getMessage());
+		}
+	}
 
 	//aqui voy a intentar modificar el grabar
 	public void grabar() {
@@ -776,179 +795,72 @@ public class BodegaIngresoRubrosC {
 			java.util.Date utilDate = new java.util.Date();
 			long lnMilisegundos = utilDate.getTime();
 			java.sql.Time sqlTime = new java.sql.Time(lnMilisegundos);
-			if(validarDatos() == false)
-				return;
-			Date date = Date.from(dtpFecha.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
-			//para guardar ingreso
-			if(ingreso == null) {//pregunta si el objeto se encuentra en null.. para crear uno nuevo y sera un nuevo ingreso
-				ingreso = new Ingreso();
-				ingreso.setIdIngreso(null);
-				if(proveedorSeleccionado == null) {
-					proveedorSeleccionado = new Proveedor();
-					proveedorSeleccionado.setIdProveedor(null);
-				}
-				proveedorSeleccionado.setNombreComercial(txtProveedor.getText());
-				proveedorSeleccionado.setNombres(txtNombresPro.getText());
-				proveedorSeleccionado.setApellidos(txtApellidosPro.getText());
-				proveedorSeleccionado.setDireccion(txtDireccionPro.getText());
-				proveedorSeleccionado.setRuc(txtRuc.getText());
-				proveedorSeleccionado.setTelefono(txtTelefonoPro.getText());
-				proveedorSeleccionado.setUsuarioCrea(Context.getInstance().getUsuariosC().getIdUsuario());
-				proveedorSeleccionado.setFechaCrea(date);
-				proveedorSeleccionado.setUsuarioModifica(Context.getInstance().getUsuariosC().getIdUsuario());
-				proveedorSeleccionado.setFechaModificacion(date);
-				proveedorSeleccionado.setEstado(Constantes.ESTADO_ACTIVO);
-			}else {//caso contrario es un ingreso recuperado..
-				System.out.println(ingreso.getProveedor().getIdProveedor() + " Id Proveedor");
-				ingreso.getProveedor().setNombreComercial(txtProveedor.getText());
-				ingreso.getProveedor().setNombres(txtNombresPro.getText());
-				ingreso.getProveedor().setApellidos(txtApellidosPro.getText());
-				ingreso.getProveedor().setDireccion(txtDireccionPro.getText());
-				ingreso.getProveedor().setRuc(txtRuc.getText());
-				ingreso.getProveedor().setTelefono(txtTelefonoPro.getText());
-				ingreso.getProveedor().setUsuarioCrea(Context.getInstance().getUsuariosC().getIdUsuario());
-				ingreso.getProveedor().setFechaCrea(date);
-				ingreso.setHora(sqlTime);
-				ingreso.getProveedor().setUsuarioModifica(Context.getInstance().getUsuariosC().getIdUsuario());
-				ingreso.getProveedor().setFechaModificacion(date);
-				ingreso.getProveedor().setEstado(Constantes.ESTADO_ACTIVO);
-			}
-
-			//ingreso.setIdIngreso(null);
-			ingreso.setFecha(date);
-			ingreso.setNumeroIngreso(txtNumero.getText());
-			ingreso.setUsuarioCrea(Context.getInstance().getUsuariosC().getIdUsuario());
-			ingreso.setHora(sqlTime);
-			ingreso.setSubtotal(Double.parseDouble(txtSubtotal.getText()));
-			ingreso.setIva(Double.parseDouble(txtIva.getText()));
-			ingreso.setTotal(Double.parseDouble(txtTotal.getText()));
-			ingreso.setObservaciones(txtObservaciones.getText());
-			ingreso.setEstado(Constantes.ESTADO_ACTIVO);
-
-			Optional<ButtonType> result = helper.mostrarAlertaConfirmacion("Desea Grabar los Datos?",Context.getInstance().getStage());
-			if(result.get() == ButtonType.OK){
-				//es un ingreso nuevoooooo **********************************************************************************************
-				if (ingreso.getIdIngreso() == null) {//se realiza un nuevo registro
-					List<IngresoDetalle> listaAgregadaRubros = new ArrayList<IngresoDetalle>();
-					List<Kardex> listaProductos = new ArrayList<Kardex>();
-
-					for(IngresoDetalle det : tvDatos.getItems()) {
-						det.setIdIngresoDet(null);
-						det.setEstado(Constantes.ESTADO_ACTIVO);
-						det.setIngreso(ingreso);
-
-						//para lo del kardex
-						Kardex kardex = new Kardex();
-						kardex.setIdKardex(null);
-						kardex.setRubro(det.getRubro());
-						kardex.setFecha(date);
-						kardex.setTipoDocumento("Factura #");
-						kardex.setNumDocumento(txtNumero.getText());
-						kardex.setDetalleOperacion("Adquisición de " + det.getRubro().getDescripcion());
-						kardex.setCantidad(det.getCantidad());
-						kardex.setUnidadMedida("Unidad");
-						kardex.setValorUnitario(det.getPrecio());
-						kardex.setCostoTotal(det.getCantidad()*det.getPrecio());
-						kardex.setTipoMovimiento(Constantes.BODEGA_INGRESO);
-						kardex.setEstado(Constantes.ESTADO_ACTIVO);		
-
-						listaProductos.add(kardex);
-						listaAgregadaRubros.add(det);
-					}
-
-					ingreso.setIngresoDetalles(listaAgregadaRubros);
-					if(proveedorSeleccionado.getIdProveedor() == null) {
-						ingreso.setProveedor(proveedorSeleccionado);
-						List<Ingreso> listaIngreso = new ArrayList<Ingreso>();
-						listaIngreso.add(ingreso);
-						proveedorSeleccionado.setIngresos(listaIngreso);
-					}else {
-						proveedorSeleccionado.addIngresos(ingreso);
-						//ingreso.setProveedor(proveedorSeleccionado);
-					}
-
-
-					//grabar el ingreso
-					ingresoDao.getEntityManager().getTransaction().begin();
-
-					if(proveedorSeleccionado.getIdProveedor() == null) 
-						ingresoDao.getEntityManager().persist(proveedorSeleccionado);
-					else
-						ingresoDao.getEntityManager().merge(proveedorSeleccionado);
-
-					//ingresoDao.getEntityManager().persist(ingreso);
-					for (Kardex kar : listaProductos) ingresoDao.getEntityManager().persist(kar);
-					ingresoDao.getEntityManager().getTransaction().commit();
-					/*
-					ingresoDao.getEntityManager().getTransaction().begin();
-					if (txtCodigoProv.getText().equals("0")) { //inserta nuevo proveedor
+			
+			if (bandera == 0) {
+				if(validarDatos() == false)
+					return;
+				Date date = Date.from(dtpFecha.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
+				//para guardar ingreso
+				if(ingreso == null) {//pregunta si el objeto se encuentra en null.. para crear uno nuevo y sera un nuevo ingreso
+					ingreso = new Ingreso();
+					ingreso.setIdIngreso(null);
+					if(proveedorSeleccionado == null) {
+						proveedorSeleccionado = new Proveedor();
 						proveedorSeleccionado.setIdProveedor(null);
-						ingresoDao.getEntityManager().persist(proveedorSeleccionado);
-					}else {//la modifica
-						proveedorSeleccionado.setIdProveedor(Integer.parseInt(txtCodigoProv.getText()));
-						ingresoDao.getEntityManager().merge(proveedorSeleccionado);
-					}		
-					ingresoDao.getEntityManager().getTransaction().commit();
-					 */
-					Integer ultimaFactura = 0;
-					Ingreso ing = ingresoDao.getUltimoRegistro();
-					EstadoMedidor estadoM = estadoMedidorDAO.getEstadoBueno();
-					if(ing != null)
-						ultimaFactura = ing.getIdIngreso();
-
-					//preguntar si se ingresan medidores y registrarlos en la tbla de medidores
-					medidorDAO.getEntityManager().getTransaction().begin();
-					for(IngresoDetalle det : tvDatos.getItems()) {
-						if(det.getRubro().getIdRubro() == Constantes.ID_MEDIDOR) {//hay registros de medidores
-							for(int i = 0 ; i < det.getCantidad() ; i ++) {
-								Medidor medidor = new Medidor();
-								medidor.setIdMedidor(null);
-								medidor.setIdFactura(ultimaFactura);
-								medidor.setMarca(det.getRubro().getMarca());
-								medidor.setModelo(det.getRubro().getMarca());
-								medidor.setEstado(Constantes.ESTADO_ACTIVO);
-								medidor.setEstadoMedidor(estadoM);
-								medidor.setPrecio(det.getRubro().getPrecio());
-								medidor.setUsado(false);
-								medidor.setUsuarioCrea(Context.getInstance().getUsuariosC().getIdUsuario());
-								medidorDAO.getEntityManager().persist(medidor);
-							}
-						}
 					}
-					medidorDAO.getEntityManager().getTransaction().commit();
-					actualizarListaRubros();
+					proveedorSeleccionado.setNombreComercial(txtProveedor.getText());
+					proveedorSeleccionado.setNombres(txtNombresPro.getText());
+					proveedorSeleccionado.setApellidos(txtApellidosPro.getText());
+					proveedorSeleccionado.setDireccion(txtDireccionPro.getText());
+					proveedorSeleccionado.setRuc(txtRuc.getText());
+					proveedorSeleccionado.setTelefono(txtTelefonoPro.getText());
+					proveedorSeleccionado.setUsuarioCrea(Context.getInstance().getUsuariosC().getIdUsuario());
+					proveedorSeleccionado.setFechaCrea(date);
+					proveedorSeleccionado.setUsuarioModifica(Context.getInstance().getUsuariosC().getIdUsuario());
+					proveedorSeleccionado.setFechaModificacion(date);
+					proveedorSeleccionado.setEstado(Constantes.ESTADO_ACTIVO);
+				}else {//caso contrario es un ingreso recuperado..
+					System.out.println(ingreso.getProveedor().getIdProveedor() + " Id Proveedor");
+					ingreso.getProveedor().setNombreComercial(txtProveedor.getText());
+					ingreso.getProveedor().setNombres(txtNombresPro.getText());
+					ingreso.getProveedor().setApellidos(txtApellidosPro.getText());
+					ingreso.getProveedor().setDireccion(txtDireccionPro.getText());
+					ingreso.getProveedor().setRuc(txtRuc.getText());
+					ingreso.getProveedor().setTelefono(txtTelefonoPro.getText());
+					ingreso.getProveedor().setUsuarioCrea(Context.getInstance().getUsuariosC().getIdUsuario());
+					ingreso.getProveedor().setFechaCrea(date);
+					ingreso.setHora(sqlTime);
+					ingreso.getProveedor().setUsuarioModifica(Context.getInstance().getUsuariosC().getIdUsuario());
+					ingreso.getProveedor().setFechaModificacion(date);
+					ingreso.getProveedor().setEstado(Constantes.ESTADO_ACTIVO);
+				}
 
-					helper.mostrarAlertaInformacion("Datos Grabados Correctamente", Context.getInstance().getStage());
-					limpiar();
-					txtCodigo.setText("0");
-					txtNumero.setText("");
-					limpiarProveedor();
-					txtNumero.setText("");
-					txtObservaciones.setText("");
-					txtSubtotal.setText("");
-					txtIva.setText("");
-					txtDescuento.setText("");
-					txtTotal.setText("");
-					tvDatos.getColumns().clear();
-					tvDatos.getItems().clear();
+				//ingreso.setIdIngreso(null);
+				ingreso.setFecha(date);
+				ingreso.setNumeroIngreso(txtNumero.getText());
+				ingreso.setUsuarioCrea(Context.getInstance().getUsuariosC().getIdUsuario());
+				ingreso.setHora(sqlTime);
+				ingreso.setSubtotal(Double.parseDouble(txtSubtotal.getText()));
+				ingreso.setIva(Double.parseDouble(txtIva.getText()));
+				ingreso.setTotal(Double.parseDouble(txtTotal.getText()));
+				ingreso.setObservaciones(txtObservaciones.getText());
+				ingreso.setEstado(Constantes.ESTADO_ACTIVO);
 
-				}else {//es una modificacion ************************************************************************************************
-					List<Integer> integer = new ArrayList<Integer>();//un arreglo para guardar los id del detalle q han sido registrado
-					for (IngresoDetalle detalle : tvDatos.getItems()) {
-						if (detalle.getIdIngresoDet() != null)//guardo los id de los registros ya grabados en la BD
-							integer.add(detalle.getIdIngresoDet());
-					}
+				Optional<ButtonType> result = helper.mostrarAlertaConfirmacion("Desea Grabar los Datos?",Context.getInstance().getStage());
+				if(result.get() == ButtonType.OK){
+					//es un ingreso nuevoooooo **********************************************************************************************
+					if (ingreso.getIdIngreso() == null) {//se realiza un nuevo registro
+						List<IngresoDetalle> listaAgregadaRubros = new ArrayList<IngresoDetalle>();
+						List<Kardex> listaProductos = new ArrayList<Kardex>();
 
-					for(IngresoDetalle det : tvDatos.getItems()) {
-						if(det.getIdIngresoDet() == null) {//cuando el id es null.. es un nuevo registro de detalle
+						for(IngresoDetalle det : tvDatos.getItems()) {
 							det.setIdIngresoDet(null);
 							det.setEstado(Constantes.ESTADO_ACTIVO);
 							det.setIngreso(ingreso);
-							ingreso.getIngresoDetalles().add(det);//y se añade al ingreso
-							//se registra en el kardex el ingreso
+
 							//para lo del kardex
 							Kardex kardex = new Kardex();
-							//kardex.setIdKardex(null);
+							kardex.setIdKardex(null);
 							kardex.setRubro(det.getRubro());
 							kardex.setFecha(date);
 							kardex.setTipoDocumento("Factura #");
@@ -959,59 +871,211 @@ public class BodegaIngresoRubrosC {
 							kardex.setValorUnitario(det.getPrecio());
 							kardex.setCostoTotal(det.getCantidad()*det.getPrecio());
 							kardex.setTipoMovimiento(Constantes.BODEGA_INGRESO);
-							kardex.setEstado(Constantes.ESTADO_ACTIVO);	
-							medidorDAO.getEntityManager().getTransaction().begin();
-							medidorDAO.getEntityManager().persist(kardex);
-							medidorDAO.getEntityManager().getTransaction().commit();	
+							kardex.setEstado(Constantes.ESTADO_ACTIVO);		
+
+							listaProductos.add(kardex);
+							listaAgregadaRubros.add(det);
 						}
-					}
-					//dar de baja a los q se han eliminado
-					for (IngresoDetalle deta: ingreso.getIngresoDetalles()) {
-						if (!integer.contains(deta.getIdIngresoDet())) { //si el id del detalle recuperado no aparece en la lista.. se le da de baja
-							deta.setEstado(Constantes.ESTADO_INACTIVO);
-							//tambien se le da de baja el id del kardex del registro
-							Kardex kardexEliminar = kardexDAO.getKardexByDocumento(deta.getIngreso().getNumeroIngreso(), deta.getRubro().getIdRubro());
-							if(kardexEliminar != null) {
-								kardexEliminar.setEstado(Constantes.ESTADO_INACTIVO);
+
+						ingreso.setIngresoDetalles(listaAgregadaRubros);
+						if(proveedorSeleccionado.getIdProveedor() == null) {
+							ingreso.setProveedor(proveedorSeleccionado);
+							List<Ingreso> listaIngreso = new ArrayList<Ingreso>();
+							listaIngreso.add(ingreso);
+							proveedorSeleccionado.setIngresos(listaIngreso);
+						}else {
+							proveedorSeleccionado.addIngresos(ingreso);
+							//ingreso.setProveedor(proveedorSeleccionado);
+						}
+
+
+						//grabar el ingreso
+						ingresoDao.getEntityManager().getTransaction().begin();
+
+						if(proveedorSeleccionado.getIdProveedor() == null) 
+							ingresoDao.getEntityManager().persist(proveedorSeleccionado);
+						else
+							ingresoDao.getEntityManager().merge(proveedorSeleccionado);
+
+						//ingresoDao.getEntityManager().persist(ingreso);
+						for (Kardex kar : listaProductos) ingresoDao.getEntityManager().persist(kar);
+						ingresoDao.getEntityManager().getTransaction().commit();
+						/*
+							ingresoDao.getEntityManager().getTransaction().begin();
+							if (txtCodigoProv.getText().equals("0")) { //inserta nuevo proveedor
+								proveedorSeleccionado.setIdProveedor(null);
+								ingresoDao.getEntityManager().persist(proveedorSeleccionado);
+							}else {//la modifica
+								proveedorSeleccionado.setIdProveedor(Integer.parseInt(txtCodigoProv.getText()));
+								ingresoDao.getEntityManager().merge(proveedorSeleccionado);
+							}		
+							ingresoDao.getEntityManager().getTransaction().commit();
+						 */
+						Integer ultimaFactura = 0;
+						Ingreso ing = ingresoDao.getUltimoRegistro();
+						EstadoMedidor estadoM = estadoMedidorDAO.getEstadoBueno();
+						if(ing != null)
+							ultimaFactura = ing.getIdIngreso();
+
+						//preguntar si se ingresan medidores y registrarlos en la tbla de medidores
+						medidorDAO.getEntityManager().getTransaction().begin();
+						for(IngresoDetalle det : tvDatos.getItems()) {
+							if(det.getRubro().getIdRubro() == Constantes.ID_MEDIDOR) {//hay registros de medidores
+								for(int i = 0 ; i < det.getCantidad() ; i ++) {
+									Medidor medidor = new Medidor();
+									medidor.setIdMedidor(null);
+									medidor.setIdFactura(ultimaFactura);
+									medidor.setMarca(det.getRubro().getMarca());
+									medidor.setModelo(det.getRubro().getMarca());
+									medidor.setEstado(Constantes.ESTADO_ACTIVO);
+									medidor.setEstadoMedidor(estadoM);
+									medidor.setPrecio(det.getRubro().getPrecio());
+									medidor.setUsado(false);
+									medidor.setUsuarioCrea(Context.getInstance().getUsuariosC().getIdUsuario());
+									medidorDAO.getEntityManager().persist(medidor);
+								}
+							}
+						}
+						medidorDAO.getEntityManager().getTransaction().commit();
+						actualizarListaRubros();
+
+						helper.mostrarAlertaInformacion("Datos Grabados Correctamente", Context.getInstance().getStage());
+						limpiar();
+						txtCodigo.setText("0");
+						txtNumero.setText("");
+						limpiarProveedor();
+						txtNumero.setText("");
+						txtObservaciones.setText("");
+						txtSubtotal.setText("");
+						txtIva.setText("");
+						txtDescuento.setText("");
+						txtTotal.setText("");
+						tvDatos.getColumns().clear();
+						tvDatos.getItems().clear();
+
+					}else {//es una modificacion ************************************************************************************************
+						List<Integer> integer = new ArrayList<Integer>();//un arreglo para guardar los id del detalle q han sido registrado
+						for (IngresoDetalle detalle : tvDatos.getItems()) {
+							if (detalle.getIdIngresoDet() != null)//guardo los id de los registros ya grabados en la BD
+								integer.add(detalle.getIdIngresoDet());
+						}
+
+						for(IngresoDetalle det : tvDatos.getItems()) {
+							if(det.getIdIngresoDet() == null) {//cuando el id es null.. es un nuevo registro de detalle
+								det.setIdIngresoDet(null);
+								det.setEstado(Constantes.ESTADO_ACTIVO);
+								det.setIngreso(ingreso);
+								ingreso.getIngresoDetalles().add(det);//y se añade al ingreso
+								//se registra en el kardex el ingreso
+								//para lo del kardex
+								Kardex kardex = new Kardex();
+								//kardex.setIdKardex(null);
+								kardex.setRubro(det.getRubro());
+								kardex.setFecha(date);
+								kardex.setTipoDocumento("Factura #");
+								kardex.setNumDocumento(txtNumero.getText());
+								kardex.setDetalleOperacion("Adquisición de " + det.getRubro().getDescripcion());
+								kardex.setCantidad(det.getCantidad());
+								kardex.setUnidadMedida("Unidad");
+								kardex.setValorUnitario(det.getPrecio());
+								kardex.setCostoTotal(det.getCantidad()*det.getPrecio());
+								kardex.setTipoMovimiento(Constantes.BODEGA_INGRESO);
+								kardex.setEstado(Constantes.ESTADO_ACTIVO);	
 								medidorDAO.getEntityManager().getTransaction().begin();
-								medidorDAO.getEntityManager().merge(kardexEliminar);
-								medidorDAO.getEntityManager().getTransaction().commit();
+								medidorDAO.getEntityManager().persist(kardex);
+								medidorDAO.getEntityManager().getTransaction().commit();	
 							}
 						}
-					}
-
-					//elimina material resta stock
-					if(tvDatos != null) {
-						List<Integer> idActual = new ArrayList<Integer>();
-						for(IngresoDetalle detalle : tvDatos.getItems()) {
-							if(detalle.getIdIngresoDet() != null)
-								idActual.add(detalle.getIdIngresoDet());
-						}
-
-						System.out.println("Ingresos actuales " + idActual.size());
-						System.out.println("Ingresos en la bd " + ingreso.getIngresoDetalles().size());
-
-						for (IngresoDetalle det : ingreso.getIngresoDetalles()) {
-							if(det.getIdIngresoDet() != null) {
-								if(!idActual.contains(det.getIdIngresoDet())) {
-									System.out.println("Rubro a eliminar " + det.getRubro().getDescripcion());
-									Rubro rubroMod = det.getRubro();
-									rubroMod.setStock(rubroMod.getStock() - det.getCantidad());
-									System.out.println("Elimnia rubro " + rubroMod.getDescripcion());
-									rubroDAO.getEntityManager().getTransaction().begin();
-									rubroDAO.getEntityManager().merge(rubroMod);
-									rubroDAO.getEntityManager().getTransaction().commit();
-								}	
+						//dar de baja a los q se han eliminado
+						for (IngresoDetalle deta: ingreso.getIngresoDetalles()) {
+							if (!integer.contains(deta.getIdIngresoDet())) { //si el id del detalle recuperado no aparece en la lista.. se le da de baja
+								deta.setEstado(Constantes.ESTADO_INACTIVO);
+								//tambien se le da de baja el id del kardex del registro
+								Kardex kardexEliminar = kardexDAO.getKardexByDocumento(deta.getIngreso().getNumeroIngreso(), deta.getRubro().getIdRubro());
+								if(kardexEliminar != null) {
+									kardexEliminar.setEstado(Constantes.ESTADO_INACTIVO);
+									medidorDAO.getEntityManager().getTransaction().begin();
+									medidorDAO.getEntityManager().merge(kardexEliminar);
+									medidorDAO.getEntityManager().getTransaction().commit();
+								}
 							}
 						}
-					}
 
+						//elimina material resta stock
+						if(tvDatos != null) {
+							List<Integer> idActual = new ArrayList<Integer>();
+							for(IngresoDetalle detalle : tvDatos.getItems()) {
+								if(detalle.getIdIngresoDet() != null)
+									idActual.add(detalle.getIdIngresoDet());
+							}
+
+							System.out.println("Ingresos actuales " + idActual.size());
+							System.out.println("Ingresos en la bd " + ingreso.getIngresoDetalles().size());
+
+							for (IngresoDetalle det : ingreso.getIngresoDetalles()) {
+								if(det.getIdIngresoDet() != null) {
+									if(!idActual.contains(det.getIdIngresoDet())) {
+										System.out.println("Rubro a eliminar " + det.getRubro().getDescripcion());
+										Rubro rubroMod = det.getRubro();
+										rubroMod.setStock(rubroMod.getStock() - det.getCantidad());
+										System.out.println("Elimnia rubro " + rubroMod.getDescripcion());
+										rubroDAO.getEntityManager().getTransaction().begin();
+										rubroDAO.getEntityManager().merge(rubroMod);
+										rubroDAO.getEntityManager().getTransaction().commit();
+									}	
+								}
+							}
+						}
+
+						//sumar
+						if(tvDatos != null) {
+							List<Rubro> listaAgregadaRubros = new ArrayList<Rubro>();
+							for(IngresoDetalle detalle: tvDatos.getItems()) {
+								if(detalle.getIdIngresoDet() == null)
+									listaAgregadaRubros.add(detalle.getRubro());
+							}
+							for (Rubro rubro : listaAgregadaRubros) {
+								for(IngresoDetalle detalle : tvDatos.getItems()) {
+									if(rubro.getIdRubro() == detalle.getRubro().getIdRubro())
+										rubro.setStock(rubro.getStock() + detalle.getCantidad());
+								}
+								rubroDAO.getEntityManager().getTransaction().begin();
+								rubroDAO.getEntityManager().merge(rubro);
+								rubroDAO.getEntityManager().getTransaction().commit();
+							}
+						}
+
+						ingresoDao.getEntityManager().getTransaction().begin();
+						ingresoDao.getEntityManager().merge(ingreso);
+						ingresoDao.getEntityManager().getTransaction().commit();
+
+						helper.mostrarAlertaInformacion("Datos grabados Correctamente", Context.getInstance().getStage());
+						limpiar();
+						txtCodigo.setText("0");
+						txtNumero.setText("");
+						limpiarProveedor();
+						txtNumero.setText("");
+						txtObservaciones.setText("");
+						txtSubtotal.setText("");
+						txtIva.setText("");
+						txtDescuento.setText("");
+						txtTotal.setText("");
+						tvDatos.getColumns().clear();
+						tvDatos.getItems().clear();
+					}
+				}
+				ingreso = null;
+				proveedorSeleccionado = null;
+			}else {
+				if(validarDatosTabla() == false)
+					return;
+				Optional<ButtonType> result = helper.mostrarAlertaConfirmacion("Desea Grabar los Datos?",Context.getInstance().getStage());
+				if(result.get() == ButtonType.OK){
 					//sumar
 					if(tvDatos != null) {
 						List<Rubro> listaAgregadaRubros = new ArrayList<Rubro>();
 						for(IngresoDetalle detalle: tvDatos.getItems()) {
-							if(detalle.getIdIngresoDet() == null)
-								listaAgregadaRubros.add(detalle.getRubro());
+							listaAgregadaRubros.add(detalle.getRubro());
 						}
 						for (Rubro rubro : listaAgregadaRubros) {
 							for(IngresoDetalle detalle : tvDatos.getItems()) {
@@ -1023,10 +1087,6 @@ public class BodegaIngresoRubrosC {
 							rubroDAO.getEntityManager().getTransaction().commit();
 						}
 					}
-
-					ingresoDao.getEntityManager().getTransaction().begin();
-					ingresoDao.getEntityManager().merge(ingreso);
-					ingresoDao.getEntityManager().getTransaction().commit();
 
 					helper.mostrarAlertaInformacion("Datos grabados Correctamente", Context.getInstance().getStage());
 					limpiar();
@@ -1041,13 +1101,56 @@ public class BodegaIngresoRubrosC {
 					txtTotal.setText("");
 					tvDatos.getColumns().clear();
 					tvDatos.getItems().clear();
+					chkDesactivar.setSelected(false);
+					desbloquear();
+					bandera = 0;
 				}
 			}
-			ingreso = null;
-			proveedorSeleccionado = null;
 		}catch(Exception ex) {
 			ingresoDao.getEntityManager().getTransaction().rollback();
 			helper.mostrarAlertaError("Error al grabar", Context.getInstance().getStage());
+			System.out.println(ex.getMessage());
+		}
+	}
+	
+	void bloquear() {
+		try {
+			txtRuc.setDisable(true);
+			txtProveedor.setDisable(true);
+			txtNombresPro.setDisable(true);
+			txtApellidosPro.setDisable(true);
+			txtDireccionPro.setDisable(true);
+			txtTelefonoPro.setDisable(true);
+			txtNumero.setDisable(true);
+			dtpFecha.setDisable(true);
+			txtUsuario.setDisable(true);
+			txtSubtotal.setDisable(true);
+			txtIva.setDisable(true);
+			txtDescuento.setDisable(true);
+			txtTotal.setDisable(true);
+			btnBuscarRubro.requestFocus();
+		}catch(Exception ex) {
+			System.out.println(ex.getMessage());
+		}
+	}
+	
+	void desbloquear() {
+		try {
+			txtRuc.setDisable(false);
+			txtProveedor.setDisable(false);
+			txtNombresPro.setDisable(false);
+			txtApellidosPro.setDisable(false);
+			txtDireccionPro.setDisable(false);
+			txtTelefonoPro.setDisable(false);
+			txtNumero.setDisable(false);
+			dtpFecha.setDisable(false);
+			txtUsuario.setDisable(false);
+			txtSubtotal.setDisable(false);
+			txtIva.setDisable(false);
+			txtDescuento.setDisable(false);
+			txtTotal.setDisable(false);
+			txtRuc.requestFocus();
+		}catch(Exception ex) {
 			System.out.println(ex.getMessage());
 		}
 	}
@@ -1102,6 +1205,20 @@ public class BodegaIngresoRubrosC {
 				return false;
 			}
 
+			if(tvDatos.getItems().isEmpty()) {
+				helper.mostrarAlertaAdvertencia("Ingresar Rubros", Context.getInstance().getStage());
+				tvDatos.requestFocus();
+				return false;
+			}
+			return true;
+		}catch(Exception ex) {
+			System.out.println(ex.getMessage());
+			return false;
+		}
+	}
+	
+	boolean validarDatosTabla() {
+		try {
 			if(tvDatos.getItems().isEmpty()) {
 				helper.mostrarAlertaAdvertencia("Ingresar Rubros", Context.getInstance().getStage());
 				tvDatos.requestFocus();

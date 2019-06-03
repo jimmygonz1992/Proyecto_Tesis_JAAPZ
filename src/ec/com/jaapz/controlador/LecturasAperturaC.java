@@ -32,6 +32,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
@@ -45,7 +46,9 @@ public class LecturasAperturaC {
     @FXML private Button btnGrabarApertura;
     @FXML private TextField txtCantidad;
     @FXML private TextField txtValor;
-
+    @FXML private RadioButton rbActual;
+    @FXML private RadioButton rbTodos;
+    
     MeDAO mesDAO = new MeDAO();
 	AnioDAO anioDAO = new AnioDAO();
 	ControllerHelper helper = new ControllerHelper();
@@ -83,6 +86,7 @@ public class LecturasAperturaC {
 					}
 				}
 			});
+			rbActual.setSelected(true);
 			cargarCombos();
 			recuperarDatos();
 		}catch(Exception ex) {
@@ -111,7 +115,7 @@ public class LecturasAperturaC {
 				}
 			});
 
-			TableColumn<AperturaLectura, String> mesColum = new TableColumn<>("Mes");
+			TableColumn<AperturaLectura, String> mesColum = new TableColumn<>("Mekkkks");
 			mesColum.setMinWidth(10);
 			mesColum.setPrefWidth(100);
 			mesColum.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<AperturaLectura,String>, ObservableValue<String>>() {
@@ -149,7 +153,7 @@ public class LecturasAperturaC {
 				}
 			});
 
-			tvAperturas.getColumns().addAll(idColum,mesColum,anioColum,clienteColum,estadoColum);
+			tvAperturas.getColumns().addAll(anioColum,mesColum,clienteColum,estadoColum);
 			tvAperturas.setItems(datos);
 
 		}catch(Exception ex) {
@@ -359,5 +363,30 @@ public class LecturasAperturaC {
 			ex.printStackTrace();
 			return false;
 		}
+	}
+	
+	public void accionarActual(){
+		rbActual.setSelected(true);
+		rbTodos.setSelected(false);
+		List<Anio> datAn = anioDAO.getListaAnios();
+		Anio anio = datAn.get(0);
+		
+		List<AperturaLectura> listaPrecios;
+		ObservableList<AperturaLectura> datos = FXCollections.observableArrayList();
+		listaPrecios = aperturaDAO.getAperturaByAnio(anio.getIdAnio());
+		datos.setAll(listaPrecios);
+		tvAperturas.setItems(datos);
+		tvAperturas.refresh();
+	}
+	public void accionarTodos() {
+		rbActual.setSelected(false);
+		rbTodos.setSelected(true);
+		
+		List<AperturaLectura> listaPrecios;
+		ObservableList<AperturaLectura> datos = FXCollections.observableArrayList();
+		listaPrecios = aperturaDAO.getListaAperturas();
+		datos.setAll(listaPrecios);
+		tvAperturas.setItems(datos);
+		tvAperturas.refresh();
 	}
 }

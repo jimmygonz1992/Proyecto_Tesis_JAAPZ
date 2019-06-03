@@ -1,5 +1,6 @@
 package ec.com.jaapz.controlador;
 
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -49,6 +50,10 @@ public class SolicitudEditarOrdenLiqC {
 	@FXML private TextField	txtCantidadMat;
 	@FXML private TextArea	txtObservaciones;
 	@FXML private TextField	txtTotal;
+	@FXML private TextField	txtCodigoMedidor;
+	@FXML private TextField	txtMarca;
+	@FXML private TextField	txtModelo;
+	@FXML private TextField	txtPrecioMed;
 	
 	@FXML private Button btnBuscarOrdenLiqEmitida;
 	@FXML private Button btnBuscarRubro;
@@ -58,12 +63,15 @@ public class SolicitudEditarOrdenLiqC {
 	@FXML private Button btnNuevo;
 	
 	@FXML private TableView<LiquidacionDetalle> tvDatos;
+	@FXML private TableView<LiquidacionDetalle> tvDatosAdicionales;
 	ControllerHelper helper = new ControllerHelper();
 	LiquidacionOrden liquidacionSeleccionada = new LiquidacionOrden();
 	Rubro rubroSeleccionado = new Rubro();
 	SimpleDateFormat formateador = new SimpleDateFormat("dd/MM/yyyy");
 	RubroDAO rubroDAO = new RubroDAO();
 	LiquidacionOrdenDAO liquidacionDao =  new LiquidacionOrdenDAO();
+	
+	DecimalFormat df = new DecimalFormat("0.00");
 	
 	public void initialize() {
 		btnAniadir.setStyle("-fx-cursor: hand;");
@@ -239,8 +247,8 @@ public class SolicitudEditarOrdenLiqC {
 		try {
 			if(validarAnadirRubro() == false)
 				return;
-			ObservableList<LiquidacionDetalle> datos = tvDatos.getItems();
-			tvDatos.getColumns().clear();
+			ObservableList<LiquidacionDetalle> datos = tvDatosAdicionales.getItems();
+			tvDatosAdicionales.getColumns().clear();
 			LiquidacionDetalle datoAnadir = new LiquidacionDetalle();
 			rubroSeleccionado.setPrecio(Double.parseDouble(txtPrecioMat.getText()));
 			datoAnadir.setRubro(rubroSeleccionado);
@@ -286,12 +294,12 @@ public class SolicitudEditarOrdenLiqC {
 			totalColum.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<LiquidacionDetalle, String>, ObservableValue<String>>() {
 				@Override
 				public ObservableValue<String> call(CellDataFeatures<LiquidacionDetalle, String> param) {
-					return new SimpleObjectProperty<String>(String.valueOf(param.getValue().getCantidad()*param.getValue().getPrecio()));
+					return new SimpleObjectProperty<String>(String.valueOf(String.format("%.2f", param.getValue().getCantidad()*param.getValue().getPrecio())));
 				}
 			});
 
-			tvDatos.getColumns().addAll(descripcionColum, cantidadColum, precioColum, totalColum);
-			tvDatos.setItems(datos);
+			tvDatosAdicionales.getColumns().addAll(descripcionColum, cantidadColum, precioColum, totalColum);
+			tvDatosAdicionales.setItems(datos);
 
 			sumarDatos();
 
@@ -320,12 +328,16 @@ public class SolicitudEditarOrdenLiqC {
 			if (tvDatos.getItems().isEmpty()) {
 				txtTotal.setText("0.0");
 			}else {
-				double subtotal = 0;
+				double subtotal1 = 0, subtotal2 = 0;
 				for(int i=0; i<tvDatos.getItems().size(); i++) {
 					Double valorSubt = new Double(tvDatos.getItems().get(i).getCantidad()*tvDatos.getItems().get(i).getPrecio());
-					subtotal += valorSubt;
-					txtTotal.setText(String.valueOf(Double.valueOf(subtotal)));
+					subtotal1 += valorSubt;
 				}
+				for(int i=0; i<tvDatosAdicionales.getItems().size(); i++) {
+					Double valorSubt = new Double(tvDatosAdicionales.getItems().get(i).getCantidad()*tvDatosAdicionales.getItems().get(i).getPrecio());
+					subtotal2 += valorSubt;
+				}
+				txtTotal.setText(String.valueOf(Double.valueOf(subtotal1+subtotal2+Double.valueOf(txtPrecioMed.getText()))));
 			}
 		}catch(Exception ex) {
 			System.out.println(ex.getMessage());
@@ -334,8 +346,12 @@ public class SolicitudEditarOrdenLiqC {
 	
 	public void eliminar(){
 		try {
-			LiquidacionDetalle detalleSeleccionado = tvDatos.getSelectionModel().getSelectedItem();
-			tvDatos.getItems().remove(detalleSeleccionado);
+			LiquidacionDetalle detalleSeleccionado = tvDatosAdicionales.getSelectionModel().getSelectedItem();
+			if(detalleSeleccionado == null) {
+				helper.mostrarAlertaError("Debe seleccionar material", Context.getInstance().getStage());
+				return;
+			}
+			tvDatosAdicionales.getItems().remove(detalleSeleccionado);
 			sumarDatos();
 		}catch(Exception ex) {
 			System.out.println(ex.getMessage());
@@ -458,15 +474,16 @@ public class SolicitudEditarOrdenLiqC {
 					tvDatos.getColumns().clear();
 					tvDatos.getItems().clear();
 				}else {
+					liquidacionSeleccionada.setEstadoOrden(Constantes.EST_FAC_PENDIENTE);
 					List<Integer> integer = new ArrayList<Integer>();
-					for (LiquidacionDetalle detalle : tvDatos.getItems()) {
+					for (LiquidacionDetalle detalle : tvDatosAdicionales.getItems()) {
 						if (detalle.getIdDetalle() != null)
 							integer.add(detalle.getIdDetalle());
 					}
-					for(LiquidacionDetalle det : tvDatos.getItems()) {
+					for(LiquidacionDetalle det : tvDatosAdicionales.getItems()) {
 						if(det.getIdDetalle() == null) {
 							det.setIdDetalle(null);
-							det.setEstado(Constantes.ESTADO_ACTIVO);
+							det.setEstado(Constantes.ESTADO_INACTIVO);
 							det.setLiquidacionOrden(liquidacionSeleccionada);
 							liquidacionSeleccionada.getLiquidacionDetalles().add(det);
 						}else {
@@ -478,7 +495,7 @@ public class SolicitudEditarOrdenLiqC {
 						}
 					}
 						
-					//elimina material resta stock
+			/*		//elimina material resta stock
 					if(tvDatos != null) {
 						List<Integer> idActual = new ArrayList<Integer>();
 						for(LiquidacionDetalle detalle : tvDatos.getItems()) {
@@ -502,9 +519,9 @@ public class SolicitudEditarOrdenLiqC {
 								}	
 							}
 						}
-					}
+					}*/
 					//sumar
-					if(tvDatos != null) {
+			/*		if(tvDatos != null) {
 						List<Rubro> listaAgregadaRubros = new ArrayList<Rubro>();
 						for(LiquidacionDetalle detalle: tvDatos.getItems()) {
 							if(detalle.getIdDetalle() == null)
@@ -519,7 +536,7 @@ public class SolicitudEditarOrdenLiqC {
 							rubroDAO.getEntityManager().merge(rubro);
 							rubroDAO.getEntityManager().getTransaction().commit();
 						}
-					}
+					}*/
 					liquidacionDao.getEntityManager().getTransaction().begin();
 					liquidacionDao.getEntityManager().merge(liquidacionSeleccionada);
 					liquidacionDao.getEntityManager().getTransaction().commit();
@@ -551,6 +568,14 @@ public class SolicitudEditarOrdenLiqC {
 		txtReferencia.setText("");
 		txtObservaciones.setText("");
 		txtTotal.setText("");
+		txtCodigoMedidor.setText("");
+		txtMarca.setText("");
+		txtModelo.setText("");
+		txtPrecioMed.setText("");
+		tvDatos.getItems().clear();
+		tvDatos.getColumns().clear();
+		tvDatosAdicionales.getItems().clear();
+		tvDatosAdicionales.getColumns().clear();
 		limpiarMateriales();
 		rubroSeleccionado = null;
 		liquidacionSeleccionada = null;
@@ -568,6 +593,30 @@ public class SolicitudEditarOrdenLiqC {
 			System.out.println(ex.getMessage());
 		}
 	}
+	
+	void desactivar() {
+		try {
+			txtIdLiquidacion.setDisable(true);
+			txtFechaEmision.setDisable(true);
+			txtCedula.setDisable(true);
+			txtIdInspeccion.setDisable(true);
+			txtFechaInspeccion.setDisable(true);
+			txtNombres.setDisable(true);
+			txtApellidos.setDisable(true);
+			txtTelefono.setDisable(true);
+			txtDireccion.setDisable(true);
+			txtReferencia.setDisable(true);
+			txtCodigoMedidor.setDisable(true);
+			txtMarca.setDisable(true);
+			txtModelo.setDisable(true);
+			txtPrecioMed.setDisable(true);
+			tvDatos.setDisable(true);
+			txtTotal.setDisable(true);
+			btnBuscarRubro.requestFocus();
+		}catch(Exception ex) {
+			System.out.println(ex.getMessage());
+		}
+	}
 		
 	public void llenarDatosLiquidacion(Integer idLiquidacion){
 		try{		
@@ -575,6 +624,10 @@ public class SolicitudEditarOrdenLiqC {
 			listaLiquidacion = liquidacionDao.getRecuperaLiquidacionEmitida(idLiquidacion);
 			
 			for(int i = 0 ; i < listaLiquidacion.size() ; i ++) {
+				txtCodigoMedidor.setText(listaLiquidacion.get(i).getMedidor().getCodigo());
+				txtMarca.setText(listaLiquidacion.get(i).getMedidor().getMarca());
+				txtModelo.setText(listaLiquidacion.get(i).getMedidor().getModelo());
+				txtPrecioMed.setText(String.valueOf(listaLiquidacion.get(i).getMedidor().getPrecio()));
 				txtIdLiquidacion.setText(Integer.toString(listaLiquidacion.get(i).getIdLiquidacion()));
 				txtIdInspeccion.setText(Integer.toString(listaLiquidacion.get(i).getSolInspeccionIn().getIdSolInspeccion()));
 				txtFechaEmision.setText(String.valueOf(formateador.format(listaLiquidacion.get(i).getFecha())));
@@ -588,6 +641,7 @@ public class SolicitudEditarOrdenLiqC {
 				txtTotal.setText(Double.toString(listaLiquidacion.get(i).getTotal()));
 				
 				recuperarDetalleLiquidacionEmitida();
+				desactivar();
 			}
 		}catch(Exception e) {
 			e.printStackTrace();
@@ -645,15 +699,16 @@ public class SolicitudEditarOrdenLiqC {
 			public ObservableValue<String> call(CellDataFeatures<LiquidacionDetalle, String> param) {
 				return new SimpleObjectProperty<String>(String.valueOf(param.getValue().getPrecio()));
 			}
-		});
-
+		});		
+		
+		//txtTotal.setText(df.format(total).replace(",", "."));
 		TableColumn<LiquidacionDetalle, String> totalColum = new TableColumn<>("Total");
 		totalColum.setMinWidth(10);
 		totalColum.setPrefWidth(90);
 		totalColum.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<LiquidacionDetalle, String>, ObservableValue<String>>() {
 			@Override
 			public ObservableValue<String> call(CellDataFeatures<LiquidacionDetalle, String> param) {
-				return new SimpleObjectProperty<String>(String.valueOf(param.getValue().getCantidad()*param.getValue().getPrecio()));
+				return new SimpleObjectProperty<String>(String.valueOf(String.format("%.2f", param.getValue().getCantidad()*param.getValue().getPrecio())));
 			}
 		});
 		tvDatos.getColumns().addAll(descripcionColum, cantidadColum, precioColum, totalColum);

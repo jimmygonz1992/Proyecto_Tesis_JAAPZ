@@ -28,7 +28,8 @@ import javax.persistence.TemporalType;
 @Entity
 @Table(name="apertura_lectura")
 @NamedQueries({
-	@NamedQuery(name="AperturaLectura.findAll", query="SELECT a FROM AperturaLectura a where a.estado = 'A'"),
+	@NamedQuery(name="AperturaLectura.findAll", query="SELECT a FROM AperturaLectura a where a.estado = 'A' order by a.idApertura"),
+	@NamedQuery(name="AperturaLectura.buscarAnio", query="SELECT a FROM AperturaLectura a where a.estado = 'A' and a.anio.idAnio = :idAnio order by a.idApertura"),
 	@NamedQuery(name="AperturaLectura.findAllRealizado", query="SELECT a FROM AperturaLectura a where a.estado = 'A' and a.estadoApertura = 'REALIZADO'"),
 	@NamedQuery(name="AperturaLectura.buscarCiclo", query="SELECT a FROM AperturaLectura a where a.estado = 'A' and a.estadoApertura = 'EN PROCESO'"),
 	@NamedQuery(name="AperturaLectura.buscarAperturaId", query="SELECT a FROM AperturaLectura a where a.estado = 'A' and a.idApertura = :idApertura"),
