@@ -483,7 +483,6 @@ public class SolicitudEditarOrdenLiqC {
 					for(LiquidacionDetalle det : tvDatosAdicionales.getItems()) {
 						if(det.getIdDetalle() == null) {
 							det.setIdDetalle(null);
-							det.setEstadoDespacho(Constantes.EST_FAC_PENDIENTE);
 							det.setEstado(Constantes.ESTADO_ACTIVO);
 							det.setLiquidacionOrden(liquidacionSeleccionada);
 							liquidacionSeleccionada.getLiquidacionDetalles().add(det);

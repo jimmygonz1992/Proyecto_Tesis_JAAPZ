@@ -23,9 +23,6 @@ public class LiquidacionDetalle implements Serializable {
 
 	private String estado;
 	
-	@Column(name="estado_despacho")
-	private String estadoDespacho;
-
 	private double precio;
 
 	private double total;
@@ -61,14 +58,6 @@ public class LiquidacionDetalle implements Serializable {
 
 	public String getEstado() {
 		return this.estado;
-	}
-
-	public String getEstadoDespacho() {
-		return estadoDespacho;
-	}
-
-	public void setEstadoDespacho(String estadoDespacho) {
-		this.estadoDespacho = estadoDespacho;
 	}
 
 	public void setEstado(String estado) {
