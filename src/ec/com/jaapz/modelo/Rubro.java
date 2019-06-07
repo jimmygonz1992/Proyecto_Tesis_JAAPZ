@@ -34,7 +34,7 @@ public class Rubro implements Serializable {
 	private Integer idRubro;
 
 	private String descripcion;
-	
+
 	private String codigo;
 
 	private String estado;
@@ -71,6 +71,34 @@ public class Rubro implements Serializable {
 	@OneToMany(mappedBy="rubro", cascade = CascadeType.ALL)
 	private List<PrecioUnitario> precioUnitarios;
 
+	//bi-directional many-to-one association to ReparacionDetalle
+	@OneToMany(mappedBy="rubro", cascade = CascadeType.ALL)
+	private List<MaterialAdicionalDetalle> materialAdicionalDetalles;
+
+	public List<MaterialAdicionalDetalle> getMaterialAdicionalDetalles() {
+		return this.materialAdicionalDetalles;
+	}
+
+	public void setMaterialAdicionalDetalles(List<MaterialAdicionalDetalle> materialAdicionalDetalles) {
+		this.materialAdicionalDetalles = materialAdicionalDetalles;
+	}
+
+	public MaterialAdicionalDetalle addMaterialAdicionalDetalles(MaterialAdicionalDetalle materialAdicionalDetalles) {
+		getMaterialAdicionalDetalles().add(materialAdicionalDetalles);
+		materialAdicionalDetalles.setRubro(this);
+
+		return materialAdicionalDetalles;
+	}
+
+	public MaterialAdicionalDetalle removeMaterialAdicionalDetalles(MaterialAdicionalDetalle materialAdicionalDetalles) {
+		getMaterialAdicionalDetalles().remove(materialAdicionalDetalles);
+		materialAdicionalDetalles.setRubro(null);
+
+		return materialAdicionalDetalles;
+	}
+	
+	
+	
 	//bi-directional many-to-one association to ReparacionDetalle
 	@OneToMany(mappedBy="rubro", cascade = CascadeType.ALL)
 	private List<ReparacionDetalle> reparacionDetalles;
@@ -135,7 +163,7 @@ public class Rubro implements Serializable {
 	public void setMarca(String marca) {
 		this.marca = marca;
 	}
-	
+
 	public String getCodigo() {
 		return this.codigo;
 	}
@@ -285,7 +313,7 @@ public class Rubro implements Serializable {
 	public void setTipoRubro(TipoRubro tipoRubro) {
 		this.tipoRubro = tipoRubro;
 	}
-	
+
 	public List<Kardex> getKardexs() {
 		return kardexs;
 	}
@@ -293,7 +321,7 @@ public class Rubro implements Serializable {
 	public void setKardexs(List<Kardex> kardexs) {
 		this.kardexs = kardexs;
 	}
-	
+
 	public Kardex addKardex(Kardex kardex) {
 		getKardexs().add(kardex);
 		kardex.setRubro(this);
@@ -307,7 +335,7 @@ public class Rubro implements Serializable {
 
 		return kardex;
 	}
-		
+
 	@Override
 	public String toString() {
 		return this.descripcion;
