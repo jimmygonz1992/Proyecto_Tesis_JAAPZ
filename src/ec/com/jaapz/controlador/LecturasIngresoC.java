@@ -231,22 +231,28 @@ public class LecturasIngresoC {
 			if(result.get() == ButtonType.OK){
 				List<PlanillaDetalle> listaDetalle = tvDatosLecturas.getItems();
 				aperturaDAO.getEntityManager().getTransaction().begin();
+				
+				
 				for(PlanillaDetalle det : listaDetalle) {
 					
 					Double categoriaPrecio = det.getPlanilla().getCuentaCliente().getCategoria().getValorM3();
 					Integer lecturaActual = det.getPlanilla().getLecturaActual();
 					Integer lecturaAnterior = det.getPlanilla().getLecturaAnterior();
 					Integer consumo = lecturaActual - lecturaAnterior;
+					
 					det.getPlanilla().setUsuarioCrea(Context.getInstance().getIdUsuario());
 					det.setCantidad(consumo);
 					det.getPlanilla().setConsumo(consumo);
 					det.setUsuarioCrea(Context.getInstance().getIdUsuario());
 					det.getPlanilla().setConsumoMinimo(0);
 					det.setSubtotal(consumo * categoriaPrecio);
+					System.out.println(det.toString());
 					det.setEstado(Constantes.ESTADO_ACTIVO);
 					
 					aperturaDAO.getEntityManager().merge(det);
 				}
+				
+				
 				aperturaDAO.getEntityManager().getTransaction().commit();
 				helper.mostrarAlertaInformacion("Datos Grabados Correctamente", Context.getInstance().getStage());
 			}

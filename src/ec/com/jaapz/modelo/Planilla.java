@@ -418,4 +418,5 @@ public class Planilla implements Serializable, Comparable<Planilla> {
 		}
 		return 0;
 	}
+
 }

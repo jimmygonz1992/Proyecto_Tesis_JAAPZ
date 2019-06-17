@@ -234,18 +234,21 @@ public class LecturasAperturaC {
 							List<Planilla> noPlanillado = planillaDAO.getNoPlanillado(cuentas.getIdCuenta());
 							
 							if(noPlanillado.size() > 0) {//existe una planilla de otro proceso
+								
 								Planilla planilla = noPlanillado.get(0); // se llena los datos de la planilla ya generada
-								System.out.println("planilla ya generada: " + planilla.getIdPlanilla());
+								System.out.println("Planilla ya generada: " + planilla.getIdPlanilla());
 								planilla.setFecha(fecha);
 								planilla.setEnvia(false);
 								planilla.setImprime(false);
 								planilla.setConvenio(Constantes.CONVENIO_NO);
+								
 								//obtener el consumo del mes anterior
 								planilla.setConsumo(0);
 								planilla.setConsumoMinimo(0);
 								List<Planilla> listaPlanillasCuenta = new ArrayList<Planilla>(); //lista que guarda las planillas de la cuenta del cliente, para saber
 																								//las lecturas anteriores
 								listaPlanillasCuenta = planillaDAO.getPlanillaCuenta(cuentas.getIdCuenta());
+								
 								if(listaPlanillasCuenta.size() > 0) {//aqui es en la posicion 
 									planilla.setLecturaAnterior(listaPlanillasCuenta.get(0).getLecturaActual());//la lectura anterior y la lectura actual de la planilla
 									planilla.setLecturaActual(listaPlanillasCuenta.get(0).getLecturaActual());//son iguales de la lectura actual de la planilla anterior
@@ -253,6 +256,7 @@ public class LecturasAperturaC {
 									planilla.setLecturaAnterior(0);//Caso contrario los dos son cero
 									planilla.setLecturaActual(0);
 								}
+								
 								planilla.setIdentificadorProceso(null);
 								planilla.setEstado(Constantes.ESTADO_ACTIVO);
 								//enlace entre planilla y apertura
@@ -270,7 +274,9 @@ public class LecturasAperturaC {
 								planilla.addPlanillaDetalle(detallePlanilla);
 
 								aperturaDAO.getEntityManager().merge(planilla);
+								
 							}else {
+								
 								List<Planilla> listaAdd = new ArrayList<Planilla>();
 								Planilla planilla = new Planilla(); // planilla nueva para todos los clientes
 								planilla.setIdPlanilla(null);
@@ -311,7 +317,8 @@ public class LecturasAperturaC {
 								det.add(detallePlanilla);
 								planilla.setPlanillaDetalles(det);
 
-								aperturaDAO.getEntityManager().persist(planilla);							
+								aperturaDAO.getEntityManager().persist(planilla);	
+								
 							}
 							aperturaDAO.getEntityManager().getTransaction().commit();
 						}
