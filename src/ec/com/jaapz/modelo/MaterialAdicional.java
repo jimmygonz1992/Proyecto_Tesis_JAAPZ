@@ -73,11 +73,11 @@ public class MaterialAdicional implements Serializable{
 		return materialAdicionalDetalles;
 	}
 
-	public Integer getIdPlanilla() {
+	public Integer getIdMatAdicional() {
 		return idMatAdicional;
 	}
 
-	public void setIdPlanilla(Integer idPlanilla) {
+	public void setIdMatAdicional(Integer idPlanilla) {
 		this.idMatAdicional = idPlanilla;
 	}
 

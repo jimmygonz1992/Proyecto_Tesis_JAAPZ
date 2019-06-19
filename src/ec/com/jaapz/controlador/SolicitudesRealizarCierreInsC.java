@@ -418,7 +418,7 @@ public class SolicitudesRealizarCierreInsC {
 					inspeccionDAO.getEntityManager().getTransaction().commit();
 					
 					helper.mostrarAlertaInformacion("Datos Grabados", Context.getInstance().getStage());
-					enviarCorreoCliente(valorTotal,cuentaCliente);
+					//enviarCorreoCliente(valorTotal,cuentaCliente);
 				}else {//no es factible la instalacion
 					inspeccionSeleccionado.setEstadoInspeccion(Constantes.EST_INSPECCION_REALIZADO);
 					inspeccionSeleccionado.setObservacion(txtObservacion.getText().toString());

@@ -115,7 +115,7 @@ public class LecturasAperturaC {
 				}
 			});
 
-			TableColumn<AperturaLectura, String> mesColum = new TableColumn<>("Mekkkks");
+			TableColumn<AperturaLectura, String> mesColum = new TableColumn<>("Mes");
 			mesColum.setMinWidth(10);
 			mesColum.setPrefWidth(100);
 			mesColum.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<AperturaLectura,String>, ObservableValue<String>>() {
@@ -272,7 +272,7 @@ public class LecturasAperturaC {
 								detallePlanilla.setPlanilla(planilla);
 								
 								planilla.addPlanillaDetalle(detallePlanilla);
-
+								
 								aperturaDAO.getEntityManager().merge(planilla);
 								
 							}else {
@@ -282,13 +282,16 @@ public class LecturasAperturaC {
 								planilla.setIdPlanilla(null);
 								planilla.setFecha(fecha);
 								planilla.setConvenio(Constantes.CONVENIO_NO);
+								
 								//obtener el consumo del mes anterior
 								planilla.setConsumo(0);
 								planilla.setConsumoMinimo(0);
 								planilla.setEnvia(false);
 								planilla.setImprime(false);
+								
 								List<Planilla> listaPlanillasCuenta = new ArrayList<Planilla>(); //lista que guarda las planillas de la cuenta del cliente
 								listaPlanillasCuenta = planillaDAO.getPlanillaCuenta(cuentas.getIdCuenta());
+								
 								if(listaPlanillasCuenta.size() != 0) {
 									planilla.setLecturaAnterior(listaPlanillasCuenta.get(0).getLecturaActual());//la lectura anterior y la lectura actual de la planilla
 									planilla.setLecturaActual(listaPlanillasCuenta.get(0).getLecturaActual());//son iguales de la lectura actual de la planilla anterior
@@ -296,8 +299,9 @@ public class LecturasAperturaC {
 									planilla.setLecturaAnterior(0);//Caso contrario los dos son cero
 									planilla.setLecturaActual(0);
 								}
-
+								
 								planilla.setEstado(Constantes.ESTADO_ACTIVO);
+								
 								//enlace entre planilla y apertura
 								planilla.setAperturaLectura(aperturaProceso.get(0));
 								
@@ -313,11 +317,12 @@ public class LecturasAperturaC {
 								detallePlanilla.setCantidad(0);
 								detallePlanilla.setIdentificadorOperacion(Constantes.IDENT_LECTURA);
 								detallePlanilla.setPlanilla(planilla);
+								
 								List<PlanillaDetalle> det = new ArrayList<PlanillaDetalle>();
 								det.add(detallePlanilla);
 								planilla.setPlanillaDetalles(det);
 
-								aperturaDAO.getEntityManager().persist(planilla);	
+								aperturaDAO.getEntityManager().persist(planilla);
 								
 							}
 							aperturaDAO.getEntityManager().getTransaction().commit();

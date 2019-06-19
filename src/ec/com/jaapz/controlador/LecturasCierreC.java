@@ -194,18 +194,41 @@ public class LecturasCierreC {
 				List<PlanillaDetalle> planillaDetalle;
 				double total = 0.0;
 				//tambien se necesita hacer los calculos para el total de la deuda
-				for(int i = 0 ; i < aperturaActual.getPlanillas().size() ; i ++) {
-					total = 0.0;
-					planillaDetalle = aperturaActual.getPlanillas().get(i).getPlanillaDetalles(); 
-					for(PlanillaDetalle det : planillaDetalle)
-						total = total + det.getSubtotal();
-					aperturaActual.getPlanillas().get(i).setTotalPagar(total);
-					long iPart = (long) total;
-					double fPart = total - iPart;
-					String numLetras = "";
-					numLetras = "(" + helper.cantidadConLetra(String.valueOf(iPart)).toUpperCase() + " DÓLARES " + (long) (fPart * 100) + "/100)"; 
-					aperturaActual.getPlanillas().get(i).setTotalLetras(numLetras);
-					aperturaActual.getPlanillas().get(i).setCancelado(Constantes.EST_FAC_PENDIENTE);
+				for(Planilla plan : aperturaActual.getPlanillas()) {
+					if(plan.getConsumo() > 0) {
+						total = 0.0;
+						planillaDetalle = plan.getPlanillaDetalles(); 
+						for(PlanillaDetalle det : planillaDetalle)
+							total = total + det.getSubtotal();
+						plan.setTotalPagar(total);
+						long iPart = (long) total;
+						double fPart = total - iPart;
+						String numLetras = "";
+						numLetras = "(" + helper.cantidadConLetra(String.valueOf(iPart)).toUpperCase() + " DÓLARES " + (long) (fPart * 100) + "/100)"; 
+						plan.setTotalLetras(numLetras);
+						plan.setCancelado(Constantes.EST_FAC_PENDIENTE);
+					}else {
+						total = 0.0;
+						planillaDetalle = plan.getPlanillaDetalles();
+						for(PlanillaDetalle det : planillaDetalle) {
+							if(det.getIdentificadorOperacion().equals("LEC")) {
+								det.setCantidad(1);
+								det.setUsuarioCrea(Context.getInstance().getIdUsuario());
+								det.setSubtotal(1);
+							}
+						}
+						for(PlanillaDetalle det : planillaDetalle)
+							total = total + det.getSubtotal();
+						plan.setTotalPagar(total);
+						long iPart = (long) total;
+						double fPart = total - iPart;
+						String numLetras = "";
+						numLetras = "(" + helper.cantidadConLetra(String.valueOf(iPart)).toUpperCase() + " DÓLARES " + (long) (fPart * 100) + "/100)"; 
+						plan.setTotalLetras(numLetras);
+						plan.setCancelado(Constantes.EST_FAC_PENDIENTE);
+						plan.setConsumo(1);
+						
+					}
 				}
 
 				aperturaDAO.getEntityManager().getTransaction().begin();

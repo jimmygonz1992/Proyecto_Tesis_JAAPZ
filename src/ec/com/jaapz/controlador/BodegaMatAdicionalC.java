@@ -2,14 +2,18 @@ package ec.com.jaapz.controlador;
 
 import java.text.DecimalFormat;
 import java.time.LocalDate;
-import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+import java.util.Optional;
 
-import ec.com.jaapz.modelo.IngresoDetalle;
 import ec.com.jaapz.modelo.Instalacion;
 import ec.com.jaapz.modelo.InstalacionDetalle;
-import ec.com.jaapz.modelo.LiquidacionOrden;
+import ec.com.jaapz.modelo.MaterialAdicional;
+import ec.com.jaapz.modelo.MaterialAdicionalDetalle;
+import ec.com.jaapz.modelo.ReparacionDAO;
 import ec.com.jaapz.modelo.Rubro;
+import ec.com.jaapz.util.Constantes;
 import ec.com.jaapz.util.Context;
 import ec.com.jaapz.util.ControllerHelper;
 import javafx.beans.property.SimpleObjectProperty;
@@ -17,12 +21,13 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.util.Callback;
 
 public class BodegaMatAdicionalC {
@@ -52,14 +57,15 @@ public class BodegaMatAdicionalC {
 	ControllerHelper helper = new ControllerHelper();
 	Instalacion instalacionSeleccionada;
 	DecimalFormat df = new DecimalFormat("0.00");
+	ReparacionDAO reparacionDAO = new ReparacionDAO();
 	
 	public void buscarLiqCuenta() {
 		try{
-			helper.abrirPantallaModal("/bodega/ListadoLiquidaciones.fxml","Listado de Órdenes Liquidaciones", Context.getInstance().getStage());
-			if (Context.getInstance().getLiquidaciones() != null) {
+			helper.abrirPantallaModal("/bodega/BodegaListaInstalacion.fxml","Listado de Instalaciones", Context.getInstance().getStage());
+			if (Context.getInstance().getInstalacion() != null) {
 				instalacionSeleccionada = Context.getInstance().getInstalacion();
 				llenarDatosLiquidacion(instalacionSeleccionada);
-				Context.getInstance().setLiquidaciones(null);
+				Context.getInstance().setInstalacion(null);
 			}
 		}catch(Exception ex){
 			System.out.println(ex.getMessage());
@@ -75,7 +81,7 @@ public class BodegaMatAdicionalC {
 			if(datoSeleccionado.getFechaInst() == null)
 				dtpFechaInstalacion.setValue(LocalDate.now());
 			else {
-				LocalDate date = datoSeleccionado.getFechaInst().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+				//LocalDate date = datoSeleccionado.getFechaInst().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 				dtpFechaInstalacion.setValue(LocalDate.now());
 			}
 			
@@ -114,12 +120,77 @@ public class BodegaMatAdicionalC {
 	}
 	
 	public void grabar() {
+		try {
+			if(validarDatos() == false)
+				return;
+			Optional<ButtonType> result = helper.mostrarAlertaConfirmacion("Desea Grabar los Datos?",Context.getInstance().getStage());
+			if(result.get() == ButtonType.OK){
+				MaterialAdicional materialAdicional = new MaterialAdicional();
+				materialAdicional.setIdMatAdicional(null);
+				materialAdicional.setFecha(new Date());
+				materialAdicional.setInstalacion(instalacionSeleccionada);
+				materialAdicional.setTotal(Double.parseDouble(txtTotal.getText()));
+				materialAdicional.setEstado(Constantes.ESTADO_ACTIVO);
+				materialAdicional.setUsuarioCrea(Context.getInstance().getIdUsuario());
+				
+				List<MaterialAdicionalDetalle> listaDetalle = new ArrayList<MaterialAdicionalDetalle>();
+				for(InstalacionDetalle det : tvDatos.getItems()) {
+					MaterialAdicionalDetalle detalle = new MaterialAdicionalDetalle();
+					detalle.setCantidad(det.getCantidad());
+					detalle.setEstado(Constantes.ESTADO_ACTIVO);
+					detalle.setIdMatAdicionalDet(null);
+					detalle.setPrecio(det.getPrecio());
+					detalle.setRubro(det.getRubro());
+					detalle.setSubtotal(det.getSubtotal());
+					detalle.setUsuarioCrea(Context.getInstance().getIdUsuario());
+					detalle.setMaterialAdicional(materialAdicional);
+					listaDetalle.add(detalle);
+				}
+				materialAdicional.setMaterialAdicionalDetalles(listaDetalle);
+				
+				if(instalacionSeleccionada.getMaterialAdicionales().size() > 0) 
+					instalacionSeleccionada.addMaterialAdicionalDetalles(materialAdicional);
+				else {
+					List<MaterialAdicional> listaAdicionales = new ArrayList<MaterialAdicional>();
+					materialAdicional.setInstalacion(instalacionSeleccionada);
+					listaAdicionales.add(materialAdicional);
+					instalacionSeleccionada.setMaterialAdicionalDetalles(listaAdicionales);
+				}
 
+				reparacionDAO.getEntityManager().getTransaction().begin();
+				reparacionDAO.getEntityManager().merge(instalacionSeleccionada);
+				reparacionDAO.getEntityManager().getTransaction().commit();
+				
+			}
+			
+			
+		}catch(Exception ex) {
+			helper.mostrarAlertaError("Error al grabar", Context.getInstance().getStage());
+			System.out.println(ex.getMessage());
+		}
 	}
+	
+	boolean validarDatos() {
+		try {	
+			if(txtCedula.getText().toString().equals("")) {
+				helper.mostrarAlertaAdvertencia("No existen datos del cliente", Context.getInstance().getStage());
+				txtCedula.requestFocus();
+				return false;
+			}
 
+			if(tvDatos.getItems().isEmpty()) {
+				helper.mostrarAlertaAdvertencia("Debe registrar Rubros", Context.getInstance().getStage());
+				return false;
+			}
+			return true;
+		}catch(Exception ex) {
+			System.out.println(ex.getMessage());
+			return false;
+		}
+	}
 	
 	public void nuevo() {
-
+		
 	}
 
 	Rubro rubroSeleccionado = new Rubro();
@@ -161,6 +232,7 @@ public class BodegaMatAdicionalC {
 		}
 	}
 	
+	@SuppressWarnings("unchecked")
 	public void anadir() {
 		try {
 			if(validarAnadirRubro() == false)

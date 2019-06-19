@@ -13,6 +13,7 @@ public abstract class Constantes {
 
 	public static String IDENT_INSTALACION = "INS";
 	public static String IDENT_REPARACION = "REP";
+	public static String IDENT_ADICIONAL = "ADC";
 	public static String IDENT_CONVENIO = "CONV";
 	public static String IDENT_PROCESO = "SIN PLANILLAR";
 	public static String IDENT_LECTURA = "LEC";

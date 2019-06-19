@@ -3,8 +3,9 @@ package ec.com.jaapz.controlador;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
-import ec.com.jaapz.modelo.Instalacion;
 import ec.com.jaapz.modelo.InstalacionDAO;
+import ec.com.jaapz.modelo.MaterialAdicional;
+import ec.com.jaapz.modelo.MaterialAdicionalDAO;
 import ec.com.jaapz.util.Context;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ObservableValue;
@@ -21,8 +22,8 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.util.Callback;
 
-public class BodegaListaInstalacionC {
-	@FXML private TableView<Instalacion> tvDatos;
+public class BodegaListadoAdicionalC {
+	@FXML private TableView<MaterialAdicional> tvDatos;
 	@FXML private TextField txtBuscar;
 	InstalacionDAO instalacionDAO = new InstalacionDAO();
 	public void initialize() {
@@ -37,11 +38,11 @@ public class BodegaListaInstalacionC {
 				}
 			});
 			tvDatos.setRowFactory(tv -> {
-	            TableRow<Instalacion> row = new TableRow<>();
+	            TableRow<MaterialAdicional> row = new TableRow<>();
 	            row.setOnMouseClicked(event -> {
 	                if (event.getClickCount() == 2 && (! row.isEmpty()) ) {
 	                	if(tvDatos.getSelectionModel().getSelectedItem() != null){
-	                		Context.getInstance().setInstalacion(tvDatos.getSelectionModel().getSelectedItem());
+	                		Context.getInstance().setMaterialAdicional(tvDatos.getSelectionModel().getSelectedItem());
 	    					Context.getInstance().getStageModal().close();
 	    				}
 	                }
@@ -59,37 +60,48 @@ public class BodegaListaInstalacionC {
 		try {
 			SimpleDateFormat formateador = new SimpleDateFormat("dd/MM/yyyy");
 			tvDatos.getColumns().clear();
-			InstalacionDAO instalacionDAO = new InstalacionDAO();
-			List<Instalacion> listaInstalacion = instalacionDAO.getListaInstalacionPendiente(codigo);
-			ObservableList<Instalacion> datos = FXCollections.observableArrayList();
+			MaterialAdicionalDAO instalacionDAO = new MaterialAdicionalDAO();
+			List<MaterialAdicional> listaInstalacion = instalacionDAO.getListaAdicionales(codigo);
+			ObservableList<MaterialAdicional> datos = FXCollections.observableArrayList();
 
 			datos.setAll(listaInstalacion);
 			
 			//llenar los datos en la tabla
-			TableColumn<Instalacion, String> idColum = new TableColumn<>("No. de Instalación");
+			TableColumn<MaterialAdicional, String> idColum = new TableColumn<>("No.");
 			idColum.setMinWidth(10);
 			idColum.setPrefWidth(50);
-			idColum.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Instalacion,String>, ObservableValue<String>>() {
+			idColum.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<MaterialAdicional,String>, ObservableValue<String>>() {
 				@Override
-				public ObservableValue<String> call(CellDataFeatures<Instalacion, String> param) {
-					return new SimpleObjectProperty<String>(String.valueOf(param.getValue().getIdInstalacion()));
+				public ObservableValue<String> call(CellDataFeatures<MaterialAdicional, String> param) {
+					return new SimpleObjectProperty<String>(String.valueOf(param.getValue().getIdMatAdicional()));
 				}
 			});
 			
-			TableColumn<Instalacion, String> ingresoColum = new TableColumn<>("Cliente");
+			
+			TableColumn<MaterialAdicional, String> idIns = new TableColumn<>("No. Ins");
+			idIns.setMinWidth(10);
+			idIns.setPrefWidth(50);
+			idIns.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<MaterialAdicional,String>, ObservableValue<String>>() {
+				@Override
+				public ObservableValue<String> call(CellDataFeatures<MaterialAdicional, String> param) {
+					return new SimpleObjectProperty<String>(String.valueOf(param.getValue().getInstalacion().getIdInstalacion()));
+				}
+			});
+			
+			TableColumn<MaterialAdicional, String> ingresoColum = new TableColumn<>("Cliente");
 			ingresoColum.setMinWidth(10);
 			ingresoColum.setPrefWidth(320);
-			ingresoColum.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Instalacion,String>, ObservableValue<String>>() {
+			ingresoColum.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<MaterialAdicional,String>, ObservableValue<String>>() {
 				@Override
-				public ObservableValue<String> call(CellDataFeatures<Instalacion, String> param) {
-					String cliente = param.getValue().getCuentaCliente().getCliente().getNombre() + " " + param.getValue().getCuentaCliente().getCliente().getNombre();
+				public ObservableValue<String> call(CellDataFeatures<MaterialAdicional, String> param) {
+					String cliente = param.getValue().getInstalacion().getCuentaCliente().getCliente().getNombre() + " " + param.getValue().getInstalacion().getCuentaCliente().getCliente().getNombre();
 					return new SimpleObjectProperty<String>(cliente);
 				}
 			});
 			
 			
 			
-			tvDatos.getColumns().addAll(idColum, ingresoColum);
+			tvDatos.getColumns().addAll(idColum,idIns, ingresoColum);
 			tvDatos.setItems(datos);
 		}catch(Exception ex) {
 			System.out.println(ex.getMessage());
@@ -99,5 +111,4 @@ public class BodegaListaInstalacionC {
 	public void buscarLiquidCuenta() {
 
 	}
-	
 }

@@ -38,7 +38,7 @@ public class Instalacion implements Serializable {
 	private double descuento;
 
 	private String estado;
-	
+
 	private String observaciones;
 
 	@Column(name="estado_instalacion")
@@ -50,7 +50,7 @@ public class Instalacion implements Serializable {
 	@Temporal(TemporalType.DATE)
 	@Column(name="fecha_inst")
 	private Date fechaInst;
-	
+
 	@Temporal(TemporalType.DATE)
 	@Column(name="fecha_salida")
 	private Date fechaSalida;
@@ -67,10 +67,10 @@ public class Instalacion implements Serializable {
 
 	@Column(name="usuario_crea")
 	private Integer usuarioCrea;
-	
+
 	@Column(name="usuario_instalacion")
 	private Integer usuarioInstalacion;
-	
+
 	//bi-directional many-to-one association to CuentaCliente
 	@ManyToOne
 	@JoinColumn(name="id_cuenta")
@@ -89,6 +89,32 @@ public class Instalacion implements Serializable {
 	@OneToMany(mappedBy="instalacion", cascade = CascadeType.ALL)
 	private List<PlanillaDetalle> planillaDetalles;
 
+	//bi-directional many-to-one association to ReparacionDetalle
+	@OneToMany(mappedBy="instalacion", cascade = CascadeType.ALL)
+	private List<MaterialAdicional> materialAdicionales;
+
+	public List<MaterialAdicional> getMaterialAdicionales() {
+		return this.materialAdicionales;
+	}
+
+	public void setMaterialAdicionalDetalles(List<MaterialAdicional> materialAdicionales) {
+		this.materialAdicionales = materialAdicionales;
+	}
+
+	public MaterialAdicional addMaterialAdicionalDetalles(MaterialAdicional materialAdicionalDetalles) {
+		getMaterialAdicionales().add(materialAdicionalDetalles);
+		materialAdicionalDetalles.setInstalacion(this);
+
+		return materialAdicionalDetalles;
+	}
+
+	public MaterialAdicional removeMaterialAdicionalDetalles(MaterialAdicional materialAdicionalDetalles) {
+		getMaterialAdicionales().remove(materialAdicionalDetalles);
+		materialAdicionalDetalles.setInstalacion(null);
+
+		return materialAdicionalDetalles;
+	}
+
 	public Instalacion() {
 	}
 
@@ -99,7 +125,7 @@ public class Instalacion implements Serializable {
 	public void setIdInstalacion(Integer idInstalacion) {
 		this.idInstalacion = idInstalacion;
 	}
-	
+
 	public String getObservaciones() {
 		return observaciones;
 	}
@@ -147,7 +173,7 @@ public class Instalacion implements Serializable {
 	public void setFechaInst(Date fechaInst) {
 		this.fechaInst = fechaInst;
 	}
-	
+
 	public Date getFechaSalida() {
 		return this.fechaSalida;
 	}
@@ -195,7 +221,7 @@ public class Instalacion implements Serializable {
 	public void setUsuarioCrea(Integer usuarioCrea) {
 		this.usuarioCrea = usuarioCrea;
 	}
-	
+
 	public Integer getUsuarioInstalacion() {
 		return this.usuarioInstalacion;
 	}
