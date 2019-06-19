@@ -8,23 +8,28 @@ import java.util.List;
 import java.util.Optional;
 
 import ec.com.jaapz.modelo.Instalacion;
+import ec.com.jaapz.modelo.InstalacionDAO;
 import ec.com.jaapz.modelo.InstalacionDetalle;
 import ec.com.jaapz.modelo.MaterialAdicional;
 import ec.com.jaapz.modelo.MaterialAdicionalDetalle;
-import ec.com.jaapz.modelo.ReparacionDAO;
 import ec.com.jaapz.modelo.Rubro;
+import ec.com.jaapz.modelo.RubroDAO;
 import ec.com.jaapz.util.Constantes;
 import ec.com.jaapz.util.Context;
 import ec.com.jaapz.util.ControllerHelper;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -57,7 +62,56 @@ public class BodegaMatAdicionalC {
 	ControllerHelper helper = new ControllerHelper();
 	Instalacion instalacionSeleccionada;
 	DecimalFormat df = new DecimalFormat("0.00");
-	ReparacionDAO reparacionDAO = new ReparacionDAO();
+	InstalacionDAO instalacionDAO = new InstalacionDAO();
+	RubroDAO rubroDAO = new RubroDAO();
+	
+	public void initialize() {
+		try {
+			//para anadir a la grilla con enter
+			txtCantidadMat.setOnKeyPressed(new EventHandler<KeyEvent>(){
+				@Override
+				public void handle(KeyEvent ke){
+					if (ke.getCode().equals(KeyCode.ENTER)){
+						anadir();
+						btnBuscarRubro.requestFocus();
+					}
+				}
+			});
+			
+			//validar solo numeros
+			txtCantidadMat.textProperty().addListener(new ChangeListener<String>() {
+				@Override
+				public void changed(ObservableValue<? extends String> observable, String oldValue, 
+						String newValue) {
+					if (newValue.matches("\\d*")) {
+						//int value = Integer.parseInt(newValue);
+					} else {
+						txtCantidadMat.setText(oldValue);
+					}
+				}
+			});
+
+			noEditable();
+		}catch(Exception ex) {
+			System.out.println(ex.getMessage());
+		}
+	}
+	
+	public void noEditable() {
+		txtDireccion.setEditable(false);
+		txtApellidos.setEditable(false);
+		txtIdInstalacion.setEditable(false);
+		txtStockMat.setEditable(false);
+		txtPrecioMat.setEditable(false);
+		txtCedula.setEditable(false);
+		dtpFechaInstalacion.setEditable(false);
+		txtTotal.setEditable(false);
+		txtDescripcionMat.setEditable(false);
+		txtTelefono.setEditable(false);
+		txtIdCuenta.setEditable(false);
+		txtNombres.setEditable(false);
+		txtObservaciones.setEditable(false);
+	}
 	
 	public void buscarLiqCuenta() {
 		try{
@@ -123,6 +177,7 @@ public class BodegaMatAdicionalC {
 		try {
 			if(validarDatos() == false)
 				return;
+			
 			Optional<ButtonType> result = helper.mostrarAlertaConfirmacion("Desea Grabar los Datos?",Context.getInstance().getStage());
 			if(result.get() == ButtonType.OK){
 				MaterialAdicional materialAdicional = new MaterialAdicional();
@@ -132,6 +187,7 @@ public class BodegaMatAdicionalC {
 				materialAdicional.setTotal(Double.parseDouble(txtTotal.getText()));
 				materialAdicional.setEstado(Constantes.ESTADO_ACTIVO);
 				materialAdicional.setUsuarioCrea(Context.getInstance().getIdUsuario());
+				materialAdicional.setEstadoSalida(Constantes.EST_FAC_PENDIENTE);
 				
 				List<MaterialAdicionalDetalle> listaDetalle = new ArrayList<MaterialAdicionalDetalle>();
 				for(InstalacionDetalle det : tvDatos.getItems()) {
@@ -157,13 +213,12 @@ public class BodegaMatAdicionalC {
 					instalacionSeleccionada.setMaterialAdicionalDetalles(listaAdicionales);
 				}
 
-				reparacionDAO.getEntityManager().getTransaction().begin();
-				reparacionDAO.getEntityManager().merge(instalacionSeleccionada);
-				reparacionDAO.getEntityManager().getTransaction().commit();
-				
+				instalacionDAO.getEntityManager().getTransaction().begin();
+				instalacionDAO.getEntityManager().merge(instalacionSeleccionada);
+				instalacionDAO.getEntityManager().getTransaction().commit();
+				helper.mostrarAlertaInformacion("Datos Grabados Correctamente", Context.getInstance().getStage());
+				limpiarTodo();
 			}
-			
-			
 		}catch(Exception ex) {
 			helper.mostrarAlertaError("Error al grabar", Context.getInstance().getStage());
 			System.out.println(ex.getMessage());
@@ -247,12 +302,6 @@ public class BodegaMatAdicionalC {
 			Double total = Integer.parseInt(txtCantidadMat.getText()) * Double.parseDouble(txtPrecioMat.getText());
 			datoAnadir.setSubtotal(total);
 			datos.add(datoAnadir);
-
-			//llenar los datos en la tabla			
-			/*TableColumn<IngresoDetalle, String> descipcionColum = new TableColumn<>("Descripción");
-			descipcionColum.setMinWidth(10);
-			descipcionColum.setPrefWidth(200);
-			descipcionColum.setCellValueFactory(new PropertyValueFactory<IngresoDetalle, String>("rubro"));*/
 			
 			TableColumn<InstalacionDetalle, String> descipcionColum = new TableColumn<>("Descripción");
 			descipcionColum.setMinWidth(10);
@@ -263,11 +312,6 @@ public class BodegaMatAdicionalC {
 					return new SimpleObjectProperty<String>(String.valueOf(param.getValue().getRubro().getDescripcion()));
 				}
 			});
-
-			/*TableColumn<IngresoDetalle, String> cantidadColum = new TableColumn<>("Cantidad");
-			cantidadColum.setMinWidth(10);
-			cantidadColum.setPrefWidth(90);
-			cantidadColum.setCellValueFactory(new PropertyValueFactory<IngresoDetalle, String>("cantidad"));*/
 			
 			TableColumn<InstalacionDetalle, String> cantidadColum = new TableColumn<>("Cantidad");
 			cantidadColum.setMinWidth(10);
@@ -279,11 +323,6 @@ public class BodegaMatAdicionalC {
 				}
 			});
 
-			/*TableColumn<IngresoDetalle, Double> precioColum = new TableColumn<>("Precio");
-			precioColum.setMinWidth(10);
-			precioColum.setPrefWidth(90);
-			precioColum.setCellValueFactory(new PropertyValueFactory<IngresoDetalle, Double>("precio"));*/
-			
 			TableColumn<InstalacionDetalle, String> precioColum = new TableColumn<>("Precio");
 			precioColum.setMinWidth(10);
 			precioColum.setPrefWidth(90);
@@ -349,6 +388,19 @@ public class BodegaMatAdicionalC {
 		txtCantidadMat.setText("");
 		txtPrecioMat.setText("");
 		txtStockMat.setText("");
-		//proveedorSeleccionado = null;	
+	}
+	
+	void limpiarTodo() {
+		txtDireccion.setText("");
+		txtApellidos.setText("");
+		txtIdInstalacion.setText("");
+		txtCedula.setText("");
+		dtpFechaInstalacion.setValue(LocalDate.now());
+		txtTelefono.setText("");
+		txtIdCuenta.setText("");
+		txtNombres.setText("");
+		txtObservaciones.setText("");
+		tvDatos.getItems().clear();
+		tvDatos.getColumns().clear();
 	}
 }

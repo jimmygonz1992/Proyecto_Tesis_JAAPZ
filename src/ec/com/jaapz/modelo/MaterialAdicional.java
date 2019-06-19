@@ -22,7 +22,7 @@ import javax.persistence.TemporalType;
 @Entity
 @Table(name="material_adicional")
 @NamedQueries({
-	@NamedQuery(name="MaterialAdicional.findAll", query="SELECT m FROM MaterialAdicional m")
+	@NamedQuery(name="MaterialAdicional.findAll", query="SELECT m FROM MaterialAdicional m WHERE m.estadoSalida = 'PENDIENTE'")
 })
 public class MaterialAdicional implements Serializable{
 	private static final long serialVersionUID = 1L;
@@ -45,6 +45,9 @@ public class MaterialAdicional implements Serializable{
 	private Integer usuarioCrea;
 
 	private String estado;
+	
+	@Column(name="estado_salida")
+	private String estadoSalida;
 
 
 	//bi-directional many-to-one association to ReparacionDetalle
@@ -85,6 +88,14 @@ public class MaterialAdicional implements Serializable{
 		return instalacion;
 	}
 
+	public String getEstadoSalida() {
+		return estadoSalida;
+	}
+
+	public void setEstadoSalida(String estadoSalida) {
+		this.estadoSalida = estadoSalida;
+	}
+
 	public void setInstalacion(Instalacion instalacion) {
 		this.instalacion = instalacion;
 	}
@@ -120,5 +131,4 @@ public class MaterialAdicional implements Serializable{
 	public void setEstado(String estado) {
 		this.estado = estado;
 	}
-
 }
