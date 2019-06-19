@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefWidth="955.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ec.com.jaapz.controlador.BodegaSalidaAdicionalesC">
+   <children>
+      <GridPane alignment="TOP_CENTER" layoutX="10.0" layoutY="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Label alignment="CENTER" contentDisplay="LEFT" prefHeight="41.0" prefWidth="416.0" text="SALIDA DE MATERIALES INSTALACIÓN" GridPane.columnSpan="7" GridPane.halignment="CENTER" GridPane.rowIndex="0" GridPane.valignment="CENTER">
+               <font>
+                  <Font name="Arial Bold" size="20.0" />
+               </font>
+            </Label>
+            <Label alignment="BOTTOM_LEFT" contentDisplay="BOTTOM" prefHeight="15.0" prefWidth="108.0" text="Datos Cliente" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
+               <font>
+                  <Font name="Arial Bold Italic" size="12.0" />
+               </font>
+            </Label>
+            <HBox style="-fx-border-color: #bbc8d0; -fx-border-width: 1px; -fx-background-radius: 6; -fx-max-height: 600; -fx-max-width: 1500; -fx-min-height: 10; -fx-min-width: 10" GridPane.columnSpan="3" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.vgrow="ALWAYS">
+               <children>
+                  <GridPane HBox.hgrow="ALWAYS">
+                     <children>
+                        <HBox alignment="CENTER_LEFT" prefHeight="31.0" prefWidth="135.0" GridPane.columnIndex="4">
+                           <children>
+                              <TextField fx:id="txtIdCuenta" prefHeight="31.0" prefWidth="138.0" />
+                              <Button fx:id="btnBuscarLiquidCuenta" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#buscarLiqCuenta" prefHeight="48.0" prefWidth="58.0" styleClass="botonBuscar">
+                                 <HBox.margin>
+                                    <Insets left="30.0" />
+                                 </HBox.margin>
+                              </Button>
+                           </children>
+                        </HBox>
+                        <TextField fx:id="txtTelefono" prefHeight="25.0" prefWidth="122.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                        <Label prefHeight="17.0" prefWidth="69.0" text="Teléfono:" GridPane.rowIndex="3">
+                           <font>
+                              <Font name="Arial Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <Label prefHeight="17.0" prefWidth="69.0" text="Dirección:" GridPane.rowIndex="2">
+                           <font>
+                              <Font name="Arial Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="txtDireccion" prefHeight="25.0" prefWidth="349.0" GridPane.columnIndex="1" GridPane.columnSpan="4" GridPane.rowIndex="2" />
+                        <TextField fx:id="txtNombres" prefHeight="25.0" prefWidth="122.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <Label prefHeight="17.0" prefWidth="69.0" text="Nombres:" GridPane.rowIndex="1">
+                           <font>
+                              <Font name="Arial Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="txtCedula" prefHeight="25.0" prefWidth="154.0" GridPane.columnIndex="1" />
+                        <Label prefHeight="17.0" prefWidth="69.0" text="Cédula:">
+                           <font>
+                              <Font name="Arial Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <Label prefHeight="17.0" prefWidth="69.0" text="Cuenta:" GridPane.columnIndex="3">
+                           <font>
+                              <Font name="Arial Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <Label prefHeight="17.0" prefWidth="69.0" text="Apellidos:" GridPane.columnIndex="3" GridPane.rowIndex="1">
+                           <font>
+                              <Font name="Arial Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="txtApellidos" prefHeight="25.0" prefWidth="159.0" GridPane.columnIndex="4" GridPane.rowIndex="1" />
+                     </children>
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="232.0" minWidth="10.0" prefWidth="86.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="406.0" minWidth="10.0" prefWidth="208.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="406.0" minWidth="1.0" prefWidth="7.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="406.0" minWidth="10.0" prefWidth="73.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="406.0" minWidth="10.0" prefWidth="221.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="406.0" minWidth="4.0" prefWidth="4.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints maxHeight="52.0" minHeight="10.0" prefHeight="38.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="49.0" minHeight="10.0" prefHeight="33.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="44.0" minHeight="10.0" prefHeight="38.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="35.0" minHeight="10.0" prefHeight="34.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                  </GridPane>
+               </children>
+            </HBox>
+            <HBox style="-fx-border-color: #bbc8d0; -fx-border-width: 1px; -fx-background-radius: 6; -fx-max-height: 600; -fx-max-width: 1500; -fx-min-height: 10; -fx-min-width: 10" GridPane.columnIndex="4" GridPane.columnSpan="3" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.vgrow="ALWAYS">
+               <children>
+                  <GridPane HBox.hgrow="ALWAYS">
+                     <children>
+                        <Label prefWidth="50.0" text="Usuario:" GridPane.rowIndex="2">
+                           <font>
+                              <Font name="Arial Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <Label prefHeight="17.0" prefWidth="76.0" text="Fecha:" GridPane.rowIndex="1">
+                           <font>
+                              <Font name="Arial Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <Label prefHeight="17.0" prefWidth="91.0" text="Id liquidación:">
+                           <font>
+                              <Font name="Arial Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="txtIdLiquid" prefHeight="25.0" prefWidth="173.0" GridPane.columnIndex="1" />
+                        <DatePicker fx:id="dtpFecha" prefHeight="25.0" prefWidth="172.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <TextField fx:id="txtUsuario" prefHeight="25.0" prefWidth="173.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                     </children>
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="354.0" minWidth="10.0" prefWidth="197.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="339.0" minWidth="10.0" prefWidth="222.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                  </GridPane>
+               </children>
+            </HBox>
+            <Label alignment="BOTTOM_LEFT" contentDisplay="BOTTOM" prefHeight="15.0" prefWidth="124.0" text="Detalle de Materiales" GridPane.columnIndex="2" GridPane.rowIndex="3" GridPane.valignment="BOTTOM">
+               <font>
+                  <Font name="Arial Bold Italic" size="12.0" />
+               </font>
+            </Label>
+            <TableView fx:id="tvDatos" GridPane.columnSpan="5" GridPane.hgrow="ALWAYS" GridPane.rowIndex="4" GridPane.rowSpan="2" GridPane.vgrow="ALWAYS" />
+            <VBox alignment="CENTER" style="-fx-border-color: #bbc8d0; -fx-border-width: 1px; -fx-background-radius: 6; -fx-max-height: 600; -fx-max-width: 1500; -fx-min-height: 10; -fx-min-width: 10" GridPane.columnIndex="6" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="4" GridPane.rowSpan="2" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+               <children>
+                  <Button fx:id="btnGrabar" alignment="BOTTOM_CENTER" contentDisplay="TOP" graphicTextGap="0.0" maxHeight="75.0" minHeight="50.0" mnemonicParsing="false" onAction="#grabar" prefHeight="60.0" prefWidth="71.0" styleClass="botonGrabar" text="Grabar">
+                     <font>
+                        <Font name="Arial Bold" size="12.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin>
+                  </Button>
+                  <Button fx:id="btnNuevo" alignment="BOTTOM_CENTER" contentDisplay="TOP" graphicTextGap="0.0" maxHeight="75.0" minHeight="50.0" mnemonicParsing="false" onAction="#nuevo" prefHeight="60.0" prefWidth="71.0" styleClass="botonNuevo" text="Nuevo">
+                     <font>
+                        <Font name="Arial Bold" size="12.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin>
+                  </Button>
+               </children>
+            </VBox>
+            <Label alignment="BOTTOM_LEFT" contentDisplay="BOTTOM" prefHeight="15.0" prefWidth="124.0" text="Observaciones:" GridPane.rowIndex="6" GridPane.valignment="BOTTOM">
+               <font>
+                  <Font name="Arial Bold Italic" size="12.0" />
+               </font>
+            </Label>
+            <HBox alignment="CENTER_LEFT" style="-fx-border-color: #bbc8d0; -fx-border-width: 1px; -fx-background-radius: 6; -fx-max-height: 600; -fx-max-width: 1500; -fx-min-height: 10; -fx-min-width: 10" GridPane.columnSpan="3" GridPane.hgrow="ALWAYS" GridPane.rowIndex="7" GridPane.vgrow="ALWAYS">
+               <children>
+                  <TextArea fx:id="txtObservaciones" HBox.hgrow="ALWAYS" />
+               </children>
+            </HBox>
+            <HBox style="-fx-border-color: #bbc8d0; -fx-border-width: 1px; -fx-background-radius: 6; -fx-max-height: 600; -fx-max-width: 1500; -fx-min-height: 10; -fx-min-width: 10" GridPane.columnIndex="4" GridPane.hgrow="ALWAYS" GridPane.rowIndex="7" GridPane.vgrow="ALWAYS">
+               <children>
+                  <GridPane HBox.hgrow="ALWAYS">
+                     <children>
+                        <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
+                           <children>
+                              <Label prefWidth="50.0" text="Total:">
+                                 <font>
+                                    <Font name="Arial Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </HBox>
+                        <TextField fx:id="txtTotal" prefHeight="25.0" prefWidth="173.0" GridPane.columnIndex="1" />
+                     </children>
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="115.0" minWidth="10.0" prefWidth="51.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="136.0" minWidth="10.0" prefWidth="123.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                  </GridPane>
+               </children>
+            </HBox>
+         </children>
+         <columnConstraints>
+            <ColumnConstraints maxWidth="285.0" minWidth="3.0" prefWidth="283.0" />
+            <ColumnConstraints maxWidth="20.0" minWidth="9.0" prefWidth="15.0" />
+            <ColumnConstraints maxWidth="622.0" minWidth="10.0" prefWidth="305.0" />
+            <ColumnConstraints maxWidth="20.0" minWidth="4.0" prefWidth="15.0" />
+            <ColumnConstraints maxWidth="210.0" minWidth="10.0" prefWidth="200.0" />
+            <ColumnConstraints maxWidth="20.0" minWidth="9.0" prefWidth="15.0" />
+            <ColumnConstraints maxWidth="90.0" minWidth="10.0" prefWidth="83.0" />
+            <ColumnConstraints />
+            <ColumnConstraints />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints maxHeight="50.0" minHeight="32.0" prefHeight="33.0" />
+            <RowConstraints maxHeight="50.0" minHeight="32.0" prefHeight="33.0" />
+            <RowConstraints maxHeight="228.0" minHeight="9.0" prefHeight="141.0" />
+            <RowConstraints maxHeight="228.0" minHeight="10.0" prefHeight="49.0" />
+            <RowConstraints maxHeight="200.0" minHeight="10.0" prefHeight="146.0" />
+            <RowConstraints maxHeight="245.0" minHeight="10.0" prefHeight="138.0" />
+            <RowConstraints maxHeight="228.0" minHeight="10.0" prefHeight="38.0" />
+            <RowConstraints maxHeight="241.0" minHeight="10.0" prefHeight="108.0" />
+         </rowConstraints>
+      </GridPane>
+   </children>
+</AnchorPane>

@@ -195,4 +195,16 @@ public class PlanillaDetalle implements Serializable, Comparable<PlanillaDetalle
         }
         return 0;
     }
+
+	@Override
+	public String toString() {
+		return "PlanillaDetalle [idPlanillaDet=" + idPlanillaDet + ", cantidad=" + cantidad + ", descripcion="
+				+ descripcion + ", estado=" + estado + ", subtotal=" + subtotal + ", usuarioCrea=" + usuarioCrea
+				+ ", convenioDetalle=" + convenioDetalle + ", identificadorOperacion=" + identificadorOperacion
+				+ ", instalacion=" + instalacion + ", planilla=" + planilla + ", reparacion=" + reparacion
+				+ ", registroFotos=" + registroFotos + "]";
+	}
+	
+	
+	
 }

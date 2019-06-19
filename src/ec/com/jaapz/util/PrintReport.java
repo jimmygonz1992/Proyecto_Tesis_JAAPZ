@@ -18,10 +18,13 @@ public class PrintReport {
 	private JasperReport report;
 	private JasperPrint reportFilled;
 	private JasperViewer viewer;
+	//ControllerHelper helper = new ControllerHelper();
+	
 	public void crearReporte(String path, ClaseDAO claseDAO,Map<String, Object> param) {
 		try {
 			String applicationPath = System.getProperty("user.dir");
 			applicationPath = applicationPath + path;
+			//helper.mostrarAlertaAdvertencia(applicationPath, Context.getInstance().getStage());
 			Connection cn = claseDAO.abreConexion();
 			report = (JasperReport) JRLoader.loadObjectFromFile(applicationPath);
 			reportFilled = JasperFillManager.fillReport(report, param, cn);

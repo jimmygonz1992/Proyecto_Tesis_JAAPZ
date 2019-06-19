@@ -230,6 +230,7 @@ public class LecturasIngresoC {
 			Optional<ButtonType> result = helper.mostrarAlertaConfirmacion("Desea Grabar los Datos?",Context.getInstance().getStage());
 			if(result.get() == ButtonType.OK){
 				List<PlanillaDetalle> listaDetalle = tvDatosLecturas.getItems();
+				
 				aperturaDAO.getEntityManager().getTransaction().begin();
 				for(PlanillaDetalle det : listaDetalle) {
 					
@@ -237,15 +238,20 @@ public class LecturasIngresoC {
 					Integer lecturaActual = det.getPlanilla().getLecturaActual();
 					Integer lecturaAnterior = det.getPlanilla().getLecturaAnterior();
 					Integer consumo = lecturaActual - lecturaAnterior;
-					det.getPlanilla().setUsuarioCrea(Context.getInstance().getIdUsuario());
-					det.setCantidad(consumo);
-					det.getPlanilla().setConsumo(consumo);
-					det.setUsuarioCrea(Context.getInstance().getIdUsuario());
-					det.getPlanilla().setConsumoMinimo(0);
-					det.setSubtotal(consumo * categoriaPrecio);
-					det.setEstado(Constantes.ESTADO_ACTIVO);
 					
-					aperturaDAO.getEntityManager().merge(det);
+					if(consumo > 0) {
+						
+						det.getPlanilla().setUsuarioCrea(Context.getInstance().getIdUsuario());
+						det.setCantidad(consumo);
+						det.getPlanilla().setConsumo(consumo);
+						det.setSubtotal(consumo * categoriaPrecio);
+						det.getPlanilla().setConsumoMinimo(0);
+						det.setUsuarioCrea(Context.getInstance().getIdUsuario());
+						det.setEstado(Constantes.ESTADO_ACTIVO);
+						aperturaDAO.getEntityManager().merge(det.getPlanilla());
+						
+					}
+					
 				}
 				aperturaDAO.getEntityManager().getTransaction().commit();
 				helper.mostrarAlertaInformacion("Datos Grabados Correctamente", Context.getInstance().getStage());

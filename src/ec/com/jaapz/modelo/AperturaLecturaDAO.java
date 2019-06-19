@@ -55,7 +55,7 @@ public class AperturaLecturaDAO extends ClaseDAO{
 	@SuppressWarnings("unchecked")
 	public List<AperturaLectura> getListaAperturasEnProceso(){
 		List<AperturaLectura> resultado = new ArrayList<AperturaLectura>();
-		Query query = getEntityManagerNuevo().createNamedQuery("AperturaLectura.buscarCiclo");
+		Query query = getEntityManager().createNamedQuery("AperturaLectura.buscarCiclo");
 		query.setHint("javax.persistence.cache.storeMode", "REFRESH");
 		resultado = (List<AperturaLectura>) query.getResultList();
 		return resultado;

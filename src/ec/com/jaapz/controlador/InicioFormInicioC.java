@@ -56,9 +56,6 @@ public class InicioFormInicioC {
 		Image image1 = new Image("login.png");
 		ivLogin.setImage(image1);
 		
-		txtUsuario.setText("sa");
-		txtClave.setText("sa");
-		
 		//para anadir a la grilla con enter
 		txtUsuario.setOnKeyPressed(new EventHandler<KeyEvent>(){
 			@Override

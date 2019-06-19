@@ -14,6 +14,7 @@ import ec.com.jaapz.modelo.Ingreso;
 import ec.com.jaapz.modelo.IngresoDetalle;
 import ec.com.jaapz.modelo.Instalacion;
 import ec.com.jaapz.modelo.LiquidacionOrden;
+import ec.com.jaapz.modelo.MaterialAdicional;
 import ec.com.jaapz.modelo.Medidor;
 import ec.com.jaapz.modelo.Planilla;
 import ec.com.jaapz.modelo.Reparacion;
@@ -76,7 +77,8 @@ public class Context {
 
 	private IngresoDetalle detalleMedidor;
 	private Ingreso ingresoSeleccionado;
-
+	private MaterialAdicional materialAdicional;
+	
 	List<LiquidacionOrden> listadoAsignados;
 
 	public static Context getInstance() {
@@ -375,6 +377,14 @@ public class Context {
 
 	public Stage getStageModalSolicitud() {
 		return stageModalSolicitud;
+	}
+
+	public MaterialAdicional getMaterialAdicional() {
+		return materialAdicional;
+	}
+
+	public void setMaterialAdicional(MaterialAdicional materialAdicional) {
+		this.materialAdicional = materialAdicional;
 	}
 
 	public void setStageModalSolicitud(Stage stageModalSolicitud) {

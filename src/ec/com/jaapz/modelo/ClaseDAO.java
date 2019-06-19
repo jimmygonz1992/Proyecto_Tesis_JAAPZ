@@ -15,7 +15,6 @@ public class ClaseDAO {
 	
 
 	private EntityManager em;
-	private EntityManager emNuevo;
 
 	
 	public EntityManager getEntityManager() {
@@ -24,15 +23,6 @@ public class ClaseDAO {
 		}
 		return em; 
 	} 
-
-	public EntityManager getEntityManagerNuevo() {
-		EntityManagerFactory emfNuevo = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
-		if (emNuevo == null){
-			emNuevo = emfNuevo.createEntityManager();
-		}
-		return emNuevo; 
-	} 
-	
 
 	public Connection abreConexion() {
 		EntityManager entityManager; 
