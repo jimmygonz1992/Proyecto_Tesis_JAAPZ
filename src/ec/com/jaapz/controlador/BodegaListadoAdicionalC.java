@@ -1,6 +1,5 @@
 package ec.com.jaapz.controlador;
 
-import java.text.SimpleDateFormat;
 import java.util.List;
 
 import ec.com.jaapz.modelo.InstalacionDAO;
@@ -58,7 +57,6 @@ public class BodegaListadoAdicionalC {
 	@SuppressWarnings("unchecked")
 	private void llenarListaInstalacion(String codigo) {
 		try {
-			SimpleDateFormat formateador = new SimpleDateFormat("dd/MM/yyyy");
 			tvDatos.getColumns().clear();
 			MaterialAdicionalDAO instalacionDAO = new MaterialAdicionalDAO();
 			List<MaterialAdicional> listaInstalacion = instalacionDAO.getListaAdicionales(codigo);

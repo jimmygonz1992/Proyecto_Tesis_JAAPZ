@@ -457,7 +457,7 @@ public class BodegaSalidaRubroInstC {
 			boolean bandera = false;
 			if(tvDatos != null) {
 				for(InstalacionDetalle detalle : tvDatos.getItems()) {
-					if(detalle.getRubro().getIdRubro() != Constantes.ID_MEDIDOR || detalle.getRubro().getIdRubro() != Constantes.ID_TASA_CONEXION) {
+					if(detalle.getRubro().getIdRubro() != Constantes.ID_MEDIDOR && detalle.getRubro().getIdRubro() != Constantes.ID_TASA_CONEXION) {
 						Rubro rubro = rubroDAO.getRubroById(detalle.getRubro().getIdRubro());
 						if(detalle.getCantidad() > rubro.getStock())
 							bandera = true;
