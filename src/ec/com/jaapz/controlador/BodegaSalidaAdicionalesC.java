@@ -4,12 +4,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import ec.com.jaapz.modelo.Kardex;
 import ec.com.jaapz.modelo.MaterialAdicional;
 import ec.com.jaapz.modelo.MaterialAdicionalDAO;
 import ec.com.jaapz.modelo.MaterialAdicionalDetalle;
 import ec.com.jaapz.modelo.Planilla;
 import ec.com.jaapz.modelo.PlanillaDAO;
 import ec.com.jaapz.modelo.PlanillaDetalle;
+import ec.com.jaapz.modelo.Rubro;
+import ec.com.jaapz.modelo.RubroDAO;
 import ec.com.jaapz.util.Constantes;
 import ec.com.jaapz.util.Context;
 import ec.com.jaapz.util.ControllerHelper;
@@ -20,7 +23,6 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
-import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
@@ -36,9 +38,7 @@ public class BodegaSalidaAdicionalesC {
 	@FXML private TextField txtIdLiquid;
 	@FXML private Button btnNuevo;
 	@FXML private TextField txtCedula;
-	@FXML private DatePicker dtpFecha;
 	@FXML private TextField txtTotal;
-	@FXML private TextField txtUsuario;
 	@FXML private TextField txtTelefono;
 	@FXML private TextField txtIdCuenta;
 	@FXML private TextField txtNombres;
@@ -49,8 +49,29 @@ public class BodegaSalidaAdicionalesC {
 	ControllerHelper helper = new ControllerHelper();
 	MaterialAdicional adicionalSeleccionado = new MaterialAdicional();
 	MaterialAdicionalDAO materialDAO = new MaterialAdicionalDAO();
+	RubroDAO rubroDAO = new RubroDAO();
+	
 	public void initialize() {
-		
+		try {
+			noEditable();
+		}catch(Exception ex) {
+			System.out.println(ex.getMessage());
+		}
+	}
+	
+	void noEditable() {
+		try {
+			txtDireccion.setEditable(false);
+			txtApellidos.setEditable(false);
+			txtIdLiquid.setEditable(false);
+			txtCedula.setEditable(false);
+			txtTotal.setEditable(false);
+			txtTelefono.setEditable(false);
+			txtIdCuenta.setEditable(false);
+			txtNombres.setEditable(false);
+		}catch(Exception ex) {
+			System.out.println(ex.getMessage());
+		}
 	}
 	
 	public void buscarLiqCuenta() {
@@ -182,6 +203,7 @@ public class BodegaSalidaAdicionalesC {
 				PlanillaDAO planillaDAO = new PlanillaDAO();
 				List<Planilla> listaPlanilla = planillaDAO.getPlanillaActual(adicionalSeleccionado.getInstalacion().getCuentaCliente().getIdCuenta());
 				Planilla planilla = new Planilla();
+				adicionalSeleccionado.setEstadoSalida(Constantes.EST_INSPECCION_REALIZADO);
 				if(listaPlanilla.size() > 0)//necesito saber si tiene una planilla en proceso.. si esta la junta en la que se encuentra en proceso
 					planilla = listaPlanilla.get(0);
 				else {//caso contrario se verifica si existe alguna planilla que no este planillado.. x si acaso
@@ -205,7 +227,7 @@ public class BodegaSalidaAdicionalesC {
 				detallePlanilla.setCantidad(1);
 				detallePlanilla.setUsuarioCrea(Context.getInstance().getIdUsuario());
 				detallePlanilla.setSubtotal(Double.parseDouble(txtTotal.getText()));
-				detallePlanilla.setDescripcion("POR MATERIALES ADICIONALES EN REPARACIÓN");
+				detallePlanilla.setDescripcion("POR MATERIALES ADICIONALES EN INSTALACIÓN");
 				detallePlanilla.setIdentificadorOperacion(Constantes.IDENT_ADICIONAL);
 				detallePlanilla.setEstado(Constantes.ESTADO_ACTIVO);
 				detallePlanilla.setCantidad(1);
@@ -222,16 +244,76 @@ public class BodegaSalidaAdicionalesC {
 				
 				materialDAO.getEntityManager().getTransaction().begin();
 				materialDAO.getEntityManager().merge(planilla);
+				materialDAO.getEntityManager().merge(adicionalSeleccionado);
 				materialDAO.getEntityManager().getTransaction().commit();
+				actualizarListaArticulos();
+				grabarKardexSalida();
+				helper.mostrarAlertaInformacion("Datos Grabados Correctamente", Context.getInstance().getStage());
+				nuevo();
 			}
 		}catch(Exception ex) {
 			System.out.println(ex.getMessage());
 		}
 	}
-
+	
+	public void actualizarListaArticulos() {
+		if(tvDatos != null) {		
+			List<Rubro> listaSalidaRubros = new ArrayList<Rubro>();
+			for(MaterialAdicionalDetalle detalle: tvDatos.getItems()) {
+				listaSalidaRubros.add(detalle.getRubro());
+			}
+			rubroDAO.getEntityManager().getTransaction().begin();
+			for (Rubro rubro : listaSalidaRubros) {
+				if(rubro.getIdRubro() != Constantes.ID_MEDIDOR || rubro.getIdRubro() != Constantes.ID_TASA_CONEXION) {
+					for(MaterialAdicionalDetalle detalle : tvDatos.getItems()) {
+						if(rubro.getIdRubro() == detalle.getRubro().getIdRubro())
+							rubro.setStock(rubro.getStock() - detalle.getCantidad());
+					}
+					rubroDAO.getEntityManager().merge(rubro);	
+				}
+			}
+			rubroDAO.getEntityManager().getTransaction().commit();
+		}
+	}
+	
+	private void grabarKardexSalida() {
+		try {
+			java.util.Date utilDate = new java.util.Date(); 
+			
+			materialDAO.getEntityManager().getTransaction().begin();
+			for(MaterialAdicionalDetalle det : tvDatos.getItems()) {
+				Kardex kardex = new Kardex();
+				//kardex.setIdKardex(null);sa
+				kardex.setRubro(det.getRubro());
+				kardex.setFecha(utilDate);
+				kardex.setTipoDocumento("Documento Liquidación #");
+				kardex.setNumDocumento(String.valueOf(adicionalSeleccionado.getInstalacion().getIdInstalacion()));
+				kardex.setDetalleOperacion("Salida de " + det.getRubro().getDescripcion());
+				kardex.setCantidad(det.getCantidad());
+				kardex.setUnidadMedida("Unidad");
+				kardex.setValorUnitario(det.getPrecio());
+				kardex.setCostoTotal(det.getCantidad()*det.getPrecio());
+				kardex.setTipoMovimiento(Constantes.BODEGA_SALIDA);
+				kardex.setEstado(Constantes.ESTADO_ACTIVO);
+				materialDAO.getEntityManager().persist(kardex);
+			}
+			materialDAO.getEntityManager().getTransaction().commit();
+		}catch(Exception ex) {
+			System.out.println(ex.getMessage());
+		}
+	}
 	
 	public void nuevo() {
-
+		tvDatos.getItems().clear();
+		tvDatos.getColumns().clear();
+		txtDireccion.setText("");
+		txtApellidos.setText("");
+		txtIdLiquid.setText("");
+		txtCedula.setText("");
+		txtTotal.setText("");
+		txtTelefono.setText("");
+		txtIdCuenta.setText("");
+		txtNombres.setText("");
+		txtObservaciones.setText("");
 	}
-
 }
