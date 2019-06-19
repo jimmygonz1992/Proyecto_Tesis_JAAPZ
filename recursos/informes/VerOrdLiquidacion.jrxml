@@ -8,19 +8,21 @@
 	<parameter name="idLiquid" class="java.lang.Integer"/>
 	<parameter name="usuario" class="java.lang.String"/>
 	<queryString language="SQL">
-		<![CDATA[SELECT l.id_liquidacion, l.fecha as fecha_liquidacion, i.telefono_contacto, i.direccion, i.referencia, i.fecha_ingreso, i.id_sol_inspeccion, l.total as total_liquid, c.cedula, (c.nombre || ' ' ||c.apellido) as cliente, r.descripcion, ld.cantidad, ld.precio, ld.total as det_total
+		<![CDATA[SELECT l.id_liquidacion, l.fecha as fecha_liquidacion, i.telefono_contacto, i.direccion, i.referencia, i.fecha_ingreso, m.codigo, m.marca, m.modelo, m.precio, i.id_sol_inspeccion, l.total as total_liquid, c.cedula, (c.nombre || ' ' ||c.apellido) as cliente, r.descripcion, ld.cantidad, ld.precio, ld.total as det_total
 FROM sol_inspeccion_ins i,
 	cliente c,
 	cuenta_cliente cc,
 	liquidacion_orden l,
 	liquidacion_detalle ld,
-	rubro r
+	rubro r,
+	medidor m
 	WHERE
 	i.id_cliente = c.id_cliente and
 	c.id_cliente = cc.id_cliente and
 	cc.id_cuenta = l.id_cuenta and
 	l.id_liquidacion = ld.id_liquidacion and
 	ld.id_rubro = r.id_rubro and
+	l.id_medidor = m.id_medidor and
 	l.id_liquidacion = $P{idLiquid}]]>
 	</queryString>
 	<field name="id_liquidacion" class="java.lang.Integer">
@@ -47,6 +49,22 @@ FROM sol_inspeccion_ins i,
 		<property name="com.jaspersoft.studio.field.label" value="fecha_ingreso"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="sol_inspeccion_ins"/>
 	</field>
+	<field name="codigo" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="codigo"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="medidor"/>
+	</field>
+	<field name="marca" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="marca"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="medidor"/>
+	</field>
+	<field name="modelo" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="modelo"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="medidor"/>
+	</field>
+	<field name="precio" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.label" value="precio"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="medidor"/>
+	</field>
 	<field name="id_sol_inspeccion" class="java.lang.Integer">
 		<property name="com.jaspersoft.studio.field.label" value="id_sol_inspeccion"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="sol_inspeccion_ins"/>
@@ -70,7 +88,7 @@ FROM sol_inspeccion_ins i,
 		<property name="com.jaspersoft.studio.field.label" value="cantidad"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="liquidacion_detalle"/>
 	</field>
-	<field name="precio" class="java.lang.Double">
+	<field name="COLUMN_17" class="java.lang.Double">
 		<property name="com.jaspersoft.studio.field.label" value="precio"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="liquidacion_detalle"/>
 	</field>
@@ -305,35 +323,109 @@ FROM sol_inspeccion_ins i,
 		</band>
 	</detail>
 	<columnFooter>
-		<band height="45" splitType="Stretch"/>
+		<band height="31" splitType="Stretch"/>
 	</columnFooter>
 	<pageFooter>
-		<band height="54" splitType="Stretch"/>
+		<band height="26" splitType="Stretch"/>
 	</pageFooter>
 	<summary>
-		<band height="23" splitType="Stretch">
+		<band height="167" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="0" width="555" height="90" uuid="1f1bd13c-d464-4dcb-911d-e2881643ca2b"/>
+			</rectangle>
 			<staticText>
-				<reportElement x="390" y="10" width="50" height="13" uuid="a0877f0e-bdc9-4b1f-be4e-8cdbc927a334"/>
+				<reportElement x="390" y="109" width="50" height="13" uuid="a0877f0e-bdc9-4b1f-be4e-8cdbc927a334"/>
 				<textElement textAlignment="Left">
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Total:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="450" y="10" width="105" height="13" uuid="3cbef10a-4bc3-453c-b114-c34c5c9a62b8"/>
+				<reportElement x="450" y="109" width="105" height="13" uuid="3cbef10a-4bc3-453c-b114-c34c5c9a62b8"/>
 				<textFieldExpression><![CDATA[$F{total_liquid}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="1" y="10" width="50" height="13" uuid="ffa3289b-24a2-42b5-9018-7e451fa2dde9"/>
+				<reportElement x="1" y="152" width="50" height="13" uuid="ffa3289b-24a2-42b5-9018-7e451fa2dde9"/>
 				<textElement textAlignment="Left">
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Usuario:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="60" y="10" width="178" height="13" uuid="4c520919-9697-468d-adc9-85784c7cda07"/>
+				<reportElement x="60" y="152" width="178" height="13" uuid="4c520919-9697-468d-adc9-85784c7cda07"/>
 				<textFieldExpression><![CDATA[$P{usuario}]]></textFieldExpression>
 			</textField>
+			<textField>
+				<reportElement x="120" y="53" width="147" height="13" uuid="30461b4c-4313-461c-8b25-e5e9d47a6d57"/>
+				<textFieldExpression><![CDATA[$F{marca}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="120" y="70" width="147" height="13" uuid="ebee425d-4495-4e59-bfe4-e528f59f90ff"/>
+				<textFieldExpression><![CDATA[$F{modelo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="120" y="36" width="147" height="13" uuid="9528f686-3f1a-45ad-9e1f-badf940fd319"/>
+				<textFieldExpression><![CDATA[$F{codigo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="403" y="36" width="147" height="13" uuid="4cd38643-9294-4d56-9b75-529bd3222b0b"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{precio}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="40" y="8" width="160" height="13" uuid="1bb0a2cb-257a-4830-a685-bd01b7023c3e">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="c6fb28d2-3973-4aac-9f33-a595b7ecc756"/>
+				</reportElement>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Medidor Asignado]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="36" width="107" height="13" uuid="799c2535-5566-4ba6-9f56-97c2c2741efc">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="c6fb28d2-3973-4aac-9f33-a595b7ecc756"/>
+				</reportElement>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Código:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="53" width="107" height="13" uuid="ac5e6e69-1eba-4113-8b8d-a5751b57d080">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="c6fb28d2-3973-4aac-9f33-a595b7ecc756"/>
+				</reportElement>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Marca:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="70" width="107" height="13" uuid="1f05f512-1995-41c5-8c85-5a5a464ce332">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="c6fb28d2-3973-4aac-9f33-a595b7ecc756"/>
+				</reportElement>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Modelo:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="330" y="36" width="61" height="13" uuid="cd93cf33-061a-4896-85d2-498cd6808cfc">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="c6fb28d2-3973-4aac-9f33-a595b7ecc756"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Precio:]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="30" width="555" height="1" uuid="d3c839f1-7fb5-494d-b75f-043562be7223"/>
+			</line>
+			<line>
+				<reportElement x="300" y="30" width="1" height="60" uuid="9ba84c7e-dca4-44a8-aab3-fd5106a45c3a"/>
+			</line>
+			<line>
+				<reportElement x="0" y="147" width="241" height="1" uuid="0932cc08-b8b8-4f5b-931a-ff5e772e93c5"/>
+			</line>
 		</band>
 	</summary>
 </jasperReport>

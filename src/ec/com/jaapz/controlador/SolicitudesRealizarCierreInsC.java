@@ -642,6 +642,7 @@ public class SolicitudesRealizarCierreInsC {
 		}
 	}
 	
+	@SuppressWarnings("unused")
 	private void enviarCorreoCliente(double totalPagar,CuentaCliente cuenta) {
 		try {
 			if(cuenta.getCliente().getEmail() != null) {
