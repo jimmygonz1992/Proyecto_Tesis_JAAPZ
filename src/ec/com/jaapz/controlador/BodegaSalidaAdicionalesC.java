@@ -160,9 +160,20 @@ public class BodegaSalidaAdicionalesC {
 		tvDatos.getColumns().addAll(descripcionColum, cantidadColum, precioColum, totalColum);
 		tvDatos.setItems(datos);
 		
-		//sumarDatos();
+		sumarDatos();
 	}
 	
+	public void sumarDatos() {
+		try {
+			Double total = 0.0;
+			for(MaterialAdicionalDetalle det : adicionalSeleccionado.getMaterialAdicionalDetalles()) {
+				total = total + det.getSubtotal();
+			}
+			txtTotal.setText(String.valueOf(total));
+		}catch(Exception ex) {
+			System.out.println(ex.getMessage());
+		}
+	}
 	public void grabar() {
 		try {
 			Optional<ButtonType> result = helper.mostrarAlertaConfirmacion("Desea Grabar los Datos?",Context.getInstance().getStage());
@@ -183,6 +194,7 @@ public class BodegaSalidaAdicionalesC {
 						planilla.setIdentificadorProceso(Constantes.IDENT_PROCESO);//con esta variable se identifica si se encuentra procesada
 						planilla.setCuentaCliente(adicionalSeleccionado.getInstalacion().getCuentaCliente());
 						planilla.setEstado(Constantes.ESTADO_ACTIVO);
+						System.out.println("crea una nueva planilla");
 					}
 				}
 				
