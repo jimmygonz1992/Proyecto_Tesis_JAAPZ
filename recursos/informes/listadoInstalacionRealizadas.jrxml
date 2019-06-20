@@ -213,7 +213,7 @@ ORDER BY i.id_instalacion]]>
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="37" splitType="Stretch">
+		<band height="15" splitType="Stretch">
 			<rectangle>
 				<reportElement x="0" y="0" width="800" height="15" uuid="d3703dc0-4605-4504-8d31-3ee1103bb396"/>
 			</rectangle>
